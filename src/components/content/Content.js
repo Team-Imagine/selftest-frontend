@@ -24,7 +24,7 @@ class Content extends React.Component {
           
           <Card border = 'dark' style={{width: '18rem'}}>
             <Card.Header>
-             <Card.Img variant="top" src="/image/maths.png"/>
+             <Card.Img variant="top" src=""/>
             </Card.Header>
 
             <Card.Body>
@@ -36,13 +36,13 @@ class Content extends React.Component {
               </Card.Text>
             </Card.Body>
             <Card.Footer>
-              <Button variant="dark">Go Study</Button>
+              <Button variant="info">Go Study</Button>
             </Card.Footer>
           </Card>
 
           <Card border = 'dark' style={{width: '18rem'}}>
             <Card.Header>
-            <Card.Img variant="top" src="/image/code.png" />
+            <Card.Img variant="top" src="" />
             </Card.Header>
             
             <Card.Body>
@@ -52,12 +52,16 @@ class Content extends React.Component {
               </Card.Text>
             </Card.Body>
             <Card.Footer>
-              <small className="text-muted">Learn More</small>
+            <Button variant="info">Go Study</Button>
             </Card.Footer>
           </Card>
 
           <Card border = 'dark' style={{width: '18rem'}}>
-            <Card.Img variant="top" src="/image/dictionary.png" />
+            <Card.Header>
+            <Card.Img variant="top" src=""/>
+            </Card.Header>
+
+
             <Card.Body>
               <Card.Title>English</Card.Title>
               <Card.Text>
@@ -65,7 +69,7 @@ class Content extends React.Component {
               </Card.Text>
             </Card.Body>
             <Card.Footer>
-              <small className="text-muted">Learn More</small>
+            <Button variant="info">Go Study</Button>
             </Card.Footer>
           </Card>
         </CardDeck>
