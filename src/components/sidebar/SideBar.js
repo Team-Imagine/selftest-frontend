@@ -29,8 +29,8 @@ class SideBar extends React.Component {
         <Nav className="flex-column pt-2">
           <p className="ml-3">Menu</p>
 
-          <Nav.Item className="active">
-            <Nav.Link href="/">
+          <Nav.Item className="/">
+            <Nav.Link href="home" to="/home">
               <FontAwesomeIcon icon={faHome} className="mr-2" />
               Home
             </Nav.Link>

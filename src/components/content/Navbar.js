@@ -57,11 +57,11 @@ class NavBar extends React.Component {
             </Button>
           </Form>
           <div class="d-flex align-items-center">
-            <Nav.Link href="#">
+            <Nav.Link href="settings"to="/settings">
               <FontAwesomeIcon icon={faCogs} className="ml-auto" />
               Settings</Nav.Link>
 
-            <Nav.Link href="#">
+            <Nav.Link href="login" to="/login">
               <FontAwesomeIcon icon={faKey} className="ml-auto" />
               Login</Nav.Link>
 
