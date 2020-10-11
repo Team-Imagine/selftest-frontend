@@ -1,11 +1,18 @@
 import React, { Component } from "react";
 
+
 export default class SignUp extends Component {
     render() {
         return (
-            <form>
+            <div class="container h-100">
+                <div class="row h-100 justify-content-center align-items-center">
+                    <form class="col-6">
+                 
+                       
                 <h3>Sign Up</h3>
+                
 
+               
                 <div className="form-group">
                     <label>First name</label>
                     <input type="text" className="form-control" placeholder="First name" />
@@ -31,6 +38,8 @@ export default class SignUp extends Component {
                     Already registered <a href="#">sign in?</a>
                 </p>
             </form>
+            </div>
+            </div>
         );
     }
 }
