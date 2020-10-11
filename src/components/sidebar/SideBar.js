@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHome,
   faQuestion,
-  faTimes,faBookmark, faTrophy, faBook, faChartBar
+  faTimes,faBookmark,  faBook, faCheck, faTrophy
 } from "@fortawesome/free-solid-svg-icons";
 import SubMenu from "./SubMenu";
 import { Nav, Button } from "react-bootstrap";
@@ -36,45 +36,40 @@ class SideBar extends React.Component {
             </Nav.Link>
           </Nav.Item>
 
-          <Nav.Item className="/">
-            <Nav.Link href="/">
-              <FontAwesomeIcon icon={faQuestion} className="mr-2" />
-              Questions
-            </Nav.Link>
-          </Nav.Item>
-
-          <Nav.Item>
-            <Nav.Link href="/">
-              <FontAwesomeIcon icon={faBookmark} className="mr-2" />
-              Favorites
-            </Nav.Link>
-          </Nav.Item>
-        
-
-          <Nav.Item>
-            <Nav.Link href="/">
-              <FontAwesomeIcon icon={faChartBar} className="mr-2" />
-              Progress
-            </Nav.Link>
-          </Nav.Item>
-
-          <Nav.Item>
-            <Nav.Link href="/">
-              <FontAwesomeIcon icon={faTrophy} className="mr-2" />
-              Rank
-            </Nav.Link>
-          </Nav.Item>
-
           <SubMenu
             title="Subjects"
             icon={faBook}
             items={["수학", "컴퓨터공학", "과학", "교양"]}
             
           />
+
+          <Nav.Item>
+            <Nav.Link href="/">
+              <FontAwesomeIcon icon={faBookmark} className="mr-2" />
+              Bookmarks
+            </Nav.Link>
+          </Nav.Item>
+        
+
           <Nav.Item>
             <Nav.Link href="/">
               <FontAwesomeIcon icon={faQuestion} className="mr-2" />
-              FAQ
+              Question
+            </Nav.Link>
+          </Nav.Item>
+
+          <Nav.Item>
+            <Nav.Link href="/">
+              <FontAwesomeIcon icon={faCheck} className="mr-2" />
+              Test
+            </Nav.Link>
+          </Nav.Item>
+
+        
+          <Nav.Item>
+            <Nav.Link href="/">
+              <FontAwesomeIcon icon={faTrophy} className="mr-2" />
+              Ranks
             </Nav.Link>
           </Nav.Item>
 

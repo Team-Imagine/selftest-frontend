@@ -1,6 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAlignLeft, faCogs, faKey, faSearch, faSignOutAlt, faUser, faUserCog, faUserGraduate, faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import { faAlignLeft, faCogs, faKey, faSearch, faSignOutAlt, faUser, faUserCog, faUserGraduate, faUserPlus, faBell} from "@fortawesome/free-solid-svg-icons";
 import { Navbar, Button, Nav } from "react-bootstrap";
 import Dropdown from 'react-bootstrap/Dropdown'
 import Form from 'react-bootstrap/Form'
@@ -87,6 +87,9 @@ class NavBar extends React.Component {
             
               </Dropdown.Menu>
             </Dropdown>
+            <Nav.Link href="#">
+            <FontAwesomeIcon icon={faBell} className="ml-auto" style />
+            </Nav.Link>
             </div>
           </Nav>
           
