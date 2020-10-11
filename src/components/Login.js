@@ -3,7 +3,11 @@ import React, { Component } from "react";
 export default class Login extends Component {
     render() {
         return (
-            <form>
+
+          <div class="container h-100">
+          <div class="row h-100 justify-content-center align-items-center">
+              <form class="col-6">
+         
                 <h3>Sign In</h3>
 
                 <div className="form-group">
@@ -28,6 +32,8 @@ export default class Login extends Component {
                     Forgot <a href="#">password?</a>
                 </p>
             </form>
+            </div>
+            </div>
         );
     }
 }
