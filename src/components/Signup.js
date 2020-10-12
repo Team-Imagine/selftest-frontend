@@ -25,7 +25,7 @@ export default class SignUp extends Component {
                 <hr />
                  <Form.Group controlId="formBasicEmail">
                  <Form.Label>*Email address</Form.Label>
-                  <Form.Control type="email" placeholder="(Compulsory)Enter email" />
+                  <Form.Control type="email" placeholder="Enter email" />
                   </Form.Group>
 
                   <Form.Group controlId="formBasicUsername">

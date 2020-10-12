@@ -11,9 +11,11 @@ import Settings from "./components/Settings";
 import LoginForm from "./components/LoginForm";
 
 ReactDOM.render(
+    <div style = {{
+        backgroundColor:'#f7feff'
+      }}>
 
     <BrowserRouter>
-
         <Switch>
             <Route path = "/home" component={App} />
             <Route path = "/login" component = {LoginForm} />
@@ -24,6 +26,9 @@ ReactDOM.render(
      
 
     </BrowserRouter>,
+
+    </div>,
+
     document.getElementById("root"))
 ;
 

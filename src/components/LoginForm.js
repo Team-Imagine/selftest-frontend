@@ -6,6 +6,9 @@ export default class SignUp extends Component {
   render() {
   
         return (
+          <div style = {{
+            backgroundColor:'#f7feff'
+          }}>
           <div class="container h-100">
           <div class="row h-100 justify-content-center align-items-center">
               <form class="col-6">
@@ -40,6 +43,7 @@ export default class SignUp extends Component {
                      Forgot password?</a>
                 </p>  
             </form>
+            </div>
             </div>
             </div>
         );

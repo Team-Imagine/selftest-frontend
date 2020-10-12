@@ -20,6 +20,7 @@ class Content extends React.Component {
            Popular Subjects  <Badge variant="danger">HOT</Badge>
           </h4>
         </div>
+        
         <CardDeck>
           
           <Card border = 'dark' style={{width: '18rem'}}>
@@ -66,6 +67,43 @@ class Content extends React.Component {
               <Card.Title>English</Card.Title>
               <Card.Text>
                 Reading, Listening, Writing, Speaking
+              </Card.Text>
+            </Card.Body>
+            <Card.Footer>
+            <Button variant="info">Go Study</Button>
+            </Card.Footer>
+          </Card>
+        </CardDeck>
+        <br />
+        <CardDeck>
+          
+          <Card border = 'dark' style={{width: '18rem'}}>
+            <Card.Header>
+             <Card.Img variant="top" src=""/>
+            </Card.Header>
+
+            <Card.Body>
+              <Card.Title>Science
+              
+              </Card.Title>
+              <Card.Text>
+                 Physics, Chemistry, Biology with Experiments
+              </Card.Text>
+            </Card.Body>
+            <Card.Footer>
+              <Button variant="info">Go Study</Button>
+            </Card.Footer>
+          </Card>
+
+          <Card border = 'dark' style={{width: '18rem'}}>
+            <Card.Header>
+            <Card.Img variant="top" src="" />
+            </Card.Header>
+            
+            <Card.Body>
+              <Card.Title>Commerce</Card.Title>
+              <Card.Text>
+                Economics, Accounting, Business
               </Card.Text>
             </Card.Body>
             <Card.Footer>
