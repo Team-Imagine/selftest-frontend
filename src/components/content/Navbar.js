@@ -14,6 +14,7 @@ class NavBar extends React.Component {
         bg="light"
         className="navbar shadow-sm p-3 mb-5 bg-white rounded"
         expand = "lg"
+        
       >
         <Button variant="outline-info" onClick={this.props.toggle}>
           <FontAwesomeIcon icon={faAlignLeft} />

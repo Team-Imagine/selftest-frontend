@@ -7,8 +7,12 @@ import { BrowserRouter, Route, Switch} from "react-router-dom";
 
 import SignUp from "./components/Signup";
 import Password from "./components/Password";
-import Settings from "./components/Settings";
+import Question from "./components/Question";
 import LoginForm from "./components/LoginForm";
+import FirstPage from "./components/FirstPage";
+import NavBar from "./components/content/Navbar";
+import SideBar from "./components/sidebar/SideBar";
+import Content from "./components/content/Content";
 
 ReactDOM.render(
     <div style = {{
@@ -16,12 +20,15 @@ ReactDOM.render(
       }}>
 
     <BrowserRouter>
+
+      <NavBar/>
+      <App/>
         <Switch>
             <Route path = "/home" component={App} />
             <Route path = "/login" component = {LoginForm} />
             <Route path = "/signup" component = {SignUp}/>
-            <Route path = "/settings" component = {Settings}/>
-            <Route path = "/password" component = {Password}/>
+            <Route path = "/question" component = {Question}/>
+            <Route path = "password" component = {Password}/>
         </Switch>
      
 
