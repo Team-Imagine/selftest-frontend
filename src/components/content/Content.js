@@ -1,7 +1,6 @@
 import React from "react";
 import classNames from "classnames";
 import { Container } from "react-bootstrap";
-import NavBar from "./Navbar";
 import Card from "react-bootstrap/Card";
 import CardDeck from 'react-bootstrap/CardDeck';
 import { Button } from "react-bootstrap";
@@ -14,7 +13,10 @@ class Content extends React.Component {
         fluid
         className={classNames("content", { "is-open": this.props.isOpen })}
       >
+        {/*
         <NavBar toggle={this.props.toggle} />
+        */}
+
         <div>
           <h4>
            Popular Subjects  <Badge variant="danger">HOT</Badge>

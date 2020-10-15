@@ -13,15 +13,18 @@ export default class SignUp extends Component {
           <div class="row h-100 justify-content-center align-items-center">
               <form class="col-6">
          
-              <div class="row h-100 justify-content-center align-items-center">
+             
+                <br/><br/><br/>
+                <h2>Login</h2>
+                <hr />
+
+                <div class="row h-100 justify-content-center align-items-center">
                     <img src = {login2}
                     width = '550'
                     height = '200'
                     alt='Login2'/>
                 </div>
 
-                <h2>Login</h2>
-                <hr />
                  <Form.Group controlId="formBasicEmail">
                  <Form.Label>Email address</Form.Label>
                   <Form.Control type="email" placeholder="Enter email" />
@@ -38,10 +41,21 @@ export default class SignUp extends Component {
                     <Form.Check type="checkbox" label="Remember me" />
                   </Form.Group>
                   <button type="submit" className="btn btn-info btn-block">Submit</button>
+
+                  <div className = "App-wrapper">
+                 
+                  
+                  
                   <p className="forgot-password text-right">
+                  <a href="signup"to="/signup">
+                     회원가입 | </a>
                    <a href="password"to="/pasword">
-                     Forgot password?</a>
-                </p>  
+                     비밀번호 찾기</a>
+      
+                </p>
+                </div>
+              
+                  
             </form>
             </div>
             </div>

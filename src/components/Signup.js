@@ -14,15 +14,16 @@ export default class SignUp extends Component {
                 
                 <form class="col-6">
 
+                <br/><br/><br/>
+                <h2>Sign Up</h2>
+                <hr />
+
                 <div class = "row h-100 justify-content-center align-items-center">
                     <img src = {welcome}
                     width = '550'
                     height = '200'
                     alt='signup'/>
                 </div>
-
-                <h2>Sign Up</h2>
-                <hr />
                  <Form.Group controlId="formBasicEmail">
                  <Form.Label>*Email address</Form.Label>
                   <Form.Control type="email" placeholder="Enter email" />

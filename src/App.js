@@ -3,9 +3,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import SideBar from "./components/sidebar/SideBar";
 import Content from "./components/content/Content";
-import NavBar from "./components/content/Navbar";
-
-
 
 class App extends React.Component {
   constructor(props) {

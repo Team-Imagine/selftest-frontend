@@ -34,11 +34,12 @@ a:focus {
 ----------------------------------------------------- */
 .sidebar {
   min-width: 250px;
-  max-width: 250px;
+  max-width: 500px;
   background: #354052;
   color: #adb5bd;
   margin-left: -250px;
   transition: all 0.5s;
+  position: sticky;
 }
 
 .sidebar.is-open {

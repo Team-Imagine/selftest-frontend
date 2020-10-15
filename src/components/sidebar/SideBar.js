@@ -9,22 +9,35 @@ import SubMenu from "./SubMenu";
 import { Nav, Button } from "react-bootstrap";
 import classNames from "classnames";
 
-
 class SideBar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      sidebarOpen: true
+    };
+    this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
+  }
+ 
+  onSetSidebarOpen(open) {
+    this.setState({ sidebarOpen: open });
+  }
+ 
   render() {
     return (
       <div className={classNames("sidebar", { "is-open": this.props.isOpen })}>
-        <div className="sidebar-header">
+        <br/>
+      <div className="sidebar-header">
           <Button
             variant="link"
             onClick={this.props.toggle}
             style={{ color: "#fff" }}
             className="mt-4"
           >
+    
             <FontAwesomeIcon icon={faTimes} pull="right" size="xs" />
           </Button>
-          <h3>SelfTest</h3>
         </div>
+      
 
         <Nav className="flex-column pt-2">
           <p className="ml-3">Menu</p>
@@ -52,7 +65,7 @@ class SideBar extends React.Component {
         
 
           <Nav.Item>
-            <Nav.Link href="/">
+            <Nav.Link href="question"to ="/question">
               <FontAwesomeIcon icon={faQuestion} className="mr-2" />
               Question
             </Nav.Link>
@@ -72,12 +85,9 @@ class SideBar extends React.Component {
               Ranks
             </Nav.Link>
           </Nav.Item>
-
-
-         
-          
         </Nav>
       </div>
+      
     );
   }
 }
