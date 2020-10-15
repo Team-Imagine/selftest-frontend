@@ -3,9 +3,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHome,
   faQuestion,
-  faTimes,faBookmark,  faBook, faCheck, faTrophy
+  faTimes,faBookmark, faCog, faCheck, faTrophy
 } from "@fortawesome/free-solid-svg-icons";
-import SubMenu from "./SubMenu";
+
 import { Nav, Button } from "react-bootstrap";
 import classNames from "classnames";
 
@@ -48,28 +48,24 @@ class SideBar extends React.Component {
               Home
             </Nav.Link>
           </Nav.Item>
-
-          <SubMenu
-            title="Subjects"
-            icon={faBook}
-            items={["수학", "컴퓨터공학", "과학", "교양"]}
-            
-          />
-
-          <Nav.Item>
-            <Nav.Link href="/">
-              <FontAwesomeIcon icon={faBookmark} className="mr-2" />
-              Bookmarks
-            </Nav.Link>
-          </Nav.Item>
-        
-
           <Nav.Item>
             <Nav.Link href="question"to ="/question">
               <FontAwesomeIcon icon={faQuestion} className="mr-2" />
               Question
             </Nav.Link>
-          </Nav.Item>
+            </Nav.Item>
+
+            <Nav.Item>
+            <Nav.Link href="/">
+              <FontAwesomeIcon icon={faBookmark} className="mr-2" />
+              Bookmarks
+            </Nav.Link>
+            </Nav.Item>
+         <Nav.Item>
+            <Nav.Link href="settings"to="/settings">
+              <FontAwesomeIcon icon={faCog} className="mr-2" />
+              Settings</Nav.Link>
+            </Nav.Item>
 
           <Nav.Item>
             <Nav.Link href="/">

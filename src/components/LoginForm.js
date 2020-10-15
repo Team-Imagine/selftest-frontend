@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import login2 from "../picture/login2.png";
+import login2 from "./picture/login2.png";
 import Form from "react-bootstrap/Form";
 
 export default class SignUp extends Component {
@@ -43,14 +43,12 @@ export default class SignUp extends Component {
                   <button type="submit" className="btn btn-info btn-block">Submit</button>
 
                   <div className = "App-wrapper">
-                 
-                  
-                  
+                
                   <p className="forgot-password text-right">
                   <a href="signup"to="/signup">
-                     회원가입 | </a>
+                     Sign Up   | </a>
                    <a href="password"to="/pasword">
-                     비밀번호 찾기</a>
+                     Find Password</a>
       
                 </p>
                 </div>

@@ -1,50 +1,36 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {  faCogs, faSearch, faSignOutAlt, faUser, faUserCog, faUserGraduate, faBell} from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faSignOutAlt, faUser, faUserCog, faUserGraduate, faBell} from "@fortawesome/free-solid-svg-icons";
 import { Navbar, Button, Nav } from "react-bootstrap";
 import Dropdown from 'react-bootstrap/Dropdown'
 import Form from 'react-bootstrap/Form'
 import FormControl from 'react-bootstrap/FormControl'
-import { Row, Col } from 'reactstrap';
 
+import logo from "../picture/icon.png";
 class NavBar extends React.Component {
   render() {
     return (
+      <div classname>
       <Navbar
         bg="light"
         className="navbar shadow-sm p-3 bg-white rounded"
         expand = "lg"
       >
-        <h1>
-       Selftest
-        </h1>
+        <div class = "row h-100 justify-content-center align-items-center">
+                    <img src = {logo}
+                    width = '60'
+                    height = '50'
+                    alt='signup'/>
+                </div>
+        <div>
+            <Nav.Link href="home"to="/home">
+            <h1>SelfTest</h1>
+            </Nav.Link>
+          </div>
 
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ml-auto" navbar>
-
-      <fieldset>
-        <Form.Group as={Row}>
-          <Form.Label as="legend" column sm={2}>
-          </Form.Label>
-          <Col sm={10}>
-            <Form.Check
-              type="radio"
-              label="Subject"
-              name="formHorizontalRadios"
-              id="formHorizontalRadios1"
-            />
-            <Form.Check
-              type="radio"
-              label="Category"
-              name="formHorizontalRadios"
-              id="formHorizontalRadios2"
-            />
-          
-          </Col>
-        </Form.Group>
-      </fieldset>
-
           <Form inline>
             <FormControl type="text" placeholder="Search" className="mr-sm-2" />
             <Button variant="info">
@@ -52,13 +38,10 @@ class NavBar extends React.Component {
             </Button>
           </Form>
           <div class="d-flex align-items-center">
-            <Nav.Link href="settings"to="/settings">
-              <FontAwesomeIcon icon={faCogs} className="ml-auto" />
-              Settings</Nav.Link>
-
+            
 
             <Dropdown>
-              <Dropdown.Toggle variant="light" id="dropdown-basic">
+              <Dropdown.Toggle href= "login" to ="/login" variant="light" id="dropdown-basic">
               <FontAwesomeIcon icon={faUser} className="ml-auto" />
                 My Profile
                </Dropdown.Toggle>
@@ -75,6 +58,8 @@ class NavBar extends React.Component {
             
               </Dropdown.Menu>
             </Dropdown>
+            
+
             <Nav.Link href="#">
             <FontAwesomeIcon icon={faBell} className="ml-auto" style />
             </Nav.Link>
@@ -82,7 +67,14 @@ class NavBar extends React.Component {
           </Nav>
           
         </Navbar.Collapse>
+        
+        
       </Navbar>
+      <div className="row title" style={{ marginBottom: "10px" }} >      
+        <div class="col-sm-12 btn btn-warning">  
+      </div>
+      </div>
+      </div>
     );
   }
 }

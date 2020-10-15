@@ -12,6 +12,7 @@ import LoginForm from "./components/LoginForm";
 import NavBar from "./components/content/Navbar";
 
 
+
 ReactDOM.render(
     <div style = {{
         backgroundColor:'#f7feff'
@@ -20,8 +21,10 @@ ReactDOM.render(
     <BrowserRouter>
 
       <NavBar/>
+
      
         <Switch>
+          
             <Route path = "/home" component={App} />
             <Route path = "/login" component = {LoginForm} />
             <Route path = "/signup" component = {SignUp}/>
