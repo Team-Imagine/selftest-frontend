@@ -2,9 +2,7 @@ import React from "react";
 import classNames from "classnames";
 import { Container } from "react-bootstrap";
 
-
-
-class Questioncontent extends React.Component {
+class Rankcontent extends React.Component {
   render() {
     return (
       <Container
@@ -13,7 +11,7 @@ class Questioncontent extends React.Component {
       >
         <div>
           <h1>
-          Question Page
+          Rank Page
           </h1>
         </div>
 
@@ -22,4 +20,4 @@ class Questioncontent extends React.Component {
   }
 }
 
-export default Questioncontent;
+export default Rankcontent;

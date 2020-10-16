@@ -5,18 +5,18 @@ import { Navbar, Button, Nav } from "react-bootstrap";
 import Dropdown from 'react-bootstrap/Dropdown'
 import Form from 'react-bootstrap/Form'
 import FormControl from 'react-bootstrap/FormControl'
+import logo from "../../picture/icon.png";
 
-import logo from "../picture/icon.png";
 class NavBar extends React.Component {
   render() {
     return (
-      <div classname>
+      <div>
       <Navbar
         bg="light"
         className="navbar shadow-sm p-3 bg-white rounded"
         expand = "lg"
       >
-        <div class = "row h-100 justify-content-center align-items-center">
+        <div className = "row h-100 justify-content-center align-items-center">
                     <img src = {logo}
                     width = '60'
                     height = '50'
@@ -37,7 +37,7 @@ class NavBar extends React.Component {
             <FontAwesomeIcon icon={faSearch} className="ml-auto" />
             </Button>
           </Form>
-          <div class="d-flex align-items-center">
+          <div className="d-flex align-items-center">
             
 
             <Dropdown>
@@ -71,7 +71,7 @@ class NavBar extends React.Component {
         
       </Navbar>
       <div className="row title" style={{ marginBottom: "10px" }} >      
-        <div class="col-sm-12 btn btn-warning">  
+        <div className="col-sm-12 btn btn-warning">  
       </div>
       </div>
       </div>

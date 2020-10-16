@@ -1,8 +1,10 @@
 import React, { Component } from "react";
-import login2 from "./picture/login2.png";
+import login from "../picture/login.png";
 import Form from "react-bootstrap/Form";
 
 export default class SignUp extends Component {
+
+  
   render() {
   
         return (
@@ -19,7 +21,7 @@ export default class SignUp extends Component {
                 <hr />
 
                 <div class="row h-100 justify-content-center align-items-center">
-                    <img src = {login2}
+                    <img src = {login}
                     width = '550'
                     height = '200'
                     alt='Login2'/>

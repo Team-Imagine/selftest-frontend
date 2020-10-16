@@ -56,7 +56,7 @@ class SideBar extends React.Component {
             </Nav.Item>
 
             <Nav.Item>
-            <Nav.Link href="/">
+            <Nav.Link href="bookmarks"to="/bookmarks">
               <FontAwesomeIcon icon={faBookmark} className="mr-2" />
               Bookmarks
             </Nav.Link>
@@ -68,7 +68,7 @@ class SideBar extends React.Component {
             </Nav.Item>
 
           <Nav.Item>
-            <Nav.Link href="/">
+            <Nav.Link href="test" to ="/test">
               <FontAwesomeIcon icon={faCheck} className="mr-2" />
               Test
             </Nav.Link>
@@ -76,7 +76,7 @@ class SideBar extends React.Component {
 
         
           <Nav.Item>
-            <Nav.Link href="/">
+            <Nav.Link href="members" to="/members">
               <FontAwesomeIcon icon={faTrophy} className="mr-2" />
               Ranks
             </Nav.Link>

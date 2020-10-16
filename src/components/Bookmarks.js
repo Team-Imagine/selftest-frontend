@@ -1,8 +1,8 @@
 import React from "react";
 import SideBar from "./sidebar/SideBar";
-import Questioncontent from "./Questioncontent";
+import Bookmarkscontent from "../components/Bookmarkscontent";
 
-class Question extends React.Component {
+class Bookmarks extends React.Component {
 
         constructor(props) {
           super(props);
@@ -54,11 +54,11 @@ class Question extends React.Component {
           return (
             <div className="App wrapper">
               <SideBar toggle={this.toggle} isOpen={this.state.isOpen} />
-              <Questioncontent toggle={this.toggle} isOpen={this.state.isOpen} />
+              <Bookmarkscontent toggle={this.toggle} isOpen={this.state.isOpen} />
             </div>
           
           );
         }
       }
       
-      export default Question;
+      export default Bookmarks;

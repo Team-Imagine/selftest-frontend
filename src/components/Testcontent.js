@@ -4,7 +4,7 @@ import { Container } from "react-bootstrap";
 
 
 
-class Questioncontent extends React.Component {
+class Testcontent extends React.Component {
   render() {
     return (
       <Container
@@ -13,13 +13,13 @@ class Questioncontent extends React.Component {
       >
         <div>
           <h1>
-          Question Page
+          Test Page
           </h1>
-        </div>
+            </div>
 
       </Container>
     );
   }
 }
 
-export default Questioncontent;
+export default Testcontent;

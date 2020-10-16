@@ -4,22 +4,22 @@ import { Container } from "react-bootstrap";
 
 
 
-class Questioncontent extends React.Component {
+class Bookmarkscontent extends React.Component {
   render() {
     return (
       <Container
         fluid
         className={classNames("content", { "is-open": this.props.isOpen })}
       >
-        <div>
-          <h1>
-          Question Page
-          </h1>
-        </div>
-
+       <h3>
+           Bookmarks Page
+       </h3>
+        
+      
+ 
       </Container>
     );
   }
 }
 
-export default Questioncontent;
+export default Bookmarkscontent;

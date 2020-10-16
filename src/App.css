@@ -13,7 +13,6 @@
 }
 
 body {
-  /*font-family: 'Poppins', sans-serif;*/
   font-family: "Chilanka", sans-serif;
   /*background: #fafafa;*/
   background-color: #f5f9fc;
@@ -80,16 +79,16 @@ a:focus {
 
 .nav-item.open {
   color: #e9ecef;
-  background: #313b4c;
+  /*background: #313b4c;*/
 }
 
 .nav-item.active {
   color: #e9ecef;
-  background: #2d3646 !important;
+  /*background: #2d3646!important;*/ 
 }
 
 .nav-item:hover {
-  background: #313b4c;
+  /*background: #313b4c;*/
   color: #fff;
   transition: 0.2s;
 }

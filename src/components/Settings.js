@@ -1,8 +1,8 @@
 import React from "react";
 import SideBar from "./sidebar/SideBar";
-import Questioncontent from "./Questioncontent";
+import Settingscontent from "./Settingscontent";
 
-class Question extends React.Component {
+class Settings extends React.Component {
 
         constructor(props) {
           super(props);
@@ -54,11 +54,11 @@ class Question extends React.Component {
           return (
             <div className="App wrapper">
               <SideBar toggle={this.toggle} isOpen={this.state.isOpen} />
-              <Questioncontent toggle={this.toggle} isOpen={this.state.isOpen} />
+              <Settingscontent toggle={this.toggle} isOpen={this.state.isOpen} />
             </div>
           
           );
         }
       }
       
-      export default Question;
+      export default Settings;

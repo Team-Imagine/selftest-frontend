@@ -1,25 +1,25 @@
 import React from "react";
 import classNames from "classnames";
 import { Container } from "react-bootstrap";
+import Card from "react-bootstrap/Card";
 
 
-
-class Questioncontent extends React.Component {
+class Memberscontent extends React.Component {
   render() {
     return (
       <Container
         fluid
         className={classNames("content", { "is-open": this.props.isOpen })}
       >
-        <div>
-          <h1>
-          Question Page
-          </h1>
-        </div>
-
+       <h3>
+           Members Page
+       </h3>
+        
+      
+ 
       </Container>
     );
   }
 }
 
-export default Questioncontent;
+export default Memberscontent;
