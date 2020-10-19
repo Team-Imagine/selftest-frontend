@@ -26,9 +26,7 @@ class LoginForm extends Component {
     };
 
  
-    axios.post(`/api/auth/login`, 
-  
-    { user })
+    axios.post('api/auth/login', user)
     
       .then(res => {
         console.log(res);

@@ -19,19 +19,18 @@ constructor(props){
         this.setState({[event.target.name]: event.target.value });
       }
     
-      submitHandler = event => {
+      submitHandler = async (event) => {
         event.preventDefault();
         console.log(this.state)
         const userRegister = {
           email: this.state.email,
           username: this.state.username,
           password: this.state.password,
-          firstname: this.state.firstname,
-          lastname: this.state.lastname
+          first_name: this.state.firstname,
+          last_name: this.state.lastname
         };
     
-        axios.post(`/api/auth/register`, { userRegister })
-
+        await axios.post('api/auth/register', userRegister)
           .then(res => {
             console.log(res);
             console.log(res.data);
