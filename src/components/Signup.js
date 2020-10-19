@@ -11,8 +11,8 @@ constructor(props){
         email: '',
         username:'',
         password:'',
-        firstname:'',
-        lastname:''
+        first_name:'',
+        last_name:''
       }
     }
       changeHandler = event => {
@@ -26,11 +26,11 @@ constructor(props){
           email: this.state.email,
           username: this.state.username,
           password: this.state.password,
-          firstname: this.state.firstname,
-          lastname: this.state.lastname
+          first_name: this.state.first_name,
+          last_name: this.state.last_name
         };
     
-        axios.post(`/api/auth/register`, { userRegister })
+        axios.post(`/api/auth/register`,  userRegister )
 
           .then(res => {
             console.log(res);
@@ -40,7 +40,7 @@ constructor(props){
       
     render() {
 
-      const{email,username,password,firstname,lastname} = this.state
+      const{email,username,password,first_name,last_name} = this.state
         return (
             <div style = {{
                 backgroundColor:'#f7feff'
@@ -96,8 +96,8 @@ constructor(props){
                  <Form.Label>*Firstname</Form.Label>
                   <Form.Control 
                   type="text" 
-                  name = "firstname"
-                  value ={firstname}
+                  name = "first_name"
+                  value ={first_name}
                   onChange={this.changeHandler}
                   placeholder="Enter firstname" />
                   </Form.Group>
@@ -106,8 +106,8 @@ constructor(props){
                  <Form.Label>*Lastname</Form.Label>
                   <Form.Control 
                   type="text" 
-                  name = "lastname"
-                  value ={lastname}
+                  name = "last_name"
+                  value ={last_name}
                   onChange={this.changeHandler}
                   placeholder="Enter lastname" />
                  
