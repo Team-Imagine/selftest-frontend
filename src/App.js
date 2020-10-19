@@ -4,7 +4,10 @@ import "./App.css";
 import SideBar from "./components/sidebar/SideBar";
 import Content from "./components/content/Content";
 
+
 class App extends React.Component {
+
+
   constructor(props) {
     super(props);
 
@@ -16,6 +19,7 @@ class App extends React.Component {
 
     this.previousWidth = -1;
   }
+
 
   updateWidth() {
     const width = window.innerWidth;
@@ -50,9 +54,13 @@ class App extends React.Component {
   toggle = () => {
     this.setState({ isOpen: !this.state.isOpen });
   };
-
+  
+  
+  
   render() {
-    
+   
+  
+
     return (
       <div className="App wrapper">
         <SideBar toggle={this.toggle} isOpen={this.state.isOpen} />
@@ -62,5 +70,6 @@ class App extends React.Component {
     );
   }
 }
+
 
 export default App;

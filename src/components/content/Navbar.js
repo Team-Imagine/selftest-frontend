@@ -27,18 +27,19 @@ class NavBar extends React.Component {
             <h1>SelfTest</h1>
             </Nav.Link>
           </div>
-
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="ml-auto" navbar>
           <Form inline>
-            <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+            <FormControl type="text" placeholder="Search" className="mr-sm-2 " />
             <Button variant="info">
             <FontAwesomeIcon icon={faSearch} className="ml-auto" />
             </Button>
           </Form>
+
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="ml-auto" navbar>
+          
           <div className="d-flex align-items-center">
-            
+
 
             <Dropdown>
               <Dropdown.Toggle href= "login" to ="/login" variant="light" id="dropdown-basic">

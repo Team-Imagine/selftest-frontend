@@ -4,7 +4,7 @@
   align-items: stretch;
 }
 
-@import "https://fonts.googleapis.com/css?family=Chilanka:300,400,500,600,700";
+@import "https://fonts.googleapis.com/css?family=Comic Sans MS:300,400,500,600,700";
 @import "https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,500,600,700";
 
 .App-logo {
@@ -13,7 +13,7 @@
 }
 
 body {
-  font-family: "Chilanka", sans-serif;
+  font-family: "Comic Sans MS", sans-serif;
   /*background: #fafafa;*/
   background-color: #f5f9fc;
 }

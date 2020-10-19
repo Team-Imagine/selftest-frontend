@@ -1,9 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faHome,
-  faQuestion,
-  faTimes,faBookmark, faCog, faCheck, faTrophy
+  faHome,faTimes,faBookmark, faCog, faCheck, faTrophy, faBook
 } from "@fortawesome/free-solid-svg-icons";
 
 import { Nav, Button } from "react-bootstrap";
@@ -49,9 +47,9 @@ class SideBar extends React.Component {
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link href="question"to ="/question">
-              <FontAwesomeIcon icon={faQuestion} className="mr-2" />
-              Question
+            <Nav.Link href="subject"to ="/subject">
+              <FontAwesomeIcon icon={faBook} className="mr-2" />
+              Subjects
             </Nav.Link>
             </Nav.Item>
 
@@ -60,11 +58,6 @@ class SideBar extends React.Component {
               <FontAwesomeIcon icon={faBookmark} className="mr-2" />
               Bookmarks
             </Nav.Link>
-            </Nav.Item>
-         <Nav.Item>
-            <Nav.Link href="settings"to="/settings">
-              <FontAwesomeIcon icon={faCog} className="mr-2" />
-              Settings</Nav.Link>
             </Nav.Item>
 
           <Nav.Item>
@@ -81,6 +74,12 @@ class SideBar extends React.Component {
               Ranks
             </Nav.Link>
           </Nav.Item>
+
+          <Nav.Item>
+            <Nav.Link href="settings"to="/settings">
+              <FontAwesomeIcon icon={faCog} className="mr-2" />
+              Settings</Nav.Link>
+            </Nav.Item>
         </Nav>
       </div>
       
