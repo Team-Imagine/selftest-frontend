@@ -3,6 +3,7 @@ import React, { Component, useState } from "react";
 import login from "../picture/login.png";
 import Form from "react-bootstrap/Form";
 import { Redirect } from "react-router-dom";
+import store from "../store";
 
 import axios from "axios";
 
