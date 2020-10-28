@@ -1,25 +1,24 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
+import NavBar from "./components/content/Navbar";
 import SideBar from "./components/sidebar/SideBar";
 import Content from "./components/content/Content";
 
-
 class App extends React.Component {
-
-
+  
   constructor(props) {
     super(props);
 
+    
     // Moblie first
     this.state = {
       isOpen: false,
-      isMobile: true
+      isMobile: true,
     };
 
     this.previousWidth = -1;
   }
-
 
   updateWidth() {
     const width = window.innerWidth;
@@ -40,6 +39,7 @@ class App extends React.Component {
    * Add event listener
    */
   componentDidMount() {
+
     this.updateWidth();
     window.addEventListener("resize", this.updateWidth.bind(this));
   }
@@ -58,14 +58,15 @@ class App extends React.Component {
   
   
   render() {
-   
-  
-
     return (
-      <div className="App wrapper">
-        <SideBar toggle={this.toggle} isOpen={this.state.isOpen} />
-        <Content toggle={this.toggle} isOpen={this.state.isOpen} />
+      <div>
+        <NavBar />
+         <div className="App wrapper">
+          <SideBar toggle={this.toggle} isOpen={this.state.isOpen} />
+          <Content toggle={this.toggle} isOpen={this.state.isOpen} />
+        </div>
       </div>
+     
       
     );
   }

@@ -1,121 +1,114 @@
 
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import login from "../picture/login.png";
 import Form from "react-bootstrap/Form";
+import { Redirect } from "react-router-dom";
+
 import axios from "axios";
 
-class LoginForm extends Component {
-   constructor(props){
-    super(props)
+const LoginForm = () => {
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [isLoggedIn, setIsLoggedIn] = useState(0);
 
-  this.state = {
-    email:'',
-    password:''
-  }
-   }
-  changeHandler = event => {
-    this.setState({ [event.target.name]: event.target.value });
-  }
-
-  submitHandler = event => {
+  const submitHandler = event => {
     event.preventDefault();
-    console.log(this.state)
+
     const user = {
-      email: this.state.email,
-      password: this.state.password
+      email: email,
+      password: password
     };
 
- 
-    axios.post(`/api/auth/login`, user )
-    
+    axios.post(`/api/auth/login`, user)
+
       .then(res => {
         console.log(res);
         console.log(res.data);
+
+        store.dispatch({type:'LOGIN', value: res.data.uid})
+
+        setPassword("");
+        setEmail("");
+        setIsLoggedIn(1);
       })
-    
   }
+  const redirect = isLoggedIn ? (<Redirect to={{pathname: '/home'}}/>) : '';
 
-  render() {
-  
-    const{email, password} = this.state
+  return (
+    <div style={{
+      backgroundColor: '#f7feff'
+    }}>
+      <div className="container h-100">
+        <div className="row h-100 justify-content-center align-items-center">
+          {redirect}
+          <form
+            onSubmit={submitHandler}
+            className="col-6">
 
-        return (
-     
-          <div style = {{
-            backgroundColor:'#f7feff'
-          }}>
-          <div className="container h-100">
-          <div className="row h-100 justify-content-center align-items-center">
-              <form 
-              onSubmit = {this.submitHandler}
-              className="col-6">
-         
-             
-                <br/><br/><br/>
-                <h2>Login</h2>
-                <hr />
+            <br /><br /><br />
+            <h2>Login</h2>
+            <hr />
 
-                <div className="row h-100 justify-content-center align-items-center">
-                    <img src = {login}
-                    width = '550'
-                    height = '200'
-                    alt='Login2'/>
-                </div>
+            <div className="row h-100 justify-content-center align-items-center">
+              <img src={login}
+                width='550'
+                height='200'
+                alt='Login2' />
+            </div>
 
-                 <Form.Group controlId="formBasicEmail">
-                 <Form.Label>Email address</Form.Label>
-                  <Form.Control 
-                  type="email"
-                  name = "email"
-                  value ={email}
-                  onChange={this.changeHandler}
-                  placeholder="Enter email"
-                  />
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control
+                type="email"
+                name="email"
+                value={email}
+                onChange={({ target: { value } }) => setEmail(value)}
+                placeholder="Enter email"
+              />
 
-                  <Form.Text className="text-muted">
-                   We'll never share your email with anyone else.
+              <Form.Text className="text-muted">
+                We'll never share your email with anyone else.
                    </Form.Text>
-                  </Form.Group>
+            </Form.Group>
 
-                  <Form.Group controlId="formBasicPassword">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control 
-                    type="password" 
-                    name = "password"
-                    value ={password}
-                    onChange={this.changeHandler}
-                    placeholder="Enter password" 
-                    />
-                  </Form.Group>
+            <Form.Group controlId="formBasicPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                name="password"
+                value={password}
+                onChange={({ target: { value } }) => setPassword(value)}
+                placeholder="Enter password"
+              />
+            </Form.Group>
 
-                  <Form.Group controlId="formBasicCheckbox">
-                    <Form.Check 
-                    type="checkbox" 
-                    label="Remember me" 
-                    />
-                  </Form.Group>
-            
-                  <button 
-                  type="submit" 
-                  className="btn btn-info btn-block"
-                  >
-                  Login</button>
+            <Form.Group controlId="formBasicCheckbox">
+              <Form.Check
+                type="checkbox"
+                label="Remember me"
+              />
+            </Form.Group>
 
-                  <div className = "App-wrapper">
-                  <p className="forgot-password text-right">
-                  <a href="signup"to="/signup">
-                     Sign Up   | </a>
-                   <a href="password"to="/pasword">
-                     Find Password</a>
-      
-                </p>
-                </div>
-            </form>
+            <button
+              type="submit"
+              className="btn btn-info btn-block"
+            >
+              Login</button>
+
+            <div className="App-wrapper">
+              <p className="forgot-password text-right">
+                <a href="signup" to="/signup">
+                  Sign Up   | </a>
+                <a href="password" to="/password">
+                  Find Password</a>
+
+              </p>
             </div>
-            </div>
-            </div>
-        );
-    
-  }
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+
 }
 export default LoginForm;
