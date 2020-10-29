@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 
 import axios from "axios";
 
-
 const Subjectcontent = ({isOpen}) => {
 
   const [subject, setSubject] = useState([]);
@@ -21,10 +20,6 @@ const Subjectcontent = ({isOpen}) => {
       })
   }, []);
 
-  const print = () => {
-    console.log(subject);
-  } 
-
   return (
     <Container
       fluid
@@ -37,8 +32,7 @@ const Subjectcontent = ({isOpen}) => {
         <ul>
         {subject.map((i) => 
             <Link key={i.title} to={{
-              pathname: `/subject/${i.title}`,
-              subject: i.title
+              pathname: `/subject/${i.title}`
               }}>
               {i.title}
               <br/>

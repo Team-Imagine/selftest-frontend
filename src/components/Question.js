@@ -10,9 +10,9 @@ const Question = ({ subject, course, isOpen }) => {
 	const [question, setQuestion] = useState([]);
 
 	useEffect(() => {
-		const course_title = { course };
+		const course_title = course;
 
-		axios.get(`/api/question/`, course_title)
+		axios.get(`/api/question?course_title=${course}`)
 			.then(res => {
 				console.log(res.data);
 
@@ -33,9 +33,7 @@ const Question = ({ subject, course, isOpen }) => {
 				<ul>
 					{question.map((i) =>			
 						<Link key={i.content} to={{
-							pathname: `/subject/${subject}/${course}/${i.content}`,
-							subject: subject,
-							course: course
+							pathname: `/subject/${subject}/${course}/${i.id}`,
 						}}>
 							{i.content}
 							<br />
