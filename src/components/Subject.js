@@ -5,6 +5,7 @@ import Course from "./Course";
 import Question from "./Question";
 import Questioncontent from "./Questioncontent";
 import MakeQuestion from "./MakeQuestion";
+import NavBar from "./content/Navbar";
 
 class Subject extends React.Component {
 
@@ -59,6 +60,8 @@ class Subject extends React.Component {
       if (this.props.match.params.course) {
         if(this.props.match.params.make_question) {
           return (
+            <div>
+            <NavBar toggle={this.toggle} isOpen={this.state.isOpen} />
             <div className="App wrapper">
             <SideBar toggle={this.toggle} isOpen={this.state.isOpen} />
             <MakeQuestion
@@ -67,10 +70,13 @@ class Subject extends React.Component {
               course={this.props.match.params.course}
               isOpen={this.state.isOpen} />
           </div>
+          </div>
           )
         }
         if (this.props.match.params.question_id) {
           return (
+            <div>
+            <NavBar toggle={this.toggle} isOpen={this.state.isOpen} />
             <div className="App wrapper">
               <SideBar toggle={this.toggle} isOpen={this.state.isOpen} />
               <Questioncontent
@@ -80,9 +86,12 @@ class Subject extends React.Component {
                 question_id={this.props.match.params.question_id}
                 isOpen={this.state.isOpen} />
             </div>
+            </div>
           )
         } else {
           return (
+            <div>
+            <NavBar toggle={this.toggle} isOpen={this.state.isOpen} />
             <div className="App wrapper">
               <SideBar toggle={this.toggle} isOpen={this.state.isOpen} />
               <Question
@@ -91,21 +100,28 @@ class Subject extends React.Component {
                 course={this.props.match.params.course}
                 isOpen={this.state.isOpen} />
             </div>
+            </div>
           );
         }
       } else {
         return (
+          <div>
+          <NavBar toggle={this.toggle} isOpen={this.state.isOpen} />
           <div className="App wrapper">
             <SideBar toggle={this.toggle} isOpen={this.state.isOpen} />
             <Course toggle={this.toggle} subject={this.props.match.params.subject} isOpen={this.state.isOpen} />
+          </div>
           </div>
         );
       }
     } else {
       return (
+        <div>
+        <NavBar toggle={this.toggle} isOpen={this.state.isOpen} />
         <div className="App wrapper">
           <SideBar toggle={this.toggle} isOpen={this.state.isOpen} />
           <Subjectcontent toggle={this.toggle} isOpen={this.state.isOpen} />
+        </div>
         </div>
       );
     }
