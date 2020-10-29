@@ -10,9 +10,9 @@ const Course = ({ subject, isOpen }) => {
 	const [course, setCourse] = useState([]);
 
 	useEffect(() => {
-		const subject_title = { subject };
+		const subject_title = subject;
 
-		axios.get(`/api/course/`, subject_title)
+		axios.get(`/api/course?subject_title=${subject_title}`)
 			.then(res => {
 				console.log(res.data);
 

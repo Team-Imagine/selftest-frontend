@@ -5,18 +5,18 @@ import { Link } from 'react-router-dom';
 
 import axios from "axios";
 
-const Question = ({ subject, course, isOpen }) => {
+const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 
-	const [question, setQuestion] = useState([]);
+	const [answer, setAnswer] = useState([]);
 
 	useEffect(() => {
-		const course_title = course;
 
-		axios.get(`/api/question?course_title=${course}`)
+	
+		axios.get(`/api/answer?question_id=${question_id}`)
 			.then(res => {
 				console.log(res.data);
 
-				setQuestion(res.data.questions);
+				setAnswer(res.data.answers);
 
 			})
 	}, []);
@@ -28,10 +28,10 @@ const Question = ({ subject, course, isOpen }) => {
 		>
 			<div>
 				<h1>
-					Question Page ( {course} )
+					Question Page ( {course} - )
         </h1>
 				<ul>
-					{question.map((i) =>			
+					{answer.map((i) =>			
 						<Link key={i.content} to={{
 							pathname: `/subject/${subject}/${course}/${i.id}`,
 						}}>
@@ -46,4 +46,4 @@ const Question = ({ subject, course, isOpen }) => {
 	);
 }
 
-export default Question;
+export default Questioncontent;
