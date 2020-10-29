@@ -13,9 +13,7 @@ class Content extends React.Component {
         fluid
         className={classNames("content", { "is-open": this.props.isOpen })}
       >
-        {/*
-        <NavBar toggle={this.props.toggle} />
-        */}
+      
 
         <div>
           <h4>

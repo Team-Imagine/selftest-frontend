@@ -23,6 +23,7 @@ ReactDOM.render(
   <div style={{
     backgroundColor: '#f7feff'
   }}>
+    
     <CookiesProvider>
       <BrowserRouter>
         <Switch>

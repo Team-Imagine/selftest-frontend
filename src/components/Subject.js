@@ -3,7 +3,7 @@ import SideBar from "./sidebar/SideBar";
 import Subjectcontent from "./Subjectcontent";
 import Course from "./Course";
 import Question from "./Question";
-
+import NavBar from "./content/Navbar";
 class Subject extends React.Component {
 
   constructor(props) {
@@ -53,30 +53,40 @@ class Subject extends React.Component {
   };
 
   render() {
+    
+ 
     console.log("props:", this.props.location.subject);
+    
     if (this.props.location.subject) {
       if(this.props.location.course) {
         return (
-
+          <div>
+            <NavBar toggle={this.toggle} isOpen={this.state.isOpen} />   
           <div className="App wrapper">
             <SideBar toggle={this.toggle} isOpen={this.state.isOpen} />
             <Question toggle={this.toggle} subject={this.props.location.subject} course={this.props.location.course} isOpen={this.state.isOpen}/>
           </div>
+          </div>
         );
       } else {
       return (
-
+        <div>
+            <NavBar toggle={this.toggle} isOpen={this.state.isOpen} />  
         <div className="App wrapper">
           <SideBar toggle={this.toggle} isOpen={this.state.isOpen} />
           <Course toggle={this.toggle} subject={this.props.location.subject} isOpen={this.state.isOpen}/>
+        </div>
         </div>
       );
       }
     } else {
       return (
+        <div>
+        <NavBar toggle={this.toggle} isOpen={this.state.isOpen} /> 
         <div className="App wrapper">
           <SideBar toggle={this.toggle} isOpen={this.state.isOpen} />
           <Subjectcontent toggle={this.toggle} isOpen={this.state.isOpen} />
+        </div>
         </div>
       );
     }

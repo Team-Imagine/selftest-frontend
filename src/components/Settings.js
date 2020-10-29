@@ -1,6 +1,7 @@
 import React from "react";
 import SideBar from "./sidebar/SideBar";
 import Settingscontent from "./Settingscontent";
+import NavBar from "./content/Navbar";
 
 class Settings extends React.Component {
 
@@ -51,10 +52,14 @@ class Settings extends React.Component {
         };
       
         render() {
+
           return (
+            <div>
+              <NavBar toggle={this.toggle} isOpen={this.state.isOpen}/>
             <div className="App wrapper">
               <SideBar toggle={this.toggle} isOpen={this.state.isOpen} />
               <Settingscontent toggle={this.toggle} isOpen={this.state.isOpen} />
+            </div>
             </div>
           
           );

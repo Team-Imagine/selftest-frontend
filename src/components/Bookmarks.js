@@ -1,6 +1,7 @@
 import React from "react";
 import SideBar from "./sidebar/SideBar";
 import Bookmarkscontent from "../components/Bookmarkscontent";
+import NavBar from "./content/Navbar";
 
 class Bookmarks extends React.Component {
 
@@ -52,9 +53,12 @@ class Bookmarks extends React.Component {
       
         render() {
           return (
+            <div>
+              <NavBar toggle={this.toggle} isOpen={this.state.isOpen} />
             <div className="App wrapper">
               <SideBar toggle={this.toggle} isOpen={this.state.isOpen} />
               <Bookmarkscontent toggle={this.toggle} isOpen={this.state.isOpen} />
+            </div>
             </div>
           
           );

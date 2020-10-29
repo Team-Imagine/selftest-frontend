@@ -29,7 +29,7 @@ const Course = ({ subject, isOpen }) => {
 			<div>
 				<h1>
 					Course Page ( {subject} )
-        </h1>
+        		</h1>
 				<ul>
 					{course.map((i) =>
 						<Link key={i.title} to={{
