@@ -14,7 +14,6 @@ import Test from "./components/Test";
 import Rank from "./components/Rank";
 import Settings from "./components/Settings";
 import Bookmarks from "./components/Bookmarks";
-import Course from "./components/Course";
 
 import { CookiesProvider } from 'react-cookie';
 
@@ -40,6 +39,7 @@ ReactDOM.render(
           <Route exact path="/subject/:subject" component={Subject} />
           <Route exact path="/subject/:subject/:course" component={Subject} />
           <Route exact path="/subject/:subject/:course/:question_id" component={Subject} />
+          <Route exact path="/subject/:subject/:course/make/:make_question" component={Subject} />
           
         </Switch>
       </BrowserRouter>

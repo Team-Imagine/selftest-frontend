@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container } from "react-bootstrap";
+import { Container, Button } from "react-bootstrap";
 import classNames from "classnames";
 import { Link } from 'react-router-dom';
 
@@ -10,8 +10,6 @@ const Question = ({ subject, course, isOpen }) => {
 	const [question, setQuestion] = useState([]);
 
 	useEffect(() => {
-		const course_title = course;
-
 		axios.get(`/api/question?course_title=${course}`)
 			.then(res => {
 				console.log(res.data);
@@ -19,7 +17,7 @@ const Question = ({ subject, course, isOpen }) => {
 				setQuestion(res.data.questions);
 
 			})
-	}, []);
+	}, [question]);
 
 	return (
 		<Container
@@ -27,18 +25,24 @@ const Question = ({ subject, course, isOpen }) => {
 			className={classNames("content", { "is-open": { isOpen } })}
 		>
 			<div>
-				<h1>
-					Question Page ( {course} )
+				<div style={{ display: 'flex' }}>
+					<h1>
+						Question Page ( {course} )
         </h1>
+					<div>
+						<Button
+							href={`/subject/${subject}/${course}/make/${1}`}
+						>문제 생성</Button>
+					</div>
+				</div>
 				<ul>
-					{question.map((i) =>			
+					{question.map((i) =>
 						<Link key={i.content} to={{
 							pathname: `/subject/${subject}/${course}/${i.id}`,
 						}}>
 							{i.content}
 							<br />
 						</Link>
-						
 					)}
 				</ul>
 			</div>
