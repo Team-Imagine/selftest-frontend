@@ -74,16 +74,15 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 
 		const submitHandler = event => {
 			event.preventDefault();
-			
-			const editorToHtml = draftToHtml(convertToRaw(editorState.getCurrentContent()));
 
+			const editorToHtml = draftToHtml(convertToRaw(editorState.getCurrentContent()));
+			
 			const data = {
 				content: editorToHtml,
 				course_title: course
 			};
-	
-			axios.post(`/api/question/`, data)
-	
+
+			axios.post(`/api/question/`,data)
 				.then(res => {
 					console.log(res);
 					console.log(res.data);

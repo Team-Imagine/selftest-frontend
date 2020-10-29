@@ -28,6 +28,7 @@ constructor(props){
           password: this.state.password,
           first_name: this.state.first_name,
           last_name: this.state.last_name
+         
         };
     
         axios.post(`/api/auth/register`,  userRegister )
@@ -36,6 +37,7 @@ constructor(props){
             console.log(res);
             console.log(res.data);
           })
+          alert("회원가입에 성공하였습니다!.");
       }
       
     render() {
