@@ -11,7 +11,6 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 
 	useEffect(() => {
 
-	
 		axios.get(`/api/answer?question_id=${question_id}`)
 			.then(res => {
 				console.log(res.data);

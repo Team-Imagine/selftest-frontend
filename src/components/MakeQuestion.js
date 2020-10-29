@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Container, Button, Alert } from "react-bootstrap";
+import { Container, Button } from "react-bootstrap";
+import { Link, useHistory } from 'react-router-dom';
+
 import classNames from "classnames";
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
@@ -42,6 +44,12 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 		// EditorState의 비어있는 ContentState 기본 구성으로 새 개체를 반환 => 이렇게 안하면 상태 값을 나중에 변경할 수 없음.
 		const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
+		let history = useHistory();
+
+  	const moveBack = () => {
+      history.push(`/subject/${subject}/${course}`);
+  	}
+
 		const onEditorStateChange = (editorState) => {
 			// editorState에 값 설정
 			setEditorState(editorState);
@@ -63,7 +71,7 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 				data => resolve({ data: { link: data } })
 			)
 		);
-		
+
 		const submitHandler = event => {
 			event.preventDefault();
 			
@@ -81,18 +89,19 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 					console.log(res.data);
 					
 					alert("문제가 성공적으로 등록되었습니다.");
-
 					setEditorState("");
+
+					moveBack();
 				})
 		}
-
+		
 		return (
 			<Container
 				fluid
 				className={classNames("content", { "is-open": { isOpen } })}
 			>
 			<h1>
-						문제 생성 ( {subject} - {course})
+				문제 생성 ( {subject} - {course})
       </h1>
 			<br/><br/><br/>
 				<MyBlock>

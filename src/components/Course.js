@@ -34,8 +34,6 @@ const Course = ({ subject, isOpen }) => {
 					{course.map((i) =>
 						<Link key={i.title} to={{
 							pathname: `/subject/${subject}/${i.title}`,
-							subject: subject,
-							course: i.title
 						}}>
 							{i.title}
 							<br />

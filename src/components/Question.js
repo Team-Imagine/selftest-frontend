@@ -17,7 +17,7 @@ const Question = ({ subject, course, isOpen }) => {
 				setQuestion(res.data.questions);
 
 			})
-	}, [question]);
+	}, []);
 
 	return (
 		<Container
