@@ -107,7 +107,7 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 				{!hidden && <ul>
 					<div>
 					{answer.map((i) =>	
-					<div key="i">{i.content} <br /></div>
+					<div key={i.id}>{i.content} <br /></div>
 					)} 
 					</div>
 				</ul>}

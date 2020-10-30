@@ -5,15 +5,23 @@ import { Navbar, Button, Nav } from "react-bootstrap";
 import Dropdown from 'react-bootstrap/Dropdown'
 import Form from 'react-bootstrap/Form'
 import FormControl from 'react-bootstrap/FormControl'
+import { useHistory } from "react-router-dom";
 import logo from "../../picture/icon.png";
 
 import store from "../../store";
 
 import { useCookies } from 'react-cookie';
+import axios from "axios";
 
-const NavBar = () => {
+const NavBar = ({toggle, isOpen}) => {
   const [test, setTest] = useState(store.getState().isLoggedIn);
-  const [cookies] = useCookies(['access_token']);
+  let [cookies] = useCookies(['access_token']);
+
+  let history = useHistory();
+
+  const moveHome = () => {
+      history.push("/home");
+  }
 
   const readCookie = () => {
     console.log(cookies);
@@ -21,6 +29,18 @@ const NavBar = () => {
     if(cookies.access_token) {  // 쿠키에 access_token이 존재하면 로그인 상태 유지
       store.dispatch({type:'LOGIN', value: 1})
     }
+  }
+
+  const signOut = () => {
+    axios.post(`/api/auth/logout`)
+      .then((res) => {
+        console.log(res.data);
+        
+        cookies.access_token = null;
+        alert('로그아웃 되었습니다.');
+
+        moveHome();
+      })
   }
 
   useEffect(() => {
@@ -42,7 +62,7 @@ const NavBar = () => {
             alt='signup' />
         </div>
         <div>
-          <Nav.Link href="home" to="/home">
+          <Nav.Link onClick={moveHome}>
             <h1>SelfTest</h1>
           </Nav.Link>
         </div>
@@ -88,7 +108,7 @@ const NavBar = () => {
             alt='signup' />
         </div>
         <div>
-          <Nav.Link href="home" to="/home">
+          <Nav.Link onClick={moveHome}>
             <h1>SelfTest</h1>
           </Nav.Link>
         </div>
@@ -115,7 +135,7 @@ const NavBar = () => {
                     <Dropdown.Item href="#/action-2">
                       <FontAwesomeIcon icon={faUserCog} className="ml-auto" />
                 Settings</Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">
+                    <Dropdown.Item href="#/action-3" onClick={signOut}>
                       <FontAwesomeIcon icon={faSignOutAlt} className="ml-auto" />
                 Sign Out</Dropdown.Item>
   
