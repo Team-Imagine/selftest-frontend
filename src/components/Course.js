@@ -36,7 +36,7 @@ const Course = ({ subject, isOpen }) => {
 					{course.map((i) =>
 					<div className="container h-100" key={i.title}>
 					<div className="row h-100 justify-content-center align-items-center">
-					<Alert variant="info" style={{ width: '25rem' }}
+					<Alert className = "text-center" variant="info" style={{ width: '25rem' }}
         >
           				<br/>
 						<Link key={i.title} to={{

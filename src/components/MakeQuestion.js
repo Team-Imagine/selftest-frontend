@@ -129,11 +129,13 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 			fluid
 			className={classNames("content", { "is-open": { isOpen } })}
 		>
-			<h1>
-				문제 생성 ( {subject} - {course})
-      </h1>
-			<br /><br /><br />
-			<MyBlock>
+			<h2>
+			Subjects {'>'} {subject} {'>'} {course} : 문제 생성
+      		</h2>
+	 		 <hr/>
+			<br />
+			
+       		<MyBlock className="justify-content-center align-items-center">
 				<input type="text" id="title" className="input" placeholder="문제 제목" fontSize="40" onChange={onChange}/>
 				<Editor
 					// 에디터와 툴바 모두에 적용되는 클래스
@@ -168,6 +170,8 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 					onEditorStateChange={onEditorStateChange}
 				/>
 			</MyBlock>
+			
+			
 			<Button
 				onClick={submitHandler}
 			>문제 등록</Button>

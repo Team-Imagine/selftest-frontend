@@ -6,7 +6,8 @@ import { Editor } from 'react-draft-wysiwyg';
 import { EditorState, ContentState } from 'draft-js';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import htmlToDraft from 'html-to-draftjs';
-
+import Card from "react-bootstrap/Card";
+import Accordion from 'react-bootstrap/Accordion'
 import axios from "axios";
 
 const MyBlock = styled.div`
@@ -71,17 +72,24 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 			})
 	}, []);
 
+	
 	return (
 		<Container
 			fluid
 			className={classNames("content", { "is-open": { isOpen } })}
 		>
 			<div>
-				<h1>
-					Question Page ( {subject} - {course} )
-        </h1>
-				<MyBlock>
-				<div className="input" style={{fontSize: "1.5rem"}}>{question.title}</div>
+				<h2>
+				Subjects {'>'} {subject} {'>'} {course} - Questions
+        		</h2>
+				<hr/>
+				<br/>
+        		<div className="row h-100 justify-content-center align-items-center">
+				<Card className = "center" border="info" style = {{width: '70rem'}}>
+				<Card.Header>
+				{question.title}
+				</Card.Header>
+				<Card.Body>
 				<Editor
 					toolbarHidden
 					// 에디터와 툴바 모두에 적용되는 클래스
@@ -97,13 +105,78 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 						locale: 'ko',
 					}}
 				/>
-				</MyBlock>
-				<Button 
+				</Card.Body>
+				<Card.Footer className="text-muted">좋아요.....   신선해요.....   난이도 </Card.Footer>
+				</Card>
+
+				<br/><br/>
+				<Accordion>
+				<br/>
+				<Card border = "info" className = "center" style = {{width: '70rem'}}>
+				<Card.Header>
+				<Accordion.Toggle className ="center" as={Button} variant="light"  block eventKey="0">
+					정답 확인
+				</Accordion.Toggle>
+				{/*
+				<Button
+				variant="info"
 				onClick={(e) => setHidden(false)}
 				style={{marginBottom: '2rem'}}
 				>정답 확인
 				</Button>
+				*/}
+				</Card.Header>
+				<Accordion.Collapse eventKey="0">
 
+				<Card.Body style={{ backgroundColor:"white"}} >
+				<br/>
+				<div>
+					{answer.map((i) =>	
+					<div key={i.id}>{i.content} <br /></div>
+					)} 
+					</div>
+					<br/> <br/>
+				
+				<Card.Footer>
+					좋아요...
+				</Card.Footer>
+				</Card.Body>
+				
+
+    			</Accordion.Collapse>
+				
+				</Card>
+				</Accordion>
+				<br/><br/>
+				<Accordion>
+				<br/>
+				<Card border = "info" className = "center" style = {{width: '70rem'}}>
+				<Card.Header>
+				<Accordion.Toggle className ="center" as={Button} variant="light"  block eventKey="0">
+					댓글 보기
+				</Accordion.Toggle>
+				</Card.Header>
+				<Accordion.Collapse eventKey="0">
+
+				<Card.Body style={{ backgroundColor:"white"}} >
+				<br/>
+				<div>
+					댓글이 보여질 곳
+				</div>
+				<br/> <br/>
+				
+				<Card.Footer>
+					좋아요...
+				</Card.Footer>
+				</Card.Body>
+				
+
+    			</Accordion.Collapse>
+				
+				</Card>
+				</Accordion>
+				</div>
+				{/*
 				{!hidden && <ul>
 					<div>
 					{answer.map((i) =>	
@@ -111,7 +184,9 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 					)} 
 					</div>
 				</ul>}
+					*/}
 			</div>
+					
 		</Container>
 	);
 }
