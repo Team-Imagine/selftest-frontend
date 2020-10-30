@@ -37,7 +37,7 @@ const Question = ({ subject, course, isOpen }) => {
 				</div>
 				<ul>
 					{question.map((i) =>
-						<Link key={i.title} to={{
+						<Link key={i.id} to={{
 							pathname: `/subject/${subject}/${course}/${i.id}`,
 						}}>
 							{i.title}
