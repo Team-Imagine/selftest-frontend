@@ -31,12 +31,12 @@ const Subjectcontent = ({isOpen}) => {
         <ul>
         
         {subject.map((i) => 
-       <div className="container h-100">
+       <div className="container h-100" key={i.title}>
        <div className="row h-100 justify-content-center align-items-center">
         <Card border="info" style={{ width: '18rem' }}
         >
           <br/>
-            <Link key={i.title} to={{
+            <Link to={{
               pathname: `/subject/${i.title}`
               }}>
               <div className = "justify-content-center align-items-center">
