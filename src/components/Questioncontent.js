@@ -80,7 +80,7 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 		>
 			<div>
 				<h2>
-				Subjects {'>'} {subject} {'>'} {course} - Questions
+				Subjects {'>'} {subject} {'>'} {course} {'>'} Question
         		</h2>
 				<hr/>
 				<br/>
@@ -147,6 +147,7 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 				
 				</Card>
 				</Accordion>
+				
 				<br/><br/>
 				<Accordion>
 				<br/>
