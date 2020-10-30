@@ -13,7 +13,7 @@ import store from "../../store";
 import { useCookies } from 'react-cookie';
 import axios from "axios";
 
-const NavBar = ({toggle, isOpen}) => {
+const NavBar = () => {
   const [test, setTest] = useState(store.getState().isLoggedIn);
   let [cookies] = useCookies(['access_token']);
 
@@ -24,7 +24,7 @@ const NavBar = ({toggle, isOpen}) => {
   }
 
   const readCookie = () => {
-    console.log(cookies);
+    //console.log(cookies);
     
     if(cookies.access_token) {  // 쿠키에 access_token이 존재하면 로그인 상태 유지
       store.dispatch({type:'LOGIN', value: 1})
