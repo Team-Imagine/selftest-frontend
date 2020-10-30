@@ -23,6 +23,10 @@ const NavBar = () => {
       history.push("/home");
   }
 
+  const moveLogin = () => {
+    history.push("/login");
+}
+
   const readCookie = () => {
     //console.log(cookies);
     
@@ -78,7 +82,7 @@ const NavBar = () => {
               <div className="d-flex align-items-center">
   
                 <Dropdown>
-                  <Dropdown.Toggle href="login" to="/login" variant="light" id="dropdown-basic">
+                  <Dropdown.Toggle href="login" onClick={moveLogin}>
                     <FontAwesomeIcon icon={faUser} className="ml-auto" />
                   My Profile
                  </Dropdown.Toggle>
