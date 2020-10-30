@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Container } from "react-bootstrap";
+import { Container, Button } from "react-bootstrap";
 import classNames from "classnames";
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Editor } from 'react-draft-wysiwyg';
 import { EditorState, ContentState } from 'draft-js';
@@ -39,6 +38,7 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 	const [editorState, setEditorState] = useState(EditorState.createEmpty());
 	const [answer, setAnswer] = useState([]);
 	const [question, setQuestion] = useState('');
+	const [hidden, setHidden] = useState(true);
 
 	let htmlToEditor = '';
 
@@ -78,10 +78,8 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 		>
 			<div>
 				<h1>
-					Question Page ( {course} - )
+					Question Page ( {subject} - {course} )
         </h1>
-
-
 				<MyBlock>
 				<div className="input" style={{fontSize: "1.5rem"}}>{question.title}</div>
 				<Editor
@@ -100,17 +98,19 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 					}}
 				/>
 				</MyBlock>
-				<ul>
-					{answer.map((i) =>			
-						<Link key={i.content} to={{
-							pathname: `/subject/${subject}/${course}/${i.id}`,
-						}}>
-							{i.content}
-							<br />
-						</Link>
-						
-					)}
-				</ul>
+				<Button 
+				onClick={(e) => setHidden(false)}
+				style={{marginBottom: '2rem'}}
+				>정답 확인
+				</Button>
+
+				{!hidden && <ul>
+					<div>
+					{answer.map((i) =>	
+					<div key="i">{i.content} <br /></div>
+					)} 
+					</div>
+				</ul>}
 			</div>
 		</Container>
 	);
