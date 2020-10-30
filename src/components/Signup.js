@@ -38,7 +38,7 @@ constructor(props){
             console.log(res);
             console.log(res.data);
           })
-          alert("Signed up successfully!.");
+          alert("회원가입에 성공하였습니다!.");
         
         this.setState({
           email: '',
