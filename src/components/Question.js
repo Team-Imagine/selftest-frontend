@@ -26,15 +26,18 @@ const Question = ({ subject, course, isOpen }) => {
 		>
 			<div>
 				<div style={{ display: 'flex' }}>
-					<h1>
-						Question Page ( {course} )
-        </h1>
+					<h2>
+						Subjects {'>'} {subject} {'>'} {course}
+        			</h2>
+					<hr/>
 					<div>
-						<Button
+						<Button variant = "info"
 							href={`/subject/${subject}/${course}/make/${1}`}
 						>문제 생성</Button>
 					</div>
+
 				</div>
+				<hr/>
 				<ul>
 					{question.map((i) =>
 						<Link key={i.id} to={{

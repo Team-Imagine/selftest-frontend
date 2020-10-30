@@ -3,7 +3,7 @@ import classNames from "classnames";
 import { Container } from "react-bootstrap";
 import { Link } from 'react-router-dom';
 import Card from "react-bootstrap/Card";
-
+import Alert from 'react-bootstrap/Alert'
 import axios from "axios";
 
 const Subjectcontent = ({isOpen}) => {
@@ -25,29 +25,31 @@ const Subjectcontent = ({isOpen}) => {
       className={classNames("content", { "is-open": {isOpen} })}
     >
       <div>
-        <h1>
-          Subject Page
-        </h1>
+        <h2>
+          Subjects
+        </h2>
+        <hr />
         <ul>
         
         {subject.map((i) => 
        <div className="container h-100" key={i.title}>
        <div className="row h-100 justify-content-center align-items-center">
-        <Card border="info" style={{ width: '18rem' }}
+      
+        <Alert variant="info" style={{ width: '25rem' }}
         >
           <br/>
             <Link to={{
               pathname: `/subject/${i.title}`
               }}>
-              <div className = "justify-content-center align-items-center">
+              <div>
               {i.title} 
               </div>
               <br/>
             </Link>
-        </Card> 
+        </Alert> 
         <br/>
         </div>
-        <br/>
+      
         </div>
           )}
         

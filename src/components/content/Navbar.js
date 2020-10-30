@@ -82,7 +82,7 @@ const NavBar = () => {
               <div className="d-flex align-items-center">
   
                 <Dropdown>
-                  <Dropdown.Toggle href="login" onClick={moveLogin}>
+                  <Dropdown.Toggle variant="info" href="login" onClick={moveLogin}>
                     <FontAwesomeIcon icon={faUser} className="ml-auto" />
                   My Profile
                  </Dropdown.Toggle>

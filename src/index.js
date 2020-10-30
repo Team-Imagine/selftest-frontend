@@ -2,8 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
+import index from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { Redirect } from 'react-router';
 
 import SignUp from "./components/Signup";
 import Password from "./components/Password";
@@ -15,6 +17,7 @@ import Rank from "./components/Rank";
 import Settings from "./components/Settings";
 import Bookmarks from "./components/Bookmarks";
 
+
 import { CookiesProvider } from 'react-cookie';
 
 ReactDOM.render(
@@ -24,8 +27,13 @@ ReactDOM.render(
   }}>
     
     <CookiesProvider>
+   
       <BrowserRouter>
+      {/*<Redirect from='/' to='/login'/>*/}
+      
+      
         <Switch>
+        
           <Route path="/home" component={App} />
           <Route path="/login" component={LoginForm} />
           <Route path="/signup" component={SignUp} />

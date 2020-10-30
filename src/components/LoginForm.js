@@ -43,10 +43,13 @@ const LoginForm = () => {
       <div className="container h-100">
         <div className="row h-100 justify-content-center align-items-center">
           {redirect}
+
+          
           <form
             onSubmit={submitHandler}
             className="col-6">
-
+            <br/><br/><br/>
+            
             <br /><br /><br />
             <h2>Login</h2>
             <hr />
@@ -103,7 +106,7 @@ const LoginForm = () => {
                   Sign Up   | </a>
                 <a href="password" to="/password">
                   Find Password</a>
-
+                  <br/> <br/><br/> <br/><br/> <br/><br/> <br/><br/> <br/><br/> <br/><br/> 
               </p>
             </div>
           </form>
