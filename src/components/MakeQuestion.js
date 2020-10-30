@@ -95,15 +95,16 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 			*/
 		const editorToHtml = draftToHtml(convertToRaw(editorState.getCurrentContent()));
 
-		console.log(editorToHtml);
-		
 		const data = {
 			title: title,
 			content: editorToHtml,
 			course_title: course
 		};
-	
-		axios.post(`/api/question/`, data)
+
+		console.log(editorToHtml.length)
+
+		if(title && (editorToHtml.length > 15)) {
+			axios.post(`/api/question/`, data)
 	
 			.then(res => {
 				console.log(res);
@@ -114,6 +115,9 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 
 				moveBack();
 			})
+		} else {
+			alert('내용을 올바르게 입력하세요.');
+		}
 	}
 
 	const onChange = (e) => {
