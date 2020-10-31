@@ -138,9 +138,13 @@ const NavBar = ({isOpen, point}) => {
             <Nav className="ml-auto" navbar>
   
               <div className="d-flex align-items-center" style ={{backgroundColor:"white"}} >
-                <div >
-                  보유 포인트: {userPoint}
+                <div>
+                  보유 포인트 : 
                 </div>
+                <div style={{color:'#dc3545'}} >
+                  {userPoint} P
+                </div>
+
                 <Dropdown>
                   <Dropdown.Toggle variant="light" id="dropdown-basic">
                     <FontAwesomeIcon icon={faUser} className="ml-auto" />
