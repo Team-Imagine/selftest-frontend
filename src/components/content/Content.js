@@ -16,9 +16,9 @@ class Content extends React.Component {
       
 
         <div>
-          <h4>
+          <h3>
            Popular Subjects  <Badge variant="danger">HOT</Badge>
-          </h4>
+          </h3>
         </div>
         <hr/>
         

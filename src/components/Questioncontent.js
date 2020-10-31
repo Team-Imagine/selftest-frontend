@@ -89,9 +89,9 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 			className={classNames("content", { "is-open": { isOpen } })}
 		>
 			<div>
-				<h2>
+				<h3>
 					Subjects {'>'} {subject} {'>'} {course} {'>'} Question
-        		</h2>
+        		</h3>
 				<hr />
 				<br />
 				<div className="row h-100 justify-content-center align-items-center">
@@ -125,33 +125,22 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 						<Accordion>
 							<br />
 							<Card border="info" className="center" style={{ width: '70rem' }}>
-								<Card.Header>
-									<Accordion.Toggle className="center" as={Button} variant="light" block eventKey="0">
-										정답 확인
-				</Accordion.Toggle>
-									{/*
-				<Button
-				variant="info"
-				onClick={(e) => setHidden(false)}
-				style={{marginBottom: '2rem'}}
-				>정답 확인
-				</Button>
-				*/}
-								</Card.Header>
+								<Accordion.Toggle className="center" as={Button} variant="light" block eventKey="0">
+								정답 확인
+								</Accordion.Toggle>
 								<Accordion.Collapse eventKey="0">
-
 									<Card.Body style={{ backgroundColor: "white" }} >
-										<br />
+										
 										<div>
 											{answer.map((i) =>
 												<div key={i.id}>{i.content} <br /></div>
 											)}
 										</div>
-										<br /> <br />
+										<br/>
 
 										<Card.Footer>
 											좋아요...
-				</Card.Footer>
+										</Card.Footer>
 									</Card.Body>
 								</Accordion.Collapse>
 							</Card>
@@ -159,19 +148,17 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 						<Accordion>
 							<br />
 							<Card border="info" className="center" style={{ width: '70rem' }}>
-								<Card.Header>
 									<Accordion.Toggle className="center" as={Button} variant="light" block eventKey="0">
 										댓글 보기
-				</Accordion.Toggle>
-								</Card.Header>
+								</Accordion.Toggle>
 								<Accordion.Collapse eventKey="0">
 
 									<Card.Body style={{ backgroundColor: "white" }} >
-										<br />
+										
 										<div>
 											댓글이 보여질 곳
-				</div>
-										<br /> <br />
+										</div>
+										<br />
 
 										<Card.Footer>
 											좋아요...

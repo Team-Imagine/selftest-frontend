@@ -38,18 +38,20 @@ const Question = ({ subject, course, isOpen }) => {
 			className={classNames("content", { "is-open": { isOpen } })}
 		>
 			<div>
-				<div style={{ display: 'flex' }}>
-					<h4>
-						Subjects {'>'} {subject} {'>'} {course} {'>'} Question
-        			</h4>
-					<hr/>
+					<div className = "d-flex bd-highlight mb-3">
+        			<div class="mr-auto p-2 bd-highlight"> 
+					<h3>
+						Subjects {'>'} {subject} {'>'} {course} 
+        			</h3>
+					</div>
+					<div className = "p-2 bd-highlight">
 					<div>
-						<Button variant="info" onClick={submitHandler}
+						<Button variant="info" style = {{width: '18rem'}} onClick={submitHandler}
 							href={`/subject/${subject}/${course}/make/${1}`}
 						>문제 생성</Button>
+						</div>
+						</div>
 					</div>
-
-				</div>
 				<hr/>
 				<ul>
 				<CardDeck>
@@ -71,11 +73,9 @@ const Question = ({ subject, course, isOpen }) => {
 							<Card.Footer>좋아요    신선도 </Card.Footer>
 						</Link>
 						</Card>
-						
 						</div>
 						<br />
 						</div>
-						
 					)}
 					</CardDeck>
 				</ul>

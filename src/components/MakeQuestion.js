@@ -129,9 +129,9 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 			fluid
 			className={classNames("content", { "is-open": { isOpen } })}
 		>
-			<h4>
+			<h3>
 			Subjects {'>'} {subject} {'>'} {course} {'>'} Make Question
-			</h4>
+			</h3>
 			<hr/>
 			<MyBlock>
 				<input type="text" id="title" className="input" placeholder="문제 제목" fontSize="40" onChange={onChange}/>
