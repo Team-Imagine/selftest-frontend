@@ -46,7 +46,7 @@ const Question = ({ subject, course, isOpen }) => {
 					</div>
 					<div className = "p-2 bd-highlight">
 					<div>
-						<Button variant="info" style = {{width: '18rem'}} onClick={submitHandler}
+						<Button variant="info" style = {{width: '18rem', height: '2.5rem'}} onClick={submitHandler}
 							href={`/subject/${subject}/${course}/make/${1}`}
 						>문제 생성</Button>
 						</div>
