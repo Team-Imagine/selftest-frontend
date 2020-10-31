@@ -7,7 +7,7 @@ import Form from 'react-bootstrap/Form'
 import FormControl from 'react-bootstrap/FormControl'
 import { useHistory } from "react-router-dom";
 import logo from "../../picture/icon.png";
-
+import Badge from "react-bootstrap/Badge";
 import store from "../../store";
 
 import { useCookies } from 'react-cookie';
@@ -138,15 +138,15 @@ const NavBar = ({isOpen, point}) => {
         </Form>
         <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="ml-auto" navbar>
-  
+            
               <div className="d-flex align-items-center" style ={{backgroundColor:"white"}} >
-                <div>
-                  보유 포인트 : 
+                <div className = "mr-2">
+                  User Point  
                 </div>
-                <div style={{color:'#dc3545'}} >
-                  {userPoint} P
+                <div className = "mr-2">
+                <Badge style={{width:"6rem", height:"2.3rem"}}variant="danger">{userPoint} P</Badge>
                 </div>
-
+                
                 <Dropdown>
                   <Dropdown.Toggle variant="light" id="dropdown-basic">
                     <FontAwesomeIcon icon={faUser} className="ml-auto" />
