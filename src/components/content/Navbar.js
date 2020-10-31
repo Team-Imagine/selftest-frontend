@@ -54,12 +54,13 @@ const NavBar = ({isOpen, point}) => {
   }, [test]);
 
   useEffect(() => {
+    if(cookies.access_token) {
     axios.get(`/api/user/`)
       .then((res) => {
         console.log(res.data.user.point);
         setUserPoint(res.data.user.point);
       })
-    
+    }
   }, [point]);
 
   const check = () => {

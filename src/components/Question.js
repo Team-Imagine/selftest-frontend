@@ -41,7 +41,7 @@ const Question = ({ subject, course, isOpen }) => {
 				<ul>
 					
 					{question.map((i) =>
-					 <div className="container h-100" key={i.title}>
+					 <div className="container h-100" key={i.id}>
 					 <div className="row h-100 justify-content-center align-items-center">
 						
 						 <Card className="text-center" variant="info" style={{ width: '50rem' }}>

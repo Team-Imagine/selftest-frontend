@@ -58,7 +58,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <NavBar toggle ={this.toggle} isOpen={this.state.isOpen} point={true}/>
+        <NavBar toggle ={this.toggle} isOpen={this.state.isOpen} />
          <div className="App wrapper">
           <SideBar toggle={this.toggle} isOpen={this.state.isOpen} />
           <Content toggle={this.toggle} isOpen={this.state.isOpen} />
