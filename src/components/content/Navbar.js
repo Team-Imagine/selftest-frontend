@@ -96,7 +96,7 @@ const NavBar = ({isOpen, point}) => {
                 <Dropdown>
                   <Dropdown.Toggle variant="info" href="login" onClick={moveLogin}>
                     <FontAwesomeIcon icon={faUser} className="ml-auto" />
-                  My Profile
+                  Login
                  </Dropdown.Toggle>
                 </Dropdown>
                 <Nav.Link href="#">

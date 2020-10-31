@@ -1,6 +1,6 @@
 import React, {useState, useEffect } from "react";
 import classNames from "classnames";
-import { Container } from "react-bootstrap";
+import { Container, Accordion, Button } from "react-bootstrap";
 import { Link } from 'react-router-dom';
 import Card from "react-bootstrap/Card";
 import Alert from 'react-bootstrap/Alert'
@@ -9,6 +9,8 @@ import axios from "axios";
 const Subjectcontent = ({isOpen}) => {
 
   const [subject, setSubject] = useState([]);
+  const [title, setTitle] = useState('');
+  const [state, setState] = useState(0);
 
   useEffect(() => {
     axios.get('/api/subject/')
@@ -17,7 +19,22 @@ const Subjectcontent = ({isOpen}) => {
         setSubject(res.data.subjects);
         //console.log(subject);
       })
-  }, []);
+  }, [state]);
+  const onChange = (e) => {
+		setTitle(e.target.value);
+  }
+  
+  const submitHandler = (event) => {
+    event.preventDefault();
+
+    axios.post('/api/subject', {title})
+      .then(res => {
+        console.log(res.data);
+
+        setTitle('');
+        setState(1);
+      })
+  }
 
   return (
     <Container
@@ -28,6 +45,30 @@ const Subjectcontent = ({isOpen}) => {
         <h4>
           Subjects
         </h4>
+        
+				<Accordion>
+				<br/>
+				<Card border = "info" className = "center" style = {{width: '70rem'}}>
+				<Card.Header>
+				<Accordion.Toggle className ="center" as={Button} variant="light"  block eventKey="0">
+					과목 추가
+				</Accordion.Toggle>
+				</Card.Header>
+				<Accordion.Collapse eventKey="0">
+
+				<Card.Body style={{ backgroundColor:"white"}} >
+				<br/>
+				<div>
+          <input type="text" id="title" className="input" value={title} placeholder="추가할 과목 이름을 입력하세요" fontSize="20" onChange={onChange}/>
+          <Button
+				  onClick={submitHandler}
+			    >과목 등록</Button>
+				</div>
+				<br/> <br/>
+				</Card.Body>
+    			</Accordion.Collapse>		
+				</Card>
+				</Accordion>
         <hr />
         <ul>
         
