@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Container, Button } from "react-bootstrap";
+import { Container, Button, CardDeck } from "react-bootstrap";
 import classNames from "classnames";
 import { Link } from 'react-router-dom';
-
+import Card from 'react-bootstrap/Card'
 import axios from "axios";
 
 const Question = ({ subject, course, isOpen }) => {
@@ -15,7 +15,7 @@ const Question = ({ subject, course, isOpen }) => {
 				console.log(res.data);
 
 				setQuestion(res.data.questions);
-
+			
 			})
 	}, []);
 
@@ -27,7 +27,7 @@ const Question = ({ subject, course, isOpen }) => {
 			<div>
 				<div style={{ display: 'flex' }}>
 					<h2>
-						Subjects {'>'} {subject} {'>'} {course}
+						Subjects {'>'} {subject} {'>'} {course} {'>'} Question
         			</h2>
 					<hr/>
 					<div>
@@ -39,13 +39,27 @@ const Question = ({ subject, course, isOpen }) => {
 				</div>
 				<hr/>
 				<ul>
+					
 					{question.map((i) =>
+					 <div className="container h-100" key={i.title}>
+					 <div className="row h-100 justify-content-center align-items-center">
+						
+						 <Card className="text-center" variant="info" style={{ width: '50rem' }}>
 						<Link key={i.id} to={{
 							pathname: `/subject/${subject}/${course}/${i.id}`,
 						}}>
+							<Card.Header>
+							<div>
 							{i.title}
-							<br />
+							</div>
+							</Card.Header>
+							<Card.Body>Click to see details</Card.Body>
+							<Card.Footer>좋아요    신선도 </Card.Footer>
 						</Link>
+						</Card>
+						</div>
+						<br />
+						</div>
 					)}
 				</ul>
 			</div>

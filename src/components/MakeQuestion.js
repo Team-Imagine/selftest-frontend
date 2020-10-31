@@ -135,7 +135,8 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 	 		 <hr/>
 			<br />
 			
-       		<MyBlock className="justify-content-center align-items-center">
+			<div className>
+				<MyBlock >
 				<input type="text" id="title" className="input" placeholder="문제 제목" fontSize="40" onChange={onChange}/>
 				<Editor
 					// 에디터와 툴바 모두에 적용되는 클래스
@@ -169,13 +170,14 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 					// 에디터의 값이 변경될 때마다 onEditorStateChange 호출
 					onEditorStateChange={onEditorStateChange}
 				/>
+				
 			</MyBlock>
-			
-			
 			<Button
 				onClick={submitHandler}
 			>문제 등록</Button>
-
+			
+			</div>
+       		
 		</Container>
 	);
 }
