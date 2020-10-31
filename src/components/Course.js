@@ -62,7 +62,7 @@ const Course = ({ subject, isOpen }) => {
 			className={classNames("content", { "is-open": { isOpen } })}
 		>
 				<div className = "d-flex bd-highlight mb-3">
-        		<div class="mr-auto p-2 bd-highlight">  
+        		<div className="mr-auto p-2 bd-highlight">  
 				<h3>
 					Subjects {'>'} {subject} 
         		</h3>
@@ -77,7 +77,7 @@ const Course = ({ subject, isOpen }) => {
 				<Card.Body style={{ backgroundColor:"white"}} >
 				<div>
           		<Form inline>
-          		<FormControl block type="text" id="title" className="mr-sm-2" value={title} placeholder="추가할 강의명을 입력하세요" fontSize="15" onChange={onChange}/>
+          		<FormControl blocktype="text" id="title" className="mr-sm-2" value={title} placeholder="추가할 강의명을 입력하세요" fontSize="15" onChange={onChange}/>
           		<Button variant = "light" block
 				onClick={submitHandler}
 			    >강의 등록</Button>
