@@ -29,12 +29,12 @@ ReactDOM.render(
     <CookiesProvider>
    
       <BrowserRouter>
-        <Redirect from='/' to='/home'/>
+        
       
         <Switch>
-        
+          <Redirect exact from='/' to='/home'/>
           <Route path="/home" component={App} />
-          <Route path="/login" component={LoginForm} />
+          <Route exact path="/login" component={LoginForm} />
           <Route path="/signup" component={SignUp} />
           <Route exact path="/subject" component={Subject} />
           <Route path="/password" component={Password} />
