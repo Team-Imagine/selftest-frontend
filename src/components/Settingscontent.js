@@ -12,10 +12,11 @@ class Settingscontent extends React.Component {
         className={classNames("content", { "is-open": this.props.isOpen })}
       >
         <div>
-          <h1>
+          <h4>
           Settings Page
-          </h1>
+          </h4>
          </div>
+         <hr/>
 
       </Container>
     );

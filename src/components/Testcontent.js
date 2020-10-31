@@ -12,10 +12,11 @@ class Testcontent extends React.Component {
         className={classNames("content", { "is-open": this.props.isOpen })}
       >
         <div>
-          <h1>
+          <h4>
           Test Page
-          </h1>
-            </div>
+          </h4>
+        </div>
+        <hr/>
 
       </Container>
     );

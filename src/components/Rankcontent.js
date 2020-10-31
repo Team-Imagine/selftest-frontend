@@ -10,10 +10,11 @@ class Rankcontent extends React.Component {
         className={classNames("content", { "is-open": this.props.isOpen })}
       >
         <div>
-          <h1>
+          <h4>
           Rank Page
-          </h1>
+          </h4>
         </div>
+        <hr/>
 
       </Container>
     );
