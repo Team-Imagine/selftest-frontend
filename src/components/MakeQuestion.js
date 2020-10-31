@@ -129,9 +129,9 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 			fluid
 			className={classNames("content", { "is-open": { isOpen } })}
 		>
-			<h2>
-			Subjects {'>'} {subject} {'>'} {course} : 문제 생성
-      		</h2>
+			<h4>
+			Subjects {'>'} {subject} {'>'} {course} {'>'} Question : 문제 생성
+      		</h4>
 	 		 <hr/>
 			<br />
 			

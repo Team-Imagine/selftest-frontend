@@ -26,9 +26,9 @@ const Question = ({ subject, course, isOpen }) => {
 		>
 			<div>
 				<div style={{ display: 'flex' }}>
-					<h2>
+					<h4>
 						Subjects {'>'} {subject} {'>'} {course} {'>'} Question
-        			</h2>
+        			</h4>
 					<hr/>
 					<div>
 						<Button variant = "info"

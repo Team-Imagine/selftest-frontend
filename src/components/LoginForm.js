@@ -31,7 +31,7 @@ const LoginForm = () => {
         setPassword("");
         setEmail("");
         setIsLoggedIn(1);
-        alert("로그인에 성공하였습니다!")
+        alert("로그인 하였습니다.")
       })
   }
   const redirect = isLoggedIn ? (<Redirect to={{pathname: '/home'}}/>) : '';

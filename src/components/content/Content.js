@@ -20,6 +20,7 @@ class Content extends React.Component {
            Popular Subjects  <Badge variant="danger">HOT</Badge>
           </h4>
         </div>
+        <hr/>
         
         <CardDeck>
           

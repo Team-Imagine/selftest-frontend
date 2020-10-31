@@ -11,9 +11,9 @@ class Bookmarkscontent extends React.Component {
         fluid
         className={classNames("content", { "is-open": this.props.isOpen })}
       >
-       <h1>
+       <h4>
            Bookmarks Page
-       </h1>
+       </h4>
         
       
  

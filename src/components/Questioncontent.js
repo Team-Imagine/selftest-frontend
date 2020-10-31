@@ -85,6 +85,7 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 				<hr/>
 				<br/>
         		<div className="row h-100 justify-content-center align-items-center">
+				<Card border = "light" style={{backgroundColor:"#f7feff"}}>
 				<Card className = "center" border="info" style = {{width: '70rem'}}>
 				<Card.Header>
 				{question.title}
@@ -109,12 +110,12 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 				<Card.Footer className="text-muted">좋아요.....   신선해요.....   난이도 </Card.Footer>
 				</Card>
 
-				<br/><br/>
+			
 				<Accordion>
 				<br/>
 				<Card border = "info" className = "center" style = {{width: '70rem'}}>
 				<Card.Header>
-				<Accordion.Toggle className ="center" as={Button} variant="light"  block eventKey="0">
+				<Accordion.Toggle className ="center" as={Button} variant="light" block eventKey="0">
 					정답 확인
 				</Accordion.Toggle>
 				{/*
@@ -141,14 +142,9 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 					좋아요...
 				</Card.Footer>
 				</Card.Body>
-				
-
     			</Accordion.Collapse>
-				
 				</Card>
 				</Accordion>
-				
-				<br/><br/>
 				<Accordion>
 				<br/>
 				<Card border = "info" className = "center" style = {{width: '70rem'}}>
@@ -176,6 +172,7 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 				
 				</Card>
 				</Accordion>
+				</Card>
 				</div>
 				{/*
 				{!hidden && <ul>
@@ -186,6 +183,7 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 					</div>
 				</ul>}
 					*/}
+					
 			</div>
 					
 		</Container>

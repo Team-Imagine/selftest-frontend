@@ -28,9 +28,9 @@ const Course = ({ subject, isOpen }) => {
 			className={classNames("content", { "is-open": { isOpen } })}
 		>
 			<div>
-				<h2>
+				<h4>
 					Subjects {'>'} {subject} 
-        		</h2>
+        		</h4>
 				<hr />
 				<ul>
 					{course.map((i) =>

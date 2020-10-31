@@ -71,7 +71,7 @@ constructor(props){
                 <hr />
 
                 <div className = "row h-100 justify-content-center align-items-center">
-                    <img src = {welcome}
+                    <img src = {welcome} 
                     width = '550'
                     height = '200'
                     alt='signup'/>

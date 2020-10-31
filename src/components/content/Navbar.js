@@ -92,7 +92,7 @@ const NavBar = ({isOpen, point}) => {
         <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="ml-auto" navbar>
   
-              <div className="d-flex align-items-center">
+              <div className="d-flex align-items-center" style={{backgroundColor:"white"}}>
                 <Dropdown>
                   <Dropdown.Toggle variant="info" href="login" onClick={moveLogin}>
                     <FontAwesomeIcon icon={faUser} className="ml-auto" />
@@ -137,8 +137,8 @@ const NavBar = ({isOpen, point}) => {
         <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="ml-auto" navbar>
   
-              <div className="d-flex align-items-center">
-                <div>
+              <div className="d-flex align-items-center" style ={{backgroundColor:"white"}} >
+                <div >
                   보유 포인트: {userPoint}
                 </div>
                 <Dropdown>

@@ -11,9 +11,9 @@ class Memberscontent extends React.Component {
         fluid
         className={classNames("content", { "is-open": this.props.isOpen })}
       >
-       <h3>
+       <h4>
            Members Page
-       </h3>
+       </h4>
         
       
  

@@ -25,9 +25,9 @@ const Subjectcontent = ({isOpen}) => {
       className={classNames("content", { "is-open": {isOpen} })}
     >
       <div>
-        <h2>
+        <h4>
           Subjects
-        </h2>
+        </h4>
         <hr />
         <ul>
         
