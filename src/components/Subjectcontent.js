@@ -56,7 +56,7 @@ const Subjectcontent = ({isOpen}) => {
     >
       
         <div className = "d-flex bd-highlight mb-3">
-        <div class="mr-auto p-2 bd-highlight">  
+        <div className="mr-auto p-2 bd-highlight">  
         <h3>
           Subjects
         </h3>
@@ -72,7 +72,7 @@ const Subjectcontent = ({isOpen}) => {
 				<Card.Body style={{ backgroundColor:"white"}} >
 				<div>
           <Form inline>
-          <FormControl block type="text" id="title" className="mr-sm-2" value={title} placeholder="추가할 과목 이름을 입력하세요" fontSize="20" onChange={onChange}/>
+          <FormControl blocktype="text" id="title" className="mr-sm-2" value={title} placeholder="추가할 과목 이름을 입력하세요" fontSize="20" onChange={onChange}/>
           <Button variant = "light" block
 				  onClick={submitHandler}
 			    >과목 등록</Button>

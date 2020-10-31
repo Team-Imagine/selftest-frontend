@@ -31,7 +31,7 @@ const Question = ({ subject, course, isOpen }) => {
 				history.push("/login");
 			}
 	}
-	
+
 	return (
 		<Container
 			fluid
@@ -39,7 +39,7 @@ const Question = ({ subject, course, isOpen }) => {
 		>
 			<div>
 					<div className = "d-flex bd-highlight mb-3">
-        			<div class="mr-auto p-2 bd-highlight"> 
+        			<div className="mr-auto p-2 bd-highlight"> 
 					<h3>
 						Subjects {'>'} {subject} {'>'} {course} 
         			</h3>
