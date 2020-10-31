@@ -42,6 +42,8 @@ const NavBar = ({isOpen, point}) => {
         console.log(res.data);
         
         cookies.access_token = null;
+
+        store.dispatch({type:'LOGIN', value: 0})
         alert('로그아웃 되었습니다.');
 
         moveHome();
@@ -95,7 +97,7 @@ const NavBar = ({isOpen, point}) => {
               <div className="d-flex align-items-center" style={{backgroundColor:"white"}}>
                 <Dropdown>
                   <Dropdown.Toggle variant="info" href="login" onClick={moveLogin}>
-                    <FontAwesomeIcon icon={faUser} className="ml-auto" />
+                    <FontAwesomeIcon icon={faUser} className="ml-auto" /> {' '}
                   Login
                  </Dropdown.Toggle>
                 </Dropdown>

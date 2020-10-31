@@ -1,16 +1,20 @@
 import React, {useState, useEffect } from "react";
 import classNames from "classnames";
 import { Container, Accordion, Button } from "react-bootstrap";
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Card from "react-bootstrap/Card";
 import Alert from 'react-bootstrap/Alert'
 import axios from "axios";
+import store from "../store";
+import { propTypes } from "react-bootstrap/esm/Image";
 
 const Subjectcontent = ({isOpen}) => {
 
   const [subject, setSubject] = useState([]);
   const [title, setTitle] = useState('');
   const [state, setState] = useState(0);
+  let history = useHistory();
+
 
   useEffect(() => {
     axios.get('/api/subject/')
@@ -26,7 +30,8 @@ const Subjectcontent = ({isOpen}) => {
   
   const submitHandler = (event) => {
     event.preventDefault();
-
+    
+    if(store.getState().isLoggedIn) {
     axios.post('/api/subject', {title})
       .then(res => {
         console.log(res.data);
@@ -34,6 +39,11 @@ const Subjectcontent = ({isOpen}) => {
         setTitle('');
         setState(1);
       })
+    } else {
+      setTitle('');
+      alert('로그인이 필요한 기능입니다.');
+      history.push("/login");
+    }
   }
 
   return (

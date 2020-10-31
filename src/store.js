@@ -5,7 +5,7 @@ export default createStore(function(state, action) {
         return {isLoggedIn: 0}
     }
     if(action.type === "LOGIN") {
-        return {...state, isLoggedIn: state.isLoggedIn + action.value, userID: action.value }
+        return {...state, isLoggedIn: action.value, userID: action.value }
     }
 
     return state;

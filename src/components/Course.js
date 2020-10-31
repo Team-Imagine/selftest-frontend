@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Container, Accordion, Button } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import classNames from "classnames";
-import { Link } from 'react-router-dom';
-import Alert from 'react-bootstrap/Alert'
+import { Link, useHistory } from 'react-router-dom';
+import Alert from 'react-bootstrap/Alert';
+import store from "../store";
 
 import axios from "axios";
 
@@ -12,6 +13,7 @@ const Course = ({ subject, isOpen }) => {
 	const [course, setCourse] = useState([]);
 	const [state, setState] = useState(0);
 	const [title, setTitle] = useState('');
+	let history = useHistory();
 
 	useEffect(() => {
 		const subject_title = subject;
@@ -32,6 +34,7 @@ const Course = ({ subject, isOpen }) => {
   const submitHandler = (event) => {
 		event.preventDefault();
 		
+		if(store.getState().isLoggedIn) {
 		const data = {
 			title: title,
 			subject_title: subject,
@@ -43,7 +46,12 @@ const Course = ({ subject, isOpen }) => {
 
 				setTitle('');
 				setState(1);
-      })
+			})
+		} else {
+			setTitle('');
+      alert('로그인이 필요한 기능입니다.');
+      history.push("/login");
+		}
   }
 
 	return (

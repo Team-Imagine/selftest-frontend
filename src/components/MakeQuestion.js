@@ -93,15 +93,15 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 				console.log(res.data);
 			})
 			*/
-		const editorToHtml = draftToHtml(convertToRaw(editorState.getCurrentContent()));
+		let editorToHtml = draftToHtml(convertToRaw(editorState.getCurrentContent()));
 
-		const data = {
+		let data = {
 			title: title,
 			content: editorToHtml,
 			course_title: course
 		};
 
-		console.log(editorToHtml.length)
+		//console.log(editorToHtml.length)
 
 		if(title && (editorToHtml.length > 15)) {
 			axios.post(`/api/question/`, data)
@@ -129,14 +129,11 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 			fluid
 			className={classNames("content", { "is-open": { isOpen } })}
 		>
-			<h4>
-			Subjects {'>'} {subject} {'>'} {course} {'>'} Question : 문제 생성
-      		</h4>
-	 		 <hr/>
-			<br />
-			
-			<div className>
-				<MyBlock >
+			<h1>
+				문제 생성 ( {subject} - {course})
+      </h1>
+			<br /><br /><br />
+			<MyBlock>
 				<input type="text" id="title" className="input" placeholder="문제 제목" fontSize="40" onChange={onChange}/>
 				<Editor
 					// 에디터와 툴바 모두에 적용되는 클래스
@@ -170,14 +167,11 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 					// 에디터의 값이 변경될 때마다 onEditorStateChange 호출
 					onEditorStateChange={onEditorStateChange}
 				/>
-				
 			</MyBlock>
 			<Button
 				onClick={submitHandler}
 			>문제 등록</Button>
-			
-			</div>
-       		
+
 		</Container>
 	);
 }
