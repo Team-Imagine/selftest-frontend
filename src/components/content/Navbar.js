@@ -13,8 +13,9 @@ import store from "../../store";
 import { useCookies } from 'react-cookie';
 import axios from "axios";
 
-const NavBar = () => {
+const NavBar = ({isOpen, point}) => {
   const [test, setTest] = useState(store.getState().isLoggedIn);
+  const [userPoint, setUserPoint] = useState('');
   let [cookies] = useCookies(['access_token']);
 
   let history = useHistory();
@@ -25,7 +26,7 @@ const NavBar = () => {
 
   const moveLogin = () => {
     history.push("/login");
-}
+  }
 
   const readCookie = () => {
     //console.log(cookies);
@@ -49,7 +50,17 @@ const NavBar = () => {
 
   useEffect(() => {
     readCookie();
+
   }, [test]);
+
+  useEffect(() => {
+    axios.get(`/api/user/`)
+      .then((res) => {
+        console.log(res.data.user.point);
+        setUserPoint(res.data.user.point);
+      })
+    
+  }, [point]);
 
   const check = () => {
     if(!cookies.access_token) {
@@ -76,11 +87,11 @@ const NavBar = () => {
             <FontAwesomeIcon icon={faSearch} className="ml-auto" />
           </Button>
         </Form>
+       
         <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="ml-auto" navbar>
   
               <div className="d-flex align-items-center">
-  
                 <Dropdown>
                   <Dropdown.Toggle variant="info" href="login" onClick={moveLogin}>
                     <FontAwesomeIcon icon={faUser} className="ml-auto" />
@@ -126,7 +137,9 @@ const NavBar = () => {
             <Nav className="ml-auto" navbar>
   
               <div className="d-flex align-items-center">
-  
+                <div>
+                  보유 포인트: {userPoint}
+                </div>
                 <Dropdown>
                   <Dropdown.Toggle variant="light" id="dropdown-basic">
                     <FontAwesomeIcon icon={faUser} className="ml-auto" />

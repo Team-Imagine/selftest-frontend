@@ -27,7 +27,7 @@ const LoginForm = () => {
         console.log(res.data);
 
         store.dispatch({type:'LOGIN', value: res.data.uid})
-
+  
         setPassword("");
         setEmail("");
         setIsLoggedIn(1);

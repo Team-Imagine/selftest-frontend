@@ -61,7 +61,7 @@ class Subject extends React.Component {
         if(this.props.match.params.make_question) {
           return (
             <div>
-            <NavBar toggle={this.toggle} isOpen={this.state.isOpen} />
+            <NavBar toggle={this.toggle} isOpen={this.state.isOpen} point={true}/>
             <div className="App wrapper">
             <SideBar toggle={this.toggle} isOpen={this.state.isOpen} />
             <MakeQuestion
@@ -76,7 +76,7 @@ class Subject extends React.Component {
         if (this.props.match.params.question_id) {
           return (
             <div>
-            <NavBar toggle={this.toggle} isOpen={this.state.isOpen} />
+            <NavBar toggle={this.toggle} isOpen={this.state.open} point={false}/>
             <div className="App wrapper">
               <SideBar toggle={this.toggle} isOpen={this.state.isOpen} />
               <Questioncontent
@@ -91,7 +91,7 @@ class Subject extends React.Component {
         } else {
           return (
             <div>
-            <NavBar toggle={this.toggle} isOpen={this.state.isOpen} />
+            <NavBar toggle={this.toggle} isOpen={this.state.isOpen} point={true} />
             <div className="App wrapper">
               <SideBar toggle={this.toggle} isOpen={this.state.isOpen} />
               <Question
@@ -106,7 +106,7 @@ class Subject extends React.Component {
       } else {
         return (
           <div>
-          <NavBar toggle={this.toggle} isOpen={this.state.isOpen} />
+          <NavBar toggle={this.toggle} isOpen={this.state.isOpen} point={true} />
           <div className="App wrapper">
             <SideBar toggle={this.toggle} isOpen={this.state.isOpen} />
             <Course toggle={this.toggle} subject={this.props.match.params.subject} isOpen={this.state.isOpen} />
@@ -117,7 +117,7 @@ class Subject extends React.Component {
     } else {
       return (
         <div>
-        <NavBar toggle={this.toggle} isOpen={this.state.isOpen} />
+        <NavBar toggle={this.toggle} isOpen={this.state.isOpen} point={true} />
         <div className="App wrapper">
           <SideBar toggle={this.toggle} isOpen={this.state.isOpen} />
           <Subjectcontent toggle={this.toggle} isOpen={this.state.isOpen} />
