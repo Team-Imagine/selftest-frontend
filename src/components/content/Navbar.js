@@ -144,7 +144,7 @@ const NavBar = ({isOpen, point}) => {
                   User Point  
                 </div>
                 <div className = "mr-2">
-                <Badge style={{ height:"2.3rem"}}variant="danger"><div style={{fontSize: "1.3rem"}}>{userPoint}P</div></Badge>
+                <Badge pill style={{ height:"2.3rem"}}variant="danger"><div style={{fontSize: "1.3rem"}}>{userPoint}P</div></Badge>
                 </div>
                 
                 <Dropdown>
