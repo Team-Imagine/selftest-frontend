@@ -12,7 +12,8 @@ constructor(props){
         username:'',
         password:'',
         first_name:'',
-        last_name:''
+        last_name:'',
+        phone_number:'',
       }
     }
     
@@ -28,8 +29,8 @@ constructor(props){
           username: this.state.username,
           password: this.state.password,
           first_name: this.state.first_name,
-          last_name: this.state.last_name
-         
+          last_name: this.state.last_name,
+          phone_number: this.state.phone_number
         };
     
         axios.post(`/api/auth/register`,  userRegister )
@@ -45,13 +46,15 @@ constructor(props){
           username :'',
           password : '',
           first_name : '',
-          last_name: ''
+          last_name: '',
+          phone_number: '',
         })
+
       }
       
     render() {
 
-      const{email,username,password,first_name,last_name} = this.state
+      const{email,username,password,first_name,last_name, phone_number} = this.state
         return (
             <div style = {{
                 backgroundColor:'#f7feff'
@@ -124,11 +127,14 @@ constructor(props){
                  
                   </Form.Group>
 
-                  <Form.Group controlId="formBasicTelephone">
-                 <Form.Label>Telephone</Form.Label>
+                  <Form.Group controlId="formBasicPhoneNumber">
+                 <Form.Label>Phone Number</Form.Label>
                   <Form.Control 
-                  type="number" 
-                  placeholder="Enter telephone number"/>
+                  type="number"
+                  name="phone_number"
+                  value={phone_number}
+                  onChange={this.changeHandler}
+                  placeholder="Enter phone number"/>
                   </Form.Group>
 
                   <Form.Text className="text-muted">
