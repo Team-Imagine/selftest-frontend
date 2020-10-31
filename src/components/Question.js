@@ -44,7 +44,7 @@ const Question = ({ subject, course, isOpen }) => {
         			</h4>
 					<hr/>
 					<div>
-						<Button onClick={submitHandler}
+						<Button variant="info" onClick={submitHandler}
 							href={`/subject/${subject}/${course}/make/${1}`}
 						>문제 생성</Button>
 					</div>
@@ -52,12 +52,12 @@ const Question = ({ subject, course, isOpen }) => {
 				</div>
 				<hr/>
 				<ul>
-					
+				<CardDeck>
 					{question.map((i) =>
 					 <div className="container h-100" key={i.id}>
 					 <div className="row h-100 justify-content-center align-items-center">
 						
-						 <Card className="text-center" variant="info" style={{ width: '50rem' }}>
+						 <Card className="text-center" variant="info" style={{ width: '30rem' }}>
 						<Link key={i.id} 
 						to={{
 							pathname: `/subject/${subject}/${course}/${i.id}`,
@@ -71,10 +71,13 @@ const Question = ({ subject, course, isOpen }) => {
 							<Card.Footer>좋아요    신선도 </Card.Footer>
 						</Link>
 						</Card>
+						
 						</div>
 						<br />
 						</div>
+						
 					)}
+					</CardDeck>
 				</ul>
 			</div>
 		</Container>

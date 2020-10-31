@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Button } from "react-bootstrap";
+import { Container, Button, CardDeck } from "react-bootstrap";
 import classNames from "classnames";
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
@@ -95,6 +95,7 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 				<hr />
 				<br />
 				<div className="row h-100 justify-content-center align-items-center">
+					
 					<Card border="light" style={{ backgroundColor: "#f7feff" }}>
 						<Card className="center" border="info" style={{ width: '70rem' }}>
 							<Card.Header>

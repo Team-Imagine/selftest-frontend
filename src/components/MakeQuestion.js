@@ -15,9 +15,9 @@ import axios from "axios";
 
 const MyBlock = styled.div`
     .wrapper-class{
-        width: 50%;
+        width: 100%;
         margin: 0;
-        margin-bottom: 4rem;
+        margin-bottom: 1rem;
     }
   	.editor {
     height: 500px !important;
@@ -27,7 +27,7 @@ const MyBlock = styled.div`
 		background-color: white;
 		}
 		.input {
-			width: 50%;
+			width: 100%;
 			margin: 0;
 			margin-bottom: 1rem;
 			height: 60px !important;
@@ -129,10 +129,10 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 			fluid
 			className={classNames("content", { "is-open": { isOpen } })}
 		>
-			<h1>
-				문제 생성 ( {subject} - {course})
-      </h1>
-			<br /><br /><br />
+			<h4>
+			Subjects {'>'} {subject} {'>'} {course} {'>'} Make Question
+			</h4>
+			<hr/>
 			<MyBlock>
 				<input type="text" id="title" className="input" placeholder="문제 제목" fontSize="40" onChange={onChange}/>
 				<Editor
@@ -168,7 +168,8 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 					onEditorStateChange={onEditorStateChange}
 				/>
 			</MyBlock>
-			<Button
+
+			<Button className="btn-block" variant="info"
 				onClick={submitHandler}
 			>문제 등록</Button>
 
