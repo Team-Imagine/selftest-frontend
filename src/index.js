@@ -29,8 +29,7 @@ ReactDOM.render(
     <CookiesProvider>
    
       <BrowserRouter>
-      {/*<Redirect from='/' to='/login'/>*/}
-      
+        <Redirect from='/' to='/home'/>
       
         <Switch>
         
