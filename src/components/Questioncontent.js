@@ -81,7 +81,6 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 
 	const appearAnswer = (event) => {
 		event.preventDefault();
-
 		setViewAnswer(!viewAnswer);
 	} 
 
@@ -113,14 +112,16 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 					<Card border="light" style={{ backgroundColor: "#f7feff" }}>
 						<Card className="center"  style={{ width: '70rem' }}>
 							<Card.Header>
-							<div style={{fontWeight:"bold"}}>
+							<div style={{fontWeight:"bold", fontsize:"5rem"}}>
 							#{question.id} {subject} - {course}
 							</div>
 							</Card.Header>
 							<Card.Body>
 							<div style={{fontWeight:"bold"}}>
-							{question.title}
+							제목: {question.title}
 							</div>
+							<hr/>
+							<p style ={{fontWeight:"bold"}}>문제</p>
 								<Editor
 									toolbarHidden
 									// 에디터와 툴바 모두에 적용되는 클래스
@@ -152,7 +153,7 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 							<div>
 							{items.map((i, index) =>
 								<div key={index}>
-							<Card border="info" className="center" style={{ width: '70rem' }}>
+							<Card className="center" style={{ width: '70rem' }}>
 								
 									<Card.Body style={{ backgroundColor: "white" }} >
 									<Editor
@@ -183,26 +184,20 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 						}
 													
 						<Accordion>
-							<br />
-							<Card border="info" className="center" style={{ width: '70rem' }}>
+							<Card className="center" style={{ width: '70rem' }}>
 								<Accordion.Toggle className="center" as={Button} variant="light" block eventKey="0">
 									댓글 보기
 								</Accordion.Toggle>
 								<Accordion.Collapse eventKey="0">
-
 									<Card.Body style={{ backgroundColor: "white" }} >
-
 										<div>
 											댓글이 보여질 곳
 										</div>
 										<br />
-
 										<Card.Footer>
 											좋아요...
 										</Card.Footer>
 									</Card.Body>
-
-
 								</Accordion.Collapse>
 
 							</Card>
