@@ -66,10 +66,10 @@ const Question = ({ subject, course, isOpen }) => {
 						}}>
 							<Card.Header>
 							<div>
-							{i.title}
+							문제 #{i.id} {subject} - {course}  
 							</div>
 							</Card.Header>
-							<Card.Body>더보기..</Card.Body>
+							<Card.Body>{i.title}</Card.Body>
 							<Card.Footer>좋아요    신선도 </Card.Footer>
 						</Link>
 						</Card>

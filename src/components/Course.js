@@ -99,16 +99,13 @@ const Course = ({ subject, isOpen }) => {
 					{course.map((i) =>
 					<div className="container h-100" key={i.title}>
 					<div className="row h-100 justify-content-center align-items-center">
-					<Alert className = "text-center" variant="info" style={{ width: '25rem' }}
-        >
-          				<br/>
+					<Alert className = "text-center" variant="info" style={{ width: '25rem' }}>
 						<Link key={i.title} to={{
 							pathname: `/subject/${subject}/${i.title}`,
 						}}>
-						<div>
+						<div style={{fontSize:18}}>
 						{i.title}
 						</div>
-						<br />
 						</Link>
 					</Alert>
 					<br/>
