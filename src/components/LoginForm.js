@@ -27,8 +27,7 @@ const LoginForm = () => {
 
         store.dispatch({type:'LOGIN', value: res.data.uid})
         store.dispatch({type:'VERIFIED', value: res.data.verified})
-        store.dispatch({type:'EMAIL', value: user.email})
-  
+        
         setPassword("");
         setEmail("");
         setIsLoggedIn(1);

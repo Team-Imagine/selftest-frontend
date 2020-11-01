@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container, Button,  } from "react-bootstrap";
 import { Link, useHistory } from 'react-router-dom';
-
+import store from "../store";
 import classNames from "classnames";
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
@@ -47,6 +47,15 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 
 	let uploadedImages = [];
 	let history = useHistory();
+
+	useEffect(() => {
+		if (store.getState().isLoggedIn) {
+		axios.get(`api/user`)
+		.then((res) => {
+			store.dispatch({type:'POINT', value: res.data.user.point});
+		})
+		}
+	}, []);
 
 	const moveBack = () => {
 		history.push(`/subject/${subject}/${course}`);

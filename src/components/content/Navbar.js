@@ -28,14 +28,19 @@ const NavBar = ({isOpen, point}) => {
     history.push("/login");
   }
 
+ 
   const readCookie = () => {
     if(cookies.access_token) {  // 쿠키에 access_token이 존재하면 로그인 상태 유지
       store.dispatch({type:'LOGIN', value: 1})
       
       axios.get(`/api/user`)
         .then((res) => {
+          
           store.dispatch({type:'VERIFIED', value: res.data.user.verified})
-          setUserPoint(res.data.user.point);
+          store.dispatch({type:'POINT', value: res.data.user.point}) 
+          setUserPoint(store.getState().point);
+          
+          //console.log('test1:', store.getState().verified);
 
           if(!store.getState().verified) {
             axios.post(`/api/auth/send-verification-email`)
@@ -44,13 +49,32 @@ const NavBar = ({isOpen, point}) => {
                 alert('인증이 필요합니다.');
                 history.push("/auth");
               })
-          }
-          
+          } 
         })
     
     }
   }
 
+  useEffect(() => {
+    if(cookies.access_token && store.getState().verified) {
+      axios.get(`/api/user/`)
+      .then((res) => {
+        //console.log(res.data.user.point);
+        setUserPoint(res.data.user.point);
+      })
+    }
+  }, [point]);
+  /*
+  useEffect(() => {
+    if(cookies.access_token && store.getState().verified) {
+      axios.get(`/api/user/`)
+      .then((res) => {
+        console.log(res.data.user.point);
+        setUserPoint(res.data.user.point);
+      })
+    }
+  }, [point]);
+  */
   const signOut = () => {
     axios.post(`/api/auth/logout`)
       .then((res) => {
@@ -58,7 +82,9 @@ const NavBar = ({isOpen, point}) => {
         
         cookies.access_token = null;
 
-        store.dispatch({type:'LOGIN', value: 0})
+        store.dispatch({type:'LOGIN', value: 0});
+        store.dispatch({type:'VERIFIED', value: 0});
+
         alert('로그아웃 되었습니다.');
 
         moveHome();
@@ -69,16 +95,6 @@ const NavBar = ({isOpen, point}) => {
     readCookie();
 
   }, [test]);
-
-  useEffect(() => {
-    if(cookies.access_token && store.getState().verified) {
-      axios.get(`/api/user/`)
-      .then((res) => {
-        console.log(res.data.user.point);
-        setUserPoint(res.data.user.point);
-      })
-    }
-  }, [point]);
 
   const check = () => {
     if(!cookies.access_token) {
