@@ -35,15 +35,12 @@ const NavBar = ({isOpen, point}) => {
       store.dispatch({type:'LOGIN', value: 1})
 
       if(!store.getState().verified) {
-        alert('인증이 필요합니다.');
-    
         axios.post(`/api/auth/send-verification-email`)
           .then((res) => {
             console.log(res.data);
-
+            alert('인증이 필요합니다.');
             history.push("/auth");
           })
-
       }
     }
   }
@@ -156,7 +153,11 @@ const NavBar = ({isOpen, point}) => {
                   User Point  
                 </div>
                 <div className = "mr-2">
-                <Badge pill style={{ height:"2.3rem"}}variant="danger"><div style={{fontSize: "1.3rem"}}>{userPoint}P</div></Badge>
+                <Badge pill style={{ height:"2.3rem"}}variant="danger">
+                  <div style={{fontSize: "1.3rem"}}>
+                    {userPoint}P
+                  </div>
+                </Badge>
                 </div>
                 
                 <Dropdown>
