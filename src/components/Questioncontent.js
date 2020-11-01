@@ -111,11 +111,16 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 				<div className="row h-100 justify-content-center align-items-center">
 
 					<Card border="light" style={{ backgroundColor: "#f7feff" }}>
-						<Card className="center" border="info" style={{ width: '70rem' }}>
+						<Card className="center"  style={{ width: '70rem' }}>
 							<Card.Header>
-								{question.title}
+							<div style={{fontWeight:"bold"}}>
+							#{question.id} {subject} - {course}
+							</div>
 							</Card.Header>
 							<Card.Body>
+							<div style={{fontWeight:"bold"}}>
+							{question.title}
+							</div>
 								<Editor
 									toolbarHidden
 									// 에디터와 툴바 모두에 적용되는 클래스
