@@ -33,6 +33,18 @@ const NavBar = ({isOpen, point}) => {
     
     if(cookies.access_token) {  // 쿠키에 access_token이 존재하면 로그인 상태 유지
       store.dispatch({type:'LOGIN', value: 1})
+
+      if(!store.getState().verified) {
+        alert('인증이 필요합니다.');
+    
+        axios.post(`/api/auth/send-verification-email`)
+          .then((res) => {
+            console.log(res.data);
+
+            history.push("/auth");
+          })
+
+      }
     }
   }
 
@@ -56,8 +68,8 @@ const NavBar = ({isOpen, point}) => {
   }, [test]);
 
   useEffect(() => {
-    if(cookies.access_token) {
-    axios.get(`/api/user/`)
+    if(cookies.access_token && store.getState().verified) {
+      axios.get(`/api/user/`)
       .then((res) => {
         console.log(res.data.user.point);
         setUserPoint(res.data.user.point);

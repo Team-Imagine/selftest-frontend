@@ -11,6 +11,7 @@ import SignUp from "./components/Signup";
 import Password from "./components/Password";
 import Subject from "./components/Subject";
 import LoginForm from "./components/LoginForm";
+import AuthForm from "./components/AuthForm";
 import Members from "./components/Rank";
 import Test from "./components/Test";
 import Rank from "./components/Rank";
@@ -35,6 +36,7 @@ ReactDOM.render(
           <Redirect exact from='/' to='/home'/>
           <Route path="/home" component={App} />
           <Route exact path="/login" component={LoginForm} />
+          <Route exact path="/auth" component={AuthForm} />
           <Route path="/signup" component={SignUp} />
           <Route exact path="/subject" component={Subject} />
           <Route path="/password" component={Password} />
