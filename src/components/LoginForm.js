@@ -60,7 +60,7 @@ const LoginForm = () => {
                 height='200'
                 alt='Login2' />
             </div>
-
+            
             <Form.Group controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
               <Form.Control

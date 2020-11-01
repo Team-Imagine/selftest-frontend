@@ -3,7 +3,7 @@ import React, { Component, useState } from "react";
 import Form from "react-bootstrap/Form";
 import { Redirect } from "react-router-dom";
 import store from "../store";
-
+import emailpic from "../picture/email.png";
 import axios from "axios";
 
 const AuthForm = () => {
@@ -43,10 +43,29 @@ const AuthForm = () => {
 						onSubmit={submitHandler}
 						className="col-6">
 						<br /><br /><br />
-
 						<br /><br /><br />
-						<h2>회원 인증</h2>
+						<br /><br /><br />
+						<h2>User Authentication</h2>
 						<hr />
+
+						<div className="row h-100 justify-content-center align-items-center">
+							<div>
+              				<img src={emailpic}
+               				width='350'
+               				height='200'
+                			alt='email' />
+						
+            			</div>
+						</div>
+						<hr/>
+
+						<div className="row h-100 justify-content-center align-items-center">
+							<h4>귀하의 메일로 인증 메일이 발송되었습니다.</h4>
+							<p>
+							인증하시면 Selftest 이용이 가능합니다.</p>
+						</div>
+							
+					
 
 						<Form.Group controlId="formBasicAuthCode">
 							<Form.Label>인증 코드</Form.Label>
@@ -55,7 +74,7 @@ const AuthForm = () => {
 								name="authCode"
 								value={authCode}
 								onChange={({ target: { value } }) => setAuthCode(value)}
-								placeholder="Enter authCode"
+								placeholder="Enter the code"
 							/>
 
 						</Form.Group>
@@ -65,6 +84,7 @@ const AuthForm = () => {
 							className="btn btn-info btn-block"
 						>
 							제출</button>
+							<br/> <br/><br/> <br/><br/> <br/><br/> <br/><br/> <br/><br/> <br/><br/> 	
 					</form>
 				</div>
 			</div>
