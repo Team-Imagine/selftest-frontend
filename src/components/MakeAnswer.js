@@ -123,9 +123,9 @@ const MakeAnswer = ({ subject, course, question_id, isOpen }) => {
 			fluid
 			className={classNames("content", { "is-open": { isOpen } })}
 		>
-			<h3>
+			<h4>
 				Subjects {'>'} {subject} {'>'} {course} {'>'} Make Answer
-			</h3>
+			</h4>
 			<hr />
 			<div className="row justify-content-center align-items-center">
 				<Card border="light" style={{ backgroundColor: "#f7feff" }}>

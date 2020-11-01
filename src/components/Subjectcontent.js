@@ -57,12 +57,12 @@ const Subjectcontent = ({isOpen}) => {
       
         <div className = "d-flex bd-highlight mb-3">
         <div className="mr-auto p-2 bd-highlight">  
-        <h3>
+        <h4>
           Subjects
-        </h3>
+        </h4>
         </div>
         <div className = "p-2 bd-highlight">
-
+        
 				<Accordion >
 				<Card border = "info" style = {{width: '18rem'}}>
 				<Accordion.Toggle  as={Button} variant="info" block eventKey="0">

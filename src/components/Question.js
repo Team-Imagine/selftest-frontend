@@ -40,9 +40,9 @@ const Question = ({ subject, course, isOpen }) => {
 			<div>
 					<div className = "d-flex bd-highlight mb-3">
         			<div className="mr-auto p-2 bd-highlight"> 
-					<h3>
+					<h4>
 						Subjects {'>'} {subject} {'>'} {course} 
-        			</h3>
+        			</h4>
 					</div>
 					<div className = "p-2 bd-highlight">
 					<div>
