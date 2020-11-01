@@ -98,8 +98,8 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 			<div>
 				<div className = "d-flex bd-highlight mb-3">
         			<div className="mr-auto p-2 bd-highlight"> 
-					<h4>
-					Subjects {'>'} {subject} {'>'} {course} {'>'} Question
+					<h4 style={{fontWeight:"bolder"}}>
+					과목 {'>'} {subject} {'>'} {course} {'>'} 문제
         			</h4>
 					</div>
 					<div className = "p-2 bd-highlight">
@@ -110,13 +110,15 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 						</div>
 						</div>
 					</div>
-				
+				<hr/>
 				<div className="row h-100 justify-content-center align-items-center">
 
 					<Card border="light" style={{ backgroundColor: "#f7feff" }}>
-						<Card className="center" border="info" style={{ width: '70rem' }}>
+					<Card className="center" style={{ width: '70rem' }}>
 							<Card.Header>
-								{question.title}
+							<div style={{fontWeight:"bold", fontsize:"5rem"}}>
+							#{question.id} {subject} - {course}
+							</div>	
 							</Card.Header>
 							<Card.Body>
 								<Editor
@@ -150,8 +152,7 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 							<div>
 							{items.map((i, index) =>
 								<div key={index}>
-							<Card border="info" className="center" style={{ width: '70rem' }}>
-								
+									<Card className="center" style={{ width: '70rem' }}>
 									<Card.Body style={{ backgroundColor: "white" }} >
 									<Editor
 									toolbarHidden
@@ -181,8 +182,7 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 						}
 													
 						<Accordion>
-							<br />
-							<Card border="info" className="center" style={{ width: '70rem' }}>
+						<Card className="center" style={{ width: '70rem' }}>
 								<Accordion.Toggle className="center" as={Button} variant="light" block eventKey="0">
 									댓글 보기
 								</Accordion.Toggle>
