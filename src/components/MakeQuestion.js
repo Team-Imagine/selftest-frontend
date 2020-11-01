@@ -128,10 +128,15 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 		<Container
 			fluid
 			className={classNames("content", { "is-open": { isOpen } })}
-		>
-			<h3>
-			Subjects {'>'} {subject} {'>'} {course} {'>'} Make Question
-			</h3>
+		>	
+		<div className = "d-flex bd-highlight mb-3">
+        <div className="mr-auto p-2 bd-highlight"> 
+		<div style={{height:"2.5rem"}}>
+			<h4 style={{fontWeight:"bolder"}}>
+			과목 {'>'} {subject} {'>'} {course} {'>'} 문제 생성
+			</h4>
+		</div>
+		</div></div>
 			<hr/>
 			<MyBlock>
 				<input type="text" id="title" className="input" placeholder="문제 제목" fontSize="40" onChange={onChange}/>

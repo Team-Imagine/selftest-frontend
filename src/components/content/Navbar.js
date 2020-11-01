@@ -100,7 +100,7 @@ const NavBar = ({isOpen, point}) => {
           </Nav.Link>
         </div>
         <Form inline>
-          <FormControl type="text" placeholder="Search" className="mr-sm-2 " />
+          <FormControl type="text" placeholder="검색하기" className="mr-sm-2 " />
           <Button variant="info">
             <FontAwesomeIcon icon={faSearch} className="ml-auto" />
           </Button>
@@ -113,7 +113,7 @@ const NavBar = ({isOpen, point}) => {
                 <Dropdown>
                   <Dropdown.Toggle variant="info" href="login" onClick={moveLogin}>
                     <FontAwesomeIcon icon={faUser} className="ml-auto" /> {' '}
-                  Login
+                  로그인
                  </Dropdown.Toggle>
                 </Dropdown>
                 <Nav.Link href="#">
@@ -156,7 +156,7 @@ const NavBar = ({isOpen, point}) => {
             
               <div className="d-flex align-items-center" style ={{backgroundColor:"white"}} >
                 <div className = "mr-2">
-                  User Point  
+                  보유 포인트  
                 </div>
                 <div className = "mr-2">
                 <Badge pill style={{ height:"2.3rem"}}variant="danger">
@@ -169,18 +169,18 @@ const NavBar = ({isOpen, point}) => {
                 <Dropdown>
                   <Dropdown.Toggle variant="light" id="dropdown-basic">
                     <FontAwesomeIcon icon={faUser} className="ml-auto" />
-                  My Profile
+                  내 프로필
                  </Dropdown.Toggle>
                   <Dropdown.Menu>
                     <Dropdown.Item href="#/action-1">
                       <FontAwesomeIcon icon={faUserGraduate} className="ml-auto" />
-                My Activity</Dropdown.Item>
+                내 활동 </Dropdown.Item>
                     <Dropdown.Item href="#/action-2">
                       <FontAwesomeIcon icon={faUserCog} className="ml-auto" />
-                Settings</Dropdown.Item>
+                내 설정</Dropdown.Item>
                     <Dropdown.Item href="#/action-3" onClick={signOut}>
                       <FontAwesomeIcon icon={faSignOutAlt} className="ml-auto" />
-                Sign Out</Dropdown.Item>
+                로그아웃</Dropdown.Item>
   
                   </Dropdown.Menu>
                 </Dropdown>

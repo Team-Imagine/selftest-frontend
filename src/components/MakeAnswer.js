@@ -16,13 +16,13 @@ import axios from "axios";
 
 const MyBlock = styled.div`
     .wrapper-class{
-        width: 100%;
+		width: 100%;
         margin: 0;
 				margin-bottom: 1rem;
 				justify-content: center;
     }
   	.editor {
-    height: 500px !important;
+    height: 200px !important;
     border: 1px solid #f1f1f1 !important;
     padding: 5px !important;
 		border-radius: 2px !important;
@@ -123,13 +123,19 @@ const MakeAnswer = ({ subject, course, question_id, isOpen }) => {
 			fluid
 			className={classNames("content", { "is-open": { isOpen } })}
 		>
-			<h4>
-				Subjects {'>'} {subject} {'>'} {course} {'>'} Make Answer
+			<div className = "d-flex bd-highlight mb-3">
+        	<div className="mr-auto p-2 bd-highlight"> 
+			<div style={{height:'2.5rem'}}>
+			<h4 style={{fontWeight:"bolder"}}>
+				과목 {'>'} {subject} {'>'} {course} {'>'} 정답 생성
 			</h4>
+			</div>
+			</div></div>
+			
 			<hr />
 			<div className="row justify-content-center align-items-center">
 				<Card border="light" style={{ backgroundColor: "#f7feff" }}>
-					<Card className="center" border="info" style={{ width: '100rem' }}>
+					<Card className="center" border="info" block style={{width:'85rem'}}>
 						<Card.Header>
 							{question.title}
 						</Card.Header>
@@ -154,8 +160,9 @@ const MakeAnswer = ({ subject, course, question_id, isOpen }) => {
 				</Card>
 			</div>
 			<br />
-			<MyBlock>
-				<Editor
+			<MyBlock style={{width:'86rem'}}>
+			<div style={{height:'17rem'}}>
+				<Editor 
 					// 에디터와 툴바 모두에 적용되는 클래스
 					wrapperClassName="wrapper-class"
 					// 에디터 주변에 적용된 클래스
@@ -182,6 +189,7 @@ const MakeAnswer = ({ subject, course, question_id, isOpen }) => {
 					// 에디터의 값이 변경될 때마다 onEditorStateChange 호출
 					onEditorStateChange={onEditorStateChange}
 				/>
+				</div>
 			</MyBlock>
 
 			<Button className="btn-block" variant="info"

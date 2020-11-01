@@ -16,8 +16,8 @@ class Content extends React.Component {
       
 
         <div>
-          <h3>
-           Popular Subjects  <Badge variant="warning">HOT</Badge>
+          <h3 style={{fontWeight:"bolder"}}>
+           인기 과목  <Badge variant="warning">HOT</Badge>
           </h3>
         </div>
         <hr/>
@@ -30,15 +30,15 @@ class Content extends React.Component {
             </Card.Header>
 
             <Card.Body>
-              <Card.Title>Mathematics
+              <Card.Title>수학
               
               </Card.Title>
               <Card.Text>
-                Integration, Differentiation, Further Mathematics
+                미분, 적분, 기하와 벡터
               </Card.Text>
             </Card.Body>
             <Card.Footer>
-              <Button variant="info">Go Study</Button>
+              <Button variant="info">공부하러가기</Button>
             </Card.Footer>
           </Card>
 
@@ -48,13 +48,13 @@ class Content extends React.Component {
             </Card.Header>
             
             <Card.Body>
-              <Card.Title>Computer Engineering</Card.Title>
+              <Card.Title>컴퓨터공학</Card.Title>
               <Card.Text>
                 Java, C, C++, C#, Python, html
               </Card.Text>
             </Card.Body>
             <Card.Footer>
-            <Button variant="info">Go Study</Button>
+            <Button variant="info">공부하러가기</Button>
             </Card.Footer>
           </Card>
 
@@ -65,13 +65,13 @@ class Content extends React.Component {
 
 
             <Card.Body>
-              <Card.Title>English</Card.Title>
+              <Card.Title>영어</Card.Title>
               <Card.Text>
-                Reading, Listening, Writing, Speaking
+                읽기, 듣기, 쓰기, 말하기
               </Card.Text>
             </Card.Body>
             <Card.Footer>
-            <Button variant="info">Go Study</Button>
+            <Button variant="info">공부하러하기</Button>
             </Card.Footer>
           </Card>
         </CardDeck>
@@ -84,15 +84,15 @@ class Content extends React.Component {
             </Card.Header>
 
             <Card.Body>
-              <Card.Title>Science
+              <Card.Title>과학
               
               </Card.Title>
               <Card.Text>
-                 Physics, Chemistry, Biology with Experiments
+                 물리, 화학, 생물, 실험
               </Card.Text>
             </Card.Body>
             <Card.Footer>
-              <Button variant="info">Go Study</Button>
+              <Button variant="info">공부하러가기</Button>
             </Card.Footer>
           </Card>
 
@@ -102,13 +102,13 @@ class Content extends React.Component {
             </Card.Header>
             
             <Card.Body>
-              <Card.Title>Commerce</Card.Title>
+              <Card.Title>무역</Card.Title>
               <Card.Text>
-                Economics, Accounting, Business
+                경제학, 회계학, 경영학
               </Card.Text>
             </Card.Body>
             <Card.Footer>
-            <Button variant="info">Go Study</Button>
+            <Button variant="info">공부하러가기</Button>
             </Card.Footer>
           </Card>
         </CardDeck>

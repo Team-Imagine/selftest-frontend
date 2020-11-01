@@ -57,19 +57,19 @@ const SideBar = ({ toggle, isOpen }) => {
         </Button>
       </div>
       <Nav className="flex-column pt-2">
-        <p className="ml-3">Menu</p>
+        <p className="ml-3">메뉴</p>
 
         <Nav.Item className="/">
 
           <Nav.Link onClick={moveHome}>
             <FontAwesomeIcon icon={faHome} className="mr-2" />
-              Home
+              홈
             </Nav.Link>
         </Nav.Item>
         <Nav.Item>
           <Nav.Link onClick={moveSubject}>
             <FontAwesomeIcon icon={faBook} className="mr-2" />
-              Subjects
+              과목
             </Nav.Link>
 
         </Nav.Item>
@@ -77,14 +77,14 @@ const SideBar = ({ toggle, isOpen }) => {
         <Nav.Item>
           <Nav.Link onClick={moveBookmarks}>
             <FontAwesomeIcon icon={faBookmark} className="mr-2" />
-              Bookmarks
+              즐겨찾기
             </Nav.Link>
         </Nav.Item>
 
         <Nav.Item>
           <Nav.Link onClick={moveTest}>
             <FontAwesomeIcon icon={faCheck} className="mr-2" />
-              Test
+              시험
             </Nav.Link>
         </Nav.Item>
 
@@ -92,14 +92,14 @@ const SideBar = ({ toggle, isOpen }) => {
         <Nav.Item>
           <Nav.Link onClick={moveMembers}>
             <FontAwesomeIcon icon={faTrophy} className="mr-2" />
-              Ranks
+              순위
             </Nav.Link>
         </Nav.Item>
 
         <Nav.Item>
           <Nav.Link onClick={moveSettings}>
             <FontAwesomeIcon icon={faCog} className="mr-2" />
-              Settings</Nav.Link>
+              설정</Nav.Link>
         </Nav.Item>
       </Nav>
     </div>

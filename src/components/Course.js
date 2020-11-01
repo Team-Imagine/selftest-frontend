@@ -63,25 +63,30 @@ const Course = ({ subject, isOpen }) => {
 		>
 				<div className = "d-flex bd-highlight mb-3">
         		<div className="mr-auto p-2 bd-highlight">  
-				<h4>
-					Subjects {'>'} {subject} 
+				<h4 style={{fontWeight:"bolder"}}>
+					과목 {'>'} {subject} 
         		</h4>
 				</div>
         		<div className = "p-2 bd-highlight">
 				<Accordion>
-				<Card border = "info"  style = {{width: '18rem'}}>
+				<Card border = "info"  style = {{width: '19rem'}}>
 				<Accordion.Toggle  as={Button} variant="info"  block eventKey="0">
 				   강의 추가
 				</Accordion.Toggle>
 				<Accordion.Collapse eventKey="0">
 				<Card.Body style={{ backgroundColor:"white"}} >
 				<div>
-          		<Form inline>
-          		<FormControl blocktype="text" id="title" className="mr-sm-2" value={title} placeholder="추가할 강의명을 입력하세요" fontSize="15" onChange={onChange}/>
-          		<Button variant = "light" block
+  
+				  <FormControl blocktype="text" id="title" className="mr-sm-2" 
+				  value={title} 
+				  placeholder="추가할 강의명을 입력하세요." 
+				  fontSize="20"
+				  style={{width:"17rem"}} 
+				  onChange={onChange}/>
+				  <Button variant = "light" block style={{width:'17rem'}}
 				onClick={submitHandler}
 			    >강의 등록</Button>
-          		</Form>
+          		
 				</div>
 				</Card.Body>
     			</Accordion.Collapse>		

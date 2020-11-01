@@ -40,13 +40,13 @@ const Question = ({ subject, course, isOpen }) => {
 			<div>
 					<div className = "d-flex bd-highlight mb-3">
         			<div className="mr-auto p-2 bd-highlight"> 
-					<h4>
-						Subjects {'>'} {subject} {'>'} {course} 
+					<h4 style={{fontWeight:"bolder"}}>
+						과목 {'>'} {subject} {'>'} {course} 
         			</h4>
 					</div>
 					<div className = "p-2 bd-highlight">
 					<div>
-						<Button variant="info" style = {{width: '18rem', height: '2.5rem'}} onClick={submitHandler}
+						<Button variant="info" style = {{width: '19rem', height: '2.5rem'}} onClick={submitHandler}
 							href={`/subject/${subject}/${course}/make/${1}`}
 						>문제 생성</Button>
 						</div>
@@ -69,7 +69,7 @@ const Question = ({ subject, course, isOpen }) => {
 							{i.title}
 							</div>
 							</Card.Header>
-							<Card.Body>Click to see details</Card.Body>
+							<Card.Body>더보기..</Card.Body>
 							<Card.Footer>좋아요    신선도 </Card.Footer>
 						</Link>
 						</Card>

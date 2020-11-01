@@ -93,19 +93,21 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 			<div>
 				<div className = "d-flex bd-highlight mb-3">
         			<div className="mr-auto p-2 bd-highlight"> 
-					<h4>
-					Subjects {'>'} {subject} {'>'} {course} {'>'} Question
+					<h4 style={{fontWeight:"bolder"}}>
+					과목 {'>'} {subject} {'>'} {course} {'>'} 문제
         			</h4>
 					</div>
+					
 					<div className = "p-2 bd-highlight">
 					<div>
-						<Button variant="info" style = {{width: '18rem', height: '2.5rem'}}
+						<Button variant="info" style = {{width: '19rem', height: '2.5rem'}}
 							href={`/subject/${subject}/${course}/${question_id}/make_answer/${1}`}
 						>정답 생성</Button>
 						</div>
 						</div>
 					</div>
-				
+				<hr/>
+
 				<div className="row h-100 justify-content-center align-items-center">
 
 					<Card border="light" style={{ backgroundColor: "#f7feff" }}>
