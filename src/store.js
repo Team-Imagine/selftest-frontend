@@ -13,6 +13,9 @@ export default createStore(function(state, action) {
     if(action.type === "EMAIL") {
         return {...state, email: action.value}
     }
+    if(action.type === "POINT") {
+        return {...state, point: action.value}
+    }
 
 
     return state;
