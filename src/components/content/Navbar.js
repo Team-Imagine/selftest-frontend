@@ -33,15 +33,23 @@ const NavBar = ({isOpen, point}) => {
     
     if(cookies.access_token) {  // 쿠키에 access_token이 존재하면 로그인 상태 유지
       store.dispatch({type:'LOGIN', value: 1})
+      
+      axios.get(`/api/user`)
+        .then((res) => {
+          store.dispatch({type:'VERIFIED', value: res.data.user.verified})
+          setUserPoint(res.data.user.point);
 
-      if(!store.getState().verified) {
-        axios.post(`/api/auth/send-verification-email`)
-          .then((res) => {
-            console.log(res.data);
-            alert('인증이 필요합니다.');
-            history.push("/auth");
-          })
-      }
+          if(!store.getState().verified) {
+            axios.post(`/api/auth/send-verification-email`)
+              .then((res) => {
+                console.log(res.data);
+                alert('인증이 필요합니다.');
+                history.push("/auth");
+              })
+          }
+          
+        })
+    
     }
   }
 

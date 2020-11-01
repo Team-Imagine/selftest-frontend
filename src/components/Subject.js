@@ -5,6 +5,7 @@ import Course from "./Course";
 import Question from "./Question";
 import Questioncontent from "./Questioncontent";
 import MakeQuestion from "./MakeQuestion";
+import MakeAnswer from "./MakeAnswer";
 import NavBar from "./content/Navbar";
 
 class Subject extends React.Component {
@@ -72,8 +73,24 @@ class Subject extends React.Component {
           </div>
           </div>
           )
-        }
+        }     
         if (this.props.match.params.question_id) {
+          if(this.props.match.params.make_answer) {
+            return (
+              <div>
+              <NavBar toggle={this.toggle} isOpen={this.state.isOpen} point={true}/>
+              <div className="App wrapper">
+              <SideBar toggle={this.toggle} isOpen={this.state.isOpen} />
+              <MakeAnswer
+                toggle={this.toggle}
+                subject={this.props.match.params.subject}
+                course={this.props.match.params.course}
+                question_id={this.props.match.params.question_id}
+                isOpen={this.state.isOpen} />
+            </div>
+            </div>
+            )
+          } else {
           return (
             <div>
             <NavBar toggle={this.toggle} isOpen={this.state.open} point={false}/>
@@ -88,6 +105,7 @@ class Subject extends React.Component {
             </div>
             </div>
           )
+          }
         } else {
           return (
             <div>

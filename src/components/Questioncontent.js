@@ -12,40 +12,19 @@ import Accordion from 'react-bootstrap/Accordion'
 import axios from "axios";
 import store from "../store";
 
-const MyBlock = styled.div`
-    .wrapper-class{
-        width: 50%;
-        margin: 0;
-        margin-bottom: 4rem;
-    }
-  	.editor {
-    height: 500px !important;
-    border: 1px solid #f1f1f1 !important;
-    padding: 5px !important;
-		border-radius: 2px !important;
-		background-color: white;
-		}
-		.input {
-			width: 50%;
-			margin: 0;
-			margin-bottom: 1rem;
-			margin-top: 2rem;
-			height: 60px !important;
-			border: 1px solid #f1f1f1 !important;
-    	padding: 5px !important;
-			border-radius: 2px !important;
-			background-color: white;
-		}`;
-
 const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 	const [editorState, setEditorState] = useState(EditorState.createEmpty());
+	const [items, setItems] = useState([]);
+	
 	const [answer, setAnswer] = useState([]);
 	const [question, setQuestion] = useState('');
-	const [hidden, setHidden] = useState(true);
+	const [viewAnswer, setViewAnswer] = useState(false);
 	let history = useHistory();
 
 	let htmlToEditor = '';
-
+	let htmlToEditorAnswer = [];
+	let t_answer = [];
+	
 	useEffect(() => {
 		if (store.getState().isLoggedIn) {
 			axios.get(`/api/question/${question_id}`)
@@ -65,16 +44,34 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 
 						const t_editorState = EditorState.createWithContent(contentState);
 						setEditorState(t_editorState);
-
 					}
 				})
 
 			axios.get(`/api/answer?question_id=${question_id}`)
 				.then(res => {
 					setAnswer(res.data.answers);
+
+					for (var i in res.data.answers) {
+					
+						htmlToEditorAnswer.push(res.data.answers[i].content);
+
+						const blocksFromHtml = htmlToDraft(htmlToEditorAnswer[i]);
+						if (blocksFromHtml) {
+							const { contentBlocks, entityMap } = blocksFromHtml;
+
+							const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
+
+							const t_editorState = EditorState.createWithContent(contentState);
+
+							t_answer.push(t_editorState);
+
+							setItems([...t_answer]);
+							//setEditorState(t_editorState);
+						}
+						
+					}
+
 				})
-
-
 		} else {
 			alert('로그인이 필요한 기능입니다.');
 			history.push(`/subject/${subject}/${course}`);
@@ -82,6 +79,11 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 		}
 	}, []);
 
+	const appearAnswer = (event) => {
+		event.preventDefault();
+
+		setViewAnswer(!viewAnswer);
+	} 
 
 	return (
 		<Container
@@ -89,13 +91,23 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 			className={classNames("content", { "is-open": { isOpen } })}
 		>
 			<div>
-				<h3>
+				<div className = "d-flex bd-highlight mb-3">
+        			<div className="mr-auto p-2 bd-highlight"> 
+					<h3>
 					Subjects {'>'} {subject} {'>'} {course} {'>'} Question
-        		</h3>
-				<hr />
-				<br />
+        			</h3>
+					</div>
+					<div className = "p-2 bd-highlight">
+					<div>
+						<Button variant="info" style = {{width: '18rem', height: '2.5rem'}}
+							href={`/subject/${subject}/${course}/${question_id}/make_answer/${1}`}
+						>정답 생성</Button>
+						</div>
+						</div>
+					</div>
+				
 				<div className="row h-100 justify-content-center align-items-center">
-					
+
 					<Card border="light" style={{ backgroundColor: "#f7feff" }}>
 						<Card className="center" border="info" style={{ width: '70rem' }}>
 							<Card.Header>
@@ -108,6 +120,7 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 									wrapperClassName="wrapper-class"
 									// 에디터 주변에 적용된 클래스
 									editorClassName="editor"
+
 									// 툴바 주위에 적용된 클래스
 									toolbarClassName="toolbar-class"
 									editorState={editorState}
@@ -120,41 +133,58 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 							</Card.Body>
 							<Card.Footer className="text-muted">좋아요.....   신선해요.....   난이도 </Card.Footer>
 						</Card>
-
-
-						<Accordion>
-							<br />
+								<br />
+						<button
+              type="submit"
+							className="btn btn-secondary"
+							onClick={appearAnswer}
+            >
+              정답 확인</button>
+								<br/>
+						{viewAnswer && 
+							<div>
+							{items.map((i, index) =>
+								<div key={index}>
 							<Card border="info" className="center" style={{ width: '70rem' }}>
-								<Accordion.Toggle className="center" as={Button} variant="light" block eventKey="0">
-								정답 확인
-								</Accordion.Toggle>
-								<Accordion.Collapse eventKey="0">
+								
 									<Card.Body style={{ backgroundColor: "white" }} >
-										
-										<div>
-											{answer.map((i) =>
-												<div key={i.id}>{i.content} <br /></div>
-											)}
-										</div>
-										<br/>
+									<Editor
+									toolbarHidden
+									// 에디터와 툴바 모두에 적용되는 클래스
+									wrapperClassName="wrapper-class"
+									// 에디터 주변에 적용된 클래스
+									editorClassName="editor"
 
+									// 툴바 주위에 적용된 클래스
+									toolbarClassName="toolbar-class"
+									editorState= {i}
+									readOnly
+									// 한국어 설정
+									localization={{
+										locale: 'ko',
+									}}
+								/>
+										<br />
 										<Card.Footer>
 											좋아요...
 										</Card.Footer>
 									</Card.Body>
-								</Accordion.Collapse>
 							</Card>
-						</Accordion>
+							<br />
+							</div>
+							)}</div>
+						}
+													
 						<Accordion>
 							<br />
 							<Card border="info" className="center" style={{ width: '70rem' }}>
-									<Accordion.Toggle className="center" as={Button} variant="light" block eventKey="0">
-										댓글 보기
+								<Accordion.Toggle className="center" as={Button} variant="light" block eventKey="0">
+									댓글 보기
 								</Accordion.Toggle>
 								<Accordion.Collapse eventKey="0">
 
 									<Card.Body style={{ backgroundColor: "white" }} >
-										
+
 										<div>
 											댓글이 보여질 곳
 										</div>
@@ -162,7 +192,7 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 
 										<Card.Footer>
 											좋아요...
-				</Card.Footer>
+										</Card.Footer>
 									</Card.Body>
 
 
@@ -172,16 +202,6 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 						</Accordion>
 					</Card>
 				</div>
-				{/*
-				{!hidden && <ul>
-					<div>
-					{answer.map((i) =>	
-					<div key={i.id}>{i.content} <br /></div>
-					)} 
-					</div>
-				</ul>}
-					*/}
-
 			</div>
 
 		</Container>

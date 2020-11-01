@@ -49,6 +49,7 @@ ReactDOM.render(
           <Route exact path="/subject/:subject/:course" component={Subject} />
           <Route exact path="/subject/:subject/:course/:question_id" component={Subject} />
           <Route exact path="/subject/:subject/:course/make/:make_question" component={Subject} />
+          <Route exact path="/subject/:subject/:course/:question_id/make_answer/:make_answer" component={Subject} />
           
         </Switch>
       </BrowserRouter>
