@@ -218,10 +218,12 @@ const NavBar = ({isOpen, point}) => {
   return (
     <div>
         {check()}
-      <div className="row title" style={{ marginBottom: "10px" }} >
-        <div className="col-sm-12 btn btn-warning">
-        </div>
-      </div>
+        <Navbar
+        bg="warning"
+        className="navbar shadow-sm p-1.5 bg-yellow rounded"
+      >
+        </Navbar>
+
     </div>
   );
 }
