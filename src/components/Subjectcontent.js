@@ -85,8 +85,6 @@ const Subjectcontent = ({isOpen}) => {
      
         </div>
         </div>
-       
-        
         <hr />
         <ul>
         

@@ -29,8 +29,6 @@ const NavBar = ({isOpen, point}) => {
   }
 
   const readCookie = () => {
-    //console.log(cookies);
-    
     if(cookies.access_token) {  // 쿠키에 access_token이 존재하면 로그인 상태 유지
       store.dispatch({type:'LOGIN', value: 1})
       
