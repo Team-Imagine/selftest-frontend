@@ -158,9 +158,10 @@ const MakeAnswer = ({ subject, course, question_id, isOpen }) => {
 						</Card.Body>
 					</Card>
 				</Card>
-			</div>
-			<br />
+
+				<br />
 			<MyBlock style={{width:'86rem'}}>
+			<br/>
 			<div style={{height:'17rem'}}>
 				<Editor 
 					// 에디터와 툴바 모두에 적용되는 클래스
@@ -191,10 +192,13 @@ const MakeAnswer = ({ subject, course, question_id, isOpen }) => {
 				/>
 				</div>
 			</MyBlock>
-
-			<Button className="btn-block" variant="info"
+			<Button className="btn-block" variant="info" style={{width:'20rem'}}
 				onClick={submitHandler}
 			>정답 등록</Button>
+			</div>
+			
+
+			
 
 		</Container>
 	);

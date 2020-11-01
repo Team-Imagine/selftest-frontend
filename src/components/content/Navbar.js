@@ -29,11 +29,11 @@ const NavBar = ({isOpen, point}) => {
   }
 
  
-  const readCookie = () => {
+  const readCookie = async () => {
     if(cookies.access_token) {  // 쿠키에 access_token이 존재하면 로그인 상태 유지
       store.dispatch({type:'LOGIN', value: 1})
       
-      axios.get(`/api/user`)
+      await axios.get(`/api/user`)
         .then((res) => {
           
           store.dispatch({type:'VERIFIED', value: res.data.user.verified})
