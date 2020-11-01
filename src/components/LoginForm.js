@@ -23,15 +23,15 @@ const LoginForm = () => {
     axios.post(`/api/auth/login`, user)
 
       .then(res => {
-        console.log(res);
         console.log(res.data);
 
         store.dispatch({type:'LOGIN', value: res.data.uid})
+        store.dispatch({type:'VERIFIED', value: res.data.verified})
+        store.dispatch({type:'EMAIL', value: user.email})
   
         setPassword("");
         setEmail("");
         setIsLoggedIn(1);
-        alert("로그인 하였습니다.")
       })
   }
   const redirect = isLoggedIn ? (<Redirect to={{pathname: '/home'}}/>) : '';
