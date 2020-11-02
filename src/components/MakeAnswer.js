@@ -135,7 +135,7 @@ const MakeAnswer = ({ subject, course, question_id, isOpen }) => {
 			<hr />
 			<div className="row justify-content-center align-items-center">
 				<Card border="light" style={{ backgroundColor: "#f7feff" }}>
-					<Card className="center" border="info" block style={{width:'85rem'}}>
+					<Card className="center" border="info" style={{width:'85rem'}}>
 						<Card.Header>
 							{question.title}
 						</Card.Header>
