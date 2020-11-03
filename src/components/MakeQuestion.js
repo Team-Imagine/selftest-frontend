@@ -115,6 +115,9 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 
 				moveBack();
 			})
+			.catch(error => {
+				alert(error.response.data.message);
+			})
 		} else {
 			alert('내용을 올바르게 입력하세요.');
 		}
