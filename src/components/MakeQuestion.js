@@ -48,18 +48,6 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 	let uploadedImages = [];
 	let history = useHistory();
 
-	useEffect(() => {
-		if (store.getState().isLoggedIn) {
-		axios.get(`api/user`)
-		.then((res) => {
-			store.dispatch({type:'POINT', value: res.data.user.point});
-		})
-		.catch(error => {
-			alert(error.response.data.message);
-		})
-		}
-	}, []);
-
 	const moveBack = () => {
 		history.push(`/subject/${subject}/${course}`);
 	}
