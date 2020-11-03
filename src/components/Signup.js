@@ -36,20 +36,22 @@ constructor(props){
         axios.post(`/api/auth/register`,  userRegister )
 
           .then(res => {
-            console.log(res);
             console.log(res.data);
-          })
-          alert("회원가입에 성공하였습니다!.");
-        
-        this.setState({
-          email: '',
-          username :'',
-          password : '',
-          first_name : '',
-          last_name: '',
-          phone_number: '',
-        })
 
+            this.setState({
+              email: '',
+              username :'',
+              password : '',
+              first_name : '',
+              last_name: '',
+              phone_number: '',
+            })
+
+            alert("회원가입에 성공하였습니다!.");
+          })
+          .catch(error => {
+            alert(error.response.data.message);
+          })
       }
       
     render() {

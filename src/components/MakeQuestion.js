@@ -54,6 +54,9 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 		.then((res) => {
 			store.dispatch({type:'POINT', value: res.data.user.point});
 		})
+		.catch(error => {
+			alert(error.response.data.message);
+		})
 		}
 	}, []);
 

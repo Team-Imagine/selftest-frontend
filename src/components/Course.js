@@ -29,91 +29,93 @@ const Course = ({ subject, isOpen }) => {
 
 	const onChange = (e) => {
 		setTitle(e.target.value);
-		
-  }
-  
-  const submitHandler = (event) => {
+
+	}
+
+	const submitHandler = (event) => {
 		event.preventDefault();
-		
-		if(store.getState().isLoggedIn) {
-		const data = {
-			title: title,
-			subject_title: subject,
-		}
 
-    axios.post('/api/course', data)
-      .then(res => {
-        console.log(res.data);
+		if (store.getState().isLoggedIn) {
+			const data = {
+				title: title,
+				subject_title: subject,
+			}
 
-				setTitle('');
-				setState(1);
-				alert("강의가 추가되었습니다!");
-			})
+			axios.post('/api/course', data)
+				.then(res => {
+					setTitle('');
+					setState(1);
+					alert(res.data.message);
+				})
+				.catch(error => {
+					setTitle('');
+					alert(error.response.data.message);
+				})
 		} else {
 			setTitle('');
-      alert('로그인이 필요한 기능입니다.');
-      history.push("/login");
+			alert('로그인이 필요한 기능입니다.');
+			history.push("/login");
 		}
-  }
+	}
 
 	return (
 		<Container
 			fluid
 			className={classNames("content", { "is-open": { isOpen } })}
 		>
-				<div className = "d-flex bd-highlight mb-3">
-        		<div className="mr-auto p-2 bd-highlight">  
-				<h4 style={{fontWeight:"bolder"}}>
-					과목 {'>'} {subject} 
-        		</h4>
+			<div className="d-flex bd-highlight mb-3">
+				<div className="mr-auto p-2 bd-highlight">
+					<h4 style={{ fontWeight: "bolder" }}>
+						과목 {'>'} {subject}
+					</h4>
 				</div>
-        		<div className = "p-2 bd-highlight">
-				<Accordion>
-				<Card border = "info"  style = {{width: '19rem'}}>
-				<Accordion.Toggle  as={Button} variant="info"  block eventKey="0">
-				   강의 추가
+				<div className="p-2 bd-highlight">
+					<Accordion>
+						<Card border="info" style={{ width: '19rem' }}>
+							<Accordion.Toggle as={Button} variant="info" block eventKey="0">
+								강의 추가
 				</Accordion.Toggle>
-				<Accordion.Collapse eventKey="0">
-				<Card.Body style={{ backgroundColor:"white"}} >
-				<div>
-  
-				  <FormControl blocktype="text" id="title" className="mr-sm-2" 
-				  value={title} 
-				  placeholder="추가할 강의명을 입력하세요." 
-				  fontSize="20"
-				  style={{width:"17rem"}} 
-				  onChange={onChange}/>
-				  <Button variant = "light" block style={{width:'17rem'}}
-				onClick={submitHandler}
-			    >강의 등록</Button>
-          		
+							<Accordion.Collapse eventKey="0">
+								<Card.Body style={{ backgroundColor: "white" }} >
+									<div>
+
+										<FormControl blocktype="text" id="title" className="mr-sm-2"
+											value={title}
+											placeholder="추가할 강의명을 입력하세요."
+											fontSize="20"
+											style={{ width: "17rem" }}
+											onChange={onChange} />
+										<Button variant="light" block style={{ width: '17rem' }}
+											onClick={submitHandler}
+										>강의 등록</Button>
+
+									</div>
+								</Card.Body>
+							</Accordion.Collapse>
+						</Card>
+					</Accordion>
 				</div>
-				</Card.Body>
-    			</Accordion.Collapse>		
-				</Card>
-				</Accordion>
-				</div>
-				</div>
-				<hr />
-				<ul>
-					{course.map((i) =>
+			</div>
+			<hr />
+			<ul>
+				{course.map((i) =>
 					<div className="container h-100" key={i.title}>
-					<div className="row h-100 justify-content-center align-items-center">
-					<Alert className = "text-center" variant="info" style={{ width: '25rem' }}>
-						<Link key={i.title} to={{
-							pathname: `/subject/${subject}/${i.title}`,
-						}}>
-						<div style={{fontSize:18}}>
-						{i.title}
+						<div className="row h-100 justify-content-center align-items-center">
+							<Alert className="text-center" variant="info" style={{ width: '25rem' }}>
+								<Link key={i.title} to={{
+									pathname: `/subject/${subject}/${i.title}`,
+								}}>
+									<div style={{ fontSize: 18 }}>
+										{i.title}
+									</div>
+								</Link>
+							</Alert>
+							<br />
 						</div>
-						</Link>
-					</Alert>
-					<br/>
 					</div>
-					</div>
-					)}
-				</ul>
-		
+				)}
+			</ul>
+
 		</Container>
 	);
 }

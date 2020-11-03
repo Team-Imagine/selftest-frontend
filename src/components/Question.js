@@ -17,7 +17,9 @@ const Question = ({ subject, course, isOpen }) => {
 				console.log(res.data);
 
 				setQuestion(res.data.questions);
-			
+			})
+			.catch(error => {
+				alert(error.response.data.message);
 			})
 	}, []);
 

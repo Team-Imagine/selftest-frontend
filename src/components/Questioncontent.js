@@ -51,6 +51,9 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 						setEditorState(t_editorState);
 					}
 				})
+				.catch(error => {
+					alert(error.response.data.message);
+				})
 
 			axios.get(`/api/answer?question_id=${question_id}`)
 				.then(res => {
@@ -76,6 +79,9 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 						
 					}
 
+				})
+				.catch(error => {
+					alert(error.response.data.message);
 				})
 		} else {
 			alert('로그인이 필요한 기능입니다.');

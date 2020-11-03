@@ -68,6 +68,9 @@ const MakeAnswer = ({ subject, course, question_id, isOpen }) => {
 						setEditorState(t_editorState);
 					}
 				})
+				.catch(error => {
+					alert(error.response.data.message);
+				})
 		} else {
 			alert('로그인이 필요한 기능입니다.');
 			history.push(`/subject/${subject}/${course}`);
@@ -108,6 +111,9 @@ const MakeAnswer = ({ subject, course, question_id, isOpen }) => {
 					setEditorAnswer("");
 
 					moveBack();
+				})
+				.catch(error => {
+					alert(error.response.data.message);
 				})
 		} else {
 			alert('내용을 올바르게 입력하세요.');

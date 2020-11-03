@@ -21,7 +21,6 @@ const LoginForm = () => {
     };
 
     axios.post(`/api/auth/login`, user)
-
       .then(res => {
         console.log(res.data);
 
@@ -31,6 +30,9 @@ const LoginForm = () => {
         setPassword("");
         setEmail("");
         setIsLoggedIn(1);
+      })
+      .catch(error => {
+        alert(error.response.data.message);
       })
   }
   const redirect = isLoggedIn ? (<Redirect to={{pathname: '/home'}}/>) : '';

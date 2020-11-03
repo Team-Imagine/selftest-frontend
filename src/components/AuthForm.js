@@ -26,6 +26,9 @@ const AuthForm = () => {
 
 				setIsAuthenticated(1);
 			})
+			.catch(error => {
+				alert(error.response.data.message);
+			})
 	}
 
 	const redirect = isAuthenticated ? (<Redirect to={{ pathname: '/home' }} />) : '';

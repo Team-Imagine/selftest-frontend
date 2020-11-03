@@ -33,7 +33,7 @@ const NavBar = ({isOpen, point}) => {
     if(cookies.access_token) {  // 쿠키에 access_token이 존재하면 로그인 상태 유지
       store.dispatch({type:'LOGIN', value: 1})
       
-      await axios.get(`/api/user`)
+       await axios.get(`/api/user`)
         .then((res) => {
           
           store.dispatch({type:'VERIFIED', value: res.data.user.verified})
@@ -41,8 +41,8 @@ const NavBar = ({isOpen, point}) => {
           setUserPoint(store.getState().point);
           
           //console.log('test1:', store.getState().verified);
-
-          if(!store.getState().verified) {
+          if(store.getState().isLoggedIn && !store.getState().verified) {
+            
             axios.post(`/api/auth/send-verification-email`)
               .then((res) => {
                 console.log(res.data);
@@ -50,6 +50,9 @@ const NavBar = ({isOpen, point}) => {
                 history.push("/auth");
               })
           } 
+        })
+        .catch(error => {
+          alert(error.response.data.message);
         })
     
     }
@@ -62,6 +65,9 @@ const NavBar = ({isOpen, point}) => {
         //console.log(res.data.user.point);
         setUserPoint(res.data.user.point);
       })
+      .catch(error => {
+				alert(error.response.data.message);
+			})
     }
   }, [point]);
   /*
@@ -75,8 +81,8 @@ const NavBar = ({isOpen, point}) => {
     }
   }, [point]);
   */
-  const signOut = () => {
-    axios.post(`/api/auth/logout`)
+  const signOut = async () => {
+    await axios.post(`/api/auth/logout`)
       .then((res) => {
         console.log(res.data);
         
@@ -84,11 +90,14 @@ const NavBar = ({isOpen, point}) => {
 
         store.dispatch({type:'LOGIN', value: 0});
         store.dispatch({type:'VERIFIED', value: 0});
-
+      
         alert('로그아웃 되었습니다.');
 
         moveHome();
       })
+      .catch(error => {
+				alert(error.response.data.message);
+			})
   }
 
   useEffect(() => {
