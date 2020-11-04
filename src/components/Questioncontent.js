@@ -111,8 +111,8 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 					<div className = "p-2 bd-highlight">
 					<div>
 						<Button variant="info" style = {{width: '19rem', height: '2.5rem'}}
-							href={`/subject/${subject}/${course}/${question_id}/make_answer/${1}`}
-						>정답 생성</Button>
+							href={`/subject/${subject}/${course}/${question_id}/problem_solving/${1}`}
+						>문제 풀이</Button>
 						</div>
 						</div>
 					</div>

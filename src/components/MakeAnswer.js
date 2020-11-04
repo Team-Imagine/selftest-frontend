@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Button, } from "react-bootstrap";
+import { Container, Button, Text } from "react-bootstrap";
 import { Link, useHistory } from 'react-router-dom';
 
 import classNames from "classnames";
@@ -22,7 +22,7 @@ const MyBlock = styled.div`
 				justify-content: center;
     }
   	.editor {
-    height: 200px !important;
+    height: 400px !important;
     border: 1px solid #f1f1f1 !important;
     padding: 5px !important;
 		border-radius: 2px !important;
@@ -46,15 +46,37 @@ const MakeAnswer = ({ subject, course, question_id, isOpen }) => {
 	const [editorState, setEditorState] = useState(EditorState.createEmpty());
 	const [editorAnswer, setEditorAnswer] = useState(EditorState.createEmpty());
 	const [question, setQuestion] = useState('');
+	const [questionType, setQuestionType] = useState('');
+	const [choiceList, setChoiceList] = useState([]);
+	const [choiceColor, setChoiceColor] = useState([]);
+	const [shortAnswer, setShortAnswer] = useState('');
 	const [title, setTitle] = useState('');
 	let history = useHistory();
 	let htmlToEditor = '';
+	let t_choiceColor = [];
 
 	useEffect(() => {
 		if (store.getState().isLoggedIn) {
 			axios.get(`/api/question/${question_id}`)
 				.then(res => {
+					console.log(res.data);
+
+					setQuestionType(res.data.question.type);
 					setQuestion(res.data.question);
+
+					if(res.data.question.type === "multiple_choice") {
+						let t_choiceList = [];
+
+						for (var i in res.data.question.multiple_choice_items) {
+							t_choiceList.push({item_text: res.data.question.multiple_choice_items[i].item_text});
+							t_choiceColor.push('black');
+						}
+						// console.log(t_choiceList);
+
+						setChoiceList([...t_choiceList]);
+						setChoiceColor([...t_choiceColor]);
+						
+					}
 
 					htmlToEditor = res.data.question.content;
 
@@ -68,9 +90,7 @@ const MakeAnswer = ({ subject, course, question_id, isOpen }) => {
 						setEditorState(t_editorState);
 					}
 				})
-				.catch(error => {
-					alert(error.response.data.message);
-				})
+				
 		} else {
 			alert('로그인이 필요한 기능입니다.');
 			history.push(`/subject/${subject}/${course}`);
@@ -88,19 +108,45 @@ const MakeAnswer = ({ subject, course, question_id, isOpen }) => {
 		setEditorAnswer(editorState);
 	};
 
+	useEffect(() => {
+		console.log(choiceColor);
+	}, [choiceList, choiceColor]);
 
-	const submitHandler = async (event) => {
+	
+	const submitHandler = (event) => {
 		event.preventDefault();
+		
+		if(questionType === "multiple_choice") {
+			let rightAnswer = true;
 
+			for(var i in question.multiple_choice_items) {
+				
+				if(question.multiple_choice_items[i].checked === 1 && choiceColor[i] === 'black'
+				|| question.multiple_choice_items[i].checked === 0 && choiceColor[i] === 'red') {
+					rightAnswer = false;
+				}
+			}
+			if(rightAnswer) {
+				alert('정답입니다.');
+			} else {
+				alert('오답입니다.');
+			}
+		} else if(questionType === "short_answer") {
+			let rightAnswer = false;
+			for(var i in question.short_answer_items) {
+				if(question.short_answer_items[i].item_text === shortAnswer) {
+					rightAnswer = true;
+					alert('정답입니다.');
+				}
+			}
+			if(!rightAnswer) {
+				alert('오답입니다.');
+			}
+		}
 		let editorToHtml = draftToHtml(convertToRaw(editorAnswer.getCurrentContent()));
 
-		let data = {
-			content: editorToHtml,
-			question_id: question_id,
-		};
-
 		//console.log(editorToHtml.length)
-
+		/*
 		if (editorToHtml.length > 15) {
 			axios.post(`/api/answer/`, data)
 
@@ -118,10 +164,28 @@ const MakeAnswer = ({ subject, course, question_id, isOpen }) => {
 		} else {
 			alert('내용을 올바르게 입력하세요.');
 		}
+		*/
 	}
 
 	const onChange = (e) => {
 		setTitle(e.target.value);
+	}
+
+	const selectAnswer = (index, e) => {
+		t_choiceColor = choiceColor;
+
+		//console.log(t_choiceColor);
+
+		if(choiceColor[index] === 'black') {
+			t_choiceColor[index] = 'red';
+		} else {
+			t_choiceColor[index] = 'black';
+		}
+		setChoiceColor([...t_choiceColor]);
+	}
+
+	const makeAnswer = (e) => {
+		setShortAnswer(e.target.value);
 	}
 
 	return (
@@ -133,15 +197,15 @@ const MakeAnswer = ({ subject, course, question_id, isOpen }) => {
         	<div className="mr-auto p-2 bd-highlight"> 
 			<div style={{height:'2.5rem'}}>
 			<h4 style={{fontWeight:"bolder"}}>
-				과목 {'>'} {subject} {'>'} {course} {'>'} 정답 생성
+				과목 {'>'} {subject} {'>'} {course} {'>'} 문제 풀이
 			</h4>
 			</div>
 			</div></div>
 			
 			<hr />
-			<div className="row justify-content-center align-items-center">
+			<div className="column justify-content-center align-items-center">
 				<Card border="light" style={{ backgroundColor: "#f7feff" }}>
-					<Card className="center" border="info" style={{width:'85rem'}}>
+					<Card className="center" border="info" style={{width:'85rem', height: '20rem'}}>
 						<Card.Header>
 							{question.title}
 						</Card.Header>
@@ -160,13 +224,27 @@ const MakeAnswer = ({ subject, course, question_id, isOpen }) => {
 								localization={{
 									locale: 'ko',
 								}}
-							/>
+							/> 
 						</Card.Body>
 					</Card>
+					
 				</Card>
-
-				<br />
-			<MyBlock style={{width:'86rem'}}>
+					
+			<div>
+			<br /><br />
+			{
+				(questionType === "multiple_choice" && choiceList !== null) ? 
+					<div>
+						{choiceList.map((i, index) =>
+						<div key={index}>
+							<Button variant="secondary" style={{ width:'40rem', color: choiceColor[index]}} onClick={(e) => {selectAnswer(index, e)}}>{index+1}번 {' >'} {i.item_text}</Button><br /><br/>
+						</div>
+					)}
+					</div>
+				: (questionType === "short_answer") ? <div>
+					<input type="text" id="title" className="input" style={{width: "50%", height: "3rem", border: "2px solid black"}} onChange={(e) => makeAnswer(e)}/>
+				</div> : <div>
+				<MyBlock style={{width:'86rem'}}>
 			<br/>
 			<div style={{height:'17rem'}}>
 				<Editor 
@@ -198,14 +276,17 @@ const MakeAnswer = ({ subject, course, question_id, isOpen }) => {
 				/>
 				</div>
 			</MyBlock>
-			<Button className="btn-block" variant="info" style={{width:'20rem'}}
-				onClick={submitHandler}
-			>정답 등록</Button>
+				</div>
+			}
 			</div>
 			
-
+				
+			<Button className="btn-block" variant="info" style={{width:'20rem'}}
+				onClick={submitHandler}
+			>풀이 제출 </Button>
+			</div>
 			
-
+			
 		</Container>
 	);
 }

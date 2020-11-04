@@ -75,7 +75,7 @@ class Subject extends React.Component {
           )
         }     
         if (this.props.match.params.question_id) {
-          if(this.props.match.params.make_answer) {
+          if(this.props.match.params.problem_solving) {
             return (
               <div>
               <NavBar toggle={this.toggle} isOpen={this.state.isOpen} point={true}/>

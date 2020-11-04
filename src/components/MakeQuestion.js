@@ -100,7 +100,6 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 		let editorToHtml = draftToHtml(convertToRaw(editorState.getCurrentContent()));
 
 		let answer_items = [];
-
 		let data;
 
 		if(questionType === "주관식") {
