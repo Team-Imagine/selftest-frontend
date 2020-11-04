@@ -42,10 +42,12 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 	// EditorState의 비어있는 ContentState 기본 구성으로 새 개체를 반환 => 이렇게 안하면 상태 값을 나중에 변경할 수 없음.
 	const [editorState, setEditorState] = useState(EditorState.createEmpty());
 	const [editorChoice, setEditorChoice] = useState(EditorState.createEmpty());
+	const [editorSolution, setEditorSolution] = useState(EditorState.createEmpty());
 	const [selectedFile, setSelectedFile] = useState('');
 	const [title, setTitle] = useState('');
 	const [questionType, setQuestionType] = useState('객관식');
 	const [choices, setChoices] = useState([0]);
+	const [checked, setChecked] = useState([false]);
 	const [checks, setChecks] = useState([false]);
 	const [answer, setAnswer] = useState([]);
 
@@ -53,30 +55,29 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 	let history = useHistory();
 
 	let choiceNumber = [0];
-	let answerList = [];
+	let answerList = [0];
 
 	let t_checkList = [];
 
 	let checkedList = [];
 
 	useEffect(() => {
-		if (questionType == "객관식") {
-
-		}
-	}, [questionType]);
+		
+	}, []);
 
 	const moveBack = () => {
 		history.push(`/subject/${subject}/${course}`);
 	}
 
-	const onEditorStateChange = (editorState) => {
+	const onEditorChange = (type, editorState) => {
 		// editorState에 값 설정
-		setEditorState(editorState);
-	};
-
-	const onEditorChoiceChange = (editorState) => {
-		// editorState에 값 설정
-		setEditorChoice(editorState);
+		if(type === 1) {	// 문제 내용 Editor
+			setEditorState(editorState);
+		} else if(type === 2) {
+			setEditorChoice(editorState);	// 서술형 답안 Editor
+		} else {
+			setEditorSolution(editorState);	// 문제의 해설 Editor
+		}
 	};
 
 	const imageUploadCallback = file => {
@@ -98,13 +99,14 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 		event.preventDefault();
 
 		let editorToHtml = draftToHtml(convertToRaw(editorState.getCurrentContent()));
+		let editorToHtml_solution = draftToHtml(convertToRaw(editorSolution.getCurrentContent()));
 
 		let answer_items = [];
 		let data;
-
+		
 		if(questionType === "주관식") {
-			for(var i in answerList) {
-				answer_items.push({item_text: answerList[i]});
+			for(var i in answer) {
+				answer_items.push({item_text: answer[i]});
 			}
 
 			data = {
@@ -115,9 +117,11 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 				short_answer_items: answer_items,
 			}
 		} else if(questionType === "객관식") {
-			for(var i in answerList) {
-				answer_items.push({item_text: answerList[i], checked: checkedList[i]});
+			for(var i in answer) {
+				answer_items.push({item_text: answer[i], checked: checked[i]});
 			}
+
+			console.log(checked);
 
 			data = {
 				title: title,
@@ -139,7 +143,7 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 				short_answer_items: answer_items,
 			}
 		}
-
+		
 		/*
 		const formData = new FormData();
 
@@ -157,28 +161,29 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 				console.log(res.data);
 			})
 			*/
-		/*
-		let editorToHtml = draftToHtml(convertToRaw(editorState.getCurrentContent()));
-
-		let data = {
-			title: title,
-			content: editorToHtml,
-			course_title: course
-		};
-
-		//console.log(editorToHtml.length)
-		*/
-		if (title && (editorToHtml.length > 15)) {
+		
+		if (title && (editorToHtml.length > 10)) {
 			axios.post(`/api/question/`, data)
 
 				.then(res => {
-					console.log(res);
-					console.log(res.data);
-
-					alert("문제가 성공적으로 등록되었습니다.");
+					
 					setEditorState("");
 
-					moveBack();
+					const nData = {
+						question_id: res.data.question.id,
+						content: editorToHtml_solution
+					} 
+					
+					axios.post(`/api/answer/`, nData)
+					.then(res => {
+						alert("문제가 성공적으로 등록되었습니다.");
+						setEditorSolution("");
+					})
+					.catch(error => {
+						alert(error.response.data.message);
+					})
+					
+					moveBack();		
 				})
 				.catch(error => {
 					alert(error.response.data.message);
@@ -202,15 +207,16 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 	const makeAnswer = (index, e) => {
 		answerList = choices;
 		
-
 		answerList[index] = e.target.value;
-		
-		console.log(answerList);
+
+		setAnswer([...answerList]);
 	}
 
 	const controlCheck = (index, e) => {
 		checkedList = checks;	
 		checkedList[index] = e.target.checked
+
+		setChecked([...checkedList]);
 	}
 
 	const addChoice = (e) => {
@@ -285,7 +291,7 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 					// 초기값 설정
 					editorState={editorState}
 					// 에디터의 값이 변경될 때마다 onEditorStateChange 호출
-					onEditorStateChange={onEditorStateChange}
+					onEditorStateChange={editorState => {onEditorChange(1, editorState)}}
 				/>
 			</MyBlock>
 					<div>
@@ -326,13 +332,34 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 				
 				toolbarClassName="toolbar-class"
 				editorState={editorChoice}
-				onEditorStateChange={onEditorChoiceChange}
+				onEditorStateChange={editorState => {onEditorChange(2, editorState)}}
 				localization={{
 					locale: 'ko',
 				}}
 			/> <hr /></div> 
 			}
 		</div>
+		<br/>
+		<div style={{backgroundColor: 'white', height: "200px", overflow: 'auto'}}> <Editor
+				wrapperClassName="wrapper-class"
+				editorClassName="editor"
+				toolbarClassName="toolbar-class"
+				toolbar={{
+					inline: { inDropdown: true },
+					list: { inDropdown: true },
+					textAlign: { inDropdown: true },
+					link: { inDropdown: true },
+					history: { inDropdown: true },
+				}}
+				placeholder="문제의 해설을 작성해주세요."
+				editorState={editorSolution}
+				onEditorStateChange={editorState => {onEditorChange(3, editorState)}}
+				localization={{
+					locale: 'ko',
+				}}
+			/>
+		</div> <br/>
+
 			<Button className="btn-block" variant="info"
 				onClick={submitHandler}
 			>문제 등록</Button>

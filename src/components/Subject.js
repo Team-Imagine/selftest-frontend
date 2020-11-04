@@ -5,7 +5,7 @@ import Course from "./Course";
 import Question from "./Question";
 import Questioncontent from "./Questioncontent";
 import MakeQuestion from "./MakeQuestion";
-import MakeAnswer from "./MakeAnswer";
+import SolveQuestion from "./SolveQuestion";
 import NavBar from "./content/Navbar";
 
 class Subject extends React.Component {
@@ -81,7 +81,7 @@ class Subject extends React.Component {
               <NavBar toggle={this.toggle} isOpen={this.state.isOpen} point={true}/>
               <div className="App wrapper">
               <SideBar toggle={this.toggle} isOpen={this.state.isOpen} />
-              <MakeAnswer
+              <SolveQuestion
                 toggle={this.toggle}
                 subject={this.props.match.params.subject}
                 course={this.props.match.params.course}

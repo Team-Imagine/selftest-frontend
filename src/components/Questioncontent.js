@@ -40,7 +40,6 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 
 					console.log(htmlToEditor);
 
-
 					const blocksFromHtml = htmlToDraft(htmlToEditor);
 					if (blocksFromHtml) {
 						const { contentBlocks, entityMap } = blocksFromHtml;
@@ -54,11 +53,11 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 				.catch(error => {
 					alert(error.response.data.message);
 				})
-
+			/*
 			axios.get(`/api/answer?question_id=${question_id}`)
 				.then(res => {
 					setAnswer(res.data.answers);
-
+					
 					for (var i in res.data.answers) {
 					
 						htmlToEditorAnswer.push(res.data.answers[i].content);
@@ -76,13 +75,12 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 							setItems([...t_answer]);
 							//setEditorState(t_editorState);
 						}
-						
 					}
-
 				})
 				.catch(error => {
 					alert(error.response.data.message);
 				})
+			*/
 		} else {
 			alert('로그인이 필요한 기능입니다.');
 			history.push(`/subject/${subject}/${course}`);
@@ -147,6 +145,7 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 							<Card.Footer className="text-muted">좋아요.....   신선해요.....   난이도 </Card.Footer>
 						</Card>
 								<br />
+								
 						<button
               type="submit"
 							className="btn btn-secondary"
