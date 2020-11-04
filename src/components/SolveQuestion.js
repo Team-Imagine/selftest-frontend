@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Button, Text } from "react-bootstrap";
+import { Container, Button, Text, CardDeck } from "react-bootstrap";
 import { Link, useHistory } from 'react-router-dom';
 
 import classNames from "classnames";
@@ -22,7 +22,7 @@ const MyBlock = styled.div`
 				justify-content: center;
     }
   	.editor {
-    height: 400px !important;
+    height: auto;
     border: 1px solid #f1f1f1 !important;
     padding: 5px !important;
 		border-radius: 2px !important;
@@ -228,11 +228,13 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 			<hr />
 			<div className="column justify-content-center align-items-center">
 				<Card border="light" style={{ backgroundColor: "#f7feff" }}>
-					<Card className="center" border="info" style={{ width: '85rem', height: '20rem' }}>
+					<Card className="center" style={{ width: '85rem', height: '20rem' }}>
 						<Card.Header>
-							{question.title}
+						#{question.id} {subject} - {course}
 						</Card.Header>
 						<Card.Body>
+						<div style={{fontWeight:"bold"}}>제목: {question.title} </div>
+						<br/>
 							<Editor
 								toolbarHidden
 								// 에디터와 툴바 모두에 적용되는 클래스
@@ -254,18 +256,25 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 				</Card>
 
 				<div>
-					<br /><br />
+					<br />
 					{
 						(questionType === "multiple_choice" && choiceList !== null) ?
+					
 							<div>
+
 								{choiceList.map((i, index) =>
+									
+									
 									<div key={index}>
-										<Button variant="secondary" style={{ width: '40rem', color: choiceColor[index] }} onClick={(e) => { selectAnswer(index, e) }}>{index + 1}번 {' >'} {i.item_text}</Button><br /><br />
+										<Button variant="outline-dark" style={{width: '40rem', color: choiceColor[index], backgroundColor:"lavender" }} onClick={(e) => { selectAnswer(index, e) }}>{'('}{index + 1}{')'} {i.item_text}</Button><br /><br />
 									</div>
+									
+									
 								)}
 							</div>
+						
 							: (questionType === "short_answer") ? <div>
-								<input type="text" id="title" className="input" style={{ width: "50%", height: "3rem", border: "2px solid black" }} onChange={(e) => makeAnswer(e)} />
+								<input type="text" id="title" className="input" style={{ width: "100%", height: "3rem"}} onChange={(e) => makeAnswer(e)} />
 							</div> : <div>
 									<MyBlock style={{ width: '86rem' }}>
 										<br />
@@ -309,10 +318,11 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 				<Button className="btn-block" variant="info" style={{ width: '20rem' }}
 					onClick={submitHandler}
 				>풀이 제출 </Button>
-				<Button className="btn-block" variant="info" style={{ width: '20rem' }}
+				<Button className="btn-block" variant="info" style={{ width: '20rem'}}
 					onClick={appearAnswer}
 				>정답 확인 </Button>
-				<div>
+				
+				<div style={{height:"0.5rem"}}>
 				{ (showAnswer) ?
 					<div>
 						{answerList.map((i, index) =>

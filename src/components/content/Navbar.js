@@ -169,11 +169,11 @@ const NavBar = ({isOpen, point}) => {
         </div>
         <div>
           <Nav.Link onClick={moveHome}>
-            <h1>SelfTest</h1>
+            <h1 >SelfTest</h1>
           </Nav.Link>
         </div>
         <Form inline>
-          <FormControl type="text" placeholder="Search" className="mr-sm-2 " />
+          <FormControl type="text" placeholder="검색하기" className="mr-sm-2 " />
           <Button variant="info">
             <FontAwesomeIcon icon={faSearch} className="ml-auto" />
           </Button>

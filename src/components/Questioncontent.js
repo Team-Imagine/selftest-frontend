@@ -12,7 +12,7 @@ import Accordion from 'react-bootstrap/Accordion'
 import axios from "axios";
 import store from "../store";
 
-const Questioncontent = ({ subject, course, question_id, isOpen }) => {
+const Questioncontent = ({ subject, course, question_id, commentable_entity_id, isOpen }) => {
 	const [editorState, setEditorState] = useState(EditorState.createEmpty());
 	const [items, setItems] = useState([]);
 	
@@ -53,6 +53,7 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 				.catch(error => {
 					alert(error.response.data.message);
 				})
+			
 			/*
 			axios.get(`/api/answer?question_id=${question_id}`)
 				.then(res => {
@@ -120,12 +121,16 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 					<Card border="light" style={{ backgroundColor: "#f7feff" }}>
 					<Card className="center" style={{ width: '70rem' }}>
 							<Card.Header>
-							<div style={{fontWeight:"bold", fontsize:"5rem"}}>
+							<div style={{fontWeight:"bold", fontsize:"rem"}}>
 							#{question.id} {subject} - {course}
 							</div>	
 							</Card.Header>
 							<Card.Body>
+								<div style={{fontWeight:"bold"}}>제목: {question.title} </div>
+								<br/>
+								
 								<Editor
+						
 									toolbarHidden
 									// 에디터와 툴바 모두에 적용되는 클래스
 									wrapperClassName="wrapper-class"
@@ -145,13 +150,15 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 							<Card.Footer className="text-muted">좋아요.....   신선해요.....   난이도 </Card.Footer>
 						</Card>
 								<br />
-								
+
+						{/*	문제풀이에서 정답이 보여지므로 button 주석처리했습니다
 						<button
               type="submit"
 							className="btn btn-secondary"
 							onClick={appearAnswer}
             >
-              정답 확인</button>
+			  정답 확인</button>
+			 
 								<br/>
 						{viewAnswer && 
 							<div>
@@ -185,9 +192,11 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 							</div>
 							)}</div>
 						}
-													
+						
+						 */}								
 						<Accordion>
 						<Card className="center" style={{ width: '70rem' }}>
+							
 								<Accordion.Toggle className="center" as={Button} variant="light" block eventKey="0">
 									댓글 보기
 								</Accordion.Toggle>
@@ -196,7 +205,7 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 									<Card.Body style={{ backgroundColor: "white" }} >
 
 										<div>
-											댓글이 보여질 곳
+											댓글이 보여질곳 입니다. {commentable_entity_id}
 										</div>
 										<br />
 

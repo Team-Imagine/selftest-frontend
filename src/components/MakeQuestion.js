@@ -243,7 +243,14 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 							과목 {'>'} {subject} {'>'} {course} {'>'} 문제 생성
 			</h4>
 					</div>
-				</div></div>
+				</div>
+				
+				
+		
+			
+		
+		</div>
+			<hr />
 			<InputGroup className="mb-3">
 				<DropdownButton
 					variant="outline-secondary"
@@ -258,7 +265,6 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 				</DropdownButton>
 
 			</InputGroup>
-			<hr />
 			<MyBlock>
 				<input type="text" id="title" className="input" placeholder="문제 제목" fontSize="40" onChange={onChange} />
 				<Editor
@@ -298,7 +304,9 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 			{
 				(questionType === "객관식") ? 
 				<div>
-					<Button onClick={addChoice}>선택지 추가</Button> <hr />
+					
+					<Button variant="outline-info" onClick={addChoice}>선택지 추가</Button> <hr />
+					<p >*답을 입력하고 정답에 체크해주세요.</p>
 					{choices.map((i, index) =>
 						<div key={index}>
 							<InputGroup className="mb-3">
@@ -307,16 +315,20 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
       						<InputGroup.Checkbox aria-label="Checkbox for following text input" onChange={(e) => controlCheck(index, e)}/>
     						</InputGroup.Prepend>
   						</InputGroup>
+						  
 						</div>
 					)}
 					<hr />
 				</div>
 				: (questionType === "주관식" ) ? 
 				<div>
-				<Button onClick={addChoice}>선택지 추가</Button> <hr />
+				<div>
+				
+				<Button variant="outline-info" onClick={addChoice}>선택지 추가</Button> <hr />
+				</div>
 				{choices.map((i, index) =>
 					<div key={index}>
-						<input type="text" id="title" className="input" style={{width: "50%", height: "3rem", border: "2px solid black"}} onChange={(e) => makeAnswer(index, e)}/>
+						<input type="text" id="title" className="input" style={{width: "100%", height: "3rem"}} onChange={(e) => makeAnswer(index, e)}/>
 			 <hr />
 					</div> 
 				)} 
@@ -339,7 +351,7 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 			/> <hr /></div> 
 			}
 		</div>
-		<br/>
+		
 		<div style={{backgroundColor: 'white', height: "200px", overflow: 'auto'}}> <Editor
 				wrapperClassName="wrapper-class"
 				editorClassName="editor"
