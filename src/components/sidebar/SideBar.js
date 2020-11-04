@@ -43,9 +43,10 @@ const SideBar = ({ toggle, isOpen }) => {
   }
 
   return (
-    <div className={classNames("sidebar", { "is-open": isOpen })}>
+    
+    <div className={classNames("sidebar", { "is-open": isOpen })} style={{height:"auto"}}>
       <br />
-      <div className="sidebar-header">
+      <div className="sidebar-header" >
         <Button
           variant="link"
           onClick={toggle}
@@ -103,6 +104,7 @@ const SideBar = ({ toggle, isOpen }) => {
         </Nav.Item>
       </Nav>
     </div>
+  
 
   );
 }

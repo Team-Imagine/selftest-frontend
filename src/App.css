@@ -33,17 +33,19 @@ a:focus {
 ----------------------------------------------------- */
 .sidebar {
   min-width: 250px;
-  max-width: 500px;
+  max-width: 2000px;
   background: #354052;
   color: #adb5bd;
   margin-left: -250px;
   transition: all 0.5s;
   position: sticky;
+  max-height: 20000px;
 }
 
 .sidebar.is-open {
   margin-left: 0;
   transition: 0.5s;
+  max-height: max-content;
 }
 
 .sidebar-header {
@@ -128,7 +130,8 @@ li a.dropdown-toggle::after {
 .content {
   padding: 20px;
   margin-left: 0;
-  height: 100vh;
+  min-height: 100vh;
+  max-height: "auto";
 }
 
 @media only screen and (max-width: 575.98px) {

@@ -48,7 +48,7 @@ const AuthForm = () => {
 						<br /><br /><br />
 						<br /><br /><br />
 						<br /><br /><br />
-						<h2>User Authentication</h2>
+						<h2>본인 인증</h2>
 						<hr />
 
 						<div className="row h-100 justify-content-center align-items-center">
