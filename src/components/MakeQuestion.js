@@ -328,14 +328,16 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 				</div>
 				{choices.map((i, index) =>
 					<div key={index}>
-						<input type="text" id="title" className="input" style={{width: "100%", height: "3rem"}} onChange={(e) => makeAnswer(index, e)}/>
+						<FormControl placeholder="정답을 작성해주세요."type="text" id="title" className="input" style={{width: "100%", height: "3rem"}} onChange={(e) => makeAnswer(index, e)}/>
 			 <hr />
 					</div> 
 				)} 
 				<hr />
 				</div>
 				: 
-				<div style={{backgroundColor: 'white'}}> <Editor
+				<div style={{backgroundColor: 'white'}}> 
+				
+				<Editor
 				toolbarHidden
 				wrapperClassName="wrapper-class"
 				

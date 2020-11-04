@@ -202,6 +202,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 		e.preventDefault();
 
 		setIsOwned(true);
+		alert("문제가 소장되었습니다!")
 	}
 
 	return (
@@ -261,17 +262,20 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 						(questionType === "multiple_choice" && choiceList !== null) ?
 					
 							<div>
-
-								{choiceList.map((i, index) =>
-									
-									
-									<div key={index}>
-										<Button variant="outline-dark" style={{width: '40rem', color: choiceColor[index], backgroundColor:"lavender" }} onClick={(e) => { selectAnswer(index, e) }}>{'('}{index + 1}{')'} {i.item_text}</Button><br /><br />
+									<div>
+									<p> 위 문제에 대한 알맞은 정답을 선택하세요.</p>
 									</div>
 									
+								{choiceList.map((i, index) =>
 									
+									<div key={index}>
+										<Button variant="outline-light" style={{width: '40rem', color: choiceColor[index], backgroundColor:"lavender" }} onClick={(e) => { selectAnswer(index, e) }}>{'('}{index + 1}{')'} {i.item_text}</Button><br />
+									</div>	
 								)}
+								<br/>
+								
 							</div>
+							
 						
 							: (questionType === "short_answer") ? <div>
 								<input type="text" id="title" className="input" style={{ width: "100%", height: "3rem"}} onChange={(e) => makeAnswer(e)} />
