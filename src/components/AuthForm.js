@@ -47,14 +47,14 @@ const AuthForm = () => {
 						className="col-6">
 						<br /><br /><br />
 						<br /><br /><br />
-						<br /><br /><br />
-						<h2>본인 인증</h2>
+						
+						<h2 style={{fontWeight:"bolder"}}>본인 인증</h2>
 						<hr />
 
 						<div className="row h-100 justify-content-center align-items-center">
 							<div>
               				<img src={emailpic}
-               				width='350'
+               				width='500'
                				height='200'
                 			alt='email' />
 						
@@ -77,7 +77,7 @@ const AuthForm = () => {
 								name="authCode"
 								value={authCode}
 								onChange={({ target: { value } }) => setAuthCode(value)}
-								placeholder="Enter the code"
+								placeholder="인증코드를 입력해주세요."
 							/>
 
 						</Form.Group>

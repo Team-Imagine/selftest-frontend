@@ -58,8 +58,10 @@ const SideBar = ({ toggle, isOpen }) => {
         </Button>
       </div>
       <Nav className="flex-column pt-2">
+        <div style={{fontSize:"2rem"}}>
         <p className="ml-3">메뉴</p>
-
+        </div>
+        <div style={{fontSize:"1.5rem", fontWeight:"lighter"}}>
         <Nav.Item className="/">
 
           <Nav.Link onClick={moveHome}>
@@ -102,6 +104,7 @@ const SideBar = ({ toggle, isOpen }) => {
             <FontAwesomeIcon icon={faCog} className="mr-2" />
               설정</Nav.Link>
         </Nav.Item>
+        </div>
       </Nav>
     </div>
   

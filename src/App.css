@@ -7,14 +7,44 @@
 @import "https://fonts.googleapis.com/css?family=Jua:400";
 @import "https://fonts.googleapis.com/css?family=Gothic A1:100,200,300,400,500,600,700,800,900";
 @import "https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,500,600,700";
+@import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poor+Story&display=swap');
+@import url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/Recipekorea.woff');
+@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
+@font-face {
+  font-family: 'Recipekorea';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/Recipekorea.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Cafe24Oneprettynight';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Cafe24Oneprettynight.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'ImcreSoojin';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.3/ImcreSoojin.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'GmarketSansMedium';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+  padding-left:"px"
 }
 
 body {
-  font-family: "Gothic A1", sans-serif;
+  font-family: 'GmarketSansMedium';
   background-color: #f5f9fc;
 }
 

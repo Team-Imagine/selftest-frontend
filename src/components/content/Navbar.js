@@ -115,14 +115,15 @@ const NavBar = ({isOpen, point}) => {
         expand="lg"
       >
         <div className="row h-100 justify-content-center align-items-center">
-          <img src={logo}
-            width='60'
-            height='50'
+          <img style={{paddingLeft:"10px", paddingRight:"10px", paddingBottom:"10px"}}src={logo}
+            width='80'
+            height='60'
             alt='signup' />
         </div>
         <div>
           <Nav.Link onClick={moveHome}>
-            <h1>SelfTest</h1>
+            <div><h1 style={{fontWeight:"bolder"}}>SelfTest</h1></div>
+            
           </Nav.Link>
         </div>
         <Form inline>
