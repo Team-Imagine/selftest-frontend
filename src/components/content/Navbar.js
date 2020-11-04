@@ -57,7 +57,7 @@ const NavBar = ({isOpen, point}) => {
     
     }
   }
-
+  /*
   useEffect(() => {
     if(cookies.access_token && store.getState().verified) {
       axios.get(`/api/user/`)
@@ -70,6 +70,7 @@ const NavBar = ({isOpen, point}) => {
 			})
     }
   }, [point]);
+  */
   /*
   useEffect(() => {
     if(cookies.access_token && store.getState().verified) {
