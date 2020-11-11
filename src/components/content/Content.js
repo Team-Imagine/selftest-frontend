@@ -30,11 +30,11 @@ class Content extends React.Component {
             </Card.Header>
 
             <Card.Body>
-              <Card.Title>수학
+              <Card.Title>컴퓨터공학
               
               </Card.Title>
               <Card.Text>
-                미분, 적분, 기하와 벡터
+                컴퓨터구조, 인공지능, 영상처리, 컴퓨터그래픽스
               </Card.Text>
             </Card.Body>
             <Card.Footer>
@@ -48,9 +48,9 @@ class Content extends React.Component {
             </Card.Header>
             
             <Card.Body>
-              <Card.Title>컴퓨터공학</Card.Title>
+              <Card.Title>교양</Card.Title>
               <Card.Text>
-                Java, C, C++, C#, Python, html
+                글쓰기, 한국사, 중국어, 영어
               </Card.Text>
             </Card.Body>
             <Card.Footer>
@@ -65,9 +65,9 @@ class Content extends React.Component {
 
 
             <Card.Body>
-              <Card.Title>영어</Card.Title>
+              <Card.Title>유아교육과</Card.Title>
               <Card.Text>
-                읽기, 듣기, 쓰기, 말하기
+                유아교육론, 유아놀이지도, 영유아발달
               </Card.Text>
             </Card.Body>
             <Card.Footer>
@@ -84,11 +84,11 @@ class Content extends React.Component {
             </Card.Header>
 
             <Card.Body>
-              <Card.Title>과학
+              <Card.Title>기계공학과
               
               </Card.Title>
               <Card.Text>
-                 물리, 화학, 생물, 실험
+                 열역학, 동역학, 고체역학
               </Card.Text>
             </Card.Body>
             <Card.Footer>
@@ -102,9 +102,9 @@ class Content extends React.Component {
             </Card.Header>
             
             <Card.Body>
-              <Card.Title>무역</Card.Title>
+              <Card.Title>경영학과</Card.Title>
               <Card.Text>
-                경제학, 회계학, 경영학
+                재무관리, 투자론, 국제경영학
               </Card.Text>
             </Card.Body>
             <Card.Footer>
