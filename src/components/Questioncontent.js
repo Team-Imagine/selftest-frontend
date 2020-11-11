@@ -9,8 +9,11 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import htmlToDraft from 'html-to-draftjs';
 import Card from "react-bootstrap/Card";
 import Accordion from 'react-bootstrap/Accordion'
+import { faAppleAlt, faHeart, faStar } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import store from "../store";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faApple } from "@fortawesome/free-brands-svg-icons";
 
 const Questioncontent = ({ subject, course, question_id, commentable_entity_id, isOpen }) => {
 	const [editorState, setEditorState] = useState(EditorState.createEmpty());
@@ -50,6 +53,7 @@ const Questioncontent = ({ subject, course, question_id, commentable_entity_id, 
 						setEditorState(t_editorState);
 					}
 				})
+			
 				.catch(error => {
 					alert(error.response.data.message);
 				})
@@ -95,6 +99,7 @@ const Questioncontent = ({ subject, course, question_id, commentable_entity_id, 
 		setViewAnswer(!viewAnswer);
 	} 
 
+	
 	return (
 		<Container
 			fluid
@@ -147,7 +152,35 @@ const Questioncontent = ({ subject, course, question_id, commentable_entity_id, 
 									}}
 								/>
 							</Card.Body>
-							<Card.Footer className="text-muted">좋아요.....   신선해요.....   난이도 </Card.Footer>
+							<Card.Footer >
+							<div className="d-flex bd-highlight mb-3" style={{height:"0.8rem"}}>
+							
+							<div className="mr-auto p-2 bd-highlight">
+							좋아요 &nbsp;
+							<FontAwesomeIcon icon={faHeart} className="ml-auto" />&nbsp;
+							<FontAwesomeIcon icon={faHeart} className="ml-auto" />&nbsp;  
+							<FontAwesomeIcon icon={faHeart} className="ml-auto" />&nbsp;  
+							<FontAwesomeIcon icon={faHeart} className="ml-auto" />&nbsp;  
+							<FontAwesomeIcon icon={faHeart} className="ml-auto" />&nbsp;  
+							</div>
+							<div className="mr-auto p-2 bd-highlight">
+							신선해요 &nbsp;  
+							<FontAwesomeIcon icon={faAppleAlt} className="ml-auto" />&nbsp;
+							<FontAwesomeIcon icon={faAppleAlt} className="ml-auto" />&nbsp;
+							<FontAwesomeIcon icon={faAppleAlt} className="ml-auto" />&nbsp;
+							<FontAwesomeIcon icon={faAppleAlt} className="ml-auto" />&nbsp;
+							<FontAwesomeIcon icon={faAppleAlt} className="ml-auto" />&nbsp;
+							</div>
+							<div className="mr-auto p-2 bd-highlight">
+							난이도  &nbsp;
+							<FontAwesomeIcon icon={faStar} className="ml-auto" />&nbsp;
+							<FontAwesomeIcon icon={faStar} className="ml-auto" />&nbsp;
+							<FontAwesomeIcon icon={faStar} className="ml-auto" />&nbsp;
+							<FontAwesomeIcon icon={faStar} className="ml-auto" />&nbsp;
+							<FontAwesomeIcon icon={faStar} className="ml-auto" />&nbsp;
+							</div>
+							</div>
+							</Card.Footer>
 						</Card>
 								<br />
 
@@ -210,7 +243,7 @@ const Questioncontent = ({ subject, course, question_id, commentable_entity_id, 
 										<br />
 
 										<Card.Footer>
-											좋아요...
+											좋아요 <FontAwesomeIcon icon={faHeart} className="ml-auto" />&nbsp;
 										</Card.Footer>
 									</Card.Body>
 

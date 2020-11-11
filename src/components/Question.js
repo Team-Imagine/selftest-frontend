@@ -5,6 +5,8 @@ import { Link, useHistory } from 'react-router-dom';
 import Card from 'react-bootstrap/Card'
 import axios from "axios";
 import store from "../store";
+import { faAppleAlt, faHeart, faStar } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Question = ({ subject, course, isOpen }) => {
 
@@ -75,7 +77,35 @@ const Question = ({ subject, course, isOpen }) => {
 							<Card.Body><div style={{fontWeight:"lighter"}}>{i.title}
 							</div>
 							</Card.Body>
-							<Card.Footer>좋아요    신선도 </Card.Footer>
+							<Card.Footer>
+							<div className="d-flex bd-highlight mb-3" style={{height:"0.8rem"}}>
+							
+							<div className="mr-auto p-2 bd-highlight">
+							좋아요 &nbsp;
+							<FontAwesomeIcon icon={faHeart} className="ml-auto" />&nbsp;
+							<FontAwesomeIcon icon={faHeart} className="ml-auto" />&nbsp;  
+							<FontAwesomeIcon icon={faHeart} className="ml-auto" />&nbsp;  
+							<FontAwesomeIcon icon={faHeart} className="ml-auto" />&nbsp;  
+							<FontAwesomeIcon icon={faHeart} className="ml-auto" />&nbsp;  
+							</div>
+							<div className="mr-auto p-2 bd-highlight">
+							신선해요 &nbsp;  
+							<FontAwesomeIcon icon={faAppleAlt} className="ml-auto" />&nbsp;
+							<FontAwesomeIcon icon={faAppleAlt} className="ml-auto" />&nbsp;
+							<FontAwesomeIcon icon={faAppleAlt} className="ml-auto" />&nbsp;
+							<FontAwesomeIcon icon={faAppleAlt} className="ml-auto" />&nbsp;
+							<FontAwesomeIcon icon={faAppleAlt} className="ml-auto" />&nbsp;
+							</div>
+							<div className="mr-auto p-2 bd-highlight">
+							난이도  &nbsp;
+							<FontAwesomeIcon icon={faStar} className="ml-auto" />&nbsp;
+							<FontAwesomeIcon icon={faStar} className="ml-auto" />&nbsp;
+							<FontAwesomeIcon icon={faStar} className="ml-auto" />&nbsp;
+							<FontAwesomeIcon icon={faStar} className="ml-auto" />&nbsp;
+							<FontAwesomeIcon icon={faStar} className="ml-auto" />&nbsp;
+							</div>
+							</div>
+								 </Card.Footer>
 						</Link>
 						</Card>
 						</div>
