@@ -72,6 +72,7 @@ const Question = ({ subject, course, isOpen }) => {
 							<div>
 							문제 #{i.id} {subject} - {course}  
 							</div>
+							
 
 							</Card.Header>
 							<Card.Body><div style={{fontWeight:"lighter"}}>{i.title}

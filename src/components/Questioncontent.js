@@ -177,6 +177,17 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 			})
 	}
 
+	const AddBookmarks = (e) => {
+		e.preventDefault();
+		axios.post(`/api/bookmark/${question_id}`)
+		.then(res => {
+		console.log(res.data.message);
+		})
+		.catch(error => {
+			alert(error.response.data.message);
+		})
+		
+	}
 	const addFreshness = (e) => {
 		e.preventDefault();
 
@@ -315,6 +326,7 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 		setInputComment(e.target.value);
 	}
 
+
 	const submitComment = (e) => {
 		e.preventDefault();
 		const content = inputComment;
@@ -391,11 +403,19 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 
 					<Card border="light" style={{ backgroundColor: "#f7feff" }}>
 						<Card className="center" style={{ width: '70rem' }}>
-							<Card.Header>
+							
+							<Card.Header style={{height:"3.5rem"}}>
+							<div className="d-flex bd-highlight mb-3">
+								<div className="mr-auto p-2 bd-highlight">
 								<div style={{ fontWeight: "bold", fontsize: "rem" }}>
 									#{question.id} {subject} - {course}
 								</div>
+								</div>
+								<Button variant="info" style={{ width: '2.8rem', height: '2.2rem' }}
+							><FontAwesomeIcon icon={faStar} className="mr-2" onClick={AddBookmarks} /></Button>
+								</div>
 							</Card.Header>
+							
 							<Card.Body>
 								<div style={{ fontWeight: "bold" }}>제목: {question.title} </div>
 								<br />

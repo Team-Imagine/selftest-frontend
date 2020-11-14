@@ -73,11 +73,11 @@ const Bookmarkscontent = ({ subject, course, question_id, question, isOpen, }) =
 						}}>
 							<Card.Header>
 							<div>
-              #{i.id} {subject} - {course}
+              				#{i.id} {subject} - {course}
 							</div>
 
 							</Card.Header>
-							<Card.Body><div style={{fontWeight:"lighter"}}>{i.title}
+							<Card.Body><div style={{fontWeight:"lighter"}}>{i.question.title}
 							</div>
 							</Card.Body>
 							<Card.Footer>
