@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Button, CardDeck, FormControl} from "react-bootstrap";
+import { Container, Button, CardDeck, FormControl } from "react-bootstrap";
 import classNames from "classnames";
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
@@ -15,29 +15,73 @@ import store from "../store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faApple } from "@fortawesome/free-brands-svg-icons";
 
-const Questioncontent = ({ subject, course, question_id, commentable_entity_id, isOpen }) => {
+const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 	const [editorState, setEditorState] = useState(EditorState.createEmpty());
 	const [items, setItems] = useState([]);
-	
-	const [answer, setAnswer] = useState([]);
+
 	const [question, setQuestion] = useState('');
-	const [viewAnswer, setViewAnswer] = useState(false);
+	const [comments, setComments] = useState([]);
+
+	const [likes, setLikes] = useState(0);
+	const [dislikes, setDislikes] = useState(0);
+	const [freshness, setFreshness] = useState('blank');
+	const [difficulty, setDifficulty] = useState('blank');
+	const [likeable_entity_id, setLikeable_entity_id] = useState(0);
+	const [commentable_entity_id, setCommentable_entity_id] = useState(0);
+
+	const [freshPoint, setFreshPoint] = useState(0);
+	const [viewInputFresh, setViewInputFresh] = useState(false);
+
+	const [difficultyPoint, setDifficultyPoint] = useState(0);
+	const [viewInputDifficulty, setViewInputDifficulty] = useState(false);
+
+	const [username, setUsername] = useState('');
+	const [inputComment, setInputComment] = useState('');
+	const [modified, setModified] = useState(false);
+	const [inputModifiedComment, setInputModifiedComment] = useState('');
+
 	let history = useHistory();
 
 	let htmlToEditor = '';
-	let htmlToEditorAnswer = [];
-	let t_answer = [];
-	
+
 	useEffect(() => {
 		if (store.getState().isLoggedIn) {
 			axios.get(`/api/user`)
 				.then((res) => {
-					store.dispatch({type:'POINT', value: res.data.user.point});
+					setUsername(res.data.user.username);
+					store.dispatch({ type: 'POINT', value: res.data.user.point });
 				})
-			
+
 			axios.get(`/api/question/${question_id}`)
 				.then(res => {
+					console.log(res.data.question);
+
 					setQuestion(res.data.question);
+
+					console.log('test',);
+
+					setLikeable_entity_id(res.data.question['likeable_entity.id']);
+					setCommentable_entity_id(res.data.question['commentable_entity.id']);
+
+					setLikes(res.data.question['likeable_entity.likes.total_likes']);
+
+					setDislikes(res.data.question['likeable_entity.dislikes.total_dislikes']);
+
+					if (res.data.question['difficulties.average_difficulty']) {
+						setDifficulty(res.data.question['difficulties.average_difficulty']);
+					}
+					if (res.data.question['freshnesses.average_freshness']) {
+						setFreshness(res.data.question['freshnesses.average_freshness']);
+					}
+
+					//const commentable_entity_id = res.data.question['commentable_entity.id'];
+
+					axios.get(`/api/comment?commentable_entity_id=${res.data.question['commentable_entity.id']}`)
+						.then(res => {
+							console.log('comment:', res.data.comments);
+							setComments(res.data.comments);
+							//setComments(res.data.)
+						})
 
 					htmlToEditor = res.data.question.content;
 
@@ -53,39 +97,6 @@ const Questioncontent = ({ subject, course, question_id, commentable_entity_id, 
 						setEditorState(t_editorState);
 					}
 				})
-			
-				.catch(error => {
-					alert(error.response.data.message);
-				})
-			
-			/*
-			axios.get(`/api/answer?question_id=${question_id}`)
-				.then(res => {
-					setAnswer(res.data.answers);
-					
-					for (var i in res.data.answers) {
-					
-						htmlToEditorAnswer.push(res.data.answers[i].content);
-
-						const blocksFromHtml = htmlToDraft(htmlToEditorAnswer[i]);
-						if (blocksFromHtml) {
-							const { contentBlocks, entityMap } = blocksFromHtml;
-
-							const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
-
-							const t_editorState = EditorState.createWithContent(contentState);
-
-							t_answer.push(t_editorState);
-
-							setItems([...t_answer]);
-							//setEditorState(t_editorState);
-						}
-					}
-				})
-				.catch(error => {
-					alert(error.response.data.message);
-				})
-			*/
 		} else {
 			alert('로그인이 필요한 기능입니다.');
 			history.push(`/subject/${subject}/${course}`);
@@ -93,49 +104,304 @@ const Questioncontent = ({ subject, course, question_id, commentable_entity_id, 
 		}
 	}, []);
 
-	const appearAnswer = (event) => {
-		event.preventDefault();
+	const addLike = (e) => {
+		e.preventDefault();
 
-		setViewAnswer(!viewAnswer);
-	} 
+		axios.get(`/api/like/${likeable_entity_id}`)
+			.then(res => {
+				if (res.data.is_liked) {
+					axios.delete(`/api/like/${likeable_entity_id}`)
+						.then(res => {
+							console.log(res.data.message);
+							axios.get(`/api/question/${question_id}`)
+								.then(res => {
+									setLikes(res.data.question['likeable_entity.likes.total_likes']);
+								})
+						})
+				} else {
+					if (res.data.is_disliked) {
+						axios.delete(`/api/dislike/${likeable_entity_id}`)
+							.then(res => {
+								console.log(res.data.message);
+								axios.get(`/api/question/${question_id}`)
+									.then(res => {
+										setDislikes(res.data.question['likeable_entity.dislikes.total_dislikes']);
+									})
+							})
+					}
+					axios.post(`/api/like/${likeable_entity_id}`)
+						.then(res => {
+							console.log(res.data.message);
+							axios.get(`/api/question/${question_id}`)
+								.then(res => {
+									setLikes(res.data.question['likeable_entity.likes.total_likes']);
+								})
+						})
+				}
+			})
+	}
+	const addDislike = (e) => {
+		e.preventDefault();
 
-	
+		axios.get(`/api/dislike/${likeable_entity_id}`)
+			.then(res => {
+				if (res.data.is_disliked) {
+					axios.delete(`/api/dislike/${likeable_entity_id}`)
+						.then(res => {
+							console.log(res.data.message);
+							axios.get(`/api/question/${question_id}`)
+								.then(res => {
+									setDislikes(res.data.question['likeable_entity.dislikes.total_dislikes']);
+								})
+						})
+				} else {
+					if (res.data.is_liked) {
+						axios.delete(`/api/like/${likeable_entity_id}`)
+							.then(res => {
+								console.log(res.data.message);
+								axios.get(`/api/question/${question_id}`)
+									.then(res => {
+										setLikes(res.data.question['likeable_entity.likes.total_likes']);
+									})
+							})
+					}
+					axios.post(`/api/dislike/${likeable_entity_id}`)
+						.then(res => {
+							console.log(res.data.message);
+							axios.get(`/api/question/${question_id}`)
+								.then(res => {
+									setDislikes(res.data.question['likeable_entity.dislikes.total_dislikes']);
+								})
+						})
+				}
+			})
+	}
+
+	const addFreshness = (e) => {
+		e.preventDefault();
+
+		setViewInputFresh(false);
+		setFreshPoint(0);
+
+		axios.get(`/api/freshness/${question_id}`)
+			.then(res => {
+				//if(!res.data.is_freshness_evaluated) {
+				const fresh = freshPoint;
+				axios.post(`/api/freshness/${question_id}`, { fresh })
+					.then(res => {
+						console.log(res.data.message);
+						axios.get(`/api/question/${question_id}`)
+							.then(res => {
+								console.log(res.data.question);
+								setFreshness(res.data.question['freshnesses.average_freshness']);
+							})
+					})
+					.catch(error => {
+						alert(error.response.data.message);
+					})
+				//}
+			})
+	}
+	const deleteFreshness = (e) => {
+		e.preventDefault();
+
+		setViewInputFresh(false);
+		setFreshPoint(0);
+
+		axios.get(`/api/freshness/${question_id}`)
+			.then(res => {
+				if (res.data.is_freshness_evaluated) {
+					axios.delete(`/api/freshness/${question_id}`)
+						.then(res => {
+							console.log(res.data.message);
+							axios.get(`/api/question/${question_id}`)
+								.then(res => {
+									console.log(res.data.question);
+									setFreshness(res.data.question['freshnesses.average_freshness']);
+								})
+						})
+				}
+			})
+			.catch(error => {
+				alert(error.response.data.message);
+			})
+	}
+
+	const inputFreshnessForm = (e) => {
+		e.preventDefault();
+		if (viewInputFresh) {
+			setViewInputFresh(false);
+		} else {
+			setViewInputFresh(true);
+		}
+
+	}
+
+	const inputFreshness = (e) => {
+		e.preventDefault();
+
+		setFreshPoint(e.target.value);
+	}
+
+	const addDifficulty = (e) => {
+		e.preventDefault();
+
+		setViewInputDifficulty(false);
+		setDifficultyPoint(0);
+
+		axios.get(`/api/difficulty/${question_id}`)
+			.then(res => {
+				//if(!res.data.is_Difficulty_evaluated) {
+				const score = difficultyPoint;
+				axios.post(`/api/difficulty/${question_id}`, { score })
+					.then(res => {
+						console.log(res.data.message);
+						axios.get(`/api/question/${question_id}`)
+							.then(res => {
+								console.log(res.data.question);
+								setDifficulty(res.data.question['difficulties.average_difficulty']);
+							})
+					})
+					.catch(error => {
+						alert(error.response.data.message);
+					})
+				//}
+			})
+	}
+	const deleteDifficulty = (e) => {
+		e.preventDefault();
+
+		setViewInputDifficulty(false);
+		setDifficultyPoint(0);
+
+		axios.get(`/api/difficulty/${question_id}`)
+			.then(res => {
+				if (res.data.is_difficulty_evaluated) {
+					axios.delete(`/api/difficulty/${question_id}`)
+						.then(res => {
+							console.log(res.data.message);
+							axios.get(`/api/question/${question_id}`)
+								.then(res => {
+									console.log(res.data.question);
+									setDifficulty(res.data.question['difficulties.average_difficulty']);
+								})
+						})
+				}
+			})
+			.catch(error => {
+				alert(error.response.data.message);
+			})
+	}
+
+	const inputDifficultyForm = (e) => {
+		e.preventDefault();
+		if (viewInputFresh) {
+			setViewInputDifficulty(false);
+		} else {
+			setViewInputDifficulty(true);
+		}
+
+	}
+
+	const inputDifficulty = (e) => {
+		e.preventDefault();
+
+		setDifficultyPoint(e.target.value);
+	}
+
+	const inputCommentContent = (e) => {
+		e.preventDefault();
+
+		setInputComment(e.target.value);
+	}
+
+	const submitComment = (e) => {
+		e.preventDefault();
+		const content = inputComment;
+
+		axios.post(`/api/comment/${commentable_entity_id}`, { content })
+			.then(res => {
+				setInputComment('');
+				alert(res.data.message);
+
+				axios.get(`/api/comment?commentable_entity_id=${commentable_entity_id}`)
+				.then(res => {
+					console.log('comment:', res.data.comments);
+					setComments(res.data.comments);
+				})
+			})
+			.catch(error => {
+				alert(error.response.data.message);
+			})
+	}
+
+	const deleteComment = (id, e) => {
+		e.preventDefault();
+
+		console.log(id);
+		axios.delete(`/api/comment/${id}`)
+		.then(res => {
+			alert(res.data.message);
+			
+			axios.get(`/api/comment?commentable_entity_id=${commentable_entity_id}`)
+				.then(res => {
+					console.log('comment:', res.data.comments);
+					setComments(res.data.comments);
+			})
+		})
+	}
+
+	const modifyComment = (comment, e) => {
+		e.preventDefault();
+
+		if(!modified) {
+			setModified(true);
+			setInputModifiedComment(comment);
+		} else {
+			setModified(false);
+		}
+	}
+
+	const modifyCommentContent = (e) => {
+		e.preventDefault();
+		setInputModifiedComment(e.target.value);
+	}
 	return (
 		<Container
 			fluid
 			className={classNames("content", { "is-open": { isOpen } })}
 		>
 			<div>
-				<div className = "d-flex bd-highlight mb-3">
-        			<div className="mr-auto p-2 bd-highlight"> 
-					<h4 style={{fontWeight:"bolder"}}>
-					과목 {'>'} {subject} {'>'} {course} {'>'} 문제
+				<div className="d-flex bd-highlight mb-3">
+					<div className="mr-auto p-2 bd-highlight">
+						<h4 style={{ fontWeight: "bolder" }}>
+							과목 {'>'} {subject} {'>'} {course} {'>'} 문제
         			</h4>
 					</div>
-					<div className = "p-2 bd-highlight">
-					<div>
-						<Button variant="info" style = {{width: '19rem', height: '2.5rem'}}
-							href={`/subject/${subject}/${course}/${question_id}/problem_solving/${1}`}
-						>문제 풀이</Button>
-						</div>
+					<div className="p-2 bd-highlight">
+						<div>
+							<Button variant="info" style={{ width: '19rem', height: '2.5rem' }}
+								href={`/subject/${subject}/${course}/${question_id}/problem_solving/${1}`}
+							>문제 풀이</Button>
 						</div>
 					</div>
-				<hr/>
+				</div>
+				<hr />
 				<div className="row h-100 justify-content-center align-items-center">
 
 					<Card border="light" style={{ backgroundColor: "#f7feff" }}>
-					<Card className="center" style={{ width: '70rem' }}>
+						<Card className="center" style={{ width: '70rem' }}>
 							<Card.Header>
-							<div style={{fontWeight:"bold", fontsize:"rem"}}>
-							#{question.id} {subject} - {course}
-							</div>	
+								<div style={{ fontWeight: "bold", fontsize: "rem" }}>
+									#{question.id} {subject} - {course}
+								</div>
 							</Card.Header>
 							<Card.Body>
-								<div style={{fontWeight:"bold"}}>제목: {question.title} </div>
-								<br/>
-								
+								<div style={{ fontWeight: "bold" }}>제목: {question.title} </div>
+								<br />
+
 								<Editor
-						
+
 									toolbarHidden
 									// 에디터와 툴바 모두에 적용되는 클래스
 									wrapperClassName="wrapper-class"
@@ -153,83 +419,56 @@ const Questioncontent = ({ subject, course, question_id, commentable_entity_id, 
 								/>
 							</Card.Body>
 							<Card.Footer >
-							<div className="d-flex bd-highlight mb-3" style={{height:"0.8rem"}}>
-							
-							<div className="mr-auto p-2 bd-highlight">
-							좋아요 &nbsp;
-							<FontAwesomeIcon icon={faHeart} className="ml-auto" />&nbsp;
-							<FontAwesomeIcon icon={faHeart} className="ml-auto" />&nbsp;  
-							<FontAwesomeIcon icon={faHeart} className="ml-auto" />&nbsp;  
-							<FontAwesomeIcon icon={faHeart} className="ml-auto" />&nbsp;  
-							<FontAwesomeIcon icon={faHeart} className="ml-auto" />&nbsp;  
-							</div>
-							<div className="mr-auto p-2 bd-highlight">
-							신선해요 &nbsp;  
-							<FontAwesomeIcon icon={faAppleAlt} className="ml-auto" />&nbsp;
-							<FontAwesomeIcon icon={faAppleAlt} className="ml-auto" />&nbsp;
-							<FontAwesomeIcon icon={faAppleAlt} className="ml-auto" />&nbsp;
-							<FontAwesomeIcon icon={faAppleAlt} className="ml-auto" />&nbsp;
-							<FontAwesomeIcon icon={faAppleAlt} className="ml-auto" />&nbsp;
-							</div>
-							<div className="mr-auto p-2 bd-highlight">
-							난이도  &nbsp;
-							<FontAwesomeIcon icon={faStar} className="ml-auto" />&nbsp;
-							<FontAwesomeIcon icon={faStar} className="ml-auto" />&nbsp;
-							<FontAwesomeIcon icon={faStar} className="ml-auto" />&nbsp;
-							<FontAwesomeIcon icon={faStar} className="ml-auto" />&nbsp;
-							<FontAwesomeIcon icon={faStar} className="ml-auto" />&nbsp;
-							</div>
-							</div>
+								<div className="d-flex bd-highlight mb-3" style={{ height: "0.8rem" }}>
+
+									<div className="mr-auto p-2 bd-highlight">
+										<Button
+											onClick={addLike}>
+											좋아요
+							</Button>
+
+										{likes}
+
+									</div>
+									<div className="mr-auto p-2 bd-highlight">
+										<Button
+											onClick={addDislike}>
+											싫어요
+							</Button>
+										{dislikes}
+									</div>
+									<div className="mr-auto p-2 bd-highlight wrapper">
+										<Button
+											onClick={inputFreshnessForm}>
+											신선해요
+							</Button>
+										{viewInputFresh && <div><input onChange={(e) => inputFreshness(e)} style={{ width: "15%" }}></input>
+											<button onClick={addFreshness}>제출</button>
+											<button onClick={deleteFreshness}>삭제</button>
+										</div>}
+										{freshness}
+
+									</div>
+									<div className="mr-auto p-2 bd-highlight">
+										<Button
+											onClick={inputDifficultyForm}>
+											난이도
+							</Button>
+										{viewInputDifficulty && <div><input onChange={(e) => inputDifficulty(e)} style={{ width: "15%" }}></input>
+											<button onClick={addDifficulty}>제출</button>
+											<button onClick={deleteDifficulty}>삭제</button>
+										</div>}
+										{difficulty}
+
+									</div>
+								</div>
 							</Card.Footer>
 						</Card>
-								<br />
+						<br />
 
-						{/*	문제풀이에서 정답이 보여지므로 button 주석처리했습니다
-						<button
-              type="submit"
-							className="btn btn-secondary"
-							onClick={appearAnswer}
-            >
-			  정답 확인</button>
-			 
-								<br/>
-						{viewAnswer && 
-							<div>
-							{items.map((i, index) =>
-								<div key={index}>
-									<Card className="center" style={{ width: '70rem' }}>
-									<Card.Body style={{ backgroundColor: "white" }} >
-									<Editor
-									toolbarHidden
-									// 에디터와 툴바 모두에 적용되는 클래스
-									wrapperClassName="wrapper-class"
-									// 에디터 주변에 적용된 클래스
-									editorClassName="editor"
-
-									// 툴바 주위에 적용된 클래스
-									toolbarClassName="toolbar-class"
-									editorState= {i}
-									readOnly
-									// 한국어 설정
-									localization={{
-										locale: 'ko',
-									}}
-								/>
-										<br />
-										<Card.Footer>
-											좋아요...
-										</Card.Footer>
-									</Card.Body>
-							</Card>
-							<br />
-							</div>
-							)}</div>
-						}
-						
-						 */}								
 						<Accordion>
-						<Card className="center" style={{ width: '70rem' }}>
-							
+							<Card className="center" style={{ width: '70rem' }}>
+
 								<Accordion.Toggle className="center" as={Button} variant="light" block eventKey="0">
 									댓글 보기
 								</Accordion.Toggle>
@@ -238,7 +477,20 @@ const Questioncontent = ({ subject, course, question_id, commentable_entity_id, 
 									<Card.Body style={{ backgroundColor: "white" }} >
 
 										<div>
-											댓글이 보여질곳 입니다. {commentable_entity_id}
+											{comments.map((i) =>
+												<div className="container h-100" key={i.id}>
+													<div className="row h-100 align-items-center">
+														작성자: {i.user.username} <br/>
+														{i.content}
+														{(username === i.user.username) ? 
+															(modified) ? 
+															<div>
+																<FormControl onValue={inputModifiedComment} onChange={(e) => modifyCommentContent(e)} type="text" id="title" className="input" style={{ width: "100%", height: "3rem" }} />
+															</div>: <div> 
+																<Button onClick = {(e) => modifyComment(e)}>수정</Button><Button onClick={(e) => deleteComment(i.id, e)}>삭제</Button></div> : <div></div>}
+													</div>
+												</div>
+											)}
 										</div>
 										<br />
 
@@ -249,9 +501,10 @@ const Questioncontent = ({ subject, course, question_id, commentable_entity_id, 
 								</Accordion.Collapse>
 							</Card>
 						</Accordion>
-						<FormControl placeholder="댓글 작성하기"type="text" id="title" className="input" style={{width: "100%", height: "3rem"}} />
+						<FormControl placeholder="댓글 작성하기" onChange={(e) => inputCommentContent(e)} type="text" id="title" className="input" style={{ width: "100%", height: "3rem" }} />
+						<Button onClick={submitComment}>제출</Button>
 					</Card>
-					
+
 				</div>
 			</div>
 

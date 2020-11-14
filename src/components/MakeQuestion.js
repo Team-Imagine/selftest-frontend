@@ -244,11 +244,6 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 			</h4>
 					</div>
 				</div>
-				
-				
-		
-			
-		
 		</div>
 			<hr />
 			<InputGroup className="mb-3">
