@@ -169,7 +169,7 @@ const NavBar = ({isOpen, point}) => {
         </div>
         <div>
           <Nav.Link onClick={moveHome}>
-            <h1 >SelfTest</h1>
+            <h1 style={{paddingTop:"0.5rem"}}>SelfTest</h1>
           </Nav.Link>
         </div>
         <Form inline>
@@ -186,7 +186,7 @@ const NavBar = ({isOpen, point}) => {
                   보유 포인트  
                 </div>
                 <div className = "mr-2">
-                <Badge pill style={{ height:"2.3rem"}}variant="danger">
+                <Badge pill style={{ height:"2.3rem", paddingTop:"0.6rem"}}variant="danger">
                   <div style={{fontSize: "1.3rem"}}>
                     {userPoint}P
                   </div>

@@ -9,7 +9,7 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import htmlToDraft from 'html-to-draftjs';
 import Card from "react-bootstrap/Card";
 import Accordion from 'react-bootstrap/Accordion'
-import { faAppleAlt, faHeart, faStar } from "@fortawesome/free-solid-svg-icons";
+import { faAppleAlt, faHeart, faStar, faThumbtack, faThumbsDown, faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import store from "../store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -412,7 +412,7 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 								</div>
 								</div>
 								<Button variant="info" style={{ width: '2.8rem', height: '2.2rem' }}
-							><FontAwesomeIcon icon={faStar} className="mr-2" onClick={AddBookmarks} /></Button>
+							><FontAwesomeIcon icon={faThumbtack} className="mr-2" onClick={AddBookmarks} /></Button>
 								</div>
 							</Card.Header>
 							
@@ -438,30 +438,31 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 									}}
 								/>
 							</Card.Body>
-							<Card.Footer >
+							<Card.Footer style={{paddingTop:"0rem", paddingBottom:"1rem"}}>
 								<div className="d-flex bd-highlight mb-3" style={{ height: "0.8rem" }}>
 
 									<div className="mr-auto p-2 bd-highlight">
-										<Button
+										<Button style={{padding:"9px", paddingRight:"px", paddingTop:"2px", paddingBottom:"2px"}} 
 											onClick={addLike}>
-											좋아요
-							</Button>
+											
+											<FontAwesomeIcon icon={faThumbsUp} className="mr-2"/>
+							</Button>&nbsp;&nbsp;
 
 										{likes}
 
 									</div>
 									<div className="mr-auto p-2 bd-highlight">
-										<Button
+										<Button style={{paddingLeft:"9px", paddingRight:"2px", paddingTop:"4px", paddingBottom:"0px"}}
 											onClick={addDislike}>
-											싫어요
-							</Button>
+											<FontAwesomeIcon icon={faThumbsDown} className="mr-2"/>
+							</Button>&nbsp;&nbsp;
 										{dislikes}
 									</div>
 									<div className="mr-auto p-2 bd-highlight wrapper">
-										<Button
+										<Button variant="danger" style={{padding:"9px", paddingRight:"2px", paddingTop:"3px", paddingBottom:"1px"}}
 											onClick={inputFreshnessForm}>
-											신선해요
-							</Button>
+											<FontAwesomeIcon icon={faAppleAlt} className="mr-2"/>
+							</Button>&nbsp;&nbsp;
 										{viewInputFresh && <div><input onChange={(e) => inputFreshness(e)} style={{ width: "15%" }}></input>
 											<button onClick={addFreshness}>제출</button>
 											<button onClick={deleteFreshness}>삭제</button>
@@ -470,10 +471,10 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 
 									</div>
 									<div className="mr-auto p-2 bd-highlight">
-										<Button
+										<Button variant="warning" style={{padding:"7px", paddingRight:"0px", paddingTop:"3px", paddingBottom:"1px"}}
 											onClick={inputDifficultyForm}>
-											난이도
-							</Button>
+											<FontAwesomeIcon icon={faStar} style={{color:"white"}} className="mr-2"/>
+							</Button>&nbsp;&nbsp;
 										{viewInputDifficulty && <div><input onChange={(e) => inputDifficulty(e)} style={{ width: "15%" }}></input>
 											<button onClick={addDifficulty}>제출</button>
 											<button onClick={deleteDifficulty}>삭제</button>
