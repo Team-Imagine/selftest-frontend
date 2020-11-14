@@ -442,7 +442,7 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 								<div className="d-flex bd-highlight mb-3" style={{ height: "0.8rem" }}>
 
 									<div className="mr-auto p-2 bd-highlight">
-										<Button style={{padding:"9px", paddingRight:"px", paddingTop:"2px", paddingBottom:"2px"}} 
+										<Button style={{padding:"9px", paddingRight:"2px", paddingTop:"2px", paddingBottom:"2px"}} 
 											onClick={addLike}>
 											
 											<FontAwesomeIcon icon={faThumbsUp} className="mr-2"/>
