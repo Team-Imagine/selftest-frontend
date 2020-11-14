@@ -71,7 +71,7 @@ a:focus {
 
 .nav-item {
   /*color: #ced4da;*/
-  color: #000;
+  color: #ffff;
 
   font-weight: 300;
 }
@@ -81,18 +81,18 @@ a:focus {
 }
 
 .nav-item.open {
-  color: #e9ecef;
+  color: #0000;
   /*background: #313b4c;*/
 }
 
 .nav-item.active {
-  color: #e9ecef;
+  color: #0000;
   /*background: #2d3646!important;*/ 
 }
 
 .nav-item:hover {
   /*background: #313b4c;*/
-  color: #fff;
+  color: #000;
   transition: 0.2s;
 }
 

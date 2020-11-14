@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Button, CardDeck } from "react-bootstrap";
+import { Container, Button, CardDeck, FormControl} from "react-bootstrap";
 import classNames from "classnames";
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
@@ -246,13 +246,12 @@ const Questioncontent = ({ subject, course, question_id, commentable_entity_id, 
 											좋아요 <FontAwesomeIcon icon={faHeart} className="ml-auto" />&nbsp;
 										</Card.Footer>
 									</Card.Body>
-
-
 								</Accordion.Collapse>
-
 							</Card>
 						</Accordion>
+						<FormControl placeholder="댓글 작성하기"type="text" id="title" className="input" style={{width: "100%", height: "3rem"}} />
 					</Card>
+					
 				</div>
 			</div>
 

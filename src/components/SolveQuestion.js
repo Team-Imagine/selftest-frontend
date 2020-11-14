@@ -278,9 +278,14 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 							
 						
 							: (questionType === "short_answer") ? <div>
-								<input type="text" id="title" className="input" style={{ width: "100%", height: "3rem"}} onChange={(e) => makeAnswer(e)} />
+								<div>
+									<p> 아래에 정답을 입력하세요.</p>
+									</div>
+								
+								<div><input type="text" id="title" className="input" style={{ width: "85rem", height: "3rem"}} onChange={(e) => makeAnswer(e)} /><br/> </div> 
 							</div> : <div>
-									<MyBlock style={{ width: '86rem' }}>
+								
+									<MyBlock style={{ width: '85rem' }}>
 										<br />
 										<div style={{ height: '17rem' }}>
 											<Editor
