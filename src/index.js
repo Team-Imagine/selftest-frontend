@@ -17,7 +17,7 @@ import Test from "./components/Test";
 import Rank from "./components/Rank";
 import Settings from "./components/Settings";
 import Bookmarks from "./components/Bookmarks";
-
+import Search from "./components/Search";
 
 import { CookiesProvider } from 'react-cookie';
 
