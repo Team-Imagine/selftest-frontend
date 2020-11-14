@@ -306,7 +306,7 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 
 	const inputDifficultyForm = (e) => {
 		e.preventDefault();
-		if (viewInputFresh) {
+		if (viewInputDifficulty) {
 			setViewInputDifficulty(false);
 		} else {
 			setViewInputDifficulty(true);
@@ -441,7 +441,7 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 							<Card.Footer style={{paddingTop:"0rem", paddingBottom:"1rem"}}>
 								<div className="d-flex bd-highlight mb-3" style={{ height: "0.8rem" }}>
 
-									<div className="mr-auto p-2 bd-highlight">
+									<div className="mr-auto p-2 bd-highlight" style={{width:"25%"}}>
 										<Button style={{padding:"9px", paddingRight:"2px", paddingTop:"2px", paddingBottom:"2px"}} 
 											onClick={addLike}>
 											
@@ -451,14 +451,14 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 										{likes}
 
 									</div>
-									<div className="mr-auto p-2 bd-highlight">
+									<div className="mr-auto p-2 bd-highlight"style={{width:"25%"}}>
 										<Button style={{paddingLeft:"9px", paddingRight:"2px", paddingTop:"4px", paddingBottom:"0px"}}
 											onClick={addDislike}>
 											<FontAwesomeIcon icon={faThumbsDown} className="mr-2"/>
 							</Button>&nbsp;&nbsp;
 										{dislikes}
 									</div>
-									<div className="mr-auto p-2 bd-highlight wrapper">
+									<div className="mr-auto p-2 bd-highlight wrapper"style={{width:"25%"}}>
 										<Button variant="danger" style={{padding:"9px", paddingRight:"2px", paddingTop:"3px", paddingBottom:"1px"}}
 											onClick={inputFreshnessForm}>
 											<FontAwesomeIcon icon={faAppleAlt} className="mr-2"/>
@@ -470,7 +470,7 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 										{freshness}
 
 									</div>
-									<div className="mr-auto p-2 bd-highlight">
+									<div className="mr-auto p-2 bd-highlight"style={{width:"25%"}}>
 										<Button variant="warning" style={{padding:"7px", paddingRight:"0px", paddingTop:"3px", paddingBottom:"1px"}}
 											onClick={inputDifficultyForm}>
 											<FontAwesomeIcon icon={faStar} style={{color:"white"}} className="mr-2"/>
@@ -499,25 +499,30 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 
 										<div>
 											{comments.map((i) =>
-												<div className="container h-100" key={i.id}>
-													<div className="row h-100 align-items-center">
-														작성자: {i.user.username} <br/>
+												<div key={i.id}>
+													<div>
+														<div style={{fontWeight:"bold"}}>작성자: {i.user.username} <br/></div>
+														
 														{i.content}
+														<br/><br/>
 														{(username === i.user.username) ? 
 															(modified) ? 
 															<div>
 																<FormControl onValue={inputModifiedComment} onChange={(e) => modifyCommentContent(e)} type="text" id="title" className="input" style={{ width: "100%", height: "3rem" }} />
 															</div>: <div> 
-																<Button onClick = {(e) => modifyComment(e)}>수정</Button><Button onClick={(e) => deleteComment(i.id, e)}>삭제</Button></div> : <div></div>}
+																<Button onClick = {(e) => modifyComment(e)}>수정</Button>&nbsp;&nbsp;<Button onClick={(e) => deleteComment(i.id, e)}>삭제</Button></div> : <div></div>} <br/>
 													</div>
+													<Card.Footer>
+											좋아요 <FontAwesomeIcon icon={faHeart} className="ml-auto" />
+										</Card.Footer>
+													<hr/>	
 												</div>
+											
 											)}
 										</div>
 										<br />
 
-										<Card.Footer>
-											좋아요 <FontAwesomeIcon icon={faHeart} className="ml-auto" />&nbsp;
-										</Card.Footer>
+										
 									</Card.Body>
 								</Accordion.Collapse>
 							</Card>
