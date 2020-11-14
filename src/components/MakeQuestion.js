@@ -353,8 +353,9 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 			/> <hr /></div> 
 			}
 		</div>
-		
-		<div style={{backgroundColor: 'white', height: "200px", overflow: 'auto'}}> <Editor
+		<div>
+			{
+				(questionType !== "서술형") ? <div style={{backgroundColor: 'white', height: "200px", overflow: 'auto'}}> <Editor
 				wrapperClassName="wrapper-class"
 				editorClassName="editor"
 				toolbarClassName="toolbar-class"
@@ -371,8 +372,11 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 				localization={{
 					locale: 'ko',
 				}}
-			/>
-		</div> <br/>
+				/>
+				</div> : <div></div>
+			}
+		</div>
+		 <br/>
 
 			<Button className="btn-block" variant="info"
 				onClick={submitHandler}
