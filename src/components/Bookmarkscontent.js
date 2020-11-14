@@ -5,7 +5,7 @@ import { Link, useHistory } from 'react-router-dom';
 import Card from 'react-bootstrap/Card'
 import axios from "axios";
 import store from "../store";
-import { faAppleAlt, faHeart, faStar } from "@fortawesome/free-solid-svg-icons";
+import { faAppleAlt, faHeart, faStar, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Bookmarkscontent = ({ subject, course, question_id, question, isOpen, }) => {
@@ -24,6 +24,19 @@ const Bookmarkscontent = ({ subject, course, question_id, question, isOpen, }) =
 				alert(error.response.data.message);
 			})
   }, []);
+
+  const DeleteBookmarks = (e) => {
+	e.preventDefault();
+	axios.delete(`/api/bookmark/${question_id}`)
+	.then(res => {
+		console.log(res.data.message);
+		alert("문제가 즐겨찾기에서 삭제되었습니다")
+	})
+	.catch(error => {
+		alert(error.response.data.message);
+	})
+}
+
   
   
 
@@ -39,6 +52,7 @@ const Bookmarkscontent = ({ subject, course, question_id, question, isOpen, }) =
 			}
 	}
 */
+
 	return (
 		<Container
 			fluid
@@ -71,9 +85,16 @@ const Bookmarkscontent = ({ subject, course, question_id, question, isOpen, }) =
 						to={{
 							pathname: `/subject/${subject}/${course}/${i.id}`,
 						}}>
-							<Card.Header>
-							<div>
+							<Card.Header style={{height:"3.5rem"}}>
+							<div className="d-flex bd-highlight mb-3">
+							<div className="mr-auto p-2 bd-highlight">
               				#{i.id} {subject} - {course}
+							</div>
+							<div >
+							<Button variant="info" style={{ width: '2.4rem', height: '2rem' }}>
+							<FontAwesomeIcon icon={faTrashAlt} className="ml-auto" onClick={DeleteBookmarks} />
+							</Button>
+							</div>
 							</div>
 
 							</Card.Header>
