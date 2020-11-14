@@ -80,16 +80,15 @@ const Bookmarkscontent = ({ subject, course, question_id, question, isOpen, }) =
 							<Card.Body><div style={{fontWeight:"lighter"}}>{i.question.title}
 							</div>
 							</Card.Body>
+							{/*
 							<Card.Footer>
+							
 							<div className="d-flex bd-highlight mb-3" style={{height:"0.8rem"}}>
 							
 							<div className="mr-auto p-2 bd-highlight">
 							좋아요 &nbsp;
 							<FontAwesomeIcon icon={faHeart} className="ml-auto" />&nbsp;
-							<FontAwesomeIcon icon={faHeart} className="ml-auto" />&nbsp;  
-							<FontAwesomeIcon icon={faHeart} className="ml-auto" />&nbsp;  
-							<FontAwesomeIcon icon={faHeart} className="ml-auto" />&nbsp;  
-							<FontAwesomeIcon icon={faHeart} className="ml-auto" />&nbsp;  
+						  
 							</div>
 							<div className="mr-auto p-2 bd-highlight">
 							신선해요 &nbsp;  
@@ -108,7 +107,8 @@ const Bookmarkscontent = ({ subject, course, question_id, question, isOpen, }) =
 							<FontAwesomeIcon icon={faStar} className="ml-auto" />&nbsp;
 							</div>
 							</div>
-								 </Card.Footer>
+				
+								 </Card.Footer>	*/}
 						</Link>
 						</Card>
 						</div>

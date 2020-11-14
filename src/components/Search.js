@@ -1,6 +1,6 @@
 import React from "react";
 import SideBar from "./sidebar/SideBar";
-import Searchcontent from "./Settingscontent";
+import Searchcontent from "./Searchcontent";
 import NavBar from "./content/Navbar";
 
 class Search extends React.Component {

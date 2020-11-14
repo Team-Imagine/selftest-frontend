@@ -5,8 +5,10 @@ import { Link, useHistory } from 'react-router-dom';
 import Card from 'react-bootstrap/Card'
 import axios from "axios";
 import store from "../store";
-import { faAppleAlt, faHeart, faStar } from "@fortawesome/free-solid-svg-icons";
+import { faAppleAlt, faHeart, faStar, faThumbsDown, faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+
 
 const Question = ({ subject, course, isOpen }) => {
 
@@ -72,7 +74,7 @@ const Question = ({ subject, course, isOpen }) => {
 							<div>
 							문제 #{i.id} {subject} - {course}  
 							</div>
-							
+
 
 							</Card.Header>
 							<Card.Body><div style={{fontWeight:"lighter"}}>{i.title}
@@ -83,27 +85,28 @@ const Question = ({ subject, course, isOpen }) => {
 							
 							<div className="mr-auto p-2 bd-highlight">
 							좋아요 &nbsp;
-							<FontAwesomeIcon icon={faHeart} className="ml-auto" />&nbsp;
-							<FontAwesomeIcon icon={faHeart} className="ml-auto" />&nbsp;  
-							<FontAwesomeIcon icon={faHeart} className="ml-auto" />&nbsp;  
-							<FontAwesomeIcon icon={faHeart} className="ml-auto" />&nbsp;  
-							<FontAwesomeIcon icon={faHeart} className="ml-auto" />&nbsp;  
+							<FontAwesomeIcon icon={faThumbsUp}className="ml-auto"/>&nbsp;
+							{i["likeable_entity.total_likes"]}
+							
 							</div>
+
+							<div className="mr-auto p-2 bd-highlight">
+							싫어요 &nbsp;
+							<FontAwesomeIcon icon={faThumbsDown} className="ml-auto" />&nbsp;
+							{i["likeable_entity.total_dislikes"]}
+							
+							</div>
+							
 							<div className="mr-auto p-2 bd-highlight">
 							신선해요 &nbsp;  
 							<FontAwesomeIcon icon={faAppleAlt} className="ml-auto" />&nbsp;
-							<FontAwesomeIcon icon={faAppleAlt} className="ml-auto" />&nbsp;
-							<FontAwesomeIcon icon={faAppleAlt} className="ml-auto" />&nbsp;
-							<FontAwesomeIcon icon={faAppleAlt} className="ml-auto" />&nbsp;
-							<FontAwesomeIcon icon={faAppleAlt} className="ml-auto" />&nbsp;
+							{i.average_freshness}
 							</div>
+
 							<div className="mr-auto p-2 bd-highlight">
 							난이도  &nbsp;
-							<FontAwesomeIcon icon={faStar} className="ml-auto" />&nbsp;
-							<FontAwesomeIcon icon={faStar} className="ml-auto" />&nbsp;
-							<FontAwesomeIcon icon={faStar} className="ml-auto" />&nbsp;
-							<FontAwesomeIcon icon={faStar} className="ml-auto" />&nbsp;
-							<FontAwesomeIcon icon={faStar} className="ml-auto" />&nbsp;
+							<FontAwesomeIcon icon={faStar} className="ml-auto"  />&nbsp;
+							{i.average_difficulty}
 							</div>
 							</div>
 								 </Card.Footer>

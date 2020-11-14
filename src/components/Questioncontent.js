@@ -26,6 +26,7 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 	const [dislikes, setDislikes] = useState(0);
 	const [freshness, setFreshness] = useState('blank');
 	const [difficulty, setDifficulty] = useState('blank');
+	const [isBookmarked, setIsbookmarked] = useState(false);
 	const [likeable_entity_id, setLikeable_entity_id] = useState(0);
 	const [commentable_entity_id, setCommentable_entity_id] = useState(0);
 
@@ -52,6 +53,12 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 					store.dispatch({ type: 'POINT', value: res.data.user.point });
 				})
 
+			axios.get(`/api/bookmark/${question_id}`)
+				.then(res=>{
+					setIsbookmarked(res.data.is_bookmarked);
+					console.log('bookmarked',isBookmarked);
+					console.log('bookmarked(api_result)',res.data);
+				})	
 			axios.get(`/api/question/${question_id}`)
 				.then(res => {
 					console.log(res.data.question);
@@ -75,7 +82,7 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 					}
 
 					//const commentable_entity_id = res.data.question['commentable_entity.id'];
-
+					
 					axios.get(`/api/comment?commentable_entity_id=${res.data.question['commentable_entity.id']}`)
 						.then(res => {
 							console.log('comment:', res.data.comments);
@@ -182,12 +189,14 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 		axios.post(`/api/bookmark/${question_id}`)
 		.then(res => {
 		console.log(res.data.message);
+		alert("즐겨찾기에 추가되었습니다");
 		})
 		.catch(error => {
 			alert(error.response.data.message);
 		})
 		
 	}
+
 	const addFreshness = (e) => {
 		e.preventDefault();
 
@@ -411,8 +420,9 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 									#{question.id} {subject} - {course}
 								</div>
 								</div>
-								<Button variant="info" style={{ width: '2.8rem', height: '2.2rem' }}
-							><FontAwesomeIcon icon={faThumbtack} className="mr-2" onClick={AddBookmarks} /></Button>
+								<Button variant="info" style={{ width: '2.4rem', height: '2rem' }}>
+									<FontAwesomeIcon icon={faThumbtack} className="mr-2" onClick={AddBookmarks} style={isBookmarked?{transform: `rotate(90deg)`}:{}}/>
+								</Button>
 								</div>
 							</Card.Header>
 							
@@ -512,9 +522,11 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 															</div>: <div> 
 																<Button onClick = {(e) => modifyComment(e)}>수정</Button>&nbsp;&nbsp;<Button onClick={(e) => deleteComment(i.id, e)}>삭제</Button></div> : <div></div>} <br/>
 													</div>
+													{/*
 													<Card.Footer>
 											좋아요 <FontAwesomeIcon icon={faHeart} className="ml-auto" />
 										</Card.Footer>
+													*/}
 													<hr/>	
 												</div>
 											
@@ -528,7 +540,7 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 							</Card>
 						</Accordion>
 						<FormControl placeholder="댓글 작성하기" onChange={(e) => inputCommentContent(e)} type="text" id="title" className="input" style={{ width: "100%", height: "3rem" }} />
-						<Button onClick={submitComment}>제출</Button>
+						<Button variant="info" onClick={submitComment}>제출</Button>
 					</Card>
 
 				</div>
