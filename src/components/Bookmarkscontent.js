@@ -80,7 +80,7 @@ const Bookmarkscontent = ({ subject, course, question_id, question, isOpen, }) =
 						 <Card className="text-center" variant="info" style={{ width: '30rem' }}>
 						<Link key={i.id} 
 						to={{
-							pathname: `/subject/${i.question.course.subject.title}/${i.question.course.title}/${i.id}`,
+							pathname: `/subject/${subject}/${course}/${i.id}/problem_solving/${1}`,
 						}}>
 							<Card.Header style={{height:"3.5rem"}}>
 							<div className="d-flex bd-highlight mb-3">
