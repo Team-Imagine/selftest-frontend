@@ -119,7 +119,8 @@ const Question = ({ subject, course, isOpen }) => {
 						 <Card className="text-center" variant="info" style={{ width: '30rem' }}>
 						<Link key={i.id} 
 						to={{
-							pathname: `/subject/${subject}/${course}/${i.id}`,
+							//pathname: `/subject/${subject}/${course}/${i.id}`,
+							pathname:`/subject/${subject}/${course}/${i.id}/problem_solving/${1}`
 						}}>
 							<Card.Header>
 							<div>

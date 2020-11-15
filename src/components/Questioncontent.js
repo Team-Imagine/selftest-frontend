@@ -598,7 +598,6 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 																{i.content} 
 															</div>
 														} <br/>
-
 													</div>
 												
 													<hr/>	
