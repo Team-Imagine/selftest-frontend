@@ -18,7 +18,7 @@ const Bookmarkscontent = ({ subject, course, question_id, question, isOpen, }) =
 			.then(res => {
 				console.log(res.data);
 
-				setBookmarks(res.data.bookmarks);
+				setBookmarks(res.data.bookmarks.rows);
 			})
 			.catch(error => {
 				alert(error.response.data.message);
@@ -27,6 +27,7 @@ const Bookmarkscontent = ({ subject, course, question_id, question, isOpen, }) =
 
   const DeleteBookmarks = (e) => {
 	e.preventDefault();
+	console.log("id:",id);
 	axios.delete(`/api/bookmark/${question_id}`)
 	.then(res => {
 		console.log(res.data.message);
@@ -65,13 +66,7 @@ const Bookmarkscontent = ({ subject, course, question_id, question, isOpen, }) =
 						즐겨찾기
         			</h4>
 					</div>
-					<div className = "p-2 bd-highlight">
-					<div>
-						<Button variant="info" style = {{width: '19rem', height: '2.5rem'}} //onClick={submitHandler}
-							href={`/subject/${subject}/${course}/make/${1}`}
-						>문제 생성</Button>
-						</div>
-						</div>
+					
 					</div>
 				<hr/>
 				<ul>
@@ -83,7 +78,7 @@ const Bookmarkscontent = ({ subject, course, question_id, question, isOpen, }) =
 						 <Card className="text-center" variant="info" style={{ width: '30rem' }}>
 						<Link key={i.id} 
 						to={{
-							pathname: `/subject/${subject}/${course}/${i.id}`,
+							pathname: `/subject/${i.question.course.subject.title}/${i.question.course.title}/${i.id}`,
 						}}>
 							<Card.Header style={{height:"3.5rem"}}>
 							<div className="d-flex bd-highlight mb-3">
