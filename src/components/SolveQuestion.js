@@ -59,16 +59,14 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 	const [answerList, setAnswerList] = useState([]);
 	const [essayAnswerEditor, setEssayAnswerEditor] = useState(EditorState.createEmpty());
 	const [showExplanation, setShowExplanation] = useState(false);
-
 	const [comments, setComments] = useState([]);
 	const [pages, setPages] = useState([]);
-
-
 	const [likes, setLikes] = useState(0);
 	const [dislikes, setDislikes] = useState(0);
 	const [freshness, setFreshness] = useState('0');
 	const [difficulty, setDifficulty] = useState('0');
 	const [isBookmarked, setIsbookmarked] = useState(false);
+	const [bookmarkedColor,setbookmarkedColor] = useState("");
 	const [likeable_entity_id, setLikeable_entity_id] = useState(0);
 	const [commentable_entity_id, setCommentable_entity_id] = useState(0);
 
@@ -99,8 +97,9 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 			axios.get(`/api/bookmark/${question_id}`)
 				.then(res=>{
 					setIsbookmarked(res.data.is_bookmarked);
-					//console.log('bookmarked',isBookmarked);
-					//console.log('bookmarked(api_result)',res.data);
+					res.data.is_bookmarked?setbookmarkedColor("yellow"):setbookmarkedColor("");
+					//console.log('bookmarked',res.data.is_bookmarked);
+					//console.log('bookmarkedcolor',bookmarkedColor);
 			})
 
 			axios.get(`/api/question/${question_id}`)
@@ -423,7 +422,23 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 		.catch(error => {
 			alert(error.response.data.message);
 		})
+		setbookmarkedColor("yellow");
+		setIsbookmarked(true);
 		
+	}
+
+	const DeleteBookmarks = (e) => {
+		e.preventDefault();
+		axios.delete(`/api/bookmark/${question_id}`)
+		.then(res => {
+		console.log(res.data.message);
+		alert("즐겨찾기에서 삭제되었습니다");
+		})
+		.catch(error => {
+			alert(error.response.data.message);
+		})
+		setbookmarkedColor("");
+		setIsbookmarked(false);
 	}
 	
 	// 신선도 처리
@@ -695,8 +710,8 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 									#{question.id} {subject} - {course}
 								</div>
 								</div>
-								<Button variant="info" style={{ width: '2.4rem', height: '2rem' }}>
-									<FontAwesomeIcon icon={faThumbtack} className="mr-2" onClick={AddBookmarks} style={isBookmarked?{transform: `rotate(90deg)`}:{}}/>
+								<Button variant="info" style={{ width: '2.4rem', height: '2rem' }} onClick={isBookmarked?DeleteBookmarks:AddBookmarks} >
+									<FontAwesomeIcon icon={faThumbtack} className="mr-2" style={{color:bookmarkedColor}}/>
 								</Button>
 								</div>
 						</Card.Header>

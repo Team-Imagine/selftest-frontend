@@ -23,7 +23,7 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 	const [comments, setComments] = useState([]);
 	const [commentCount, setCommentCount] = useState(0);
 	const [pages, setPages] = useState([]);
-
+	const [bookmarkedColor,setbookmarkedColor] = useState("");
 	const [likes, setLikes] = useState(0);
 	const [dislikes, setDislikes] = useState(0);
 	const [freshness, setFreshness] = useState('0');
@@ -58,6 +58,7 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 			axios.get(`/api/bookmark/${question_id}`)
 				.then(res=>{
 					setIsbookmarked(res.data.is_bookmarked);
+					res.data.is_bookmarked?setbookmarkedColor("yellow"):setbookmarkedColor("");
 					//console.log('bookmarked',isBookmarked);
 					//console.log('bookmarked(api_result)',res.data);
 				})	
@@ -210,7 +211,23 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 		.catch(error => {
 			alert(error.response.data.message);
 		})
+		setbookmarkedColor("yellow");
+		setIsbookmarked(true);
 		
+	}
+
+	const DeleteBookmarks = (e) => {
+		e.preventDefault();
+		axios.delete(`/api/bookmark/${question_id}`)
+		.then(res => {
+		console.log(res.data.message);
+		alert("즐겨찾기에서 삭제되었습니다");
+		})
+		.catch(error => {
+			alert(error.response.data.message);
+		})
+		setbookmarkedColor("");
+		setIsbookmarked(false);
 	}
 	
 	// 신선도 처리
@@ -493,8 +510,8 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 									#{question.id} {subject} - {course}
 								</div>
 								</div>
-								<Button variant="info" style={{ width: '2.4rem', height: '2rem' }} onClick={AddBookmarks} >
-									<FontAwesomeIcon icon={faThumbtack} className="mr-2" style={isBookmarked?{transform: `rotate(90deg)`}:{}}/>
+								<Button variant="info" style={{ width: '2.4rem', height: '2rem' }} onClick={isBookmarked?DeleteBookmarks:AddBookmarks} >
+									<FontAwesomeIcon icon={faThumbtack} className="mr-2" style={{color:bookmarkedColor}}/>
 								</Button>
 								</div>
 							</Card.Header>

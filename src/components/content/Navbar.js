@@ -30,7 +30,7 @@ const NavBar = ({isOpen, point}) => {
   }
 
   const moveSearch = () => {
-    history.push("/search");
+    history.push("/search",searchKeyword);
   }
 
   const onSearchChange = (e) =>{
