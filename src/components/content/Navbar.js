@@ -12,9 +12,9 @@ import store from "../../store";
 
 import { useCookies } from 'react-cookie';
 import axios from "axios";
-const[searchKeyword, setSearchKeyword] = useState("");
 
 const NavBar = ({isOpen, point}) => {
+  const[searchKeyword, setSearchKeyword] = useState("");
   const [test, setTest] = useState(store.getState().isLoggedIn);
   const [userPoint, setUserPoint] = useState('');
   let [cookies] = useCookies(['access_token']);
