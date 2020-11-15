@@ -26,8 +26,8 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 
 	const [likes, setLikes] = useState(0);
 	const [dislikes, setDislikes] = useState(0);
-	const [freshness, setFreshness] = useState('blank');
-	const [difficulty, setDifficulty] = useState('blank');
+	const [freshness, setFreshness] = useState('0');
+	const [difficulty, setDifficulty] = useState('0');
 	const [isBookmarked, setIsbookmarked] = useState(false);
 	const [likeable_entity_id, setLikeable_entity_id] = useState(0);
 	const [commentable_entity_id, setCommentable_entity_id] = useState(0);

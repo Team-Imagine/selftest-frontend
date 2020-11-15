@@ -25,17 +25,19 @@ const Bookmarkscontent = ({ subject, course, question_id, question, isOpen, }) =
 			})
   }, []);
 
-  const DeleteBookmarks = (e) => {
+  const DeleteBookmarks=id=> (e) => {
 	e.preventDefault();
-	console.log("id:",id);
-	axios.delete(`/api/bookmark/${question_id}`)
-	.then(res => {
-		console.log(res.data.message);
-		alert("문제가 즐겨찾기에서 삭제되었습니다")
-	})
-	.catch(error => {
-		alert(error.response.data.message);
-	})
+	
+		console.log("id:",id);
+		axios.delete(`/api/bookmark/${id}`)
+		.then(res => {
+			console.log(res.data.message);
+			alert("문제가 즐겨찾기에서 삭제되었습니다")
+		})
+		.catch(error => {
+			alert(error.response.data.message);
+		})
+	
 }
 
   
@@ -87,7 +89,7 @@ const Bookmarkscontent = ({ subject, course, question_id, question, isOpen, }) =
 							</div>
 							<div >
 							<Button variant="info" style={{ width: '2.4rem', height: '2rem' }}>
-							<FontAwesomeIcon icon={faTrashAlt} className="ml-auto" onClick={DeleteBookmarks} />
+							<FontAwesomeIcon icon={faTrashAlt} className="ml-auto" onClick={DeleteBookmarks(i.id)} />
 							</Button>
 							</div>
 							</div>
