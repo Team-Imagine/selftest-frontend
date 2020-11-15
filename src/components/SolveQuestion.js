@@ -63,8 +63,8 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 	const [pages, setPages] = useState([]);
 	const [likes, setLikes] = useState(0);
 	const [dislikes, setDislikes] = useState(0);
-	const [freshness, setFreshness] = useState('0');
-	const [difficulty, setDifficulty] = useState('0');
+	const [freshness, setFreshness] = useState(0);
+	const [difficulty, setDifficulty] = useState(0);
 	const [isBookmarked, setIsbookmarked] = useState(false);
 	const [bookmarkedColor,setbookmarkedColor] = useState("");
 	const [likeable_entity_id, setLikeable_entity_id] = useState(0);
@@ -767,7 +767,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 											<button onClick={addFreshness}>제출</button>
 											<button onClick={deleteFreshness}>삭제</button>
 										</div>}
-										{freshness}
+										{Number(freshness).toFixed(2)}
 
 									</div>
 									<div className="mr-auto p-2 bd-highlight"style={{width:"25%"}}>
@@ -780,7 +780,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 											<button onClick={addDifficulty}>제출</button>
 											<button onClick={deleteDifficulty}>삭제</button>
 										</div>}
-										{difficulty}
+										{Number(difficulty).toFixed(2)}
 									</div>
 								</div>
 										
