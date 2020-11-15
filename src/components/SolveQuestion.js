@@ -10,7 +10,7 @@ import Form from "react-bootstrap/Form";
 import Accordion from 'react-bootstrap/Accordion'
 import styled from 'styled-components';
 import { EditorState, convertToRaw, ContentState } from 'draft-js';
-import { faAppleAlt, faHeart, faStar, faThumbtack, faThumbsDown, faThumbsUp } from "@fortawesome/free-solid-svg-icons";
+import { faAppleAlt, faHeart, faStar, faThumbtack, faThumbsDown, faThumbsUp, faAlignCenter } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
@@ -749,6 +749,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 			</div>
 
 			<hr />
+		
 			<div className="column justify-content-center align-items-center">
 				{/*<Card border="light" style={{ backgroundColor: "#f7feff" }}>*/}
 				<Card.Header style={{width:"85rem"}}>
@@ -842,27 +843,59 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 					<br />
 					{
 						(questionType === "multiple_choice" && choiceList !== null) ?
-
-							<div>
+						//문제 푸는 곳
+						
+						<Card style={{width:"85rem", marginRight:"10px"}}>
+						<div className="container h">
+						<div className="justify-content-center align-items-center" style = {{textAlign:"center", margin:0}}>
+								
+								<br/>
 								<div>
-									<p> 위 문제에 대한 알맞은 정답을 선택하세요.</p>
+									<h4> 위 문제에 대한 알맞은 정답을 선택하세요.</h4>
 								</div>
-
+								<br/>
+								<div className="justify-content-center align-items-center">
 								{choiceList.map((i, index) =>
-
+									//선택지 버튼 출력 부분
 									<div key={index}>
-										<Button variant="outline-light" style={{ width: '40rem', color: choiceColor[index], backgroundColor: "lavender" }} onClick={(e) => { selectAnswer(index, e) }}>{'('}{index + 1}{')'} {i.item_text}</Button><br />
+										<Button variant="outline-light" style={{  height:"4rem", width: '40rem', color: choiceColor[index], fontSize:"18px", backgroundColor: "lavender" }} onClick={(e) => { selectAnswer(index, e) }}>{'('}{index + 1}{')'} {i.item_text}</Button><br /><br/>
 									</div>
 								)}
-								<br />
-
-							</div>
-							: (questionType === "short_answer") ? <div>
-								<div>
-									<p> 아래에 정답을 입력하세요.</p>
 								</div>
+						
 
-								<div><input type="text" id="title" className="input" style={{ width: "85rem", height: "3rem" }} onChange={(e) => makeAnswer(e)} /><br /> </div>
+								</div>
+							</div>
+							<div className="justify-content-center align-items-center" style = {{float:"left", textAlign:"center",marginBottom:"30px"}}>
+							{(questionType) ?
+								<Button className="btn pull-right" variant="info" style={{ width: "18rem" , height:"3rem", fontSize:"20px", marginRight:"2rem"}}
+									onClick={show_Explanation}
+								>풀이 확인 </Button>
+								: <div></div>}
+							<Button className="btn pull-right" variant="info" style={{ width:"18rem", height:"3rem",fontSize:"20px", marginLeft : "2rem", }}
+								onClick={submitHandler}
+									>풀이 제출 </Button>
+							</div>
+							</Card>
+							
+							: (questionType === "short_answer") ? <div>
+								<div >
+									<h3> 아래에 정답을 입력하세요.</h3>
+								</div>
+								
+								<div><input type="text" id="title" className="input" style={{ width: "85rem", height: "3rem" }} onChange={(e) => makeAnswer(e)} /><br /> 
+								</div>
+								<div className="justify-content-center align-items-center" style = {{float:"left", textAlign:"center",marginBottom:"2rem",marginTop:"1rem",width: "85rem"}}>
+							{(questionType) ?
+								<Button className="btn pull-right" variant="info" style={{ width: "41.5rem" , height:"3rem", fontSize:"20px", marginRight:"1rem"}}
+									onClick={show_Explanation}
+								>풀이 확인 </Button>
+								: <div></div>}
+							<Button className="btn pull-right" variant="info" style={{ width:"41.5rem", height:"3rem",fontSize:"20px", marginLeft : "1rem", }}
+								onClick={submitHandler}
+									>풀이 제출 </Button>
+							</div>
+								
 							</div> : <div>
 
 									<MyBlock style={{ width: '85rem' }}>
@@ -895,6 +928,16 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 												// 에디터의 값이 변경될 때마다 onEditorStateChange 호출
 												onEditorStateChange={onEditorStateChange}
 											/>
+											<div className="justify-content-center align-items-center" style = {{float:"left", textAlign:"center",marginBottom:"2rem",marginTop:"1rem",width: "85rem"}}>
+							{(questionType) ?
+								<Button className="btn pull-right" variant="info" style={{ width: "41.5rem" , height:"3rem", fontSize:"20px", marginRight:"1rem"}}
+									onClick={show_Explanation}
+								>풀이 확인 </Button>
+								: <div></div>}
+							<Button className="btn pull-right" variant="info" style={{ width:"41.5rem", height:"3rem",fontSize:"20px", marginLeft : "1rem", }}
+								onClick={submitHandler}
+									>풀이 제출 </Button>
+							</div>
 										</div>
 									</MyBlock>
 
@@ -904,9 +947,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 
 				</div>
 				
-				<Button className="btn-block" variant="info" style={{ width: '20rem' }}
-					onClick={submitHandler}
-				>풀이 제출 </Button>
+				
 				
 				<div style={{ height: "0.5rem" }}>
 					{(showAnswer && (questionType === 'short_answer' || questionType === 'multiple_choice')) ?
@@ -946,17 +987,11 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 											/>
 										</Card.Body>
 									</Card>
-
 								</Card>
 							</div> :
 							<div>
 							</div>
 					}
-					{(questionType) ?
-						<Button className="btn-block" variant="info" style={{ width: '20rem' }}
-							onClick={show_Explanation}
-						>풀이 확인 </Button>
-						: <div></div>}
 					{(showExplanation) ?
 						<div>
 							{answerList.map((i, index) =>
@@ -1043,7 +1078,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 						</Accordion>
 
 						<FormControl placeholder="댓글 작성하기" onChange={(e) => inputCommentContent(e)} type="text" id="title" className="input" style={{ width: "85rem", height: "3rem" }} />
-						<Button variant="info" onClick={submitComment}>제출</Button>
+						<Button style={{width:"85rem"}} variant="info" onClick={submitComment}>제출</Button>
 						</div>
 						: <div>
 							<Accordion>
@@ -1096,7 +1131,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 						</Accordion>
 						
 						<FormControl placeholder="댓글 작성하기" onChange={(e) => inputCommentContent(e)} type="text" id="title" className="input" style={{ width: "85rem", height: "3rem" }} />
-						<Button variant="info" onClick={submitComment}>
+						<Button style={{width:"85rem"}}variant="info" onClick={submitComment}>
 							제출
 							</Button>
 						
