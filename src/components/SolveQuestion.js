@@ -6,6 +6,7 @@ import classNames from "classnames";
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import Card from "react-bootstrap/Card";
+import Form from "react-bootstrap/Form";
 import Accordion from 'react-bootstrap/Accordion'
 import styled from 'styled-components';
 import { EditorState, convertToRaw, ContentState } from 'draft-js';
@@ -750,9 +751,8 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 			<hr />
 			<div className="column justify-content-center align-items-center">
 				<Card border="light" style={{ backgroundColor: "#f7feff" }}>
-					<Card className="center" style={{ width: '85rem', height: '20rem' , overflow: 'auto'}}>
-						<Card.Header>
-							<div className="d-flex bd-highlight mb-3">
+				<Card.Header style={{width:"85rem"}}>
+							<div className="d-flex bd-highlight mb-3" style = {{height:"1rem"}}>
 								<div className="mr-auto p-2 bd-highlight">
 								<div style={{ fontWeight: "bold", fontsize: "rem" }}>
 									#{question.id} {subject} - {course}
@@ -763,6 +763,8 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 								</Button>
 								</div>
 						</Card.Header>
+					<Card className="center" style={{ width: '85rem', height: '20rem' , overflow: 'auto'}}>
+						
 						<Card.Body>
 							<div style={{ fontWeight: "bold"}}>제목: {question.title} </div>
 							<br />
@@ -784,9 +786,10 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 							/>
 							</div>
 						</Card.Body>
+						
 
 					</Card>
-					<Card.Footer style={{paddingTop:"0rem", paddingBottom:"1rem", backgroundColor: "#ffffff", border:"light"}} >
+					<Card.Footer style={{paddingTop:"0rem", paddingBottom:"1rem", backgroundColor: "#ffffff", border:"light" ,width: '85rem'}} >
 								<div className="d-flex bd-highlight mb-3" style={{ height: "0.8rem"}}>
 
 									<div className="mr-auto p-2 bd-highlight" style={{width:"25%"}}>
@@ -909,7 +912,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 						<div>
 							{answerList.map((i, index) =>
 								<div key={index}>
-									<Card className="center" style={{ width: '70rem' }}>
+									<Card className="center" style={{ width: '85rem' }}>
 										<Card.Body style={{ backgroundColor: "white" }} >
 											{i}
 											<br />
@@ -922,7 +925,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 						(showAnswer && questionType === 'essay') ?
 							<div>
 								<Card border="light" style={{ backgroundColor: "#f7feff" }}>
-									<Card className="center" style={{ width: '80%', height: '20rem', overflow: 'auto' }}>
+									<Card className="center" style={{ width: '85rem', height: '20rem', overflow: 'auto' }}>
 										<Card.Body>
 											<br />
 											<Editor
@@ -957,7 +960,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 						<div>
 							{answerList.map((i, index) =>
 								<div key={index}>
-									<Card className="center" style={{ width: '70rem' }}>
+									<Card className="center" style={{ width: '85rem' }}>
 										<Card.Body style={{ backgroundColor: "white" }} >
 											{i}
 											<br />
@@ -967,7 +970,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 								</div>
 							)}
 							<Card border="light" style={{ backgroundColor: "#f7feff" }}>
-								<Card className="center" style={{ width: '80%', height: '20rem', overflow: 'auto' }}>
+								<Card className="center" style={{ width: '85rem', height: '20rem', overflow: 'auto' }}>
 									<Card.Body>
 										<br />
 										<Editor
@@ -990,7 +993,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 
 							</Card>
 							<Accordion>
-							<Card className="center" style={{ width: '70rem' }}>
+							<Card className="center" style={{ width: '85rem' }}>
 
 								<Accordion.Toggle className="center" as={Button} variant="light" block eventKey="0">
 									댓글 보기
@@ -1004,11 +1007,11 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 												<div key={i.id}>
 													<div>
 													<div style={{fontWeight:"bold"}}>작성자: {i.user.username} <br/></div>
-														<br/><br/>
+														<br/>
 														{(username === i.user.username) ?
 															(modified) ? 
 															<div>
-																<FormControl defaultValue={inputModifiedComment} onChange={(e) => modifyCommentContent(e)} type="text" id="title" className="input" style={{ width: "100%", height: "3rem" }} />
+																<FormControl defaultValue={inputModifiedComment} onChange={(e) => modifyCommentContent(e)} type="text" id="title" className="input" style={{ width: "85rem", height: "3rem" }} />
 																<Button onClick = {(e) => submitModifyComment(i.id, e)}>제출</Button>
 															</div>: <div>
 																{i.content} 
@@ -1016,7 +1019,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 															<div>
 																{i.content} 
 															</div>
-														} <br/>
+														} 
 													</div>
 												
 													<hr/>	
@@ -1037,12 +1040,13 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 								</Accordion.Collapse>
 							</Card>
 						</Accordion>
-						<FormControl placeholder="댓글 작성하기" onChange={(e) => inputCommentContent(e)} type="text" id="title" className="input" style={{ width: "100%", height: "3rem" }} />
+
+						<FormControl placeholder="댓글 작성하기" onChange={(e) => inputCommentContent(e)} type="text" id="title" className="input" style={{ width: "85rem", height: "3rem" }} />
 						<Button variant="info" onClick={submitComment}>제출</Button>
 						</div>
 						: <div>
 							<Accordion>
-							<Card className="center" style={{ width: '70rem' }}>
+							<Card className="center" style={{ width: '85rem' }}>
 
 								<Accordion.Toggle className="center" as={Button} variant="light" block eventKey="0">
 									댓글 보기
@@ -1056,19 +1060,19 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 												<div key={i.id}>
 													<div>
 													<div style={{fontWeight:"bold"}}>작성자: {i.user.username} <br/></div>
-														<br/><br/>
+														<br/>
 														{(username === i.user.username) ?
 															(modified) ? 
 															<div>
-																<FormControl defaultValue={inputModifiedComment} onChange={(e) => modifyCommentContent(e)} type="text" id="title" className="input" style={{ width: "100%", height: "3rem" }} />
+																<FormControl defaultValue={inputModifiedComment} onChange={(e) => modifyCommentContent(e)} type="text" id="title" className="input" style={{ width: "85rem", height: "3rem" }} />
 																<Button onClick = {(e) => submitModifyComment(i.id, e)}>제출</Button>
 															</div>: <div>
-																{i.content} 
+																{i.content} <br/>
 																<Button onClick = {(e) => modifyComment(i.content, e)}>수정</Button>&nbsp;&nbsp;<Button onClick={(e) => deleteComment(i.id, e)}>삭제</Button></div> : 
 															<div>
 																{i.content} 
 															</div>
-														} <br/>
+														}
 													</div>
 												
 													<hr/>	
@@ -1089,8 +1093,12 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 								</Accordion.Collapse>
 							</Card>
 						</Accordion>
-						<FormControl placeholder="댓글 작성하기" onChange={(e) => inputCommentContent(e)} type="text" id="title" className="input" style={{ width: "100%", height: "3rem" }} />
-						<Button variant="info" onClick={submitComment}>제출</Button>
+						
+						<FormControl placeholder="댓글 작성하기" onChange={(e) => inputCommentContent(e)} type="text" id="title" className="input" style={{ width: "85rem", height: "3rem" }} />
+						<Button variant="info" onClick={submitComment}>
+							제출
+							</Button>
+						
 						</div>
 					}
 				</div>

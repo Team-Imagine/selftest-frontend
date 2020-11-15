@@ -4,15 +4,21 @@ import classNames from "classnames";
 import { Link, useHistory } from 'react-router-dom';
 import Card from 'react-bootstrap/Card'
 import axios from "axios";
+import { faAppleAlt, faHeart, faStar, faThumbsDown, faThumbsUp, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import queryString from 'query-string';
 
-
-const Searchcontent = ({params, isOpen}) => {
+const Searchcontent = ({searchtype,keywordtype,keyword, isOpen}) => {
 
   const[searchresults, setSearchresults] = useState([]);
-	let history = useHistory();
+  let history = useHistory();
+  var keywordType="";
+  keywordtype==="default"?keywordType="":keywordType=keywordtype;
+  
 	useEffect(() => {
-    axios.get(`/api/question?question_type=essay&q_question_content=${params}`)
+    axios.get(`/api/question?question_type=${keywordType}&${searchtype}=${keyword}`)
 				.then(res=>{
+          console.log(`/api/question?question_type=${keywordType}&${searchtype}=${keyword}`);
           console.log(res.data);
 					setSearchresults(res.data.questions.rows);
 				}).catch(error => {
@@ -29,7 +35,7 @@ const Searchcontent = ({params, isOpen}) => {
 					<div className = "d-flex bd-highlight mb-3">
         			<div className="mr-auto p-2 bd-highlight"> 
 					<h4 style={{fontWeight:"bolder"}}>
-						검색결과 - {params}
+              문제 검색결과 - {keyword}
         			</h4>
 					</div>
 					
@@ -57,36 +63,37 @@ const Searchcontent = ({params, isOpen}) => {
 							<Card.Body><div style={{fontWeight:"lighter"}}>{i.title}
 							</div>
 							</Card.Body>
-							{/*
-							<Card.Footer>
-							
+              <Card.Footer>
 							<div className="d-flex bd-highlight mb-3" style={{height:"0.8rem"}}>
 							
 							<div className="mr-auto p-2 bd-highlight">
 							좋아요 &nbsp;
-							<FontAwesomeIcon icon={faHeart} className="ml-auto" />&nbsp;
-						  
+							<FontAwesomeIcon icon={faThumbsUp}className="ml-auto"/>&nbsp;
+							{i["likeable_entity.total_likes"]}
+							
 							</div>
+
+							<div className="mr-auto p-2 bd-highlight">
+							싫어요 &nbsp;
+							<FontAwesomeIcon icon={faThumbsDown} className="ml-auto" />&nbsp;
+							{i["likeable_entity.total_dislikes"]}
+							
+							</div>
+							
 							<div className="mr-auto p-2 bd-highlight">
 							신선해요 &nbsp;  
 							<FontAwesomeIcon icon={faAppleAlt} className="ml-auto" />&nbsp;
-							<FontAwesomeIcon icon={faAppleAlt} className="ml-auto" />&nbsp;
-							<FontAwesomeIcon icon={faAppleAlt} className="ml-auto" />&nbsp;
-							<FontAwesomeIcon icon={faAppleAlt} className="ml-auto" />&nbsp;
-							<FontAwesomeIcon icon={faAppleAlt} className="ml-auto" />&nbsp;
+							{!i["average_freshness"]?"0.0000":i["average_freshness"]}
 							</div>
+
 							<div className="mr-auto p-2 bd-highlight">
 							난이도  &nbsp;
-							<FontAwesomeIcon icon={faStar} className="ml-auto" />&nbsp;
-							<FontAwesomeIcon icon={faStar} className="ml-auto" />&nbsp;
-							<FontAwesomeIcon icon={faStar} className="ml-auto" />&nbsp;
-							<FontAwesomeIcon icon={faStar} className="ml-auto" />&nbsp;
-							<FontAwesomeIcon icon={faStar} className="ml-auto" />&nbsp;
+							<FontAwesomeIcon icon={faStar} className="ml-auto"  />&nbsp;
+							{!i["average_difficulty"]?"0.0000":i["average_difficulty"]}
 							</div>
 							</div>
-				
-								 </Card.Footer>	*/}
-						</Link>
+							</Card.Footer>
+							</Link>
 						</Card>
 						</div>
 						<br />

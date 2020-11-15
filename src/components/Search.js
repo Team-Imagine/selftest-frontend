@@ -2,7 +2,7 @@ import React from "react";
 import SideBar from "./sidebar/SideBar";
 import Searchcontent from "./Searchcontent";
 import NavBar from "./content/Navbar";
-
+import querysString from 'query-string';
 class Search extends React.Component {
   
         constructor(props) {
@@ -53,14 +53,16 @@ class Search extends React.Component {
         };
       
         render() {
-          const {params} = this.props.match;
+          const searchtype = this.props.match.params.searchtype;
+          const keywordtype = this.props.match.params.keywordtype;
+          const keyword = this.props.match.params.keyword;
           return (
             
             <div>
               <NavBar toggle={this.toggle} isOpen={this.state.isOpen}/>
             <div className="App wrapper">
               <SideBar toggle={this.toggle} isOpen={this.state.isOpen} />
-              <Searchcontent toggle={this.toggle} isOpen={this.state.isOpen} params={params.keyword}/>
+              <Searchcontent toggle={this.toggle} isOpen={this.state.isOpen} searchtype = {searchtype} keywordtype = {keywordtype} keyword = {keyword}/>
             </div>
             </div>
           

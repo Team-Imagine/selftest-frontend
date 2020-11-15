@@ -16,6 +16,8 @@ import { set } from "js-cookie";
 
 const NavBar = ({isOpen, point}) => {
   const[searchKeyword, setSearchKeyword] = useState("");
+  const[questionType, setQuestionType] = useState("default");
+  const[searchType, setSearchType]= useState("course_title");
   const [test, setTest] = useState(store.getState().isLoggedIn);
   const [userPoint, setUserPoint] = useState('');
   let [cookies] = useCookies(['access_token']);
@@ -34,13 +36,21 @@ const NavBar = ({isOpen, point}) => {
   const moveLogin = () => {
     history.push("/login");
   }
-
+  
   const moveSearch = () => {
-    history.push(`/search/${searchKeyword}`);
+    history.push(`/search/${searchType}/${questionType}/${searchKeyword}`);
   }
 
   const onSearchChange = (e) =>{
     setSearchKeyword(e.target.value);
+  }
+
+  const onSelectQustionChange = (e) =>{
+    setQuestionType(e.target.value);
+  }
+  
+  const onSelectTypeChange = (e) =>{
+    setSearchType(e.target.value);
   }
  
   const readCookie = async () => {
@@ -191,19 +201,17 @@ const NavBar = ({isOpen, point}) => {
         </div>
         <Form inline>
         <Form.Group>
-        <Form.Control as="select">
-        <option>제목</option>
-        <option>내용</option>
-       
+        <Form.Control as="select" onChange ={onSelectTypeChange.bind(this)}>
+        <option value = "course_title">강의제목</option>
+        <option value = "q_question_content">내용</option>
         </Form.Control>
 
-        <Form.Control as="select">
-        <option>객관식</option>
-        <option>주관식</option>
-        <option>서술형</option>
+        <Form.Control as="select" onChange={onSelectQustionChange.bind(this)}>
+        <option value="default">문제유형</option>
+        <option value="multiple_choice">객관식</option>
+        <option value="short_answer">주관식</option>
+        <option value="essay">서술형</option>
         </Form.Control>
-        
-
         </Form.Group>
       
           <FormControl type="text" placeholder="검색하기" value={searchKeyword} onChange={onSearchChange} className="mr-sm-2 " />
