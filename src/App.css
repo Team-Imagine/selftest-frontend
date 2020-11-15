@@ -131,7 +131,7 @@ li a.dropdown-toggle::after {
 .content {
   padding: 20px;
   margin-left: 0;
-  min-height: 90vh;
+  min-height: 150vh;
   max-height: "auto";
   
 }

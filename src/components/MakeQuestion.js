@@ -323,7 +323,7 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 				{choices.map((i, index) =>
 					<div key={index}>
 						<FormControl placeholder="정답을 작성해주세요."type="text" id="title" className="input" style={{width: "100%", height: "3rem"}} onChange={(e) => makeAnswer(index, e)}/>
-			 <hr />
+		
 					</div> 
 				)} 
 				<hr />

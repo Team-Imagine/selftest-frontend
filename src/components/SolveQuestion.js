@@ -750,7 +750,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 
 			<hr />
 			<div className="column justify-content-center align-items-center">
-				<Card border="light" style={{ backgroundColor: "#f7feff" }}>
+				{/*<Card border="light" style={{ backgroundColor: "#f7feff" }}>*/}
 				<Card.Header style={{width:"85rem"}}>
 							<div className="d-flex bd-highlight mb-3" style = {{height:"1rem"}}>
 								<div className="mr-auto p-2 bd-highlight">
@@ -788,8 +788,10 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 						</Card.Body>
 						
 
-					</Card>
-					<Card.Footer style={{paddingTop:"0rem", paddingBottom:"1rem", backgroundColor: "#ffffff", border:"light" ,width: '85rem'}} >
+					{/*</Card>*/}
+				
+				</Card>
+				<Card.Footer  style={{paddingTop:"0rem", paddingBottom:"1rem", backgroundColor: "#ffffff", border:"light" ,width: '85rem'}} >
 								<div className="d-flex bd-highlight mb-3" style={{ height: "0.8rem"}}>
 
 									<div className="mr-auto p-2 bd-highlight" style={{width:"25%"}}>
@@ -836,7 +838,6 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 								</div>
 										
 							</Card.Footer>
-				</Card>
 				<div>
 					<br />
 					{
@@ -866,7 +867,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 
 									<MyBlock style={{ width: '85rem' }}>
 										<br />
-										<div style={{ height: '17rem' }}>
+										<div style={{ height: '8rem' }}>
 											<Editor
 												// 에디터와 툴바 모두에 적용되는 클래스
 												wrapperClassName="wrapper-class"
@@ -924,7 +925,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 						</div> :
 						(showAnswer && questionType === 'essay') ?
 							<div>
-								<Card border="light" style={{ backgroundColor: "#f7feff" }}>
+								<Card style={{ backgroundColor: "#f7feff" }}>
 									<Card className="center" style={{ width: '85rem', height: '20rem', overflow: 'auto' }}>
 										<Card.Body>
 											<br />
@@ -969,7 +970,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 									<br />
 								</div>
 							)}
-							<Card border="light" style={{ backgroundColor: "#f7feff" }}>
+					
 								<Card className="center" style={{ width: '85rem', height: '20rem', overflow: 'auto' }}>
 									<Card.Body>
 										<br />
@@ -991,7 +992,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 									</Card.Body>
 								</Card>
 
-							</Card>
+						
 							<Accordion>
 							<Card className="center" style={{ width: '85rem' }}>
 
@@ -1014,7 +1015,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 																<FormControl defaultValue={inputModifiedComment} onChange={(e) => modifyCommentContent(e)} type="text" id="title" className="input" style={{ width: "85rem", height: "3rem" }} />
 																<Button onClick = {(e) => submitModifyComment(i.id, e)}>제출</Button>
 															</div>: <div>
-																{i.content} 
+																{i.content} <br/>
 																<Button onClick = {(e) => modifyComment(i.content, e)}>수정</Button>&nbsp;&nbsp;<Button onClick={(e) => deleteComment(i.id, e)}>삭제</Button></div> : 
 															<div>
 																{i.content} 
