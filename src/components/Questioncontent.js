@@ -585,8 +585,8 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 																{i.content} 
 																<Button onClick = {(e) => modifyComment(i.content, e)}>수정</Button>&nbsp;&nbsp;<Button onClick={(e) => deleteComment(i.id, e)}>삭제</Button></div> : <div></div>} <br/>
 																<ul className="row justify-content-center align-items-center">
-																	{pages.map((i) => 
-																		<div>
+																	{pages.map((i, index) => 
+																		<div key={index}>
 																			<button onClick={(e) => loadCommentPerPage(i, e)}>{i}</button>
 																		</div>)
 																	}

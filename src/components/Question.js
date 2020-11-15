@@ -170,8 +170,8 @@ const Question = ({ subject, course, isOpen }) => {
 					</CardDeck>
 				</ul>
 				<ul className="row justify-content-center align-items-center">
-				{pages.map((i) => 
-						<div>
+				{pages.map((i, index) => 
+					<div key={index}>
 							<button onClick={(e) => loadQuestionPerPage(i, e)}>{i}</button>
 						</div>)
 					}		
