@@ -53,17 +53,14 @@ class Search extends React.Component {
         };
       
         render() {
-
-          
-         
-
+          const {params} = this.props.match;
           return (
             
             <div>
               <NavBar toggle={this.toggle} isOpen={this.state.isOpen}/>
             <div className="App wrapper">
               <SideBar toggle={this.toggle} isOpen={this.state.isOpen} />
-              <Searchcontent toggle={this.toggle} isOpen={this.state.isOpen} />
+              <Searchcontent toggle={this.toggle} isOpen={this.state.isOpen} params={params.keyword}/>
             </div>
             </div>
           

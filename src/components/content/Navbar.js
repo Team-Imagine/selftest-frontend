@@ -30,7 +30,7 @@ const NavBar = ({isOpen, point}) => {
   }
 
   const moveSearch = () => {
-    history.push("/search",searchKeyword);
+    history.push(`/search/${searchKeyword}`);
   }
 
   const onSearchChange = (e) =>{
@@ -141,6 +141,7 @@ const NavBar = ({isOpen, point}) => {
             <FontAwesomeIcon icon={faSearch} className="ml-auto"  />
           </Button>
           </div>
+         
         </Form>
        
         <Navbar.Collapse id="responsive-navbar-nav">
@@ -183,10 +184,28 @@ const NavBar = ({isOpen, point}) => {
           </Nav.Link>
         </div>
         <Form inline>
+        <Form.Group>
+        <Form.Control as="select">
+        <option>제목</option>
+        <option>내용</option>
+       
+        </Form.Control>
+
+        <Form.Control as="select">
+        <option>객관식</option>
+        <option>주관식</option>
+        <option>서술형</option>
+        </Form.Control>
+        
+
+        </Form.Group>
+      
           <FormControl type="text" placeholder="검색하기" value={searchKeyword} onChange={onSearchChange} className="mr-sm-2 " />
           <Button variant="info" onClick={moveSearch}>
             <FontAwesomeIcon icon={faSearch} className="ml-auto"/>
           </Button>
+
+         
         </Form>
         <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="ml-auto" navbar>

@@ -35,7 +35,7 @@ ReactDOM.render(
         <Switch>
           <Redirect exact from='/' to='/home'/>
           <Route path="/home" component={App} />
-          <Route exact path="/search" component={Search}/>
+          <Route exact path="/search/:keyword" component={Search}/>
           <Route exact path="/login" component={LoginForm} />
           <Route exact path="/auth" component={AuthForm} />
           <Route path="/signup" component={SignUp} />
