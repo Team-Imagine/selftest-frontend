@@ -111,6 +111,8 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 		}
 	}, []);
 
+
+	// 좋아요 처리
 	const addLike = (e) => {
 		e.preventDefault();
 
@@ -147,6 +149,8 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 				}
 			})
 	}
+
+	// 싫어요 처리
 	const addDislike = (e) => {
 		e.preventDefault();
 
@@ -184,6 +188,7 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 			})
 	}
 
+	// 북마크 처리
 	const AddBookmarks = (e) => {
 		e.preventDefault();
 		axios.post(`/api/bookmark/${question_id}`)
@@ -196,7 +201,8 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 		})
 		
 	}
-
+	
+	// 신선도 처리
 	const addFreshness = (e) => {
 		e.preventDefault();
 
@@ -263,6 +269,8 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 		setFreshPoint(e.target.value);
 	}
 
+
+	// 난이도 처리
 	const addDifficulty = (e) => {
 		e.preventDefault();
 
@@ -335,7 +343,19 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 		setInputComment(e.target.value);
 	}
 
+	// 문제 ID를 기반으로 댓글을 불러오는 함수
+	const loadComments = () => {
+		axios.get(`/api/comment?commentable_entity_id=${commentable_entity_id}`)
+				.then(res => {
+					console.log('comment:', res.data.comments);
+					setComments(res.data.comments);
+				})
+				.catch(error => {
+					alert(error.response.data.message);
+				})
+	}
 
+	// 댓글 작성
 	const submitComment = (e) => {
 		e.preventDefault();
 		const content = inputComment;
@@ -345,11 +365,7 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 				setInputComment('');
 				alert(res.data.message);
 
-				axios.get(`/api/comment?commentable_entity_id=${commentable_entity_id}`)
-				.then(res => {
-					console.log('comment:', res.data.comments);
-					setComments(res.data.comments);
-				})
+				loadComments();
 			})
 			.catch(error => {
 				alert(error.response.data.message);
@@ -376,8 +392,8 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 		e.preventDefault();
 
 		if(!modified) {
-			setModified(true);
 			setInputModifiedComment(comment);
+			setModified(true);
 		} else {
 			setModified(false);
 		}
@@ -386,6 +402,25 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 	const modifyCommentContent = (e) => {
 		e.preventDefault();
 		setInputModifiedComment(e.target.value);
+	}
+
+	const submitModifyComment = (id, e) => {
+		e.preventDefault();
+
+		const content = inputModifiedComment;
+
+		console.log(id, content);
+
+		axios.put(`/api/comment/${id}`, {content})
+		.then(res => {
+			alert(res.data.message);
+
+			loadComments();
+			setModified(false);
+		})
+		.catch(error => {
+			alert(error.response.data.message);
+		})
 	}
 	return (
 		<Container
@@ -513,14 +548,15 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 													<div>
 														<div style={{fontWeight:"bold"}}>작성자: {i.user.username} <br/></div>
 														
-														{i.content}
 														<br/><br/>
 														{(username === i.user.username) ? 
 															(modified) ? 
 															<div>
-																<FormControl onValue={inputModifiedComment} onChange={(e) => modifyCommentContent(e)} type="text" id="title" className="input" style={{ width: "100%", height: "3rem" }} />
-															</div>: <div> 
-																<Button onClick = {(e) => modifyComment(e)}>수정</Button>&nbsp;&nbsp;<Button onClick={(e) => deleteComment(i.id, e)}>삭제</Button></div> : <div></div>} <br/>
+																<FormControl defaultValue={inputModifiedComment} onChange={(e) => modifyCommentContent(e)} type="text" id="title" className="input" style={{ width: "100%", height: "3rem" }} />
+																<Button onClick = {(e) => submitModifyComment(i.id, e)}>제출</Button>
+															</div>: <div>
+																{i.content} 
+																<Button onClick = {(e) => modifyComment(i.content, e)}>수정</Button>&nbsp;&nbsp;<Button onClick={(e) => deleteComment(i.id, e)}>삭제</Button></div> : <div></div>} <br/>
 													</div>
 													{/*
 													<Card.Footer>
