@@ -702,7 +702,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 			<hr />
 			<div className="column justify-content-center align-items-center">
 				<Card border="light" style={{ backgroundColor: "#f7feff" }}>
-					<Card className="center" style={{ width: '85rem', height: '20rem' }}>
+					<Card className="center" style={{ width: '85rem', height: '20rem' , overflow: 'auto'}}>
 						<Card.Header>
 							<div className="d-flex bd-highlight mb-3">
 								<div className="mr-auto p-2 bd-highlight">
@@ -716,8 +716,9 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 								</div>
 						</Card.Header>
 						<Card.Body>
-							<div style={{ fontWeight: "bold" }}>제목: {question.title} </div>
+							<div style={{ fontWeight: "bold"}}>제목: {question.title} </div>
 							<br />
+							<div style={{height: "200px !important"}}>
 							<Editor
 								toolbarHidden
 								// 에디터와 툴바 모두에 적용되는 클래스
@@ -733,9 +734,12 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 									locale: 'ko',
 								}}
 							/>
+							</div>
 						</Card.Body>
-						<Card.Footer style={{paddingTop:"0rem", paddingBottom:"1rem"}}>
-								<div className="d-flex bd-highlight mb-3" style={{ height: "0.8rem" }}>
+
+					</Card>
+					<Card.Footer style={{paddingTop:"0rem", paddingBottom:"1rem", backgroundColor: "#ffffff", border:"light"}} >
+								<div className="d-flex bd-highlight mb-3" style={{ height: "0.8rem"}}>
 
 									<div className="mr-auto p-2 bd-highlight" style={{width:"25%"}}>
 										<Button style={{padding:"9px", paddingRight:"2px", paddingTop:"2px", paddingBottom:"2px"}} 
@@ -771,17 +775,16 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 											onClick={inputDifficultyForm}>
 											<FontAwesomeIcon icon={faStar} style={{color:"white"}} className="mr-2"/>
 							</Button>&nbsp;&nbsp;
+										
 										{viewInputDifficulty && <div><input onChange={(e) => inputDifficulty(e)} style={{ width: "15%" }}></input>
 											<button onClick={addDifficulty}>제출</button>
 											<button onClick={deleteDifficulty}>삭제</button>
 										</div>}
 										{difficulty}
-
 									</div>
 								</div>
+										
 							</Card.Footer>
-					</Card>
-								
 				</Card>
 				<div>
 					<br />
@@ -848,7 +851,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 					}
 
 				</div>
-
+				
 				<Button className="btn-block" variant="info" style={{ width: '20rem' }}
 					onClick={submitHandler}
 				>풀이 제출 </Button>
@@ -941,12 +944,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 								</Card>
 
 							</Card>
-						</div>
-						: <div></div>
-					}
-				</div>
-
-				<Accordion>
+							<Accordion>
 							<Card className="center" style={{ width: '70rem' }}>
 
 								<Accordion.Toggle className="center" as={Button} variant="light" block eventKey="0">
@@ -996,7 +994,61 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 						</Accordion>
 						<FormControl placeholder="댓글 작성하기" onChange={(e) => inputCommentContent(e)} type="text" id="title" className="input" style={{ width: "100%", height: "3rem" }} />
 						<Button variant="info" onClick={submitComment}>제출</Button>
+						</div>
+						: <div>
+							<Accordion>
+							<Card className="center" style={{ width: '70rem' }}>
 
+								<Accordion.Toggle className="center" as={Button} variant="light" block eventKey="0">
+									댓글 보기
+								</Accordion.Toggle>
+								<Accordion.Collapse eventKey="0">
+
+									<Card.Body style={{ backgroundColor: "white" }} >
+
+										<div>
+											{comments.map((i) =>
+												<div key={i.id}>
+													<div>
+													<div style={{fontWeight:"bold"}}>작성자: {i.user.username} <br/></div>
+														<br/><br/>
+														{(username === i.user.username) ?
+															(modified) ? 
+															<div>
+																<FormControl defaultValue={inputModifiedComment} onChange={(e) => modifyCommentContent(e)} type="text" id="title" className="input" style={{ width: "100%", height: "3rem" }} />
+																<Button onClick = {(e) => submitModifyComment(i.id, e)}>제출</Button>
+															</div>: <div>
+																{i.content} 
+																<Button onClick = {(e) => modifyComment(i.content, e)}>수정</Button>&nbsp;&nbsp;<Button onClick={(e) => deleteComment(i.id, e)}>삭제</Button></div> : 
+															<div>
+																{i.content} 
+															</div>
+														} <br/>
+													</div>
+												
+													<hr/>	
+												</div>
+											)}
+												<ul className="row justify-content-center align-items-center">
+																	{pages.map((i, index) => 
+																		<div key={index}>
+																			<button onClick={(e) => loadCommentPerPage(i, e)}>{i}</button>
+																		</div>)
+																	}
+												</ul>
+										</div>
+										<br />
+
+										
+									</Card.Body>
+								</Accordion.Collapse>
+							</Card>
+						</Accordion>
+						<FormControl placeholder="댓글 작성하기" onChange={(e) => inputCommentContent(e)} type="text" id="title" className="input" style={{ width: "100%", height: "3rem" }} />
+						<Button variant="info" onClick={submitComment}>제출</Button>
+						</div>
+					}
+				</div>
 			</div>
 
 
