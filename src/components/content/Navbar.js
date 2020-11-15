@@ -12,6 +12,7 @@ import store from "../../store";
 
 import { useCookies } from 'react-cookie';
 import axios from "axios";
+import { set } from "js-cookie";
 
 const NavBar = ({isOpen, point}) => {
   const[searchKeyword, setSearchKeyword] = useState("");
@@ -20,6 +21,11 @@ const NavBar = ({isOpen, point}) => {
   let [cookies] = useCookies(['access_token']);
 
   let history = useHistory();
+
+  useEffect(() => {
+    setUserPoint(store.getState().point);
+    console.log('point renewed!');
+  }, [store.getState().point])
 
   const moveHome = () => {
       history.push("/home");

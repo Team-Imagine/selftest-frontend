@@ -291,11 +291,27 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 
 		}
 	}
-
+	// 정답 확인
 	const appearAnswer = () => {
 		var result = window.confirm('문제의 정답을 확인하시겠습니까? 1 포인트가 차감됩니다.');
 
 		if (result) {
+			axios.get(`/api/question/solve/${question_id}`)
+			.then(res => {
+				if(!res.data.point_decrement) {
+					alert('이미 확인한 정답입니다.');
+				} else {
+					axios.get(`/api/user`)
+					.then((res) => {
+						store.dispatch({ type: 'POINT', value: res.data.user.point });
+						console.log(store.getState().point);
+					})
+				}
+			})
+			.catch(error => {
+				alert(error.response.data.message);
+			})
+
 			loadAnswer();
 			setShowAnswer(1);
 		}
@@ -308,10 +324,27 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 		alert("문제가 소장되었습니다!")
 	}
 
+	// 해설 확인
 	const show_Explanation = () => {
 		var result = window.confirm('문제의 해설을 확인하시겠습니까? 2 포인트가 차감됩니다.');
 
 		if (result) {
+			axios.get(`/api/question/unlock/${question_id}`)
+			.then(res => {
+				if(!res.data.point_decrement) {
+					alert(res.data.message);
+				} else {
+					axios.get(`/api/user`)
+					.then((res) => {
+						store.dispatch({ type: 'POINT', value: res.data.user.point });
+						console.log(store.getState().point);
+					})
+				}
+			})
+			.catch(error => {
+				alert(error.response.data.message);
+			})
+
 			axios.get(`/api/answer?question_id=${question_id}`)
 				.then(res => {
 					console.log(res.data);
