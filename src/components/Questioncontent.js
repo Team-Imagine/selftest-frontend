@@ -584,30 +584,33 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 											{comments.map((i) =>
 												<div key={i.id}>
 													<div>
-														<div style={{fontWeight:"bold"}}>작성자: {i.user.username} <br/></div>
-														
+													<div style={{fontWeight:"bold"}}>작성자: {i.user.username} <br/></div>
 														<br/><br/>
-														{(username === i.user.username) ? 
+														{(username === i.user.username) ?
 															(modified) ? 
 															<div>
 																<FormControl defaultValue={inputModifiedComment} onChange={(e) => modifyCommentContent(e)} type="text" id="title" className="input" style={{ width: "100%", height: "3rem" }} />
 																<Button onClick = {(e) => submitModifyComment(i.id, e)}>제출</Button>
 															</div>: <div>
 																{i.content} 
-																<Button onClick = {(e) => modifyComment(i.content, e)}>수정</Button>&nbsp;&nbsp;<Button onClick={(e) => deleteComment(i.id, e)}>삭제</Button></div> : <div></div>} <br/>
-																<ul className="row justify-content-center align-items-center">
+																<Button onClick = {(e) => modifyComment(i.content, e)}>수정</Button>&nbsp;&nbsp;<Button onClick={(e) => deleteComment(i.id, e)}>삭제</Button></div> : 
+															<div>
+																{i.content} 
+															</div>
+														} <br/>
+
+													</div>
+												
+													<hr/>	
+												</div>
+											)}
+												<ul className="row justify-content-center align-items-center">
 																	{pages.map((i, index) => 
 																		<div key={index}>
 																			<button onClick={(e) => loadCommentPerPage(i, e)}>{i}</button>
 																		</div>)
 																	}
-																</ul>
-													</div>
-												
-													<hr/>	
-												</div>
-											
-											)}
+												</ul>
 										</div>
 										<br />
 
