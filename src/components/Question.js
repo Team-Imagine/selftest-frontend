@@ -152,13 +152,13 @@ const Question = ({ subject, course, isOpen }) => {
 							<div className="mr-auto p-2 bd-highlight">
 							신선해요 &nbsp;  
 							<FontAwesomeIcon icon={faAppleAlt} className="ml-auto" />&nbsp;
-							{i.average_freshness}
+							{Number(i.average_freshness).toFixed(2)}
 							</div>
 
 							<div className="mr-auto p-2 bd-highlight">
 							난이도  &nbsp;
 							<FontAwesomeIcon icon={faStar} className="ml-auto"  />&nbsp;
-							{i.average_difficulty}
+							{Number(i.average_difficulty).toFixed(2)}
 							</div>
 							</div>
 								 </Card.Footer>

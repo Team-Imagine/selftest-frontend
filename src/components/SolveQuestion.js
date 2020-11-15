@@ -186,50 +186,6 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 	useEffect(() => {
 	}, [choiceList, choiceColor]);
 
-
-	const submitHandler = (event) => {
-		event.preventDefault();
-
-		var result = window.confirm('풀이를 제출하시겠습니까?');
-
-		if (result) {
-			if (questionType === "multiple_choice") {
-				let rightAnswer = true;
-
-				for (var i in question.multiple_choice_items) {
-
-					if (question.multiple_choice_items[i].checked === 1 && choiceColor[i] === 'black'
-						|| question.multiple_choice_items[i].checked === 0 && choiceColor[i] === 'red') {
-						rightAnswer = false;
-					}
-				}
-				if (rightAnswer) {
-					alert('정답입니다.');
-				} else {
-					alert('오답입니다.');
-				}
-			} else if (questionType === "short_answer") {
-				let rightAnswer = false;
-				for (var i in question.short_answer_items) {
-
-
-					if (question.short_answer_items[i].item_text === shortAnswer) {
-						rightAnswer = true;
-						alert('정답입니다.');
-					}
-				}
-				if (!rightAnswer) {
-					alert('오답입니다.');
-				}
-			} else {
-				alert('정답과 비교해보세요!');
-				appearAnswer();
-			}
-		} else {
-
-		}
-	}
-
 	const onChange = (e) => {
 		setTitle(e.target.value);
 	}
@@ -291,15 +247,18 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 
 		}
 	}
-	// 정답 확인
-	const appearAnswer = () => {
-		var result = window.confirm('문제의 정답을 확인하시겠습니까? 1 포인트가 차감됩니다.');
+
+	// 풀이 제출
+	const submitHandler = (event) => {
+		event.preventDefault();
+
+		var result = window.confirm('풀이를 제출하시겠습니까? 포인트 1점이 차감됩니다.');
 
 		if (result) {
 			axios.get(`/api/question/solve/${question_id}`)
 			.then(res => {
 				if(!res.data.point_decrement) {
-					alert('이미 확인한 정답입니다.');
+					alert('이미 제출한 적이 있습니다.');
 				} else {
 					axios.get(`/api/user`)
 					.then((res) => {
@@ -312,8 +271,40 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 				alert(error.response.data.message);
 			})
 
-			loadAnswer();
-			setShowAnswer(1);
+			if (questionType === "multiple_choice") {
+				let rightAnswer = true;
+
+				for (var i in question.multiple_choice_items) {
+
+					if (question.multiple_choice_items[i].checked === 1 && choiceColor[i] === 'black'
+						|| question.multiple_choice_items[i].checked === 0 && choiceColor[i] === 'red') {
+						rightAnswer = false;
+					}
+				}
+				if (rightAnswer) {
+					alert('정답입니다.');
+				} else {
+					alert('오답입니다.');
+				}
+			} else if (questionType === "short_answer") {
+				let rightAnswer = false;
+				for (var i in question.short_answer_items) {
+
+
+					if (question.short_answer_items[i].item_text === shortAnswer) {
+						rightAnswer = true;
+						alert('정답입니다.');
+					}
+				}
+				if (!rightAnswer) {
+					alert('오답입니다.');
+				}
+			} else {
+				alert('정답과 비교해보세요!');
+				openAnswer();
+			}
+		} else {
+
 		}
 	}
 
@@ -324,10 +315,34 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 		alert("문제가 소장되었습니다!")
 	}
 
+	const openAnswer = () => {
+		
+			axios.get(`/api/answer?question_id=${question_id}`)
+				.then(res => {
+					console.log(res.data);
+
+					htmlToEditor_answer = res.data.answers.rows[0].content;
+
+					const blocksFromHtml = htmlToDraft(htmlToEditor_answer);
+					if (blocksFromHtml) {
+						const { contentBlocks, entityMap } = blocksFromHtml;
+
+						const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
+
+						const t_editorState_answer = EditorState.createWithContent(contentState);
+						setEssayAnswerEditor(t_editorState_answer);
+					}
+				})
+			loadAnswer();
+
+			setShowExplanation(true);
+	}
+
 	// 해설 확인
 	const show_Explanation = () => {
+	
 		var result = window.confirm('문제의 해설을 확인하시겠습니까? 2 포인트가 차감됩니다.');
-
+	
 		if (result) {
 			axios.get(`/api/question/unlock/${question_id}`)
 			.then(res => {
@@ -344,7 +359,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 			.catch(error => {
 				alert(error.response.data.message);
 			})
-
+			
 			axios.get(`/api/answer?question_id=${question_id}`)
 				.then(res => {
 					console.log(res.data);
@@ -888,10 +903,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 				<Button className="btn-block" variant="info" style={{ width: '20rem' }}
 					onClick={submitHandler}
 				>풀이 제출 </Button>
-				<Button className="btn-block" variant="info" style={{ width: '20rem' }}
-					onClick={appearAnswer}
-				>정답 확인 </Button>
-
+				
 				<div style={{ height: "0.5rem" }}>
 					{(showAnswer && (questionType === 'short_answer' || questionType === 'multiple_choice')) ?
 						<div>
@@ -938,7 +950,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 					}
 					{(questionType !== 'essay') ?
 						<Button className="btn-block" variant="info" style={{ width: '20rem' }}
-							onClick={show_Explanation}
+							onClick={(e) => { show_Explanation(false, e) }}
 						>풀이 확인 </Button>
 						: <div></div>}
 					{(showExplanation && (questionType === 'short_answer' || questionType === 'multiple_choice')) ?
