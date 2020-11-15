@@ -54,8 +54,10 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 	const [isOwned, setIsOwned] = useState(false);
 	const [showAnswer, setShowAnswer] = useState('');
 	const [answerList, setAnswerList] = useState([]);
+	const [essayAnswerEditor, setEssayAnswerEditor] = useState(EditorState.createEmpty());
 	let history = useHistory();
 	let htmlToEditor = '';
+	let htmlToEditor_answer = '';
 	let t_choiceColor = [];
 
 	useEffect(() => {
@@ -74,11 +76,8 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 							t_choiceList.push({ item_text: res.data.question.multiple_choice_items[i].item_text });
 							t_choiceColor.push('black');
 						}
-						// console.log(t_choiceList);
-
 						setChoiceList([...t_choiceList]);
 						setChoiceColor([...t_choiceColor]);
-
 					}
 
 					htmlToEditor = res.data.question.content;
@@ -145,8 +144,13 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 			if (!rightAnswer) {
 				alert('오답입니다.');
 			}
+		} else {
+			alert('정답과 비교해보세요!');
+			appearAnswer();
 		}
 	}
+
+
 
 	const onChange = (e) => {
 		setTitle(e.target.value);
@@ -169,7 +173,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 		setShortAnswer(e.target.value);
 	}
 
-	const appearAnswer = (e) => {
+	const appearAnswer = () => {
 		if(questionType ==="multiple_choice") {
 			let answerArray = '';
 			for(var i in question.multiple_choice_items) {
@@ -194,7 +198,24 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 			setAnswerList([...answerList]);
 			setShowAnswer(1);
 		} else {
-			// 서술형 답변 생성 // html 편집기 이용
+			axios.get(`/api/answer?question_id=${question_id}`)
+			.then(res => {
+				console.log(res.data);
+
+				htmlToEditor_answer = res.data.answers[0].content;
+
+				const blocksFromHtml = htmlToDraft(htmlToEditor_answer);
+				if (blocksFromHtml) {
+					const { contentBlocks, entityMap } = blocksFromHtml;
+
+					const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
+
+					const t_editorState_answer = EditorState.createWithContent(contentState);
+					setEssayAnswerEditor(t_editorState_answer);
+				}
+			})
+
+			setShowAnswer(1);
 		}
 	}
 
@@ -220,7 +241,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 				</div>
 				<div className="p-2 bd-highlight">
 					<div>
-						<Button variant="info" style={{ width: '19rem', height: '2.5rem' }} onClick={isOwnedHandler}
+						<Button variant="info" style={{ width: '19rem', height: '2.5rem'}} onClick={isOwnedHandler}
 						>문제 소장</Button>
 					</div>
 				</div>
@@ -332,7 +353,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 				>정답 확인 </Button>
 				
 				<div style={{height:"0.5rem"}}>
-				{ (showAnswer) ?
+				{ (showAnswer && questionType === 'short_answer') ?
 					<div>
 						{answerList.map((i, index) =>
 							<div key={index}>
@@ -345,6 +366,32 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 								<br />
 							</div>
 						)}
+					</div> :
+					(showAnswer && questionType === 'essay') ?
+					<div>
+							<Card border="light" style={{ backgroundColor: "#f7feff" }}>
+					<Card className="center" style={{ width: '80%', height: '20rem', overflow: 'auto' }}>
+						<Card.Body>
+						<br/>
+							<Editor
+								toolbarHidden
+								// 에디터와 툴바 모두에 적용되는 클래스
+								wrapperClassName="wrapper-class"
+								// 에디터 주변에 적용된 클래스
+								editorClassName="editor"
+								// 툴바 주위에 적용된 클래스
+								toolbarClassName="toolbar-class"
+								editorState={essayAnswerEditor}
+								readOnly
+								// 한국어 설정
+								localization={{
+									locale: 'ko',
+								}}
+							/>
+						</Card.Body>
+					</Card>
+
+				</Card>
 					</div> :
 					<div>
 					</div>

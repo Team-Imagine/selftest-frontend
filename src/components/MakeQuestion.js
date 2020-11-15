@@ -350,7 +350,7 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 		</div>
 		<div>
 			{
-				(questionType !== "서술형") ? <div style={{backgroundColor: 'white', height: "200px", overflow: 'auto'}}> <Editor
+				(questionType !== "서술형") ? <div style={{backgroundColor: 'white', height: "20rem"}}> <Editor
 				wrapperClassName="wrapper-class"
 				editorClassName="editor"
 				toolbarClassName="toolbar-class"
