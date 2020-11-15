@@ -56,12 +56,12 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 			axios.get(`/api/bookmark/${question_id}`)
 				.then(res=>{
 					setIsbookmarked(res.data.is_bookmarked);
-					console.log('bookmarked',isBookmarked);
-					console.log('bookmarked(api_result)',res.data);
+					//console.log('bookmarked',isBookmarked);
+					//console.log('bookmarked(api_result)',res.data);
 				})	
 			axios.get(`/api/question/${question_id}`)
 				.then(res => {
-					console.log(res.data.question);
+					console.log(res.data);
 
 					setQuestion(res.data.question);
 
@@ -81,7 +81,7 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 
 					axios.get(`/api/comment?commentable_entity_id=${res.data.question['commentable_entity.id']}`)
 						.then(res => {
-							setComments(res.data.comments);
+							setComments(res.data.comments.rows);
 						})
 						.catch(error => {
 							alert(error.response.data.message);
@@ -257,7 +257,6 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 		} else {
 			setViewInputFresh(true);
 		}
-
 	}
 
 	const inputFreshness = (e) => {
@@ -344,8 +343,7 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 	const loadComments = () => {
 		axios.get(`/api/comment?commentable_entity_id=${commentable_entity_id}`)
 				.then(res => {
-					console.log('comment:', res.data.comments);
-					setComments(res.data.comments);
+					setComments(res.data.comments.rows);
 				})
 				.catch(error => {
 					alert(error.response.data.message);

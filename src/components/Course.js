@@ -22,12 +22,12 @@ const Course = ({ subject, isOpen }) => {
 
 		axios.get(`/api/course?subject_title=${subject_title}`)
 			.then(res => {
-				console.log(res.data);
+				console.log(res.data.courses);
 
-				setCourse(res.data.courses);
+				setCourse(res.data.courses.rows);
 				
-				//let count = res.data.courses.number / 10 + 1;
-				let count = 5;
+				let count = res.data.courses.count/ 10 + 1;
+
 				let t_pages = [];
 
 				for(var i = 1; i < count; i++) {
@@ -79,7 +79,7 @@ const Course = ({ subject, isOpen }) => {
 		})
 		.then(res => {
 			console.log(res.data);
-			setCourse(res.data.courses);
+			setCourse(res.data.courses.rows);
 		})
 		.catch(error => {
 			alert(error.response.data.message);

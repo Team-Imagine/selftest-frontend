@@ -22,17 +22,14 @@ const Question = ({ subject, course, isOpen }) => {
 	const [pages, setPages] = useState([]);
 	let history = useHistory();
 
-	
-
 	useEffect(() => {
 		axios.get(`/api/question?course_title=${course}`)
 			.then(res => {
 				console.log(res.data);
 
-				setQuestion(res.data.questions);
+				setQuestion(res.data.questions.rows);
 
-				//let count = res.data.courses.number / 10 + 1;
-				let count = 5;
+				let count = res.data.questions.count / 10 + 1;
 				let t_pages = [];
 
 				for(var i = 1; i < count; i++) {
@@ -85,7 +82,7 @@ const Question = ({ subject, course, isOpen }) => {
 		})
 		.then(res => {
 			console.log(res.data);
-			setQuestion(res.data.questions);
+			setQuestion(res.data.questions.rows);
 		})
 		.catch(error => {
 			alert(error.response.data.message);

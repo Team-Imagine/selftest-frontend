@@ -25,10 +25,9 @@ const Subjectcontent = ({ isOpen }) => {
     axios.get('/api/subject/')
       .then(res => {
         console.log(res.data);
-        setSubject(res.data.subjects);
+        setSubject(res.data.subjects.rows);
 
-        //let count = res.data.courses.number / 10 + 1;
-				let count = 5;
+        let count = res.data.subjects.count / 10 + 1;
 				let t_pages = [];
 
 				for(var i = 1; i < count; i++) {
@@ -36,9 +35,6 @@ const Subjectcontent = ({ isOpen }) => {
 				}
         setPages(t_pages);
       })
-      .catch(error => {
-				alert(error.response.data.message);
-			})
   }, [state]);
 
   const onChange = (e) => {
@@ -55,7 +51,7 @@ const Subjectcontent = ({ isOpen }) => {
 		})
 		.then(res => {
 			console.log(res.data);
-			setSubject(res.data.subjects);
+			setSubject(res.data.subjects.rows);
 		})
 		.catch(error => {
 			alert(error.response.data.message);
