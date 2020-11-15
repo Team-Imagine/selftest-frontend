@@ -317,7 +317,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 	}
 
 	const openAnswer = () => {
-		
+
 			axios.get(`/api/answer?question_id=${question_id}`)
 				.then(res => {
 					console.log(res.data);
@@ -951,7 +951,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 							<div>
 							</div>
 					}
-					{(questionType !== 'essay') ?
+					{(questionType) ?
 						<Button className="btn-block" variant="info" style={{ width: '20rem' }}
 							onClick={(e) => { show_Explanation(false, e) }}
 						>풀이 확인 </Button>
