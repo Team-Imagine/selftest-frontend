@@ -65,8 +65,6 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 
 					setQuestion(res.data.question);
 
-					console.log('test',);
-
 					setLikeable_entity_id(res.data.question['likeable_entity.id']);
 					setCommentable_entity_id(res.data.question['commentable_entity.id']);
 
@@ -81,13 +79,12 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 						setFreshness(res.data.question['freshnesses.average_freshness']);
 					}
 
-					//const commentable_entity_id = res.data.question['commentable_entity.id'];
-					
 					axios.get(`/api/comment?commentable_entity_id=${res.data.question['commentable_entity.id']}`)
 						.then(res => {
-							console.log('comment:', res.data.comments);
 							setComments(res.data.comments);
-							//setComments(res.data.)
+						})
+						.catch(error => {
+							alert(error.response.data.message);
 						})
 
 					htmlToEditor = res.data.question.content;

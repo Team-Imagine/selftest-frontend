@@ -13,7 +13,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const Question = ({ subject, course, isOpen }) => {
 
 	const [question, setQuestion] = useState([]);
+	/*
+	const [likeList, setLikeList] = useState([]);
+	const [dislikeList, setDislikeList] = useState([]);
+	const [freshList, setFreshList] = useState([]);
+	const [difficutlyList, setDifficultyList] = useState([]);
+	*/
+	const [pages, setPages] = useState([]);
 	let history = useHistory();
+
+	
 
 	useEffect(() => {
 		axios.get(`/api/question?course_title=${course}`)
@@ -21,6 +30,32 @@ const Question = ({ subject, course, isOpen }) => {
 				console.log(res.data);
 
 				setQuestion(res.data.questions);
+
+				//let count = res.data.courses.number / 10 + 1;
+				let count = 5;
+				let t_pages = [];
+
+				for(var i = 1; i < count; i++) {
+					t_pages.push(i);
+				}
+				setPages(t_pages);
+
+				/*
+				let like_list = [];
+				let dislike_list = [];
+				let fresh_list = [];
+				let difficulty_list = [];
+				for(var i in res.data.questions) {
+					like_list.push(res.data.questions[i]['likeable_entity.total_likes']);
+					dislike_list.push(res.data.questions[i]['likeable_entity.total_dislikes']);
+					fresh_list.push(res.data.questions[i]['average_freshness']);
+					difficulty_list.push(res.data.questions[i]['average_difficulty']);
+				}
+				setLikeList(like_list);
+				setDislikeList(dislike_list);
+				setFreshList(fresh_list);
+				setDifficutlyList(difficultyList);
+				*/
 			})
 			.catch(error => {
 				alert(error.response.data.message);
@@ -36,6 +71,25 @@ const Question = ({ subject, course, isOpen }) => {
 				alert('로그인이 필요한 기능입니다.');
 				history.push("/login");
 			}
+	}
+
+	const loadQuestionPerPage = (index, e) => {
+		e.preventDefault();
+		
+		axios.get(`/api/question/`, {
+			params: {
+				course_title: course,
+				subject_title: subject,
+				page: index,
+			}
+		})
+		.then(res => {
+			console.log(res.data);
+			setQuestion(res.data.questions);
+		})
+		.catch(error => {
+			alert(error.response.data.message);
+		})
 	}
 
 	return (
@@ -117,6 +171,13 @@ const Question = ({ subject, course, isOpen }) => {
 						</div>
 					)}
 					</CardDeck>
+				</ul>
+				<ul className="row justify-content-center align-items-center">
+				{pages.map((i) => 
+						<div>
+							<button onClick={(e) => loadQuestionPerPage(i, e)}>{i}</button>
+						</div>)
+					}		
 				</ul>
 			</div>
 		</Container>

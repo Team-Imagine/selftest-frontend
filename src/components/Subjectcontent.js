@@ -16,6 +16,8 @@ const Subjectcontent = ({ isOpen }) => {
   const [subject, setSubject] = useState([]);
   const [title, setTitle] = useState('');
   const [state, setState] = useState(0);
+  const [pages, setPages] = useState([]);
+
   let history = useHistory();
 
 
@@ -24,6 +26,15 @@ const Subjectcontent = ({ isOpen }) => {
       .then(res => {
         console.log(res.data);
         setSubject(res.data.subjects);
+
+        //let count = res.data.courses.number / 10 + 1;
+				let count = 5;
+				let t_pages = [];
+
+				for(var i = 1; i < count; i++) {
+					t_pages.push(i);
+				}
+        setPages(t_pages);
       })
       .catch(error => {
 				alert(error.response.data.message);
@@ -33,6 +44,23 @@ const Subjectcontent = ({ isOpen }) => {
   const onChange = (e) => {
     setTitle(e.target.value);
   }
+
+  const loadSubjectPerPage = (index, e) => {
+		e.preventDefault();
+		
+		axios.get(`/api/subject/`, {
+			params: {
+				page: index,
+			}
+		})
+		.then(res => {
+			console.log(res.data);
+			setSubject(res.data.subjects);
+		})
+		.catch(error => {
+			alert(error.response.data.message);
+		})
+	}
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -127,6 +155,13 @@ const Subjectcontent = ({ isOpen }) => {
           </div>
         )}
       </ul>
+      <ul className="row justify-content-center align-items-center">
+				{pages.map((i) => 
+						<div>
+							<button onClick={(e) => loadSubjectPerPage(i, e)}>{i}</button>
+						</div>)
+					}		
+			</ul>
     </Container>
   );
 }

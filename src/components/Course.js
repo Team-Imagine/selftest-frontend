@@ -13,6 +13,8 @@ const Course = ({ subject, isOpen }) => {
 	const [course, setCourse] = useState([]);
 	const [state, setState] = useState(0);
 	const [title, setTitle] = useState('');
+	const [pages, setPages] = useState([]);
+
 	let history = useHistory();
 
 	useEffect(() => {
@@ -23,13 +25,21 @@ const Course = ({ subject, isOpen }) => {
 				console.log(res.data);
 
 				setCourse(res.data.courses);
+				
+				//let count = res.data.courses.number / 10 + 1;
+				let count = 5;
+				let t_pages = [];
 
+				for(var i = 1; i < count; i++) {
+					t_pages.push(i);
+				}
+				setPages(t_pages);
+				
 			})
 	}, [state]);
 
 	const onChange = (e) => {
 		setTitle(e.target.value);
-
 	}
 
 	const submitHandler = (event) => {
@@ -56,6 +66,24 @@ const Course = ({ subject, isOpen }) => {
 			alert('로그인이 필요한 기능입니다.');
 			history.push("/login");
 		}
+	}
+
+	const loadCoursePerPage = (index, e) => {
+		e.preventDefault();
+		
+		axios.get(`/api/course/`, {
+			params: {
+				subject_title: subject,
+				page: index,
+			}
+		})
+		.then(res => {
+			console.log(res.data);
+			setCourse(res.data.courses);
+		})
+		.catch(error => {
+			alert(error.response.data.message);
+		})
 	}
 
 	return (
@@ -115,6 +143,15 @@ const Course = ({ subject, isOpen }) => {
 					</div>
 				)}
 			</ul>
+			<ul className="row justify-content-center align-items-center">
+				{pages.map((i) => 
+						<div>
+							<button onClick={(e) => loadCoursePerPage(i, e)}>{i}</button>
+						</div>)
+					}		
+			</ul>
+
+
 
 		</Container>
 	);
