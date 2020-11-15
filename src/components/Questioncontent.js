@@ -21,6 +21,8 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 
 	const [question, setQuestion] = useState('');
 	const [comments, setComments] = useState([]);
+	const [commentCount, setCommentCount] = useState(0);
+	const [pages, setPages] = useState([]);
 
 	const [likes, setLikes] = useState(0);
 	const [dislikes, setDislikes] = useState(0);
@@ -81,7 +83,19 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 
 					axios.get(`/api/comment?commentable_entity_id=${res.data.question['commentable_entity.id']}`)
 						.then(res => {
+							console.log(res.data);
+
 							setComments(res.data.comments.rows);
+						
+							let count = res.data.comments.count / 10 + 1;
+
+							let t_pages = [];
+
+							for(var i = 1; i < count; i++) {
+								t_pages.push(i);
+							}
+							setPages(t_pages);
+
 						})
 						.catch(error => {
 							alert(error.response.data.message);
@@ -350,6 +364,24 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 				})
 	}
 
+	const loadCommentPerPage = (index, e) => {
+		e.preventDefault();
+		
+		axios.get(`/api/comment/`, {
+			params: {
+				commentable_entity_id:commentable_entity_id,
+				page: index,
+			}
+		})
+		.then(res => {
+			console.log(res.data);
+			setComments(res.data.comments.rows);
+		})
+		.catch(error => {
+			alert(error.response.data.message);
+		})
+	}
+
 	// 댓글 작성
 	const submitComment = (e) => {
 		e.preventDefault();
@@ -378,7 +410,7 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 			axios.get(`/api/comment?commentable_entity_id=${commentable_entity_id}`)
 				.then(res => {
 					console.log('comment:', res.data.comments);
-					setComments(res.data.comments);
+					setComments(res.data.comments.rows);
 			})
 		})
 	}
@@ -552,12 +584,15 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 															</div>: <div>
 																{i.content} 
 																<Button onClick = {(e) => modifyComment(i.content, e)}>수정</Button>&nbsp;&nbsp;<Button onClick={(e) => deleteComment(i.id, e)}>삭제</Button></div> : <div></div>} <br/>
+																<ul className="row justify-content-center align-items-center">
+																	{pages.map((i) => 
+																		<div>
+																			<button onClick={(e) => loadCommentPerPage(i, e)}>{i}</button>
+																		</div>)
+																	}
+																</ul>
 													</div>
-													{/*
-													<Card.Footer>
-											좋아요 <FontAwesomeIcon icon={faHeart} className="ml-auto" />
-										</Card.Footer>
-													*/}
+												
 													<hr/>	
 												</div>
 											
