@@ -55,6 +55,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 	const [showAnswer, setShowAnswer] = useState('');
 	const [answerList, setAnswerList] = useState([]);
 	const [essayAnswerEditor, setEssayAnswerEditor] = useState(EditorState.createEmpty());
+	const [showExplanation, setShowExplanation] = useState(false);
 	let history = useHistory();
 	let htmlToEditor = '';
 	let htmlToEditor_answer = '';
@@ -136,6 +137,8 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 		} else if (questionType === "short_answer") {
 			let rightAnswer = false;
 			for (var i in question.short_answer_items) {
+
+
 				if (question.short_answer_items[i].item_text === shortAnswer) {
 					rightAnswer = true;
 					alert('정답입니다.');
@@ -150,16 +153,12 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 		}
 	}
 
-
-
 	const onChange = (e) => {
 		setTitle(e.target.value);
 	}
 
 	const selectAnswer = (index, e) => {
 		t_choiceColor = choiceColor;
-
-		//console.log(t_choiceColor);
 
 		if (choiceColor[index] === 'black') {
 			t_choiceColor[index] = 'red';
@@ -202,7 +201,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 			.then(res => {
 				console.log(res.data);
 
-				htmlToEditor_answer = res.data.answers[0].content;
+				htmlToEditor_answer = res.data.answers.rows[0].content;
 
 				const blocksFromHtml = htmlToDraft(htmlToEditor_answer);
 				if (blocksFromHtml) {
@@ -224,6 +223,27 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 
 		setIsOwned(true);
 		alert("문제가 소장되었습니다!")
+	}
+
+	const show_Explanation = () => {
+		axios.get(`/api/answer?question_id=${question_id}`)
+			.then(res => {
+				console.log(res.data);
+
+				htmlToEditor_answer = res.data.answers.rows[0].content;
+
+				const blocksFromHtml = htmlToDraft(htmlToEditor_answer);
+				if (blocksFromHtml) {
+					const { contentBlocks, entityMap } = blocksFromHtml;
+
+					const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
+
+					const t_editorState_answer = EditorState.createWithContent(contentState);
+					setEssayAnswerEditor(t_editorState_answer);
+				}
+		})
+
+		setShowExplanation(true);
 	}
 
 	return (
@@ -296,8 +316,6 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 								<br/>
 								
 							</div>
-							
-						
 							: (questionType === "short_answer") ? <div>
 								<div>
 									<p> 아래에 정답을 입력하세요.</p>
@@ -353,7 +371,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 				>정답 확인 </Button>
 				
 				<div style={{height:"0.5rem"}}>
-				{ (showAnswer && questionType === 'short_answer') ?
+				{(showAnswer && (questionType === 'short_answer' || questionType === 'multiple_choice')) ?
 					<div>
 						{answerList.map((i, index) =>
 							<div key={index}>
@@ -396,10 +414,39 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 					<div>
 					</div>
 				}
-			</div>
 				<Button className="btn-block" variant="info" style={{ width: '20rem' }}
-					onClick={appearAnswer}
+					onClick={show_Explanation}
 				>풀이 확인 </Button>
+				{(showExplanation && (questionType === 'short_answer' || questionType === 'multiple_choice')) ? 
+				<div>
+					<Card border="light" style={{ backgroundColor: "#f7feff" }}>
+					<Card className="center" style={{ width: '80%', height: '20rem', overflow: 'auto' }}>
+						<Card.Body>
+						<br/>
+							<Editor
+								toolbarHidden
+								// 에디터와 툴바 모두에 적용되는 클래스
+								wrapperClassName="wrapper-class"
+								// 에디터 주변에 적용된 클래스
+								editorClassName="editor"
+								// 툴바 주위에 적용된 클래스
+								toolbarClassName="toolbar-class"
+								editorState={essayAnswerEditor}
+								readOnly
+								// 한국어 설정
+								localization={{
+									locale: 'ko',
+								}}
+							/>
+						</Card.Body>
+					</Card>
+
+				</Card>
+				</div>
+				: <div></div>
+				}
+			</div>
+				
 			</div>
 
 

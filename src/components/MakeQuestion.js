@@ -176,7 +176,7 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 					
 					axios.post(`/api/answer/`, nData)
 					.then(res => {
-						alert("문제가 성공적으로 등록되었습니다.");
+						alert(res.data.message);
 						setEditorSolution("");
 					})
 					.catch(error => {
@@ -191,7 +191,6 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 		} else {
 			alert('내용을 올바르게 입력하세요.');
 		}
-		
 	}
 
 	const onChange = (e) => {
