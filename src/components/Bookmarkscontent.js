@@ -88,8 +88,8 @@ const Bookmarkscontent = ({ subject, course, question_id, question, isOpen, }) =
               				#{i.id} {i.question.course.subject.title} - {i.question.course.title}
 							</div>
 							<div >
-							<Button variant="info" style={{ width: '2.4rem', height: '2rem' }}>
-							<FontAwesomeIcon icon={faTrashAlt} className="ml-auto" onClick={DeleteBookmarks(i.id)} />
+							<Button variant="info" style={{ width: '2.4rem', height: '2rem' }} onClick={DeleteBookmarks(i.id)}>
+							<FontAwesomeIcon icon={faTrashAlt} className="ml-auto"  />
 							</Button>
 							</div>
 							</div>

@@ -12,6 +12,7 @@ import store from "../../store";
 
 import { useCookies } from 'react-cookie';
 import axios from "axios";
+const[searchKeyword, setSearchKeyword] = useState("");
 
 const NavBar = ({isOpen, point}) => {
   const [test, setTest] = useState(store.getState().isLoggedIn);
@@ -28,6 +29,13 @@ const NavBar = ({isOpen, point}) => {
     history.push("/login");
   }
 
+  const moveSearch = () => {
+    history.push("/search");
+  }
+
+  const onSearchChange = (e) =>{
+    setSearchKeyword(e.target.value);
+  }
  
   const readCookie = async () => {
     if(cookies.access_token) {  // 쿠키에 access_token이 존재하면 로그인 상태 유지
@@ -128,9 +136,11 @@ const NavBar = ({isOpen, point}) => {
         </div>
         <Form inline>
           <FormControl type="text" placeholder="검색하기" className="mr-sm-2 " />
+          <div>
           <Button variant="info">
-            <FontAwesomeIcon icon={faSearch} className="ml-auto" />
+            <FontAwesomeIcon icon={faSearch} className="ml-auto"  />
           </Button>
+          </div>
         </Form>
        
         <Navbar.Collapse id="responsive-navbar-nav">
@@ -173,9 +183,9 @@ const NavBar = ({isOpen, point}) => {
           </Nav.Link>
         </div>
         <Form inline>
-          <FormControl type="text" placeholder="검색하기" className="mr-sm-2 " />
-          <Button variant="info">
-            <FontAwesomeIcon icon={faSearch} className="ml-auto" />
+          <FormControl type="text" placeholder="검색하기" value={searchKeyword} onChange={onSearchChange} className="mr-sm-2 " />
+          <Button variant="info" onClick={moveSearch}>
+            <FontAwesomeIcon icon={faSearch} className="ml-auto"/>
           </Button>
         </Form>
         <Navbar.Collapse id="responsive-navbar-nav">

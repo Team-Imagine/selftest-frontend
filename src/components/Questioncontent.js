@@ -493,8 +493,8 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 									#{question.id} {subject} - {course}
 								</div>
 								</div>
-								<Button variant="info" style={{ width: '2.4rem', height: '2rem' }}>
-									<FontAwesomeIcon icon={faThumbtack} className="mr-2" onClick={AddBookmarks} style={isBookmarked?{transform: `rotate(90deg)`}:{}}/>
+								<Button variant="info" style={{ width: '2.4rem', height: '2rem' }} onClick={AddBookmarks} >
+									<FontAwesomeIcon icon={faThumbtack} className="mr-2" style={isBookmarked?{transform: `rotate(90deg)`}:{}}/>
 								</Button>
 								</div>
 							</Card.Header>
