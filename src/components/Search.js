@@ -4,7 +4,7 @@ import Searchcontent from "./Searchcontent";
 import NavBar from "./content/Navbar";
 
 class Search extends React.Component {
-
+  
         constructor(props) {
           super(props);
       
@@ -16,6 +16,7 @@ class Search extends React.Component {
       
           this.previousWidth = -1;
         }
+        
       
         updateWidth() {
           const width = window.innerWidth;
@@ -53,7 +54,11 @@ class Search extends React.Component {
       
         render() {
 
+          
+         
+
           return (
+            
             <div>
               <NavBar toggle={this.toggle} isOpen={this.state.isOpen}/>
             <div className="App wrapper">

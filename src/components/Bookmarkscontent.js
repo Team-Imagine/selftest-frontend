@@ -88,7 +88,7 @@ const Bookmarkscontent = ({ subject, course, question_id, question, isOpen, }) =
 							<Card.Header style={{height:"3.5rem"}}>
 							<div className="d-flex bd-highlight mb-3">
 							<div className="mr-auto p-2 bd-highlight">
-              				#{i.id} {subject} - {course}
+              				#{i.id} {i.question.course.subject.title} - {i.question.course.title}
 							</div>
 							<div >
 							<Button variant="info" style={{ width: '2.4rem', height: '2rem' }}>
