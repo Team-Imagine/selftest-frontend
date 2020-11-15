@@ -449,6 +449,16 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 			alert(error.response.data.message);
 		})
 	}
+
+	const solveQuestion = () => {
+		var result = window.confirm("문제를 푸시겠어요?");
+
+		if(result) {
+			history.push(`/subject/${subject}/${course}/${question_id}/problem_solving/${1}`);
+		} else {
+			
+		}
+	}
 	return (
 		<Container
 			fluid
@@ -464,7 +474,8 @@ const Questioncontent = ({ subject, course, question_id, isOpen }) => {
 					<div className="p-2 bd-highlight">
 						<div>
 							<Button variant="info" style={{ width: '19rem', height: '2.5rem' }}
-								href={`/subject/${subject}/${course}/${question_id}/problem_solving/${1}`}
+								onClick={solveQuestion}
+								//href={`/subject/${subject}/${course}/${question_id}/problem_solving/${1}`}
 							>문제 풀이</Button>
 						</div>
 					</div>
