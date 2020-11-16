@@ -817,11 +817,15 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 											onClick={inputFreshnessForm}>
 											<FontAwesomeIcon icon={faAppleAlt} className="mr-2"/>
 							</Button>&nbsp;&nbsp;
-										{viewInputFresh && <div><input onChange={(e) => inputFreshness(e)} style={{ width: "15%" }}></input>
+										
+										{Number(freshness).toFixed(2)}
+										{viewInputFresh &&
+										 <div>
+											 <input onChange={(e) => inputFreshness(e)} style={{ width: "15%" }}></input>
 											<button onClick={addFreshness}>제출</button>
 											<button onClick={deleteFreshness}>삭제</button>
 										</div>}
-										{Number(freshness).toFixed(2)}
+										
 
 									</div>
 									<div className="mr-auto p-2 bd-highlight"style={{width:"25%"}}>
@@ -829,12 +833,14 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 											onClick={inputDifficultyForm}>
 											<FontAwesomeIcon icon={faStar} style={{color:"white"}} className="mr-2"/>
 							</Button>&nbsp;&nbsp;
-										
-										{viewInputDifficulty && <div><input onChange={(e) => inputDifficulty(e)} style={{ width: "15%" }}></input>
+										{Number(difficulty).toFixed(2)}
+										{viewInputDifficulty && 
+										<div>
+											<input onChange={(e) => inputDifficulty(e)} style={{ width: "15%" }}></input>
 											<button onClick={addDifficulty}>제출</button>
 											<button onClick={deleteDifficulty}>삭제</button>
 										</div>}
-										{Number(difficulty).toFixed(2)}
+										
 									</div>
 								</div>
 										

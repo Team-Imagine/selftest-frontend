@@ -50,7 +50,7 @@ const Searchcontent = ({searchtype,keywordtype,keyword, isOpen}) => {
 						 <Card className="text-center" variant="info" style={{ width: '30rem' }}>
 						<Link key={i.id} 
 						to={{
-							pathname: `/subject/test/${i["course.title"]}/${i.id}`,
+							pathname: `/subject/${i["course.subject.title"]}/${i["course.title"]}/${i.id}/problem_solving/${1}`,
 						}}>
 							<Card.Header style={{height:"3.5rem"}}>
 							<div className="d-flex bd-highlight mb-3">
