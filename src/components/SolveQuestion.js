@@ -139,7 +139,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 						.then(res => {
 							console.log(res.data);
 
-							setComments(res.data.comments.rows);
+							setComments(res.data.comments);
 						
 							let count = res.data.comments.count / 10 + 1;
 
@@ -634,7 +634,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 	const loadComments = () => {
 		axios.get(`/api/comment?commentable_entity_id=${commentable_entity_id}`)
 				.then(res => {
-					setComments(res.data.comments.rows);
+					setComments(res.data.comments);
 				})
 				.catch(error => {
 					alert(error.response.data.message);
@@ -652,7 +652,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 		})
 		.then(res => {
 			console.log(res.data);
-			setComments(res.data.comments.rows);
+			setComments(res.data.comments);
 		})
 		.catch(error => {
 			alert(error.response.data.message);
@@ -686,8 +686,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 			
 			axios.get(`/api/comment?commentable_entity_id=${commentable_entity_id}`)
 				.then(res => {
-					console.log('comment:', res.data.comments);
-					setComments(res.data.comments.rows);
+					setComments(res.data.comments);
 			})
 		})
 	}
@@ -864,7 +863,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 								{choiceList.map((i, index) =>
 									//선택지 버튼 출력 부분
 									<div key={index}>
-										<Button variant="outline-light" style={{  height:"4rem", width: '40rem', color: choiceColor[index], fontSize:"18px", backgroundColor: "lavender" }} onClick={(e) => { selectAnswer(index, e) }}>{'('}{index + 1}{')'} {i.item_text}</Button><br /><br/>
+										<Button variant="outline-light" style={{  height:"2rem", width: '40rem', color: choiceColor[index], fontSize:"18px", backgroundColor: "lavender" }} onClick={(e) => { selectAnswer(index, e) }}>{'('}{index + 1}{')'} {i.item_text}</Button><br /><br/>
 									</div>
 								)}
 								</div>
@@ -874,39 +873,39 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 							</div>
 							<div className="justify-content-center align-items-center" style = {{float:"left", textAlign:"center",marginBottom:"30px"}}>
 							{(questionType) ?
-								<Button className="btn pull-right" variant="info" style={{ width: "18rem" , height:"3rem", fontSize:"20px", marginRight:"2rem"}}
+								<Button className="btn pull-right" variant="info" style={{ width: "18rem" , height:"2rem", fontSize:"15px", marginRight:"2rem"}}
 									onClick={show_Explanation}
 								>풀이 확인 </Button>
 								: <div></div>}
-							<Button className="btn pull-right" variant="info" style={{ width:"18rem", height:"3rem",fontSize:"20px", marginLeft : "2rem", }}
+							<Button className="btn pull-right" variant="info" style={{ width:"18rem", height:"2rem",fontSize:"15px", marginLeft : "2rem", }}
 								onClick={submitHandler}
 									>풀이 제출 </Button>
 							</div>
 							</Card>
 							
-							: (questionType === "short_answer") ? <div>
+							: (questionType === "short_answer") ? <div style={{textAlign:"center"}}>
 								<div >
 									<h3> 아래에 정답을 입력하세요.</h3>
 								</div>
 								
-								<div><input type="text" id="title" className="input" style={{ width: "85rem", height: "3rem" }} onChange={(e) => makeAnswer(e)} /><br /> 
+								<div><input type="text" id="title" className="input" style={{ width: "42rem", height: "2rem" }} onChange={(e) => makeAnswer(e)} /><br /> 
 								</div>
-								<div className="justify-content-center align-items-center" style = {{float:"left", textAlign:"center",marginBottom:"2rem",marginTop:"1rem",width: "85rem"}}>
+								<div className="justify-content-center align-items-center" style = {{float:"left", textAlign:"center",marginBottom:"2rem",marginTop:"1rem",width: "86rem"}}>
 							{(questionType) ?
-								<Button className="btn pull-right" variant="info" style={{ width: "41.5rem" , height:"3rem", fontSize:"20px", marginRight:"1rem"}}
+								<Button className="btn pull-right" variant="info" style={{ width: "20rem" , height:"2rem", fontSize:"15px", marginRight:"1rem"}}
 									onClick={show_Explanation}
 								>풀이 확인 </Button>
 								: <div></div>}
-							<Button className="btn pull-right" variant="info" style={{ width:"41.5rem", height:"3rem",fontSize:"20px", marginLeft : "1rem", }}
+							<Button className="btn pull-right" variant="info" style={{ width:"20rem", height:"2rem",fontSize:"15px", marginLeft : "1rem", }}
 								onClick={submitHandler}
 									>풀이 제출 </Button>
 							</div>
 								
 							</div> : <div>
 
-									<MyBlock style={{ width: '85rem' }}>
+									<MyBlock style={{ width: '85rem'}}>
 										<br />
-										<div style={{ height: '8rem' }}>
+										<div style={{height: "20rem !important"}}>
 											<Editor
 												// 에디터와 툴바 모두에 적용되는 클래스
 												wrapperClassName="wrapper-class"
@@ -936,11 +935,11 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 											/>
 											<div className="justify-content-center align-items-center" style = {{float:"left", textAlign:"center",marginBottom:"2rem",marginTop:"1rem",width: "85rem"}}>
 							{(questionType) ?
-								<Button className="btn pull-right" variant="info" style={{ width: "41.5rem" , height:"3rem", fontSize:"20px", marginRight:"1rem"}}
+								<Button className="btn pull-right" variant="info" style={{ width: "41.5rem" , height:"2rem", fontSize:"15px", marginRight:"1rem"}}
 									onClick={show_Explanation}
 								>풀이 확인 </Button>
 								: <div></div>}
-							<Button className="btn pull-right" variant="info" style={{ width:"41.5rem", height:"3rem",fontSize:"20px", marginLeft : "1rem", }}
+							<Button className="btn pull-right" variant="info" style={{ width:"41.5rem", height:"2rem",fontSize:"15px", marginLeft : "1rem", }}
 								onClick={submitHandler}
 									>풀이 제출 </Button>
 							</div>
@@ -973,7 +972,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 						(showAnswer && questionType === 'essay') ?
 							<div>
 								<Card style={{ backgroundColor: "#f7feff" }}>
-									<Card className="center" style={{ width: '85rem', height: '20rem', overflow: 'auto' }}>
+									<Card className="center" style={{ width: '85rem', height: '20rem !important' }}>
 										<Card.Body>
 											<br />
 											<Editor
@@ -1015,6 +1014,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 								<Card className="center" style={{ width: '85rem', height: '20rem', overflow: 'auto' }}>
 									<Card.Body>
 										<br />
+										<div style={{height: "200px !important"}}>
 										<Editor
 											toolbarHidden
 											// 에디터와 툴바 모두에 적용되는 클래스
@@ -1030,6 +1030,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 												locale: 'ko',
 											}}
 										/>
+										</div>
 									</Card.Body>
 								</Card>
 
@@ -1104,7 +1105,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 													<div style={{fontWeight:"bold"}}>작성자: {i.user.username} <br/></div>
 														<br/>
 														{(username === i.user.username) ?
-															(modified) ? 
+															(modified) ?
 															<div>
 																<FormControl defaultValue={inputModifiedComment} onChange={(e) => modifyCommentContent(e)} type="text" id="title" className="input" style={{ width: "85rem", height: "3rem" }} />
 																<Button onClick = {(e) => submitModifyComment(i.id, e)}>제출</Button>

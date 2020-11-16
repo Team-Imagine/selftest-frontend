@@ -78,7 +78,7 @@ const Bookmarkscontent = ({ subject, course, question_id, question, isOpen, }) =
 					 <div className="row h-100 justify-content-center align-items-center">
 						
 						 <Card className="text-center" variant="info" style={{ width: '30rem' }}>
-						<Link key={i["question.id"]} 
+						<Link key={i["question.id"]}
 						to={{
 							pathname: `/subject/${i["question.course.subject.title"]}/${i["question.course.title"]}/${i["question.id"]}/problem_solving/${1}`,
 						}}>

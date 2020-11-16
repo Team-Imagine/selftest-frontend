@@ -64,7 +64,6 @@ const NavBar = ({isOpen, point}) => {
           store.dispatch({type:'POINT', value: res.data.user.point}) 
           setUserPoint(store.getState().point);
           
-          //console.log('test1:', store.getState().verified);
           if(store.getState().isLoggedIn && !store.getState().verified) {
             
             axios.post(`/api/auth/send-verification-email`)
