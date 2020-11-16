@@ -33,6 +33,16 @@ const Bookmarkscontent = ({ subject, course, question_id, question, isOpen, }) =
 		.then(res => {
 			console.log(res.data.message);
 			alert("문제가 즐겨찾기에서 삭제되었습니다")
+
+			axios.get(`/api/bookmark`)
+			.then(res => {
+				console.log(res.data);
+
+				setBookmarks(res.data.bookmarks.rows);
+			})
+			.catch(error => {
+				alert(error.response.data.message);
+			})
 		})
 		.catch(error => {
 			alert(error.response.data.message);
