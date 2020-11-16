@@ -176,13 +176,12 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 					
 					axios.post(`/api/answer/`, nData)
 					.then(res => {
-						alert(res.data.message);
 						setEditorSolution("");
 					})
 					.catch(error => {
 						alert(error.response.data.message);
 					})
-					
+					alert(res.data.message);
 					moveBack();		
 				})
 				.catch(error => {
@@ -191,6 +190,8 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 		} else {
 			alert('내용을 올바르게 입력하세요.');
 		}
+
+		
 	}
 
 	const onChange = (e) => {

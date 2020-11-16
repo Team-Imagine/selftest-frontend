@@ -139,9 +139,10 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 						.then(res => {
 							console.log(res.data);
 
-							setComments(res.data.comments);
-						
+							setComments(res.data.comments.rows);
+
 							let count = res.data.comments.count / 10 + 1;
+							
 
 							let t_pages = [];
 
@@ -149,7 +150,6 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 								t_pages.push(i);
 							}
 							setPages(t_pages);
-
 						})
 						.catch(error => {
 							alert(error.response.data.message);
@@ -634,7 +634,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 	const loadComments = () => {
 		axios.get(`/api/comment?commentable_entity_id=${commentable_entity_id}`)
 				.then(res => {
-					setComments(res.data.comments);
+					setComments(res.data.comments.rows);
 				})
 				.catch(error => {
 					alert(error.response.data.message);
@@ -652,7 +652,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 		})
 		.then(res => {
 			console.log(res.data);
-			setComments(res.data.comments);
+			setComments(res.data.comments.rows);
 		})
 		.catch(error => {
 			alert(error.response.data.message);
@@ -686,7 +686,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 			
 			axios.get(`/api/comment?commentable_entity_id=${commentable_entity_id}`)
 				.then(res => {
-					setComments(res.data.comments);
+					setComments(res.data.comments.rows);
 			})
 		})
 	}
@@ -883,13 +883,13 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 							</div>
 							</Card>
 							
-							: (questionType === "short_answer") ? <div style={{textAlign:"center"}}>
+							: (questionType === "short_answer") ? <div className="justify-content-center align-items-center" style = {{float:"left", textAlign:"center",marginBottom:"2rem",marginTop:"1rem",width: "86rem"}}>
 								<div >
 									<h3> 아래에 정답을 입력하세요.</h3>
 								</div>
 								
 								<div><input type="text" id="title" className="input" style={{ width: "42rem", height: "2rem" }} onChange={(e) => makeAnswer(e)} /><br /> 
-								</div>
+								
 								<div className="justify-content-center align-items-center" style = {{float:"left", textAlign:"center",marginBottom:"2rem",marginTop:"1rem",width: "86rem"}}>
 							{(questionType) ?
 								<Button className="btn pull-right" variant="info" style={{ width: "20rem" , height:"2rem", fontSize:"15px", marginRight:"1rem"}}
@@ -900,7 +900,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 								onClick={submitHandler}
 									>풀이 제출 </Button>
 							</div>
-								
+							</div>
 							</div> : <div>
 
 									<MyBlock style={{ width: '85rem'}}>
@@ -1071,7 +1071,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 												<ul className="row justify-content-center align-items-center">
 																	{pages.map((i, index) => 
 																		<div key={index}>
-																			<button onClick={(e) => loadCommentPerPage(i, e)}>{i}</button>
+																			<button style={{backgroundColor: '#ffffff', border: '1px solid', width: '1.5rem'}} onClick={(e) => loadCommentPerPage(i, e)}>{i}</button>
 																		</div>)
 																	}
 												</ul>
@@ -1124,7 +1124,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 												<ul className="row justify-content-center align-items-center">
 																	{pages.map((i, index) => 
 																		<div key={index}>
-																			<button onClick={(e) => loadCommentPerPage(i, e)}>{i}</button>
+																			<button style={{backgroundColor: '#ffffff', border: '1px solid', width: '1.5rem'}} onClick={(e) => loadCommentPerPage(i, e)}>{i}</button>
 																		</div>)
 																	}
 												</ul>
