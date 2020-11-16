@@ -146,7 +146,7 @@ const Course = ({ subject, isOpen }) => {
 			<ul className="row justify-content-center align-items-center">
 			{pages.map((i, index) => 
 				<div key={index}>
-							<button onClick={(e) => loadCoursePerPage(i, e)}>{i}</button>
+							<button style={{backgroundColor: '#ffffff', border: '1px solid', width: '1.5rem'}} onClick={(e) => loadCoursePerPage(i, e)}>{i}</button>&nbsp;
 						</div>)
 					}		
 			</ul>

@@ -154,7 +154,7 @@ const Subjectcontent = ({ isOpen }) => {
       <ul className="row justify-content-center align-items-center">
       {pages.map((i, index) => 
 			  <div key={index}>
-							<button onClick={(e) => loadSubjectPerPage(i, e)}>{i}</button>
+							<button style={{backgroundColor: '#ffffff', border: '1px solid', width: '1.5rem'}}onClick={(e) => loadSubjectPerPage(i, e)}>{i}</button>
 						</div>)
 					}		
 			</ul>

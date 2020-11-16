@@ -139,7 +139,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 						.then(res => {
 							console.log(res.data);
 
-							setComments(res.data.comments.rows);
+							setComments(res.data.comments);
 						
 							let count = res.data.comments.count / 10 + 1;
 
@@ -634,7 +634,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 	const loadComments = () => {
 		axios.get(`/api/comment?commentable_entity_id=${commentable_entity_id}`)
 				.then(res => {
-					setComments(res.data.comments.rows);
+					setComments(res.data.comments);
 				})
 				.catch(error => {
 					alert(error.response.data.message);
@@ -652,7 +652,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 		})
 		.then(res => {
 			console.log(res.data);
-			setComments(res.data.comments.rows);
+			setComments(res.data.comments);
 		})
 		.catch(error => {
 			alert(error.response.data.message);
@@ -686,8 +686,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 			
 			axios.get(`/api/comment?commentable_entity_id=${commentable_entity_id}`)
 				.then(res => {
-					console.log('comment:', res.data.comments);
-					setComments(res.data.comments.rows);
+					setComments(res.data.comments);
 			})
 		})
 	}
@@ -858,7 +857,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 								{choiceList.map((i, index) =>
 									//선택지 버튼 출력 부분
 									<div key={index}>
-										<Button variant="outline-light" style={{  height:"4rem", width: '40rem', color: choiceColor[index], fontSize:"18px", backgroundColor: "lavender" }} onClick={(e) => { selectAnswer(index, e) }}>{'('}{index + 1}{')'} {i.item_text}</Button><br /><br/>
+										<Button variant="outline-light" style={{  height:"2rem", width: '40rem', color: choiceColor[index], fontSize:"18px", backgroundColor: "lavender" }} onClick={(e) => { selectAnswer(index, e) }}>{'('}{index + 1}{')'} {i.item_text}</Button><br /><br/>
 									</div>
 								)}
 								</div>
@@ -1098,7 +1097,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 													<div style={{fontWeight:"bold"}}>작성자: {i.user.username} <br/></div>
 														<br/>
 														{(username === i.user.username) ?
-															(modified) ? 
+															(modified) ?
 															<div>
 																<FormControl defaultValue={inputModifiedComment} onChange={(e) => modifyCommentContent(e)} type="text" id="title" className="input" style={{ width: "85rem", height: "3rem" }} />
 																<Button onClick = {(e) => submitModifyComment(i.id, e)}>제출</Button>

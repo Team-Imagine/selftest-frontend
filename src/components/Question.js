@@ -173,7 +173,7 @@ const Question = ({ subject, course, isOpen }) => {
 				<ul className="row justify-content-center align-items-center">
 				{pages.map((i, index) => 
 					<div key={index}>
-							<button onClick={(e) => loadQuestionPerPage(i, e)}>{i}</button>
+							<button style={{backgroundColor: '#ffffff', border: '1px solid', width: '1.5rem'}} onClick={(e) => loadQuestionPerPage(i, e)}>{i}</button>
 						</div>)
 					}		
 				</ul>
