@@ -139,7 +139,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 						.then(res => {
 							console.log(res.data);
 
-							setComments(res.data.comments);
+							setComments(res.data.comments.rows);
 						
 							let count = res.data.comments.count / 10 + 1;
 
