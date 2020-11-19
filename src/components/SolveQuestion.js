@@ -763,7 +763,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 								</Button>
 								</div>
 						</Card.Header>
-					<Card className="center" style={{ width: '85rem', height: '20rem' , overflow: 'auto'}}>
+					<Card className="center" style={{ width: '85rem', height: '20rem !important' , overflow: 'auto'}}>
 						
 						<Card.Body>
 							<div style={{ fontWeight: "bold"}}>제목: {question.title} </div>
