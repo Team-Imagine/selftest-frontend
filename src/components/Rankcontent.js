@@ -31,7 +31,7 @@ const Rankcontent = ({ isOpen }) => {
 					<div className = "d-flex bd-highlight mb-3">
         			<div className="mr-auto p-2 bd-highlight"> 
 					<h4 style={{fontWeight:"bolder"}}>
-						회원 랭크
+						회원 순위
         			</h4>
             
 					</div>
