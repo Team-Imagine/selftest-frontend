@@ -89,7 +89,7 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 		}
 		setImageURL(imageObject.localSrc);
 		
-		uploadedImages.push(imageObject);
+		uploadedImages.push(file);
 		setSelectedFile(uploadedImages);
 
 		return new Promise(
@@ -110,7 +110,7 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 		console.log(editorToHtml);
 
 		//console.log(imageURL);
-		/*
+		
 		if(questionType === "주관식") {
 			for(var i in answer) {
 				answer_items.push({item_text: answer[i]});
@@ -150,14 +150,13 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 				short_answer_items: answer_items,
 			}
 		}
-		*/
+		
+		// 이미지 업로드 
 		const formData = new FormData();
 
-		console.log(selectedFile);
-
-		formData.append("img", selectedFile);
-		//formData.append("url", imageURL);
-
+		for(var i = 0; i < selectedFile.length; i++) {
+			formData.append("img", selectedFile[i]);
+		}
 		
 		await axios.post('/api/image/upload', formData, {
 			headers: {
@@ -166,9 +165,10 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 			}
 		})
 		.then(res => {
+			setSelectedFile([]);
 			console.log(res.data);
 		})
-		/*
+		
 		if (title && (editorToHtml.length > 10)) {
 			axios.post(`/api/question/`, data)
 				.then(res => {
@@ -196,7 +196,7 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 		} else {
 			alert('내용을 올바르게 입력하세요.');
 		}
-		*/
+		
 	}
 
 	const onChange = (e) => {
