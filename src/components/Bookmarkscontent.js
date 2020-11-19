@@ -8,7 +8,7 @@ import store from "../store";
 import { faAppleAlt, faHeart, faStar, faThumbsDown, faThumbsUp, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Bookmarkscontent = ({ subject, course, question_id, question, isOpen, }) => {
+const Bookmarkscontent = ({  isOpen, }) => {
 
   const[bookmarks, setBookmarks] = useState([]);
 	let history = useHistory();
