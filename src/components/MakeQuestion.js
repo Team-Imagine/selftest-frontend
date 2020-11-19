@@ -44,6 +44,7 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 	const [editorChoice, setEditorChoice] = useState(EditorState.createEmpty());
 	const [editorSolution, setEditorSolution] = useState(EditorState.createEmpty());
 	const [selectedFile, setSelectedFile] = useState('');
+	const [imageURL, setImageURL] = useState('');
 	const [title, setTitle] = useState('');
 	const [questionType, setQuestionType] = useState('객관식');
 	const [choices, setChoices] = useState([0]);
@@ -86,7 +87,8 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 			file: file,
 			localSrc: URL.createObjectURL(file),
 		}
-		uploadedImages.push(imageObject);
+		setImageURL(imageObject.localSrc);
+		//uploadedImages.push(imageObject);
 		setSelectedFile(file);
 
 		return new Promise(
@@ -103,6 +105,10 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 
 		let answer_items = [];
 		let data;
+
+		console.log(editorToHtml);
+
+		console.log(imageURL);
 		
 		if(questionType === "주관식") {
 			for(var i in answer) {
@@ -144,12 +150,13 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 			}
 		}
 		
-		/*
 		const formData = new FormData();
 
 		console.log(selectedFile);
 
-		await formData.append("file", selectedFile);
+		
+		formData.append("img", selectedFile);
+		//formData.append("url", imageURL);
 
 		await axios.post('/api/image/upload', formData, {
 			headers: {
@@ -157,14 +164,13 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 				'Content-Type': 'multipart/form-data'
 			}
 		})
-			.then(res => {
-				console.log(res.data);
-			})
-			*/
+		.then(res => {
+			console.log(res.data);
+		})
+		
 		
 		if (title && (editorToHtml.length > 10)) {
 			axios.post(`/api/question/`, data)
-
 				.then(res => {
 					
 					setEditorState("");
@@ -190,7 +196,6 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 		} else {
 			alert('내용을 올바르게 입력하세요.');
 		}
-
 		
 	}
 
