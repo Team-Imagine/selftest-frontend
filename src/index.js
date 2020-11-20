@@ -13,7 +13,7 @@ import Subject from "./components/Subject";
 import LoginForm from "./components/LoginForm";
 import AuthForm from "./components/AuthForm";
 import Members from "./components/Rank";
-import Test from "./components/Test";
+import Test from "./components/test/Test";
 import Rank from "./components/Rank";
 import Settings from "./components/Settings";
 import Bookmarks from "./components/Bookmarks";

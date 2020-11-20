@@ -67,7 +67,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 	const [freshness, setFreshness] = useState(0);
 	const [difficulty, setDifficulty] = useState(0);
 	const [isBookmarked, setIsbookmarked] = useState(false);
-	const [bookmarkedColor,setbookmarkedColor] = useState("");
+	const [bookmarkedColor, setbookmarkedColor] = useState("");
 	const [likeable_entity_id, setLikeable_entity_id] = useState(0);
 	const [commentable_entity_id, setCommentable_entity_id] = useState(0);
 
@@ -93,15 +93,13 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 				.then((res) => {
 					setUsername(res.data.user.username);
 					store.dispatch({ type: 'POINT', value: res.data.user.point });
-			})
+				})
 
 			axios.get(`/api/bookmark/${question_id}`)
-				.then(res=>{
+				.then(res => {
 					setIsbookmarked(res.data.is_bookmarked);
-					res.data.is_bookmarked?setbookmarkedColor("yellow"):setbookmarkedColor("");
-					//console.log('bookmarked',res.data.is_bookmarked);
-					//console.log('bookmarkedcolor',bookmarkedColor);
-			})
+					res.data.is_bookmarked ? setbookmarkedColor("yellow") : setbookmarkedColor("");
+				})
 
 			axios.get(`/api/question/${question_id}`)
 				.then(res => {
@@ -142,11 +140,11 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 							setComments(res.data.comments.rows);
 
 							let count = res.data.comments.count / 10 + 1;
-							
+
 
 							let t_pages = [];
 
-							for(var i = 1; i < count; i++) {
+							for (var i = 1; i < count; i++) {
 								t_pages.push(i);
 							}
 							setPages(t_pages);
@@ -257,20 +255,20 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 
 		if (result) {
 			axios.get(`/api/question/solve/${question_id}`)
-			.then(res => {
-				if(!res.data.point_decrement) {
-					alert('이미 제출한 적이 있습니다.');
-				} else {
-					axios.get(`/api/user`)
-					.then((res) => {
-						store.dispatch({ type: 'POINT', value: res.data.user.point });
-						console.log(store.getState().point);
-					})
-				}
-			})
-			.catch(error => {
-				alert(error.response.data.message);
-			})
+				.then(res => {
+					if (!res.data.point_decrement) {
+						alert('이미 제출한 적이 있습니다.');
+					} else {
+						axios.get(`/api/user`)
+							.then((res) => {
+								store.dispatch({ type: 'POINT', value: res.data.user.point });
+								console.log(store.getState().point);
+							})
+					}
+				})
+				.catch(error => {
+					alert(error.response.data.message);
+				})
 
 			if (questionType === "multiple_choice") {
 				let rightAnswer = true;
@@ -309,58 +307,51 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 		}
 	}
 
-	const isOwnedHandler = (e) => {
-		e.preventDefault();
-
-		setIsOwned(true);
-		alert("문제가 소장되었습니다!")
-	}
-
 	const openAnswer = () => {
 
-			axios.get(`/api/answer?question_id=${question_id}`)
-				.then(res => {
-					console.log(res.data);
+		axios.get(`/api/answer?question_id=${question_id}`)
+			.then(res => {
+				console.log(res.data);
 
-					htmlToEditor_answer = res.data.answers.rows[0].content;
+				htmlToEditor_answer = res.data.answers.rows[0].content;
 
-					const blocksFromHtml = htmlToDraft(htmlToEditor_answer);
-					if (blocksFromHtml) {
-						const { contentBlocks, entityMap } = blocksFromHtml;
+				const blocksFromHtml = htmlToDraft(htmlToEditor_answer);
+				if (blocksFromHtml) {
+					const { contentBlocks, entityMap } = blocksFromHtml;
 
-						const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
+					const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
 
-						const t_editorState_answer = EditorState.createWithContent(contentState);
-						setEssayAnswerEditor(t_editorState_answer);
-					}
-				})
-			loadAnswer();
+					const t_editorState_answer = EditorState.createWithContent(contentState);
+					setEssayAnswerEditor(t_editorState_answer);
+				}
+			})
+		loadAnswer();
 
-			setShowExplanation(true);
+		setShowExplanation(true);
 	}
 
 	// 해설 확인
 	const show_Explanation = () => {
-	
+
 		var result = window.confirm('문제의 해설을 확인하시겠습니까? 2 포인트가 차감됩니다.');
-	
+
 		if (result) {
 			axios.get(`/api/question/unlock/${question_id}`)
-			.then(res => {
-				if(!res.data.point_decrement) {
-					alert(res.data.message);
-				} else {
-					axios.get(`/api/user`)
-					.then((res) => {
-						store.dispatch({ type: 'POINT', value: res.data.user.point });
-						console.log(store.getState().point);
-					})
-				}
-			})
-			.catch(error => {
-				alert(error.response.data.message);
-			})
-			
+				.then(res => {
+					if (!res.data.point_decrement) {
+						alert(res.data.message);
+					} else {
+						axios.get(`/api/user`)
+							.then((res) => {
+								store.dispatch({ type: 'POINT', value: res.data.user.point });
+								console.log(store.getState().point);
+							})
+					}
+				})
+				.catch(error => {
+					alert(error.response.data.message);
+				})
+
 			axios.get(`/api/answer?question_id=${question_id}`)
 				.then(res => {
 					console.log(res.data);
@@ -383,6 +374,26 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 		}
 	}
 
+	// 문제 소장 처리
+	const isOwnedHandler = (e) => {
+		e.preventDefault();
+
+		setIsOwned(true);
+		console.log('own test');
+
+		axios.get(`/api/question/own/${question_id}`)
+			.then(res => {
+				console.log();
+				if (res.data.point_decrement)
+					alert(res.data.point_decrement + "포인트를 사용하여 " + res.data.message);
+				else {
+					alert("이미 소장중인 문제입니다.");
+				}
+			})
+			.catch(error => {
+				alert(error.response.data.message);
+			})
+	}
 
 	// 좋아요 처리
 	const addLike = (e) => {
@@ -464,32 +475,32 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 	const AddBookmarks = (e) => {
 		e.preventDefault();
 		axios.post(`/api/bookmark/${question_id}`)
-		.then(res => {
-		console.log(res.data.message);
-		alert("즐겨찾기에 추가되었습니다");
-		})
-		.catch(error => {
-			alert(error.response.data.message);
-		})
+			.then(res => {
+				console.log(res.data.message);
+				alert("즐겨찾기에 추가되었습니다");
+			})
+			.catch(error => {
+				alert(error.response.data.message);
+			})
 		setbookmarkedColor("yellow");
 		setIsbookmarked(true);
-		
+
 	}
 
 	const DeleteBookmarks = (e) => {
 		e.preventDefault();
 		axios.delete(`/api/bookmark/${question_id}`)
-		.then(res => {
-		console.log(res.data.message);
-		alert("즐겨찾기에서 삭제되었습니다");
-		})
-		.catch(error => {
-			alert(error.response.data.message);
-		})
+			.then(res => {
+				console.log(res.data.message);
+				alert("즐겨찾기에서 삭제되었습니다");
+			})
+			.catch(error => {
+				alert(error.response.data.message);
+			})
 		setbookmarkedColor("");
 		setIsbookmarked(false);
 	}
-	
+
 	// 신선도 처리
 	const addFreshness = (e) => {
 		e.preventDefault();
@@ -633,30 +644,30 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 	// 문제 ID를 기반으로 댓글을 불러오는 함수
 	const loadComments = () => {
 		axios.get(`/api/comment?commentable_entity_id=${commentable_entity_id}`)
-				.then(res => {
-					setComments(res.data.comments.rows);
-				})
-				.catch(error => {
-					alert(error.response.data.message);
-				})
+			.then(res => {
+				setComments(res.data.comments.rows);
+			})
+			.catch(error => {
+				alert(error.response.data.message);
+			})
 	}
 
 	const loadCommentPerPage = (index, e) => {
 		e.preventDefault();
-		
+
 		axios.get(`/api/comment/`, {
 			params: {
-				commentable_entity_id:commentable_entity_id,
+				commentable_entity_id: commentable_entity_id,
 				page: index,
 			}
 		})
-		.then(res => {
-			console.log(res.data);
-			setComments(res.data.comments.rows);
-		})
-		.catch(error => {
-			alert(error.response.data.message);
-		})
+			.then(res => {
+				console.log(res.data);
+				setComments(res.data.comments.rows);
+			})
+			.catch(error => {
+				alert(error.response.data.message);
+			})
 	}
 
 	// 댓글 작성
@@ -681,20 +692,20 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 
 		console.log(id);
 		axios.delete(`/api/comment/${id}`)
-		.then(res => {
-			alert(res.data.message);
-			
-			axios.get(`/api/comment?commentable_entity_id=${commentable_entity_id}`)
-				.then(res => {
-					setComments(res.data.comments.rows);
+			.then(res => {
+				alert(res.data.message);
+
+				axios.get(`/api/comment?commentable_entity_id=${commentable_entity_id}`)
+					.then(res => {
+						setComments(res.data.comments.rows);
+					})
 			})
-		})
 	}
 
 	const modifyComment = (comment, e) => {
 		e.preventDefault();
 
-		if(!modified) {
+		if (!modified) {
 			setInputModifiedComment(comment);
 			setModified(true);
 		} else {
@@ -714,16 +725,16 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 
 		console.log(id, content);
 
-		axios.put(`/api/comment/${id}`, {content})
-		.then(res => {
-			alert(res.data.message);
+		axios.put(`/api/comment/${id}`, { content })
+			.then(res => {
+				alert(res.data.message);
 
-			loadComments();
-			setModified(false);
-		})
-		.catch(error => {
-			alert(error.response.data.message);
-		})
+				loadComments();
+				setModified(false);
+			})
+			.catch(error => {
+				alert(error.response.data.message);
+			})
 	}
 
 	return (
@@ -748,27 +759,27 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 			</div>
 
 			<hr />
-		
+
 			<div className="column justify-content-center align-items-center">
 				{/*<Card border="light" style={{ backgroundColor: "#f7feff" }}>*/}
-				<Card.Header style={{width:"85rem"}}>
-							<div className="d-flex bd-highlight mb-3" style = {{height:"1rem"}}>
-								<div className="mr-auto p-2 bd-highlight">
-								<div style={{ fontWeight: "bold", fontsize: "rem" }}>
-									#{question.id} {subject} - {course}
-								</div>
-								</div>
-								<Button variant="info" style={{ width: '2.4rem', height: '2rem' }} onClick={isBookmarked?DeleteBookmarks:AddBookmarks} >
-									<FontAwesomeIcon icon={faThumbtack} className="mr-2" style={{color:bookmarkedColor}}/>
-								</Button>
-								</div>
-						</Card.Header>
-					<Card className="center" style={{ width: '85rem', height: '20rem !important' , overflow: 'auto'}}>
-						
-						<Card.Body>
-							<div style={{ fontWeight: "bold"}}>제목: {question.title} </div>
-							<br />
-							<div style={{height: "200px !important"}}>
+				<Card.Header style={{ width: "85rem" }}>
+					<div className="d-flex bd-highlight mb-3" style={{ height: "1rem" }}>
+						<div className="mr-auto p-2 bd-highlight">
+							<div style={{ fontWeight: "bold", fontsize: "rem" }}>
+								#{question.id} {subject} - {course}
+							</div>
+						</div>
+						<Button variant="info" style={{ width: '2.4rem', height: '2rem' }} onClick={isBookmarked ? DeleteBookmarks : AddBookmarks} >
+							<FontAwesomeIcon icon={faThumbtack} className="mr-2" style={{ color: bookmarkedColor }} />
+						</Button>
+					</div>
+				</Card.Header>
+				<Card className="center" style={{ width: '85rem', height: '20rem !important', overflow: 'auto' }}>
+
+					<Card.Body>
+						<div style={{ fontWeight: "bold" }}>제목: {question.title} </div>
+						<br />
+						<div style={{ height: "200px !important" }}>
 							<Editor
 								toolbarHidden
 								// 에디터와 툴바 모두에 적용되는 클래스
@@ -784,128 +795,128 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 									locale: 'ko',
 								}}
 							/>
-							</div>
-						</Card.Body>
-						
+						</div>
+					</Card.Body>
+
 
 					{/*</Card>*/}
-				
-				</Card>
-				<Card.Footer  style={{paddingTop:"0rem", paddingBottom:"1rem", backgroundColor: "#ffffff", border:"light" ,width: '85rem'}} >
-								<div className="d-flex bd-highlight mb-3" style={{ height: "0.8rem"}}>
 
-									<div className="mr-auto p-2 bd-highlight" style={{width:"25%"}}>
-										<Button style={{padding:"9px", paddingRight:"2px", paddingTop:"2px", paddingBottom:"2px"}} 
-											onClick={addLike}>
-											
-											<FontAwesomeIcon icon={faThumbsUp} className="mr-2"/>
+				</Card>
+				<Card.Footer style={{ paddingTop: "0rem", paddingBottom: "1rem", backgroundColor: "#ffffff", border: "light", width: '85rem' }} >
+					<div className="d-flex bd-highlight mb-3" style={{ height: "0.8rem" }}>
+
+						<div className="mr-auto p-2 bd-highlight" style={{ width: "25%" }}>
+							<Button style={{ padding: "9px", paddingRight: "2px", paddingTop: "2px", paddingBottom: "2px" }}
+								onClick={addLike}>
+
+								<FontAwesomeIcon icon={faThumbsUp} className="mr-2" />
 							</Button>&nbsp;&nbsp;
 
 										{likes}
 
-									</div>
-									<div className="mr-auto p-2 bd-highlight"style={{width:"25%"}}>
-										<Button style={{paddingLeft:"9px", paddingRight:"2px", paddingTop:"4px", paddingBottom:"0px"}}
-											onClick={addDislike}>
-											<FontAwesomeIcon icon={faThumbsDown} className="mr-2"/>
+						</div>
+						<div className="mr-auto p-2 bd-highlight" style={{ width: "25%" }}>
+							<Button style={{ paddingLeft: "9px", paddingRight: "2px", paddingTop: "4px", paddingBottom: "0px" }}
+								onClick={addDislike}>
+								<FontAwesomeIcon icon={faThumbsDown} className="mr-2" />
 							</Button>&nbsp;&nbsp;
 										{dislikes}
-									</div>
-									<div className="mr-auto p-2 bd-highlight wrapper"style={{width:"25%"}}>
-										<Button variant="danger" style={{padding:"9px", paddingRight:"2px", paddingTop:"3px", paddingBottom:"1px"}}
-											onClick={inputFreshnessForm}>
-											<FontAwesomeIcon icon={faAppleAlt} className="mr-2"/>
+						</div>
+						<div className="mr-auto p-2 bd-highlight wrapper" style={{ width: "25%" }}>
+							<Button variant="danger" style={{ padding: "9px", paddingRight: "2px", paddingTop: "3px", paddingBottom: "1px" }}
+								onClick={inputFreshnessForm}>
+								<FontAwesomeIcon icon={faAppleAlt} className="mr-2" />
 							</Button>&nbsp;&nbsp;
-										
-										{Number(freshness).toFixed(2)}
-										{viewInputFresh &&
-										 <div>
-											 <input onChange={(e) => inputFreshness(e)} style={{ width: "15%" }}></input>
-											<button onClick={addFreshness}>제출</button>
-											<button onClick={deleteFreshness}>삭제</button>
-										</div>}
-										
 
-									</div>
-									<div className="mr-auto p-2 bd-highlight"style={{width:"25%"}}>
-										<Button variant="warning" style={{padding:"7px", paddingRight:"0px", paddingTop:"3px", paddingBottom:"1px"}}
-											onClick={inputDifficultyForm}>
-											<FontAwesomeIcon icon={faStar} style={{color:"white"}} className="mr-2"/>
+										{Number(freshness).toFixed(2)}
+							{viewInputFresh &&
+								<div>
+									<input onChange={(e) => inputFreshness(e)} style={{ width: "15%" }}></input>
+									<button onClick={addFreshness}>제출</button>
+									<button onClick={deleteFreshness}>삭제</button>
+								</div>}
+
+
+						</div>
+						<div className="mr-auto p-2 bd-highlight" style={{ width: "25%" }}>
+							<Button variant="warning" style={{ padding: "7px", paddingRight: "0px", paddingTop: "3px", paddingBottom: "1px" }}
+								onClick={inputDifficultyForm}>
+								<FontAwesomeIcon icon={faStar} style={{ color: "white" }} className="mr-2" />
 							</Button>&nbsp;&nbsp;
 										{Number(difficulty).toFixed(2)}
-										{viewInputDifficulty && 
-										<div>
-											<input onChange={(e) => inputDifficulty(e)} style={{ width: "15%" }}></input>
-											<button onClick={addDifficulty}>제출</button>
-											<button onClick={deleteDifficulty}>삭제</button>
-										</div>}
-										
-									</div>
-								</div>
-										
-							</Card.Footer>
+							{viewInputDifficulty &&
+								<div>
+									<input onChange={(e) => inputDifficulty(e)} style={{ width: "15%" }}></input>
+									<button onClick={addDifficulty}>제출</button>
+									<button onClick={deleteDifficulty}>삭제</button>
+								</div>}
+
+						</div>
+					</div>
+
+				</Card.Footer>
 				<div>
 					<br />
 					{
 						(questionType === "multiple_choice" && choiceList !== null) ?
-						//문제 푸는 곳
-						
-						<Card style={{width:"85rem", marginRight:"10px"}}>
-						<div className="container h">
-						<div className="justify-content-center align-items-center" style = {{textAlign:"center", margin:0}}>
-								
-								<br/>
-								<div>
-									<h4> 위 문제에 대한 알맞은 정답을 선택하세요.</h4>
-								</div>
-								<br/>
-								<div className="justify-content-center align-items-center">
-								{choiceList.map((i, index) =>
-									//선택지 버튼 출력 부분
-									<div key={index}>
-										<Button variant="outline-light" style={{  height:"2rem", width: '40rem', color: choiceColor[index], fontSize:"18px", backgroundColor: "lavender" }} onClick={(e) => { selectAnswer(index, e) }}>{'('}{index + 1}{')'} {i.item_text}</Button><br /><br/>
-									</div>
-								)}
-								</div>
-						
+							//문제 푸는 곳
 
+							<Card style={{ width: "85rem", marginRight: "10px" }}>
+								<div className="container h">
+									<div className="justify-content-center align-items-center" style={{ textAlign: "center", margin: 0 }}>
+
+										<br />
+										<div>
+											<h4> 위 문제에 대한 알맞은 정답을 선택하세요.</h4>
+										</div>
+										<br />
+										<div className="justify-content-center align-items-center">
+											{choiceList.map((i, index) =>
+												//선택지 버튼 출력 부분
+												<div key={index}>
+													<Button variant="outline-light" style={{ height: "2rem", width: '40rem', color: choiceColor[index], fontSize: "18px", backgroundColor: "lavender" }} onClick={(e) => { selectAnswer(index, e) }}>{'('}{index + 1}{')'} {i.item_text}</Button><br /><br />
+												</div>
+											)}
+										</div>
+
+
+									</div>
 								</div>
-							</div>
-							<div className="justify-content-center align-items-center" style = {{float:"left", textAlign:"center",marginBottom:"30px"}}>
-							{(questionType) ?
-								<Button className="btn pull-right" variant="info" style={{ width: "18rem" , height:"2rem", fontSize:"15px", marginRight:"2rem"}}
-									onClick={show_Explanation}
-								>풀이 확인 </Button>
-								: <div></div>}
-							<Button className="btn pull-right" variant="info" style={{ width:"18rem", height:"2rem",fontSize:"15px", marginLeft : "2rem", }}
-								onClick={submitHandler}
+								<div className="justify-content-center align-items-center" style={{ float: "left", textAlign: "center", marginBottom: "30px" }}>
+									{(questionType) ?
+										<Button className="btn pull-right" variant="info" style={{ width: "18rem", height: "2rem", fontSize: "15px", marginRight: "2rem" }}
+											onClick={show_Explanation}
+										>풀이 확인 </Button>
+										: <div></div>}
+									<Button className="btn pull-right" variant="info" style={{ width: "18rem", height: "2rem", fontSize: "15px", marginLeft: "2rem", }}
+										onClick={submitHandler}
 									>풀이 제출 </Button>
-							</div>
+								</div>
 							</Card>
-							
-							: (questionType === "short_answer") ? <div className="justify-content-center align-items-center" style = {{float:"left", textAlign:"center",marginBottom:"2rem",marginTop:"1rem",width: "86rem"}}>
+
+							: (questionType === "short_answer") ? <div className="justify-content-center align-items-center" style={{ float: "left", textAlign: "center", marginBottom: "2rem", marginTop: "1rem", width: "86rem" }}>
 								<div >
 									<h3> 아래에 정답을 입력하세요.</h3>
 								</div>
-								
-								<div><input type="text" id="title" className="input" style={{ width: "42rem", height: "2rem" }} onChange={(e) => makeAnswer(e)} /><br /> 
-								
-								<div className="justify-content-center align-items-center" style = {{float:"left", textAlign:"center",marginBottom:"2rem",marginTop:"1rem",width: "86rem"}}>
-							{(questionType) ?
-								<Button className="btn pull-right" variant="info" style={{ width: "20rem" , height:"2rem", fontSize:"15px", marginRight:"1rem"}}
-									onClick={show_Explanation}
-								>풀이 확인 </Button>
-								: <div></div>}
-							<Button className="btn pull-right" variant="info" style={{ width:"20rem", height:"2rem",fontSize:"15px", marginLeft : "1rem", }}
-								onClick={submitHandler}
-									>풀이 제출 </Button>
-							</div>
-							</div>
+
+								<div><input type="text" id="title" className="input" style={{ width: "42rem", height: "2rem" }} onChange={(e) => makeAnswer(e)} /><br />
+
+									<div className="justify-content-center align-items-center" style={{ float: "left", textAlign: "center", marginBottom: "2rem", marginTop: "1rem", width: "86rem" }}>
+										{(questionType) ?
+											<Button className="btn pull-right" variant="info" style={{ width: "20rem", height: "2rem", fontSize: "15px", marginRight: "1rem" }}
+												onClick={show_Explanation}
+											>풀이 확인 </Button>
+											: <div></div>}
+										<Button className="btn pull-right" variant="info" style={{ width: "20rem", height: "2rem", fontSize: "15px", marginLeft: "1rem", }}
+											onClick={submitHandler}
+										>풀이 제출 </Button>
+									</div>
+								</div>
 							</div> : <div>
 
-									<MyBlock style={{ width: '85rem'}}>
+									<MyBlock style={{ width: '85rem' }}>
 										<br />
-										<div style={{height: "20rem !important"}}>
+										<div style={{ height: "20rem !important" }}>
 											<Editor
 												// 에디터와 툴바 모두에 적용되는 클래스
 												wrapperClassName="wrapper-class"
@@ -933,16 +944,16 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 												// 에디터의 값이 변경될 때마다 onEditorStateChange 호출
 												onEditorStateChange={onEditorStateChange}
 											/>
-											<div className="justify-content-center align-items-center" style = {{float:"left", textAlign:"center",marginBottom:"2rem",marginTop:"1rem",width: "85rem"}}>
-							{(questionType) ?
-								<Button className="btn pull-right" variant="info" style={{ width: "41.5rem" , height:"2rem", fontSize:"15px", marginRight:"1rem"}}
-									onClick={show_Explanation}
-								>풀이 확인 </Button>
-								: <div></div>}
-							<Button className="btn pull-right" variant="info" style={{ width:"41.5rem", height:"2rem",fontSize:"15px", marginLeft : "1rem", }}
-								onClick={submitHandler}
-									>풀이 제출 </Button>
-							</div>
+											<div className="justify-content-center align-items-center" style={{ float: "left", textAlign: "center", marginBottom: "2rem", marginTop: "1rem", width: "85rem" }}>
+												{(questionType) ?
+													<Button className="btn pull-right" variant="info" style={{ width: "41.5rem", height: "2rem", fontSize: "15px", marginRight: "1rem" }}
+														onClick={show_Explanation}
+													>풀이 확인 </Button>
+													: <div></div>}
+												<Button className="btn pull-right" variant="info" style={{ width: "41.5rem", height: "2rem", fontSize: "15px", marginLeft: "1rem", }}
+													onClick={submitHandler}
+												>풀이 제출 </Button>
+											</div>
 										</div>
 									</MyBlock>
 
@@ -951,9 +962,9 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 					}
 
 				</div>
-				
-				
-				
+
+
+
 				<div style={{ height: "0.5rem" }}>
 					{(showAnswer && (questionType === 'short_answer' || questionType === 'multiple_choice')) ?
 						<div>
@@ -1010,11 +1021,11 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 									<br />
 								</div>
 							)}
-					
-								<Card className="center" style={{ width: '85rem', height: '20rem', overflow: 'auto' }}>
-									<Card.Body>
-										<br />
-										<div style={{height: "200px !important"}}>
+
+							<Card className="center" style={{ width: '85rem', height: '20rem', overflow: 'auto' }}>
+								<Card.Body>
+									<br />
+									<div style={{ height: "200px !important" }}>
 										<Editor
 											toolbarHidden
 											// 에디터와 툴바 모두에 적용되는 클래스
@@ -1030,118 +1041,118 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 												locale: 'ko',
 											}}
 										/>
-										</div>
-									</Card.Body>
-								</Card>
-
-						
-							<Accordion>
-							<Card className="center" style={{ width: '85rem' }}>
-
-								<Accordion.Toggle className="center" as={Button} variant="light" block eventKey="0">
-									댓글 보기
-								</Accordion.Toggle>
-								<Accordion.Collapse eventKey="0">
-
-									<Card.Body style={{ backgroundColor: "white" }} >
-
-										<div>
-											{comments.map((i) =>
-												<div key={i.id}>
-													<div>
-													<div style={{fontWeight:"bold"}}>작성자: {i.user.username} <br/></div>
-														<br/>
-														{(username === i.user.username) ?
-															(modified) ? 
-															<div>
-																<FormControl defaultValue={inputModifiedComment} onChange={(e) => modifyCommentContent(e)} type="text" id="title" className="input" style={{ width: "85rem", height: "3rem" }} />
-																<Button onClick = {(e) => submitModifyComment(i.id, e)}>제출</Button>
-															</div>: <div>
-																{i.content} <br/>
-																<Button onClick = {(e) => modifyComment(i.content, e)}>수정</Button>&nbsp;&nbsp;<Button onClick={(e) => deleteComment(i.id, e)}>삭제</Button></div> : 
-															<div>
-																{i.content} 
-															</div>
-														} 
-													</div>
-												
-													<hr/>	
-												</div>
-											)}
-												<ul className="row justify-content-center align-items-center">
-																	{pages.map((i, index) => 
-																		<div key={index}>
-																			<button style={{backgroundColor: '#ffffff', border: '1px solid', width: '1.5rem'}} onClick={(e) => loadCommentPerPage(i, e)}>{i}</button>
-																		</div>)
-																	}
-												</ul>
-										</div>
-										<br />
-
-										
-									</Card.Body>
-								</Accordion.Collapse>
+									</div>
+								</Card.Body>
 							</Card>
-						</Accordion>
 
-						<FormControl placeholder="댓글 작성하기" onChange={(e) => inputCommentContent(e)} type="text" id="title" className="input" style={{ width: "85rem", height: "3rem" }} />
-						<Button style={{width:"85rem"}} variant="info" onClick={submitComment}>제출</Button>
+
+							<Accordion>
+								<Card className="center" style={{ width: '85rem' }}>
+
+									<Accordion.Toggle className="center" as={Button} variant="light" block eventKey="0">
+										댓글 보기
+								</Accordion.Toggle>
+									<Accordion.Collapse eventKey="0">
+
+										<Card.Body style={{ backgroundColor: "white" }} >
+
+											<div>
+												{comments.map((i) =>
+													<div key={i.id}>
+														<div>
+															<div style={{ fontWeight: "bold" }}>작성자: {i.user.username} <br /></div>
+															<br />
+															{(username === i.user.username) ?
+																(modified) ?
+																	<div>
+																		<FormControl defaultValue={inputModifiedComment} onChange={(e) => modifyCommentContent(e)} type="text" id="title" className="input" style={{ width: "85rem", height: "3rem" }} />
+																		<Button onClick={(e) => submitModifyComment(i.id, e)}>제출</Button>
+																	</div> : <div>
+																		{i.content} <br />
+																		<Button onClick={(e) => modifyComment(i.content, e)}>수정</Button>&nbsp;&nbsp;<Button onClick={(e) => deleteComment(i.id, e)}>삭제</Button></div> :
+																<div>
+																	{i.content}
+																</div>
+															}
+														</div>
+
+														<hr />
+													</div>
+												)}
+												<ul className="row justify-content-center align-items-center">
+													{pages.map((i, index) =>
+														<div key={index}>
+															<button style={{ backgroundColor: '#ffffff', border: '1px solid', width: '1.5rem' }} onClick={(e) => loadCommentPerPage(i, e)}>{i}</button>
+														</div>)
+													}
+												</ul>
+											</div>
+											<br />
+
+
+										</Card.Body>
+									</Accordion.Collapse>
+								</Card>
+							</Accordion>
+
+							<FormControl placeholder="댓글 작성하기" onChange={(e) => inputCommentContent(e)} type="text" id="title" className="input" style={{ width: "85rem", height: "3rem" }} />
+							<Button style={{ width: "85rem" }} variant="info" onClick={submitComment}>제출</Button>
 						</div>
 						: <div>
 							<Accordion>
-							<Card className="center" style={{ width: '85rem' }}>
+								<Card className="center" style={{ width: '85rem' }}>
 
-								<Accordion.Toggle className="center" as={Button} variant="light" block eventKey="0">
-									댓글 보기
+									<Accordion.Toggle className="center" as={Button} variant="light" block eventKey="0">
+										댓글 보기
 								</Accordion.Toggle>
-								<Accordion.Collapse eventKey="0">
+									<Accordion.Collapse eventKey="0">
 
-									<Card.Body style={{ backgroundColor: "white" }} >
+										<Card.Body style={{ backgroundColor: "white" }} >
 
-										<div>
-											{comments.map((i) =>
-												<div key={i.id}>
-													<div>
-													<div style={{fontWeight:"bold"}}>작성자: {i.user.username} <br/></div>
-														<br/>
-														{(username === i.user.username) ?
-															(modified) ?
-															<div>
-																<FormControl defaultValue={inputModifiedComment} onChange={(e) => modifyCommentContent(e)} type="text" id="title" className="input" style={{ width: "85rem", height: "3rem" }} />
-																<Button onClick = {(e) => submitModifyComment(i.id, e)}>제출</Button>
-															</div>: <div>
-																{i.content} <br/>
-																<Button onClick = {(e) => modifyComment(i.content, e)}>수정</Button>&nbsp;&nbsp;<Button onClick={(e) => deleteComment(i.id, e)}>삭제</Button></div> : 
-															<div>
-																{i.content} 
-															</div>
-														}
+											<div>
+												{comments.map((i) =>
+													<div key={i.id}>
+														<div>
+															<div style={{ fontWeight: "bold" }}>작성자: {i.user.username} <br /></div>
+															<br />
+															{(username === i.user.username) ?
+																(modified) ?
+																	<div>
+																		<FormControl defaultValue={inputModifiedComment} onChange={(e) => modifyCommentContent(e)} type="text" id="title" className="input" style={{ width: "85rem", height: "3rem" }} />
+																		<Button onClick={(e) => submitModifyComment(i.id, e)}>제출</Button>
+																	</div> : <div>
+																		{i.content} <br />
+																		<Button onClick={(e) => modifyComment(i.content, e)}>수정</Button>&nbsp;&nbsp;<Button onClick={(e) => deleteComment(i.id, e)}>삭제</Button></div> :
+																<div>
+																	{i.content}
+																</div>
+															}
+														</div>
+
+														<hr />
 													</div>
-												
-													<hr/>	
-												</div>
-											)}
+												)}
 												<ul className="row justify-content-center align-items-center">
-																	{pages.map((i, index) => 
-																		<div key={index}>
-																			<button style={{backgroundColor: '#ffffff', border: '1px solid', width: '1.5rem'}} onClick={(e) => loadCommentPerPage(i, e)}>{i}</button>
-																		</div>)
-																	}
+													{pages.map((i, index) =>
+														<div key={index}>
+															<button style={{ backgroundColor: '#ffffff', border: '1px solid', width: '1.5rem' }} onClick={(e) => loadCommentPerPage(i, e)}>{i}</button>
+														</div>)
+													}
 												</ul>
-										</div>
-										<br />
+											</div>
+											<br />
 
-										
-									</Card.Body>
-								</Accordion.Collapse>
-							</Card>
-						</Accordion>
-						
-						<FormControl placeholder="댓글 작성하기" onChange={(e) => inputCommentContent(e)} type="text" id="title" className="input" style={{ width: "85rem", height: "3rem" }} />
-						<Button style={{width:"85rem"}}variant="info" onClick={submitComment}>
-							제출
+
+										</Card.Body>
+									</Accordion.Collapse>
+								</Card>
+							</Accordion>
+
+							<FormControl placeholder="댓글 작성하기" onChange={(e) => inputCommentContent(e)} type="text" id="title" className="input" style={{ width: "85rem", height: "3rem" }} />
+							<Button style={{ width: "85rem" }} variant="info" onClick={submitComment}>
+								제출
 							</Button>
-						
+
 						</div>
 					}
 				</div>

@@ -1,8 +1,8 @@
 import React from "react";
-import SideBar from "./sidebar/SideBar";
+import SideBar from "../sidebar/SideBar";
 import Testcontent from "./Testcontent";
 import TestMaking from "./TestMaking";
-import NavBar from "../components/content/Navbar";
+import NavBar from "../content/Navbar";
 
 class Test extends React.Component {
 

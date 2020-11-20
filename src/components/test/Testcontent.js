@@ -5,7 +5,6 @@ import { Link, useHistory } from 'react-router-dom';
 import Card from "react-bootstrap/Card";
 import Alert from 'react-bootstrap/Alert'
 import axios from "axios";
-import store from "../store";
 import { propTypes } from "react-bootstrap/esm/Image";
 import Form from 'react-bootstrap/Form'
 import FormControl from 'react-bootstrap/FormControl'
