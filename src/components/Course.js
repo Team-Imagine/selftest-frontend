@@ -25,16 +25,16 @@ const Course = ({ subject, isOpen }) => {
 				console.log(res.data.courses);
 
 				setCourse(res.data.courses.rows);
-				
-				let count = res.data.courses.count/ 10 + 1;
+
+				let count = res.data.courses.count / 10 + 1;
 
 				let t_pages = [];
 
-				for(var i = 1; i < count; i++) {
+				for (var i = 1; i < count; i++) {
 					t_pages.push(i);
 				}
 				setPages(t_pages);
-				
+
 			})
 	}, [state]);
 
@@ -70,20 +70,20 @@ const Course = ({ subject, isOpen }) => {
 
 	const loadCoursePerPage = (index, e) => {
 		e.preventDefault();
-		
+
 		axios.get(`/api/course/`, {
 			params: {
 				subject_title: subject,
 				page: index,
 			}
 		})
-		.then(res => {
-			console.log(res.data);
-			setCourse(res.data.courses.rows);
-		})
-		.catch(error => {
-			alert(error.response.data.message);
-		})
+			.then(res => {
+				console.log(res.data);
+				setCourse(res.data.courses.rows);
+			})
+			.catch(error => {
+				alert(error.response.data.message);
+			})
 	}
 
 	return (
@@ -102,7 +102,7 @@ const Course = ({ subject, isOpen }) => {
 						<Card border="info" style={{ width: '19rem' }}>
 							<Accordion.Toggle as={Button} variant="info" block eventKey="0">
 								강의 추가
-				</Accordion.Toggle>
+							</Accordion.Toggle>
 							<Accordion.Collapse eventKey="0">
 								<Card.Body style={{ backgroundColor: "white" }} >
 									<div>
@@ -144,11 +144,11 @@ const Course = ({ subject, isOpen }) => {
 				)}
 			</ul>
 			<ul className="row justify-content-center align-items-center">
-			{pages.map((i, index) => 
-				<div key={index}>
-							<button style={{backgroundColor: '#ffffff', border: '1px solid', width: '1.5rem'}} onClick={(e) => loadCoursePerPage(i, e)}>{i}</button>&nbsp;
+				{pages.map((i, index) =>
+					<div key={index}>
+						<button style={{ backgroundColor: '#ffffff', border: '1px solid', width: '1.5rem' }} onClick={(e) => loadCoursePerPage(i, e)}>{i}</button>&nbsp;
 						</div>)
-					}		
+				}
 			</ul>
 
 

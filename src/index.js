@@ -18,7 +18,6 @@ import Rank from "./components/Rank";
 import Settings from "./components/Settings";
 import Bookmarks from "./components/Bookmarks";
 import Search from "./components/Search";
-
 import { CookiesProvider } from 'react-cookie';
 
 ReactDOM.render(
@@ -42,7 +41,8 @@ ReactDOM.render(
           <Route exact path="/subject" component={Subject} />
           <Route path="/password" component={Password} />
           <Route path="/members" component={Members} />
-          <Route path="/test" component={Test} />
+          <Route exact path="/test" component={Test} />
+          <Route exact path="/test/make_test/:make_test" component={Test} />
           <Route path="/rank" component={Rank} />
           <Route path="/bookmarks" component={Bookmarks} />
           <Route path="/settings" component={Settings} />
