@@ -10,13 +10,13 @@ class SubMenu extends React.Component {
 
     this.toggleNavbar = this.toggleNavbar.bind(this);
     this.state = {
-      collapsed: true
+      collapsed: true,
     };
   }
 
   toggleNavbar() {
     this.setState({
-      collapsed: !this.state.collapsed
+      collapsed: !this.state.collapsed,
     });
   }
 
@@ -42,7 +42,7 @@ class SubMenu extends React.Component {
 
           <Accordion.Collapse eventKey="0">
             <nav className="nav flex-column">
-              {items.map(item => (
+              {items.map((item) => (
                 <a
                   className={`nav-link nav-item pl-5 ${
                     item === "Active" ? "active" : ""

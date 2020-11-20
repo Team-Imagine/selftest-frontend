@@ -3,7 +3,6 @@ import classNames from "classnames";
 import { Container } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 
-
 class Memberscontent extends React.Component {
   render() {
     return (
@@ -11,12 +10,7 @@ class Memberscontent extends React.Component {
         fluid
         className={classNames("content", { "is-open": this.props.isOpen })}
       >
-       <h4>
-           Members Page
-       </h4>
-        
-      
- 
+        <h4>Members Page</h4>
       </Container>
     );
   }
