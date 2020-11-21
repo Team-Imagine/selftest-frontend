@@ -192,33 +192,64 @@ const Question = ({ subject, course, isOpen }) => {
 
 	const handleSelect = (e) => {
 		setSelectedTest(e);
-
 	};
 
+	const refreshSelect = () => {
+		for (var row = 0; row < selected.length; row++) {
+			for (var col = 0; col < selected[row].length; col++) {
+				selected[row][col].selected = 'info';			
+			}
+		}
+	}
+	/*
 	useEffect(() => {
 		if(selectedTest !== 'Test+') {
 			console.log(testList);
-			for(var i = 0; i< testList.length; i++) {
-				if(testList[i].title === selectedTest) {
-					axios.get(`/api/testset/${testList[i].id}?per_page=${30}`)
-					.then(res => {
-						console.log(res.data);
-						console.log(res.data.test_set.rows[0].test_questions);
-						
-						console.log(question);
-					})
-				}
-			}
+			
 		}
 	}, [selectedTest]);
-
+	*/
 	const selectedTestHandler = (value, e) => {
 		e.preventDefault();
 
 		if(value) {
+			var result = window.confirm('시험을 생성하시겠습니까?');
+				if (result) {
+					let t_modifyTest = [];
+					for (var row = 0; row < selected.length; row++) {
+						for (var col = 0; col < selected[row].length; col++) {
+							if (selected[row][col].selected === 'danger') {
+								t_modifyTest.push({ id: selected[row][col].question_id });
+							}
+						}
+					}
+					console.log(t_modifyTest);
+					let selectedTest_id;
+					for(var i = 0; i< testList.length; i++) {
+						if(testList[i].title === selectedTest) {
+							selectedTest_id = testList[i].id;
+						}
+					}
 
+					let data = {
+							test_set_id: selectedTest_id,
+							questions: t_modifyTest,
+					}
+
+					axios.post(`/api/testset/question/`, data)
+					.then(res => {
+						alert(res.data.message);
+						setSelectedTest('Test+');
+						refreshSelect();
+					})
+					.catch(error => {
+						alert(error.response.data.message);
+					})
+
+				}
 		} else {
 			setSelectedTest('Test+');
+			refreshSelect();
 		}
 	}
 
@@ -295,7 +326,7 @@ const Question = ({ subject, course, isOpen }) => {
 							//id="input-group-dropdown-1"
 							onSelect={handleSelect}
 						>
-							{testList.map((i, index) => <div>
+							{testList.map((i, index) => <div key={i.id}>
 									<Dropdown.Item eventKey={i.title}>{i.title}</Dropdown.Item>
 								</div>
 							)}
