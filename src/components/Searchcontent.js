@@ -17,7 +17,8 @@ import queryString from "query-string";
 
 const Searchcontent = ({ searchtype, keywordtype, keyword, isOpen }) => {
   const [searchresults, setSearchresults] = useState([]);
-  let history = useHistory();
+  const [pages, setPages] = useState([]);
+
   var keywordType = "";
   keywordtype === "default" ? (keywordType = "") : (keywordType = keywordtype);
 
@@ -32,11 +33,37 @@ const Searchcontent = ({ searchtype, keywordtype, keyword, isOpen }) => {
         );
         console.log(res.data);
         setSearchresults(res.data.questions.rows);
+        
+        let count = res.data.questions.count / 10 + 1;
+        let t_pages = [];
+
+        for (var i = 1; i < count; i++) {
+          t_pages.push(i);
+        }
+        setPages(t_pages);
       })
       .catch((error) => {
         alert(error.response.data.message);
       });
   }, []);
+
+  const loadSearchPerPage = (index, e) => {
+    e.preventDefault();
+
+    axios
+      .get(`/api/question?question_type=${keywordType}&${searchtype}=${keyword}`, {
+        params: {
+          page: index,
+        },
+      })
+      .then((res) => {
+        console.log(
+          `/api/question?question_type=${keywordType}&${searchtype}=${keyword}`);
+      })
+      .catch((error) => {
+        alert(error.response.data.message);
+      });
+  };
 
   return (
     <Container
@@ -137,6 +164,23 @@ const Searchcontent = ({ searchtype, keywordtype, keyword, isOpen }) => {
           </CardDeck>
         </ul>
       </div>
+
+      <ul className="row justify-content-center align-items-center">
+        {pages.map((i, index) => (
+          <div key={index}>
+            <button
+              style={{
+                backgroundColor: "#ffffff",
+                border: "1px solid",
+                width: "1.5rem",
+              }}
+              onClick={(e) => loadSearchPerPage(i, e)}
+            >
+              {i}
+            </button>
+          </div>
+        ))}
+      </ul>
     </Container>
   );
 };
