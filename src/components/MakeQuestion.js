@@ -61,6 +61,8 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
   const [checks, setChecks] = useState([false]);
   const [answer, setAnswer] = useState([]);
 
+  const [imageFile, setImageFile] = useState([]);
+
   let uploadedImages = [];
   let history = useHistory();
 
@@ -170,6 +172,8 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
       formData.append("img", selectedFile[i]);
     }
 
+    let images;
+
     await axios
       .post("/api/image/upload", formData, {
         headers: {
@@ -180,7 +184,17 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
       .then((res) => {
         setSelectedFile([]);
         console.log(res.data);
+        images = res.data.url;
       });
+    
+      data = {
+        title: title,
+        type: "essay",
+        content: editorToHtml,
+        course_title: course,
+        short_answer_items: answer_items,
+        image: images,
+      };
 
     if (title && editorToHtml.length > 10) {
       axios

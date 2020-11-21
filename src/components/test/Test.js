@@ -2,6 +2,7 @@ import React from "react";
 import SideBar from "../sidebar/SideBar";
 import Testcontent from "./Testcontent";
 import TestMaking from "./TestMaking";
+import TestPage from "./TestPage";
 import NavBar from "../content/Navbar";
 
 class Test extends React.Component {
@@ -63,6 +64,16 @@ class Test extends React.Component {
               </div>
               </div>
             
+            );
+          } else if(this.props.match.params.test_id) {
+            return (
+              <div>
+                <NavBar toggle={this.toggle} isOpen={this.state.isOpen} />
+              <div className="App wrapper">
+                <SideBar toggle={this.toggle} isOpen={this.state.isOpen} />
+                <TestPage toggle={this.toggle} isOpen={this.state.isOpen} test_id={this.props.match.params.test_id} />
+              </div>
+              </div>
             );
           } else {
             return (

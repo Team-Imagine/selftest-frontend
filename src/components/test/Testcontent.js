@@ -68,10 +68,12 @@ const Testcontent = ({isOpen}) => {
         </h4>
         </div>
         <div className="p-2 bd-highlight">
+					{/*
           <div>
 						<Button variant="info" style = {{width: '19rem', height: '2.5rem'}} onClick={submitHandler} href={`/test/make_test/${1}`}
 						>시험 생성</Button>
 					</div>
+					*/}
         </div>
       </div>
       <hr />
@@ -79,9 +81,9 @@ const Testcontent = ({isOpen}) => {
         {tests.length ? tests.map((i) =>
 					<div className="container h-100" key={i.title}>
 						<div className="row h-100 justify-content-center align-items-center">
-							<Alert className="text-center" variant="info" style={{ width: '25rem' }}>
+							<Alert className="text-center" variant="info" style={{ width:'30%', height:'10%' }}>
 								<Link key={i.title} to={{
-									pathname: `/test/make_test/${1}`,
+									pathname: `/test/${i.id}`,
 								}}>
 									<div style={{ fontSize: 18 }}>
 										{i.title}
