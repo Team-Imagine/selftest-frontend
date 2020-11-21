@@ -42,6 +42,7 @@ ReactDOM.render(
           <Route path="/password" component={Password} />
           <Route path="/members" component={Members} />
           <Route exact path="/test" component={Test} />
+          <Route exact path="/test/:test_id" component={Test} />
           <Route exact path="/test/make_test/:make_test" component={Test} />
           <Route path="/rank" component={Rank} />
           <Route path="/bookmarks" component={Bookmarks} />
