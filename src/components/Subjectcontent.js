@@ -19,7 +19,9 @@ const Subjectcontent = ({ isOpen }) => {
   let history = useHistory();
 
   useEffect(() => {
-    axios.get("/api/subject/").then((res) => {
+    axios
+    .get("/api/subject/")
+    .then((res) => {
       console.log(res.data);
       setSubject(res.data.subjects.rows);
 

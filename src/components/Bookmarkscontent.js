@@ -16,24 +16,51 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Bookmarkscontent = ({ isOpen }) => {
+  const [pages, setPages] = useState([]);
   const [bookmarks, setBookmarks] = useState([]);
-  let history = useHistory();
+  
 
   useEffect(() => {
     axios
       .get(`/api/bookmark`)
       .then((res) => {
         console.log(res.data);
-
         setBookmarks(res.data.bookmarks.rows);
+
+        let count = res.data.bookmarks.count / 10 + 1;
+        let t_pages = [];
+  
+        for (var i = 1; i < count; i++) {
+          t_pages.push(i);
+        }
+        setPages(t_pages);
       })
       .catch((error) => {
         alert(error.response.data.message);
       });
   }, []);
 
+  const loadBookmarksPerPage = (index, e) => {
+    e.preventDefault();
+  
+    axios
+    .get(`/api/bookmark`, {
+      params: {
+        page: index,
+      },
+    })
+    .then((res) => {
+      console.log(res.data);
+      setBookmarks(res.data.bookmarks.rows);
+    })
+    .catch((error) => {
+      alert(error.response.data.message);
+    });
+};
+
   const DeleteBookmarks = (id) => (e) => {
     e.preventDefault();
+    
 
     console.log("id:", id);
     axios
@@ -57,20 +84,6 @@ const Bookmarkscontent = ({ isOpen }) => {
         alert(error.response.data.message);
       });
   };
-
-  /*
-	const submitHandler = (event) => {
-		event.preventDefault();
-			
-		if(store.getState().isLoggedIn) {
-			history.push(`/subject/${subject}/${course}/make/${1}`);
-			} else {
-				alert('로그인이 필요한 기능입니다.');
-				history.push("/login");
-			}
-	}
-*/
-
   return (
     <Container
       fluid
@@ -177,35 +190,6 @@ const Bookmarkscontent = ({ isOpen }) => {
                           </div>
                         </div>
                       </Card.Footer>
-                      {/*
-							<Card.Footer>
-							
-							<div className="d-flex bd-highlight mb-3" style={{height:"0.8rem"}}>
-							
-							<div className="mr-auto p-2 bd-highlight">
-							좋아요 &nbsp;
-							<FontAwesomeIcon icon={faHeart} className="ml-auto" />&nbsp;
-						  
-							</div>
-							<div className="mr-auto p-2 bd-highlight">
-							신선해요 &nbsp;  
-							<FontAwesomeIcon icon={faAppleAlt} className="ml-auto" />&nbsp;
-							<FontAwesomeIcon icon={faAppleAlt} className="ml-auto" />&nbsp;
-							<FontAwesomeIcon icon={faAppleAlt} className="ml-auto" />&nbsp;
-							<FontAwesomeIcon icon={faAppleAlt} className="ml-auto" />&nbsp;
-							<FontAwesomeIcon icon={faAppleAlt} className="ml-auto" />&nbsp;
-							</div>
-							<div className="mr-auto p-2 bd-highlight">
-							난이도  &nbsp;
-							<FontAwesomeIcon icon={faStar} className="ml-auto" />&nbsp;
-							<FontAwesomeIcon icon={faStar} className="ml-auto" />&nbsp;
-							<FontAwesomeIcon icon={faStar} className="ml-auto" />&nbsp;
-							<FontAwesomeIcon icon={faStar} className="ml-auto" />&nbsp;
-							<FontAwesomeIcon icon={faStar} className="ml-auto" />&nbsp;
-							</div>
-							</div>
-				
-								 </Card.Footer>	*/}
                     </Link>
                   </Card>
                 </div>
@@ -215,6 +199,24 @@ const Bookmarkscontent = ({ isOpen }) => {
           </CardDeck>
         </ul>
       </div>
+
+      <ul className="row justify-content-center align-items-center">
+        {pages.map((i, index) => (
+          <div key={index}>
+            <button
+              style={{
+                backgroundColor: "#ffffff",
+                border: "1px solid",
+                width: "1.5rem",
+              }}
+              onClick={(e) => loadBookmarksPerPage(i, e)}
+            >
+              {i}
+            </button>
+          </div>
+        ))}
+      </ul>
+
     </Container>
   );
 };
