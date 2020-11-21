@@ -165,7 +165,8 @@ const Searchcontent = ({ searchtype, keywordtype, keyword, isOpen }) => {
         </ul>
       </div>
 
-      <ul className="row justify-content-center align-items-center">
+      <ul style={{position:"fixed", width:"90%", bottom:"0"}} 
+      className="row justify-content-center align-items-center">
         {pages.map((i, index) => (
           <div key={index}>
             <button

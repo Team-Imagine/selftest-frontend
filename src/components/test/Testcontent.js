@@ -95,7 +95,8 @@ const Testcontent = ({isOpen}) => {
 					</div>
 				) : <div className="row justify-content-center align-items-center">등록된 Test가 없습니다. 새로운 Test를 등록해주세요.</div>}
       </ul>
-      <ul className="row justify-content-center align-items-center">
+	  <ul style={{position:"fixed", width:"90%", bottom:"0"}}
+	  className="row justify-content-center align-items-center">
 				{pages.map((i, index) =>
 					<div key={index}>
 						<button style={{ backgroundColor: '#ffffff', border: '1px solid', width: '1.5rem' }} onClick={(e) => loadTestPerPage(i, e)}>{i}</button>&nbsp;
