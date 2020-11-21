@@ -68,16 +68,21 @@ const Rankcontent = ({ isOpen }) => {
           </div>
         </div>
 
-        {ranks.map((i) => (
+        {ranks.map((i, index) => (
           <div className="container h-100">
             <div className="row h-100 justify-content-center align-items-center">
               <Card style={{ width: "100rem", height: "4rem" }}>
                 <Card.Body style={{ paddingTop: "4px", paddingBottom: "4px" }}>
                   <div className="d-flex bd-highlight mb-3">
+                   
                     <div
                       className="mr-auto p-2 bd-highlight"
                       style={{ width: "25%" }}
-                    ></div>
+                    >
+                       <div key={index+1}>
+                      {index+1}
+                    </div>
+                    </div>
                     <div
                       className="mr-auto p-2 bd-highlight"
                       style={{ width: "25%" }}
@@ -96,6 +101,7 @@ const Rankcontent = ({ isOpen }) => {
                     >
                       {i.num_solved_questions}
                     </div>
+                  
                   </div>
                 </Card.Body>
               </Card>
