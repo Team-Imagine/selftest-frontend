@@ -200,7 +200,7 @@ const Bookmarkscontent = ({ isOpen }) => {
         </ul>
       </div>
 
-      <ul style={{position:"fixed", width:"90%", bottom:"0"}} 
+      <ul style={{position:"fixed", width:"80%", bottom:"0"}} 
       className="row justify-content-center align-items-center">
         {pages.map((i, index) => (
           <div key={index}>

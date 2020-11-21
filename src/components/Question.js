@@ -418,7 +418,8 @@ const Question = ({ subject, course, isOpen }) => {
 						)}
 					</CardDeck>
 				</ul>
-				<ul className="row justify-content-center align-items-center">
+				<ul style={{position:"fixed", width:"80%", bottom:"0"}} 
+				className="row justify-content-center align-items-center">
 					{pages.map((i, index) =>
 						<div key={index}>
 							<button style={{ backgroundColor: '#ffffff', border: '1px solid', width: '1.5rem' }} onClick={(e) => loadQuestionPerPage(i, e)}>{i}</button>&nbsp;
