@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Button, CardDeck } from "react-bootstrap";
+import { Container, Button, CardDeck, Accordion, FormControl } from "react-bootstrap";
 import classNames from "classnames";
 import { Link, useHistory } from 'react-router-dom';
 import Card from 'react-bootstrap/Card'
@@ -12,24 +12,28 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Question = ({ subject, course, isOpen }) => {
 
-	const [question, setQuestion] = useState([]);
+	const [question, setQuestion] = useState({
+		question: [],
+		curPage: 1,
+	}
+	);
 	const [pages, setPages] = useState([]);
-	const [curPage, setCurPage] = useState(1);
-
-	const [temp, setTemp] = useState(true);
+	
+  const [testTitle, setTestTitle] = useState('');
 	const [testState, setTestState] = useState("info");
 	const [selected, setSelected] = useState([]);
 	const [addTest, setAddTest] = useState([]);
 	
 	let history = useHistory();
 	
+
 	useEffect(() => {
 		axios.get(`/api/question?course_title=${course}`)
 			.then(res => {
 				console.log(res.data);
 
-				setQuestion(res.data.questions.rows);
-
+				//setQuestion(res.data.questions.rows);
+				setQuestion({question: res.data.questions.rows, curPage: 1});
 				let count = res.data.questions.count / 10 + 1;
 				let t_row = [];
 				let t_col = [];
@@ -43,8 +47,8 @@ const Question = ({ subject, course, isOpen }) => {
 					}
 					t_row.push(t_col);
 				}
-
-				console.log(t_row);
+				//console.log('check:', question);
+				//console.log(t_row);
 				setSelected(t_row);
 				
 				let t_pages = [];
@@ -87,26 +91,28 @@ const Question = ({ subject, course, isOpen }) => {
 					tSelected[index-1][col].question_id = res.data.questions.rows[col].id;
 				}
 				
-				console.log("test:", selected);
-				
-				setQuestion(res.data.questions.rows);
+				//setQuestion(res.data.questions.rows);
+				setQuestion({question: res.data.questions.rows, curPage: index});
+					
+				//setCurPage(index);
 				setSelected([...tSelected]);
-				setCurPage(index);
+
 			})
 			.catch(error => {
 				alert(error.response.data.message);
 			})
-			
 	}
 
 	const selectHandler = (index, e) => {
 		e.preventDefault();
 
 		let t_selected = selected;
-		if(t_selected[curPage -1][index].selected === "info")
-			t_selected[curPage -1][index].selected = "danger";
+		if(t_selected[question.curPage -1][index].selected === "info") {
+			t_selected[question.curPage -1][index].selected = "danger";
+
+		}
 		else {
-			t_selected[curPage -1][index].selected = "info";
+			t_selected[question.curPage -1][index].selected = "info";
 		}
 
 		setSelected([...t_selected]);
@@ -118,19 +124,46 @@ const Question = ({ subject, course, isOpen }) => {
 		else {
 			var result = window.confirm('시험을 생성하시겠습니까?');
 			if(result) {
-				console.log(selected);
-				
+				let t_addTest = [];
 				for(var row = 0; row < selected.length; row++) {
 					for(var col = 0; col < selected[row].length; col++) {
-					if(selected[row][col].selected === 'danger')
-						console.log(row , col);
-						console.log(question)
+						if(selected[row][col].selected === 'danger') {
+							console.log(row , col, selected[row][col].question_id);
+							t_addTest.push({id: selected[row][col].question_id});
+						}
 					}
 				}
+				console.log(t_addTest);
+				setAddTest(t_addTest);
+				let title = testTitle;
+				
+				axios.post(`/api/testset/`, {title})
+				.then(res => {
+					console.log(res.data);
+					
+					let data = {
+						test_set_id: res.data.test_set.id,
+						questions: t_addTest,
+					}
+					console.log(data);
+					axios.post(`/api/testset/question/`, data)
+					.then(res => {
+						console.log(res.data);
+					})
+
+				})
+				
 			} else {
 				setTestState("info");
+				setAddTest([]);
 			}
 		}
+	}
+
+	const testTitleChange = (e) => {
+		e.preventDefault();
+
+		setTestTitle(e.target.value);
 	}
 
 	return (
@@ -145,22 +178,51 @@ const Question = ({ subject, course, isOpen }) => {
 							과목 {'>'} {subject} {'>'} {course}
 						</h4>
 					</div>
-					<div className="p-2 bd-highlight">
-						<div>
+					<div className="d-flex p-2 bd-highlight">
 						
-							<Button variant={testState} style = {{width: '19rem', height: '2.5rem'}} onClick={makeTestHandler}
-							>시험 생성</Button>
+						<Accordion>
+            <Card border="info" style={{ width: "19rem" }}>
+              <Accordion.Toggle as={Button} variant={testState} block eventKey="0">
+                시험 생성
+              </Accordion.Toggle>
+              <Accordion.Collapse eventKey="0">
+                <Card.Body style={{ backgroundColor: "white" }}>
+                  <div>
+                    <FormControl
+                      blocktype="text"
+                      id="title"
+                      className="mr-sm-2"
+                      value={testTitle}
+                      placeholder="추가할 시험명을 입력하세요."
+                      fontSize="20"
+                      style={{ width: "17rem" }}
+                      onChange={testTitleChange}
+                    />
+                    <Button
+                      variant="light"
+                      block
+                      style={{ width: "17rem" }}
+                      onClick={makeTestHandler}
+                    >
+                      문제 선택
+                    </Button>
+                  </div>
+                </Card.Body>
+              </Accordion.Collapse>
+            </Card>
+          </Accordion>		
+					
 							&nbsp;
 							<Button variant="info" style={{ width: '19rem', height: '2.5rem' }} onClick={submitHandler}
 								href={`/subject/${subject}/${course}/make/${1}`}
 							>문제 생성</Button>
-						</div>
+						
 					</div>
 				</div>
 				<hr />
 				<ul>
 					<CardDeck>
-						{question.map((i, index) =>
+					{question.question.map((i, index) =>
 							<div className="container h-100" key={i.id}>
 								<div className="row h-100 justify-content-center align-items-center">
 
@@ -214,7 +276,7 @@ const Question = ({ subject, course, isOpen }) => {
 									{(testState === "danger") &&
 									<div>
 										<Button
-										variant={selected[curPage -1][index].selected}
+										variant={selected[question.curPage -1][index].selected}
 										onClick={(e) => selectHandler(index, e)}
 										>추가</Button>
 									</div>

@@ -75,6 +75,13 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
   const [essayAnswerEditor, setEssayAnswerEditor] = useState(
     EditorState.createEmpty()
   );
+
+  const [pointControl, setPointControl] = useState({
+    points_to_own: null,
+    points_to_solve: null,
+    points_to_unlock: null,
+  })
+
   const [showExplanation, setShowExplanation] = useState(false);
   const [comments, setComments] = useState([]);
   const [pages, setPages] = useState([]);
@@ -122,6 +129,12 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 
         setQuestionType(res.data.question.type);
         setQuestion(res.data.question);
+
+        setPointControl({
+          points_to_own: res.data.question.points_to_own, 
+          points_to_solve: res.data.question.points_to_solve,
+          points_to_unlock: res.data.question.points_to_unlock,
+        })
 
         if (res.data.question.type === "multiple_choice") {
           let t_choiceList = [];
@@ -276,22 +289,33 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
   const submitHandler = (event) => {
     event.preventDefault();
 
-    var result = window.confirm(
-      "풀이를 제출하시겠습니까? 포인트 1점이 차감됩니다."
-    );
+    var result;
+    if(pointControl.points_to_solve) {
+      result = window.confirm(
+        "풀이를 제출하시겠습니까? 포인트 "+ pointControl.points_to_solve+ "점이 차감됩니다."
+      );
+    } else {
+      result = window.confirm(
+        "풀이를 제출하시겠습니까?"
+      );
+    }
 
     if (result) {
+
+      if(pointControl.points_to_solve) {
+        let t_point = pointControl.points_to_solve;
+        setPointControl({points_to_unlock: 0, points_to_own: pointControl.points_to_own - t_point});
+      }
+
       axios
         .get(`/api/question/solve/${question_id}`)
         .then((res) => {
-          if (!res.data.point_decrement) {
-            alert("이미 제출한 적이 있습니다.");
-          } else {
-            axios.get(`/api/user`).then((res) => {
-              store.dispatch({ type: "POINT", value: res.data.user.point });
-              console.log(store.getState().point);
-            });
-          }
+
+          axios.get(`/api/user`).then((res) => {
+            store.dispatch({ type: "POINT", value: res.data.user.point });
+            console.log(store.getState().point);
+          });
+          
         })
         .catch((error) => {
           alert(error.response.data.message);
@@ -362,28 +386,38 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 
   // 해설 확인
   const show_Explanation = () => {
-    var result = window.confirm(
-      "문제의 해설을 확인하시겠습니까? 2 포인트가 차감됩니다."
-    );
+    var result;
+
+    if(pointControl.points_to_unlock) {
+      result = window.confirm(
+        "문제의 해설을 확인하시겠습니까? "+ pointControl.points_to_unlock+ "포인트가 차감됩니다."
+      );
+    } else {
+      result = window.confirm(
+        "문제의 해설을 확인하시겠습니까? "
+      );
+    }
 
     if (result) {
       axios
         .get(`/api/question/unlock/${question_id}`)
         .then((res) => {
-          if (!res.data.point_decrement) {
-            alert(res.data.message);
-          } else {
             axios.get(`/api/user`).then((res) => {
               store.dispatch({ type: "POINT", value: res.data.user.point });
               console.log(store.getState().point);
             });
-          }
+            
         })
         .catch((error) => {
           alert(error.response.data.message);
         });
 
       axios.get(`/api/answer?question_id=${question_id}`).then((res) => {
+        if(pointControl.points_to_unlock) {
+          let t_point = pointControl.points_to_unlock;
+          setPointControl({points_to_unlock: 0, points_to_own: pointControl.points_to_own - t_point});
+        }
+
         console.log(res.data);
 
         htmlToEditor_answer = res.data.answers.rows[0].content;
@@ -406,6 +440,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
       loadAnswer();
 
       setShowExplanation(true);
+
     }
   };
 
@@ -413,25 +448,32 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
   const isOwnedHandler = (e) => {
     e.preventDefault();
 
+    var result;
+
+    if(!pointControl.points_to_own) {
+      result = window.confirm(
+        "문제를 소장하시겠습니까? "+ pointControl.points_to_own+ "포인트가 차감됩니다."
+      );
+    } else {
+      alert('이미 소장 중인 문제입니다.');
+    }
+    if(result) {
+      ownQuestion();
+    }
+    
+  };
+
+  const ownQuestion = () => {
     setIsOwned(true);
-    console.log("own test");
 
     axios
       .get(`/api/question/own/${question_id}`)
       .then((res) => {
-        console.log();
-        if (res.data.point_decrement)
-          alert(
-            res.data.point_decrement + "포인트를 사용하여 " + res.data.message
-          );
-        else {
-          alert("이미 소장중인 문제입니다.");
-        }
       })
       .catch((error) => {
         alert(error.response.data.message);
       });
-  };
+  }
 
   // 좋아요 처리
   const addLike = (e) => {
