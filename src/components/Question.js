@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Button, CardDeck, Accordion, FormControl } from "react-bootstrap";
+import { Container, Button, CardDeck, Accordion, FormControl, ButtonGroup } from "react-bootstrap";
 import classNames from "classnames";
 import { Link, useHistory } from 'react-router-dom';
 import Card from 'react-bootstrap/Card'
@@ -18,14 +18,15 @@ const Question = ({ subject, course, isOpen }) => {
 	}
 	);
 	const [pages, setPages] = useState([]);
-	
-  const [testTitle, setTestTitle] = useState('');
+
+	const [testTitle, setTestTitle] = useState('');
 	const [testState, setTestState] = useState("info");
 	const [selected, setSelected] = useState([]);
 	const [addTest, setAddTest] = useState([]);
-	
+
+
 	let history = useHistory();
-	
+
 
 	useEffect(() => {
 		axios.get(`/api/question?course_title=${course}`)
@@ -33,16 +34,16 @@ const Question = ({ subject, course, isOpen }) => {
 				console.log(res.data);
 
 				//setQuestion(res.data.questions.rows);
-				setQuestion({question: res.data.questions.rows, curPage: 1});
+				setQuestion({ question: res.data.questions.rows, curPage: 1 });
 				let count = res.data.questions.count / 10 + 1;
 				let t_row = [];
 				let t_col = [];
 
 				for (var i = 1; i <= count; i++) {
 					t_col = [];
-					for(var j = 0; j< 10; j++) {
-						if((i-1) * 10 + j < res.data.questions.count) {
-							t_col.push({selected:"info", question_id: res.data.questions.rows[j].id});
+					for (var j = 0; j < 10; j++) {
+						if ((i - 1) * 10 + j < res.data.questions.count) {
+							t_col.push({ selected: "info", question_id: res.data.questions.rows[j].id });
 						}
 					}
 					t_row.push(t_col);
@@ -50,7 +51,7 @@ const Question = ({ subject, course, isOpen }) => {
 				//console.log('check:', question);
 				//console.log(t_row);
 				setSelected(t_row);
-				
+
 				let t_pages = [];
 
 				for (var i = 1; i < count; i++) {
@@ -62,7 +63,7 @@ const Question = ({ subject, course, isOpen }) => {
 				alert(error.response.data.message);
 			})
 	}, []);
-	
+
 	const submitHandler = (event) => {
 		event.preventDefault();
 
@@ -85,15 +86,15 @@ const Question = ({ subject, course, isOpen }) => {
 			}
 		})
 			.then(res => {
-				
+
 				let tSelected = selected;
-				for(var col = 0; col < res.data.questions.rows.length; col++) {
-					tSelected[index-1][col].question_id = res.data.questions.rows[col].id;
+				for (var col = 0; col < res.data.questions.rows.length; col++) {
+					tSelected[index - 1][col].question_id = res.data.questions.rows[col].id;
 				}
-				
+
 				//setQuestion(res.data.questions.rows);
-				setQuestion({question: res.data.questions.rows, curPage: index});
-					
+				setQuestion({ question: res.data.questions.rows, curPage: index });
+
 				//setCurPage(index);
 				setSelected([...tSelected]);
 
@@ -107,56 +108,58 @@ const Question = ({ subject, course, isOpen }) => {
 		e.preventDefault();
 
 		let t_selected = selected;
-		if(t_selected[question.curPage -1][index].selected === "info") {
-			t_selected[question.curPage -1][index].selected = "danger";
+		if (t_selected[question.curPage - 1][index].selected === "info") {
+			t_selected[question.curPage - 1][index].selected = "danger";
 
 		}
 		else {
-			t_selected[question.curPage -1][index].selected = "info";
+			t_selected[question.curPage - 1][index].selected = "info";
 		}
 
 		setSelected([...t_selected]);
 	}
 
-	const makeTestHandler = () => {
-		if(testState === "info")
-			setTestState("danger");
-		else {
-			var result = window.confirm('시험을 생성하시겠습니까?');
-			if(result) {
-				let t_addTest = [];
-				for(var row = 0; row < selected.length; row++) {
-					for(var col = 0; col < selected[row].length; col++) {
-						if(selected[row][col].selected === 'danger') {
-							console.log(row , col, selected[row][col].question_id);
-							t_addTest.push({id: selected[row][col].question_id});
+	const makeTestHandler = (value, e) => {
+		e.preventDefault();
+
+		if (value) {
+			if (testState === "info") {
+				setTestState("danger");
+			} else {
+				var result = window.confirm('시험을 생성하시겠습니까?');
+				if (result) {
+					let t_addTest = [];
+					for (var row = 0; row < selected.length; row++) {
+						for (var col = 0; col < selected[row].length; col++) {
+							if (selected[row][col].selected === 'danger') {
+								console.log(row, col, selected[row][col].question_id);
+								t_addTest.push({ id: selected[row][col].question_id });
+							}
 						}
 					}
-				}
-				console.log(t_addTest);
-				setAddTest(t_addTest);
-				let title = testTitle;
-				
-				axios.post(`/api/testset/`, {title})
-				.then(res => {
-					console.log(res.data);
-					
-					let data = {
-						test_set_id: res.data.test_set.id,
-						questions: t_addTest,
-					}
-					console.log(data);
-					axios.post(`/api/testset/question/`, data)
-					.then(res => {
-						console.log(res.data);
-					})
+					console.log(t_addTest);
+					setAddTest(t_addTest);
+					let title = testTitle;
 
-				})
-				
-			} else {
-				setTestState("info");
-				setAddTest([]);
+					axios.post(`/api/testset/`, { title })
+						.then(res => {
+							console.log(res.data);
+
+							let data = {
+								test_set_id: res.data.test_set.id,
+								questions: t_addTest,
+							}
+							console.log(data);
+							axios.post(`/api/testset/question/`, data)
+								.then(res => {
+									console.log(res.data);
+								})
+						})
+				}
 			}
+		} else {
+
+			setTestState('info');
 		}
 	}
 
@@ -179,50 +182,71 @@ const Question = ({ subject, course, isOpen }) => {
 						</h4>
 					</div>
 					<div className="d-flex p-2 bd-highlight">
-						
+
 						<Accordion>
-            <Card border="info" style={{ width: "19rem" }}>
-              <Accordion.Toggle as={Button} variant={testState} block eventKey="0">
-                시험 생성
-              </Accordion.Toggle>
-              <Accordion.Collapse eventKey="0">
-                <Card.Body style={{ backgroundColor: "white" }}>
-                  <div>
-                    <FormControl
-                      blocktype="text"
-                      id="title"
-                      className="mr-sm-2"
-                      value={testTitle}
-                      placeholder="추가할 시험명을 입력하세요."
-                      fontSize="20"
-                      style={{ width: "17rem" }}
-                      onChange={testTitleChange}
-                    />
-                    <Button
-                      variant="light"
-                      block
-                      style={{ width: "17rem" }}
-                      onClick={makeTestHandler}
-                    >
-                      문제 선택
-                    </Button>
-                  </div>
-                </Card.Body>
-              </Accordion.Collapse>
-            </Card>
-          </Accordion>		
-					
+							<Card border="info" style={{ width: "19rem" }}>
+								<Accordion.Toggle as={Button} variant={testState} block eventKey="0">
+									시험 생성
+              	</Accordion.Toggle>
+								<Accordion.Collapse eventKey="0">
+									<Card.Body style={{ backgroundColor: "white" }}>
+										<div>
+											<FormControl
+												blocktype="text"
+												id="title"
+												value={testTitle}
+												placeholder="추가할 시험명을 입력하세요."
+												fontSize="20"
+												style={{ width: "17rem" }}
+												onChange={testTitleChange}
+											/>
+											{(testState === "info") ?
+												<Button
+													variant="light"
+
+													style={{ width: "17rem" }}
+													onClick={(e) => makeTestHandler(true, e)}
+												>
+													문제 선택
+												</Button> :
+												<ButtonGroup>
+													<Button
+														variant="light"
+
+														style={{ width: "8.5rem" }}
+														onClick={(e) => makeTestHandler(true, e)}
+													>
+														선택 완료
+													</Button>
+													<Button
+														variant="light"
+														block
+														style={{ width: "8.5rem" }}
+														onClick={(e) => makeTestHandler(false, e)}
+													>
+														생성 취소
+													</Button>
+												</ButtonGroup>
+
+
+											}
+										</div>
+									</Card.Body>
+								</Accordion.Collapse>
+							</Card>
+						</Accordion>
+
 							&nbsp;
 							<Button variant="info" style={{ width: '19rem', height: '2.5rem' }} onClick={submitHandler}
-								href={`/subject/${subject}/${course}/make/${1}`}
-							>문제 생성</Button>
-						
+							href={`/subject/${subject}/${course}/make/${1}`}
+						>문제 생성</Button>
+
 					</div>
 				</div>
 				<hr />
 				<ul>
 					<CardDeck>
-					{question.question.map((i, index) =>
+						{question.question.map((i, index) =>
 							<div className="container h-100" key={i.id}>
 								<div className="row h-100 justify-content-center align-items-center">
 
@@ -274,12 +298,12 @@ const Question = ({ subject, course, isOpen }) => {
 										</Link>
 									</Card>
 									{(testState === "danger") &&
-									<div>
-										<Button
-										variant={selected[question.curPage -1][index].selected}
-										onClick={(e) => selectHandler(index, e)}
-										>추가</Button>
-									</div>
+										<div>
+											<Button
+												variant={selected[question.curPage - 1][index].selected}
+												onClick={(e) => selectHandler(index, e)}
+											>추가</Button>
+										</div>
 									}
 								</div>
 								<br />
