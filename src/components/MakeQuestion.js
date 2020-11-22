@@ -192,7 +192,7 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
         //console.log(res.data);
 
         for (var i = 0; i < res.data.images.length; i++) {
-          images.push(res.data.images[i].url);
+          images.push({url: res.data.images[i].url});
         }
 
         console.log(images);
@@ -224,6 +224,7 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
             uploaded_images: images,
           };
         }
+
         // 정답에 이미지 첨부 미포함 *이후 구현*
         axios.post(`/api/question/`, data)
           .then((res) => {

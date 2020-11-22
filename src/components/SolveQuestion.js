@@ -25,6 +25,7 @@ import {
   faThumbsUp,
   faAlignCenter,
 } from "@fortawesome/free-solid-svg-icons";
+import parse from "node-html-parser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import draftToHtml from "draftjs-to-html";
 import htmlToDraft from "html-to-draftjs";
@@ -127,6 +128,9 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
       axios.get(`/api/question/${question_id}`).then((res) => {
         console.log(res.data);
 
+        res.data.question.content = convertUploadedImageUrls(res.data.question.content);
+        console.log(res.data.question.content);
+
         setQuestionType(res.data.question.type);
         setQuestion(res.data.question);
 
@@ -208,6 +212,28 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
       history.push("/login");
     }
   }, []);
+
+  const convertUploadedImageUrls = function (content) {
+    const root = parse(content);
+    const img_tags = root.querySelectorAll("img");
+    console.log('root',root);
+    console.log('img',img_tags);
+
+    for (let i = 0, upload_cnt = 0; i < img_tags.length; i++) {
+      
+      let src_attribute = img_tags[i].getAttribute("src");
+      /*
+      // 업로드한 이미지가 아닐 경우 blob이 붙지 않음
+      if (!src_attribute.startsWith("blob")) {
+        continue;
+      }
+      // 업로드한 이미지일 경우, uploaded_images 배열의 url로 대체
+      */
+      img_tags[i].setAttribute("src", "http://localhost:8002"+ src_attribute);
+      img_tags[i].setAttribute("target", "_blank");
+    } 
+    return root.toString();
+  };
 
   const moveBack = () => {
     history.push(`/subject/${subject}/${course}/${question_id}`);
