@@ -269,14 +269,13 @@ const NavBar = ({ isOpen, point }) => {
                     프로필
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
-                    {/*
                     <Dropdown.Item href="#/action-1">
                       <FontAwesomeIcon
                         icon={faUserGraduate}
                         className="ml-auto"
                       />
                       내 활동{" "}
-                    </Dropdown.Item> */}
+                    </Dropdown.Item>
                     <Dropdown.Item href="#/action-2">
                       <FontAwesomeIcon icon={faUserCog} className="ml-auto" />내
                       설정

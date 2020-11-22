@@ -154,8 +154,7 @@ const Course = ({ subject, isOpen }) => {
           </div>
         ))}
       </ul>
-      <ul style={{position:"fixed", width:"80%", bottom:"0"}} 
-      className="row justify-content-center align-items-center">
+      <ul className="row justify-content-center align-items-center">
         {pages.map((i, index) => (
           <div key={index}>
             <button
