@@ -11,29 +11,34 @@ import FormControl from 'react-bootstrap/FormControl'
 
 
 
-const Testcontent = ({isOpen}) => {
-  const [tests, setTests] = useState([]);
-  const [pages, setPages] = useState([]);
+const Testcontent = ({ isOpen }) => {
+	const [tests, setTests] = useState({
+		test_list: [],
+		curPage: 1,
+	});
+	const [pages, setPages] = useState([]);
+	const [state, setState] = useState('normal');
+	const [buttonColor, setButtonColor] = useState('info');
 
 	let history = useHistory();
-	
-  useEffect(() => {
-    axios.get('/api/testset/')
-      .then(res => {
-        console.log(res.data);
-        setTests(res.data.test_sets.rows);
-        
-        let count = res.data.test_sets.count / 10 + 1;
+
+	useEffect(() => {
+		axios.get('/api/testset/')
+			.then(res => {
+				console.log(res.data);
+				setTests({test_list:res.data.test_sets.rows});
+
+				let count = res.data.test_sets.count / 10 + 1;
 				let t_pages = [];
 
-				for(var i = 1; i <= count; i++) {
+				for (var i = 1; i <= count; i++) {
 					t_pages.push(i);
 				}
-        setPages(t_pages);
-      })
-  }, []);
+				setPages(t_pages);
+			})
+	}, []);
 
-  const loadTestPerPage = (index, e) => {
+	const loadTestPerPage = (index, e) => {
 		e.preventDefault();
 
 		axios.get(`/api/testset/`, {
@@ -43,45 +48,76 @@ const Testcontent = ({isOpen}) => {
 		})
 			.then(res => {
 				console.log(res.data);
-				setTests(res.data.test_sets.rows);
+				setTests({test_list: res.data.test_sets.rows, curPage: index});
 			})
 			.catch(error => {
 				alert(error.response.data.message);
 			})
 	}
 
-	const submitHandler = (event) => {
-		event.preventDefault();
-		
-		history.push(`/test/make_test/${1}`);
+	const modifyHandler = () => {
+
+		if (state === 'normal') {
+			setButtonColor('danger');
+			setState('delete');
+		} else {
+			setButtonColor('info');
+			setState('normal');
+		}
+	}
+	const deleteHandler = (index, e) => {
+		e.preventDefault();
+
+		var result = window.confirm('해당 Test를 삭제 하시겠습니까?');
+
+		//console.log('test', tests);
+		let id = tests.test_list[index].id;
+
+		if (result) {
+			axios.delete(`/api/testset/${id}`)
+				.then(res => {
+					alert(res.data.message);
+					axios.get(`/api/testset/`, {
+						params: {
+							page: tests.curPage,
+						}
+					})
+					.then(res => {
+						console.log(res.data);
+						setTests({test_list: res.data.test_sets.rows});
+					})
+					.catch(error => {
+						alert(error.response.data.message);
+					})
+				})
+				.catch(error => {
+					alert(error.response.data.message);
+				})
+		}
 	}
 
-  return (
-    <Container
-      fluid
-      className={classNames("content", { "is-open": isOpen })}
-    >
-      <div className="d-flex bd-highlight mb-3">
-        <div className="mr-auto p-2 bd-highlight">
-          <h4 style={{ fontWeight: "bolder" }}>
-            시험
+	return (
+		<Container
+			fluid
+			className={classNames("content", { "is-open": isOpen })}
+		>
+			<div className="d-flex bd-highlight mb-3">
+				<div className="mr-auto p-2 bd-highlight">
+					<h4 style={{ fontWeight: "bolder" }}>
+						시험
         </h4>
+				</div>
+				<div className="p-2 bd-highlight">
+					<Button variant={buttonColor} style={{ width: '19rem', height: '2.5rem' }} onClick={modifyHandler}
+					>시험 수정</Button>&nbsp;
         </div>
-        <div className="p-2 bd-highlight">
-					{/*
-          <div>
-						<Button variant="info" style = {{width: '19rem', height: '2.5rem'}} onClick={submitHandler} href={`/test/make_test/${1}`}
-						>시험 생성</Button>
-					</div>
-					*/}
-        </div>
-      </div>
-      <hr />
+			</div>
+			<hr />
 			<ul>
-        {tests.length ? tests.map((i) =>
-					<div className="container h-100" key={i.title}>
+				{tests.test_list.length ? tests.test_list.map((i, index) =>
+					<div key={i.title}>
 						<div className="row h-100 justify-content-center align-items-center">
-							<Alert className="text-center" variant="info" style={{ width:'30%', height:'10%' }}>
+							<Alert className="text-center" variant="info" style={{ width: '30%', height: '10%' }}>
 								<Link key={i.title} to={{
 									pathname: `/test/${i.id}`,
 								}}>
@@ -90,21 +126,28 @@ const Testcontent = ({isOpen}) => {
 									</div>
 								</Link>
 							</Alert>
+							&nbsp;&nbsp;
+							{(state === 'delete') &&
+								<Button
+									variant='danger'
+									onClick={(e) => deleteHandler(index, e)}
+								>삭제</Button>}
 							<br />
 						</div>
+
 					</div>
 				) : <div className="row justify-content-center align-items-center">등록된 Test가 없습니다. 새로운 Test를 등록해주세요.</div>}
-      </ul>
-	  <ul style={{position:"fixed", width:"90%", bottom:"0"}}
-	  className="row justify-content-center align-items-center">
+			</ul>
+			<ul style={{ position: "fixed", width: "90%", bottom: "0" }}
+				className="row justify-content-center align-items-center">
 				{pages.map((i, index) =>
 					<div key={index}>
 						<button style={{ backgroundColor: '#ffffff', border: '1px solid', width: '1.5rem' }} onClick={(e) => loadTestPerPage(i, e)}>{i}</button>&nbsp;
 						</div>)
 				}
 			</ul>
-    </Container>
-  );
+		</Container>
+	);
 
 }
 

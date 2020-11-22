@@ -4,7 +4,7 @@ import classNames from "classnames";
 import { Link, useHistory } from 'react-router-dom';
 import Card from 'react-bootstrap/Card'
 import axios from "axios";
-import store from "../store";
+import store from "../../store";
 import { faAppleAlt, faHeart, faStar, faThumbsDown, faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -166,10 +166,12 @@ const Question = ({ subject, course, isOpen }) => {
 								test_set_id: res.data.test_set.id,
 								questions: t_addTest,
 							}
-							console.log(data);
+							
 							axios.post(`/api/testset/question/`, data)
 								.then(res => {
 									console.log(res.data);
+									setTestState('info');
+									alert(res.data.message);
 								})
 						})
 				}

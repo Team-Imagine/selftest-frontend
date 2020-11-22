@@ -29,8 +29,6 @@ ReactDOM.render(
     <CookiesProvider>
    
       <BrowserRouter>
-        
-      
         <Switch>
           <Redirect exact from='/' to='/home'/>
           <Route path="/home" component={App} />

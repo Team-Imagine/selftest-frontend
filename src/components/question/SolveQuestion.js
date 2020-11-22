@@ -29,7 +29,7 @@ import parse from "node-html-parser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import draftToHtml from "draftjs-to-html";
 import htmlToDraft from "html-to-draftjs";
-import store from "../store";
+import store from "../../store";
 
 import axios from "axios";
 
@@ -1024,7 +1024,6 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
           <br />
           {questionType === "multiple_choice" && choiceList !== null ? (
             //문제 푸는 곳
-
             <Card style={{ width: "85rem", marginRight: "10px" }}>
               <div className="container h">
                 <div

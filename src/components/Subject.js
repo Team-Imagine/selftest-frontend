@@ -2,10 +2,9 @@ import React from "react";
 import SideBar from "./sidebar/SideBar";
 import Subjectcontent from "./Subjectcontent";
 import Course from "./Course";
-import Question from "./Question";
-import Questioncontent from "./Questioncontent";
-import MakeQuestion from "./MakeQuestion";
-import SolveQuestion from "./SolveQuestion";
+import Question from "./question/Question";
+import MakeQuestion from "./question/MakeQuestion";
+import SolveQuestion from "./question/SolveQuestion";
 import NavBar from "./content/Navbar";
 
 class Subject extends React.Component {
@@ -90,26 +89,6 @@ class Subject extends React.Component {
                 <div className="App wrapper">
                   <SideBar toggle={this.toggle} isOpen={this.state.isOpen} />
                   <SolveQuestion
-                    toggle={this.toggle}
-                    subject={this.props.match.params.subject}
-                    course={this.props.match.params.course}
-                    question_id={this.props.match.params.question_id}
-                    isOpen={this.state.isOpen}
-                  />
-                </div>
-              </div>
-            );
-          } else {
-            return (
-              <div>
-                <NavBar
-                  toggle={this.toggle}
-                  isOpen={this.state.open}
-                  point={false}
-                />
-                <div className="App wrapper">
-                  <SideBar toggle={this.toggle} isOpen={this.state.isOpen} />
-                  <Questioncontent
                     toggle={this.toggle}
                     subject={this.props.match.params.subject}
                     course={this.props.match.params.course}

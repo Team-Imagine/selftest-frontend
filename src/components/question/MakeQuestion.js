@@ -8,7 +8,6 @@ import {
   FormControl,
 } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
-import store from "../store";
 import classNames from "classnames";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
@@ -130,14 +129,7 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
         answer_items.push({ item_text: answer[i] });
       }
       question_type = "short_answer";
-      /*
-      data = {
-        title: title,
-        type: "short_answer",
-        content: editorToHtml,
-        course_title: course,
-        short_answer_items: answer_items,
-      }; */
+    
     } else if (questionType === "객관식") {
       for (var i in answer) {
         answer_items.push({ item_text: answer[i], checked: checked[i] });
@@ -145,14 +137,7 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 
       console.log(checked);
       question_type = "multiple_choice";
-      /*
-      data = {
-        title: title,
-        type: "multiple_choice",
-        content: editorToHtml,
-        course_title: course,
-        multiple_choice_items: answer_items,
-      }; */
+     
     } else {
       let editorToHtml_answer = draftToHtml(
         convertToRaw(editorChoice.getCurrentContent())
@@ -161,14 +146,6 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
       answer_items.push({ item_text: editorToHtml_answer });
 
       question_type = "essay";
-      /*
-    data = {
-      title: title,
-      type: "essay",
-      content: editorToHtml,
-      course_title: course,
-      short_answer_items: answer_items,
-    }; */
     }
 
     // 이미지 업로드
@@ -189,7 +166,6 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
       })
       .then((res) => {
         setSelectedFile([]);
-        //console.log(res.data);
 
         for (var i = 0; i < res.data.images.length; i++) {
           images.push({url: res.data.images[i].url});
