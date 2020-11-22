@@ -20,6 +20,8 @@ const TestPage = ({ isOpen, test_id }) => {
 	const [buttonColor, setButtonColor] = useState('info');
 	const [questionNum, setQuestionNum] = useState(0);
 
+	const [answerList, setAnswerList] = useState([]);
+
 	const [editorState, setEditorState] = useState(EditorState.createEmpty());
 	const [editorAnswer, setEditorAnswer] = useState(EditorState.createEmpty());
 	const [question, setQuestion] = useState("");
@@ -27,7 +29,7 @@ const TestPage = ({ isOpen, test_id }) => {
 	const [choiceList, setChoiceList] = useState([]);
 	const [choiceColor, setChoiceColor] = useState([]);
 	const [shortAnswer, setShortAnswer] = useState("");
-
+	
 	const [showExplanation, setShowExplanation] = useState(false);
 
 	const [essayAnswerEditor, setEssayAnswerEditor] = useState(
@@ -95,7 +97,6 @@ const TestPage = ({ isOpen, test_id }) => {
 		t_choiceColor = [];
 		htmlToEditor = "";
 		setComplete(false);
-		setEditorAnswer(EditorState.createEmpty());
 		setShortAnswer('');
 	}
 
@@ -168,6 +169,54 @@ const TestPage = ({ isOpen, test_id }) => {
 
 		});
 	}
+
+	// 정답을 불러오는 함수
+	const loadAnswer = () => {
+    if (questionType === "multiple_choice") {
+      let answerArray = "";
+      for (var i in question.multiple_choice_items) {
+        if (question.multiple_choice_items[i].checked === 1) {
+          i *= 1;
+          i += 1;
+          i += "";
+
+          answerArray += i;
+          answerArray += "번, ";
+        }
+      }
+      setAnswerList([answerArray.substring(0, answerArray.length - 2)]);
+    } else if (questionType === "short_answer") {
+      let answerList = [];
+
+      for (var i in question.short_answer_items) {
+        answerList.push(question.short_answer_items[i].item_text + " ");
+      }
+
+      setAnswerList([...answerList]);
+    } else {
+      axios.get(`/api/answer?question_id=${test.test_questions[questionNum].question.id}`).then((res) => {
+        console.log(res.data);
+
+        htmlToEditor_answer = res.data.answers.rows[0].content;
+
+        const blocksFromHtml = htmlToDraft(htmlToEditor_answer);
+        if (blocksFromHtml) {
+          const { contentBlocks, entityMap } = blocksFromHtml;
+
+          const contentState = ContentState.createFromBlockArray(
+            contentBlocks,
+            entityMap
+          );
+
+          const t_editorState_answer = EditorState.createWithContent(
+            contentState
+          );
+          setEssayAnswerEditor(t_editorState_answer);
+        }
+      });
+    }
+  };
+
 	// 풀이 제출 - 정답 확인 함수
 	const submitHandler = (event) => {
 		event.preventDefault();
@@ -220,6 +269,7 @@ const TestPage = ({ isOpen, test_id }) => {
 					}
 		
 					setComplete(true);
+					loadAnswer();
 		
 					// 문제 넘버 + 1
 					if (questionNum + 1 < test.test_questions.length) {
@@ -431,7 +481,7 @@ const TestPage = ({ isOpen, test_id }) => {
 								}
 							</div>
 							<div style={{ width: "25rem", border: '1px solid black', textAlign: 'center', display: 'inline-block' }}>
-
+								<div>
 								<Button
 									className="btn pull-right"
 									variant="info"
@@ -446,11 +496,60 @@ const TestPage = ({ isOpen, test_id }) => {
 										variant="info"
 										onClick={loadNextQuestion}
 									>
-										다음 문제 보기
+										다음 문제
                 </Button>
-								}
-
+								} </div>
+								<br/>
+								{
+									(complete) &&
+										(questionType === "short_answer" ||
+											questionType === "multiple_choice") ? (
+											<div>
+												{answerList.map((i, index) => (
+													<div key={index} >
+														<Card className="center" style={{ width:'50%', textAlign: 'center'}}>
+															<Card.Body style={{ backgroundColor: "white" }}>
+																{i}
+																<br />
+															</Card.Body>
+														</Card>
+														<br />
+													</div>
+												))}
+											</div>
+										) : (complete) && questionType === "essay" ? (
+											<div>
+												<Card style={{ backgroundColor: "#f7feff" }}>
+													<Card
+														className="center"
+														style={{ height: "20rem !important" }}
+													>
+														<Card.Body>
+															<br />
+															<Editor
+																toolbarHidden
+																// 에디터와 툴바 모두에 적용되는 클래스
+																wrapperClassName="wrapper-class"
+																// 에디터 주변에 적용된 클래스
+																editorClassName="editor"
+																// 툴바 주위에 적용된 클래스
+																toolbarClassName="toolbar-class"
+																editorState={essayAnswerEditor}
+																readOnly
+																// 한국어 설정
+																localization={{
+																	locale: "ko",
+																}}
+															/>
+														</Card.Body>
+													</Card>
+												</Card>
+											</div>
+										) : (
+											<div></div>
+										)}
 							</div>
+							
 						</div>
 					</div> : <div></div>}
 			</ul>
