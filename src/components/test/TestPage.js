@@ -15,14 +15,23 @@ import axios from "axios";
 
 const TestPage = ({isOpen, test_id}) => {
 	const [test, setTest] = useState();
+	const [title, setTitle] = useState('');
+
 
 	useEffect(() => {
 
 		axios.get(`/api/testset/${test_id}`)
 		.then(res => {
 			console.log(res.data);
+			setTest(res.data.test_set.rows[0]);
+			setTitle(res.data.test_set.rows[0].title);
 		})
 	}, []);
+
+	const deleteHandler = () => {
+
+	}
+
 	return (
 		<Container
 			fluid
@@ -31,12 +40,15 @@ const TestPage = ({isOpen, test_id}) => {
 			<div className="d-flex bd-highlight mb-3">
 				<div className="mr-auto p-2 bd-highlight">
 					<h4 style={{ fontWeight: "bolder" }}>
-						테스트 {test_id}
+						{title}
                 </h4>
 				</div>
 				<div className="p-2 bd-highlight">
 					<div>
-						
+						<div>
+						<Button variant="info" style = {{width: '19rem', height: '2.5rem'}} onClick={deleteHandler}
+						>시험 생성</Button>
+					</div>
 					</div>
 				</div>
 				<div className="p-2 bd-highlight">

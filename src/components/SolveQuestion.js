@@ -216,10 +216,8 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
   const convertUploadedImageUrls = function (content) {
     const root = parse(content);
     const img_tags = root.querySelectorAll("img");
-    console.log('root',root);
-    console.log('img',img_tags);
-
-    for (let i = 0, upload_cnt = 0; i < img_tags.length; i++) {
+    
+    for (let i = 0; i < img_tags.length; i++) {
       
       let src_attribute = img_tags[i].getAttribute("src");
       /*
