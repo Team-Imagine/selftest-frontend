@@ -269,7 +269,7 @@ const TestPage = ({ isOpen, test_id }) => {
 						}
 
 						let t_editorState_answer = EditorState.createEmpty();
-						if (loadedQuestion[i].question.answers) {
+						if (loadedQuestion[i].question.answers.length !== 0) {
 							htmlToEditor_answer = loadedQuestion[i].question.answers[0].content;
 
 							const blocksFromHtml = htmlToDraft(htmlToEditor_answer);
@@ -296,7 +296,7 @@ const TestPage = ({ isOpen, test_id }) => {
 						}
 
 						let t_editorState_answer = EditorState.createEmpty();
-						if (loadedQuestion[i].question.answers) {
+						if (loadedQuestion[i].question.answers.length !== 0) {
 							htmlToEditor_answer = loadedQuestion[i].question.answers[0].content;
 
 							const blocksFromHtml = htmlToDraft(htmlToEditor_answer);
@@ -337,7 +337,6 @@ const TestPage = ({ isOpen, test_id }) => {
 									contentState
 								);
 							}
-							
 						}
 						
 						t_answer.push({ answer: "", solution: t_editorState_answer });
