@@ -117,11 +117,11 @@ const TestPage = ({ isOpen, test_id }) => {
 
 	const startHandler = () => {
 		setState('test');
-		
+
 		let t_state = [];
 		let t_question = [];
 		let t_type = [];
-		for(var i = 0; i < test.test_questions.length; i++) {
+		for (var i = 0; i < test.test_questions.length; i++) {
 			test.test_questions[i].question.content = convertUploadedImageUrls(test.test_questions[i].question.content);
 
 			htmlToEditor = test.test_questions[i].question.content;
@@ -134,23 +134,23 @@ const TestPage = ({ isOpen, test_id }) => {
 					contentBlocks,
 					entityMap
 				);
-				
+
 				const t_editorState = EditorState.createWithContent(contentState);
 				t_state.push(t_editorState);
 			}
 
 			t_question.push(test.test_questions[i].question);
 
-			if(test.test_questions[i].question.type === "multiple_choice") {
+			if (test.test_questions[i].question.type === "multiple_choice") {
 				let t_colorList = [];
-				for(var j = 0; j< test.test_questions[i].question.multiple_choice_items.length; j++) {
-					t_colorList.push({color:'black'});
+				for (var j = 0; j < test.test_questions[i].question.multiple_choice_items.length; j++) {
+					t_colorList.push({ color: 'black' });
 				}
-				t_type.push({choiceList: test.test_questions[i].question.multiple_choice_items, choiceColor: t_colorList});
-			} else if(test.test_questions[i].question.type === "short_answer") {
-				t_type.push({answer: ''});
+				t_type.push({ choiceList: test.test_questions[i].question.multiple_choice_items, choiceColor: t_colorList });
+			} else if (test.test_questions[i].question.type === "short_answer") {
+				t_type.push({ answer: '' });
 			} else {
-				t_type.push({essay_answer: EditorState.createEmpty()});
+				t_type.push({ essay_answer: EditorState.createEmpty() });
 			}
 		}
 		setEditorState(t_state);
@@ -209,11 +209,11 @@ const TestPage = ({ isOpen, test_id }) => {
 	const moveHandler = (value, e) => {
 		e.preventDefault();
 
-		if(value) {
-			if(Num < test.test_questions.length - 1)
+		if (value) {
+			if (Num < test.test_questions.length - 1)
 				setNum(Num + 1);
 		} else {
-			if(Num > 0)
+			if (Num > 0)
 				setNum(Num - 1);
 		}
 	}
@@ -223,7 +223,7 @@ const TestPage = ({ isOpen, test_id }) => {
 	const onEditorStateChange = (editorState) => {
 		setSubmittedAnswer(
 			submittedAnswer.map((i, index) =>
-				index === Num ? {...i, essay_answer: editorState} : i
+				index === Num ? { ...i, essay_answer: editorState } : i
 			)
 		)
 	};
@@ -231,7 +231,7 @@ const TestPage = ({ isOpen, test_id }) => {
 	const makeAnswer = (e) => {
 		setSubmittedAnswer(
 			submittedAnswer.map((i, index) =>
-				index === Num ? {...i, answer: e.target.value} : i
+				index === Num ? { ...i, answer: e.target.value } : i
 			)
 		)
 	};
@@ -239,7 +239,7 @@ const TestPage = ({ isOpen, test_id }) => {
 	const selectAnswer = (t_index, e) => {
 		let t_answer = submittedAnswer;
 
-		if(submittedAnswer[Num].choiceColor[t_index].color === 'black') {
+		if (submittedAnswer[Num].choiceColor[t_index].color === 'black') {
 			t_answer[Num].choiceColor[t_index].color = 'red';
 		} else {
 			t_answer[Num].choiceColor[t_index].color = 'black';
@@ -252,118 +252,129 @@ const TestPage = ({ isOpen, test_id }) => {
 		alert('시험 제출');
 
 		console.log('test result:', submittedAnswer);
-		
+
 		axios.get(`/api/testset/${test.id}/answers`)
-		.then(res => {
-			console.log(res.data);
+			.then(res => {
+				console.log(res.data);
 
-			let loadedQuestion = res.data.test_set.test_questions.rows;
+				let loadedQuestion = res.data.test_set.test_questions.rows;
 
-			let t_answer = [];
+				let t_answer = [];
 
-			for(var i = 0; i < loadedQuestion.length; i++) {
-				if(loadedQuestion[i].question.type === 'short_answer') {
-					let t_short = [];
-					for(var j = 0; j < loadedQuestion[i].question.short_answer_answers.length; j++) {
-						t_short.push(loadedQuestion[i].question.short_answer_answers[j].item_text);
+				for (var i = 0; i < loadedQuestion.length; i++) {
+					if (loadedQuestion[i].question.type === 'short_answer') {
+						let t_short = [];
+						for (var j = 0; j < loadedQuestion[i].question.short_answer_answers.length; j++) {
+							t_short.push(loadedQuestion[i].question.short_answer_answers[j].item_text);
+						}
+
+						let t_editorState_answer = EditorState.createEmpty();
+						if (loadedQuestion[i].question.answers) {
+							htmlToEditor_answer = loadedQuestion[i].question.answers[0].content;
+
+							const blocksFromHtml = htmlToDraft(htmlToEditor_answer);
+							
+							if (blocksFromHtml) {
+								const { contentBlocks, entityMap } = blocksFromHtml;
+
+								const contentState = ContentState.createFromBlockArray(
+									contentBlocks,
+									entityMap
+								);
+
+								t_editorState_answer = EditorState.createWithContent(
+									contentState
+								);
+							}
+						}
+
+						t_answer.push({ answer: t_short, solution: t_editorState_answer });
+					} else if (loadedQuestion[i].question.type === 'multiple_choice') {
+						let t_choice = [];
+						for (var j = 0; j < loadedQuestion[i].question.multiple_choice_answers.length; j++) {
+							t_choice.push(loadedQuestion[i].question.multiple_choice_answers[j].item_text);
+						}
+
+						let t_editorState_answer = EditorState.createEmpty();
+						if (loadedQuestion[i].question.answers) {
+							htmlToEditor_answer = loadedQuestion[i].question.answers[0].content;
+
+							const blocksFromHtml = htmlToDraft(htmlToEditor_answer);
+							
+							if (blocksFromHtml) {
+								const { contentBlocks, entityMap } = blocksFromHtml;
+
+								const contentState = ContentState.createFromBlockArray(
+									contentBlocks,
+									entityMap
+								);
+
+								t_editorState_answer = EditorState.createWithContent(
+									contentState
+								);
+							}
+						}
+						t_answer.push({ answer: t_choice, solution: t_editorState_answer });
+
+					} else {
+						let t_editorState_answer = EditorState.createEmpty();
+						if (loadedQuestion[i].question.answers) {
+							htmlToEditor_answer = loadedQuestion[i].question.answers[0].content;
+
+							const blocksFromHtml = htmlToDraft(htmlToEditor_answer);
+							
+							if (blocksFromHtml) {
+								const { contentBlocks, entityMap } = blocksFromHtml;
+
+								const contentState = ContentState.createFromBlockArray(
+									contentBlocks,
+									entityMap
+								);
+
+								t_editorState_answer = EditorState.createWithContent(
+									contentState
+								);
+							}
+						}
+						t_answer.push({ answer: "", solution: t_editorState_answer });
 					}
-					
-					htmlToEditor_answer = loadedQuestion[i].question.answers[0].content;
-
-					const blocksFromHtml = htmlToDraft(htmlToEditor_answer);
-					let t_editorState_answer = EditorState.createEmpty();
-					if (blocksFromHtml) {
-						const { contentBlocks, entityMap } = blocksFromHtml;
-
-						const contentState = ContentState.createFromBlockArray(
-							contentBlocks,
-							entityMap
-						);
-
-						t_editorState_answer = EditorState.createWithContent(
-							contentState
-						);
-					}
-					t_answer.push({answer: t_short, solution: t_editorState_answer});
-				} else if(loadedQuestion[i].question.type === 'multiple_choice') {
-					let t_choice = [];
-					for(var j = 0; j < loadedQuestion[i].question.multiple_choice_answers.length; j++) {
-						t_choice.push(loadedQuestion[i].question.multiple_choice_answers[j].item_text);
-					}
-					
-					htmlToEditor_answer = loadedQuestion[i].question.answers[0].content;
-
-					const blocksFromHtml = htmlToDraft(htmlToEditor_answer);
-					let t_editorState_answer = EditorState.createEmpty();
-					if (blocksFromHtml) {
-						const { contentBlocks, entityMap } = blocksFromHtml;
-
-						const contentState = ContentState.createFromBlockArray(
-							contentBlocks,
-							entityMap
-						);
-
-						t_editorState_answer = EditorState.createWithContent(
-							contentState
-						);
-					}
-					t_answer.push({answer: t_choice, solution: t_editorState_answer});
-					
-				} else {
-					htmlToEditor_answer = loadedQuestion[i].question.answers[0].content;
-
-					const blocksFromHtml = htmlToDraft(htmlToEditor_answer);
-					let t_editorState_answer = EditorState.createEmpty();
-					if (blocksFromHtml) {
-						const { contentBlocks, entityMap } = blocksFromHtml;
-
-						const contentState = ContentState.createFromBlockArray(
-							contentBlocks,
-							entityMap
-						);
-
-						t_editorState_answer = EditorState.createWithContent(
-							contentState
-						);
-					}
-					t_answer.push({answer: "", solution: t_editorState_answer});
 				}
-			}
-			
-			showScore(t_answer);
-		})
-		.catch((error) => {
-			alert(error.response.data.message);
-		});
-		
+
+				showScore(t_answer);
+			})
+			.catch((error) => {
+				alert(error.response.data.message);
+			});
+
 	}
 
 	const showScore = (answerLoaded) => {
 		let t_testResult = [];
 
-		for(var i = 0; i< answerLoaded.length; i++) {		
-			if(question[i].type === "multiple_choice") {
-				
+		console.log('answer:', answerLoaded);
+		for (var i = 0; i < answerLoaded.length; i++) {
+			if (question[i].type === "multiple_choice") {
+
 				let count = 0;
-				for(var j = 0; j < submittedAnswer[i].choiceColor.length; j++) {
-					for(var k = 0; k < answerLoaded[i].answer.length; k++) {
-						if(submittedAnswer[i].choiceColor[j].color === 'red' && submittedAnswer[i].choiceList[j].item_text === answerLoaded[i].answer[k])
-							count += 1;	
+				for (var j = 0; j < submittedAnswer[i].choiceColor.length; j++) {
+					for (var k = 0; k < answerLoaded[i].answer.length; k++) {
+						if (submittedAnswer[i].choiceColor[j].color === 'red' && submittedAnswer[i].choiceList[j].item_text === answerLoaded[i].answer[k])
+							count += 1;
 					}
 				}
-				if(count === answerLoaded[i].answer.length) {
+				if (count === answerLoaded[i].answer.length) {
 					t_testResult.push(1);
 				} else {
 					t_testResult.push(0);
 				}
-			} else if(question[i].type === "short_answer") {
+			} else if (question[i].type === "short_answer") {
 				let check = false;
-				for(var j = 0; j < answerLoaded[i].answer.length; j++) {
-					if(answerLoaded[i].answer[j] === submittedAnswer[i].answer) {
+				for (var j = 0; j < answerLoaded[i].answer.length; j++) {
+					if (answerLoaded[i].answer[j] === submittedAnswer[i].answer) {
 						check = true;
 					}
 				}
-				if(check) {
+				if (check) {
 					t_testResult.push(1);
 				} else {
 					t_testResult.push(0);
@@ -390,13 +401,13 @@ const TestPage = ({ isOpen, test_id }) => {
 				</div>
 				<div className="p-2 bd-highlight">
 					{(state !== 'test') ? <div>
-					<Button variant={buttonColor} style={{ width: '19rem', height: '2.5rem' }} onClick={modifyHandler}
-					>문제 수정</Button>&nbsp;
+						<Button variant={buttonColor} style={{ width: '19rem', height: '2.5rem' }} onClick={modifyHandler}
+						>문제 수정</Button>&nbsp;
 						<Button variant="info" style={{ width: '19rem', height: '2.5rem' }} onClick={startHandler}
-					>시험 시작</Button> </div> : <div>
-						<Button variant="info" style={{ width: '19rem', height: '2.5rem' }} onClick={testSubmitHandler}
-					>시험 제출</Button>
-					</div>
+						>시험 시작</Button> </div> : <div>
+							<Button variant="info" style={{ width: '19rem', height: '2.5rem' }} onClick={testSubmitHandler}
+							>시험 제출</Button>
+						</div>
 					}
 				</div>
 			</div>
@@ -427,7 +438,7 @@ const TestPage = ({ isOpen, test_id }) => {
 					: (state === 'test') ? <div style={{ width: "50rem", left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto', textAlign: 'center' }}>
 
 						<div style={{ width: "50rem", left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto' }}>
-							
+
 							<Card
 								className="center"
 								style={{
@@ -481,7 +492,7 @@ const TestPage = ({ isOpen, test_id }) => {
 												</Button>
 												<br />
 											</div>
-										))} <br/>
+										))} <br />
 									</div> : question[Num].type === "short_answer" ? <div>
 										<div style={{ textAlign: 'center' }}>
 											<div>아래에 정답을 입력하세요.</div><br />
@@ -522,19 +533,19 @@ const TestPage = ({ isOpen, test_id }) => {
 									</div> : <div></div>
 									}
 								</div>
-								{ Num !== 0 ?
-								<Button
-									variant="info"
-									style={{
-										width: '5rem',
-									}}
-									onClick={(e) => moveHandler(false, e)}
-								>
-									이전
-						</Button> : <div style={{width: '5rem'}}></div>
-						}
+								{Num !== 0 ?
+									<Button
+										variant="info"
+										style={{
+											width: '5rem',
+										}}
+										onClick={(e) => moveHandler(false, e)}
+									>
+										이전
+						</Button> : <div style={{ width: '5rem' }}></div>
+								}
 						&nbsp;&nbsp;
-						{ Num !== test.test_questions.length - 1 ? <Button
+						{Num !== test.test_questions.length - 1 ? <Button
 									variant="info"
 									style={{
 										width: '5rem',
@@ -542,7 +553,7 @@ const TestPage = ({ isOpen, test_id }) => {
 									onClick={(e) => moveHandler(true, e)}
 								>
 									다음
-						</Button> : <div style={{width: '5rem'}}></div>}
+						</Button> : <div style={{ width: '5rem' }}></div>}
 							</div>
 							{testEnd && <div>
 
