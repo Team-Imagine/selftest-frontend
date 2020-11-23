@@ -360,15 +360,19 @@ const TestPage = ({ isOpen, test_id }) => {
 
 				let count = 0;
 				let check = false;
+				let ssss = 0;
 				for (var j = 0; j < submittedAnswer[i].choiceColor.length; j++) {
+					if (submittedAnswer[i].choiceColor[j].color === 'red') {
+						check = true;
+					}
 					for (var k = 0; k < answerLoaded[i].answer.length; k++) {
-						if (submittedAnswer[i].choiceColor[j].color === 'red') {
-							check = true;
+						if (submittedAnswer[i].choiceColor[j].color === 'red') {				
 							if(submittedAnswer[i].choiceList[j].item_text === answerLoaded[i].answer[k]) 
 								count += 1;
 						}
 					}
 				}
+
 				if ((count === answerLoaded[i].answer.length) && answerLoaded[i].answer.length !== 0) {
 					t_testResult.push(1);
 				} else if (!check && answerLoaded[i].answer.length === 0) {
