@@ -318,7 +318,9 @@ const TestPage = ({ isOpen, test_id }) => {
 
 					} else {
 						let t_editorState_answer = EditorState.createEmpty();
-						if (loadedQuestion[i].question.answers) {
+						
+						if (loadedQuestion[i].question.answers.length !== 0) {
+							
 							htmlToEditor_answer = loadedQuestion[i].question.answers[0].content;
 
 							const blocksFromHtml = htmlToDraft(htmlToEditor_answer);
@@ -335,7 +337,9 @@ const TestPage = ({ isOpen, test_id }) => {
 									contentState
 								);
 							}
+							
 						}
+						
 						t_answer.push({ answer: "", solution: t_editorState_answer });
 					}
 				}
@@ -356,13 +360,19 @@ const TestPage = ({ isOpen, test_id }) => {
 			if (question[i].type === "multiple_choice") {
 
 				let count = 0;
+				let check = false;
 				for (var j = 0; j < submittedAnswer[i].choiceColor.length; j++) {
 					for (var k = 0; k < answerLoaded[i].answer.length; k++) {
-						if (submittedAnswer[i].choiceColor[j].color === 'red' && submittedAnswer[i].choiceList[j].item_text === answerLoaded[i].answer[k])
-							count += 1;
+						if (submittedAnswer[i].choiceColor[j].color === 'red') {
+							check = true;
+							if(submittedAnswer[i].choiceList[j].item_text === answerLoaded[i].answer[k]) 
+								count += 1;
+						}
 					}
 				}
-				if (count === answerLoaded[i].answer.length) {
+				if ((count === answerLoaded[i].answer.length) && answerLoaded[i].answer.length !== 0) {
+					t_testResult.push(1);
+				} else if (!check && answerLoaded[i].answer.length === 0) {
 					t_testResult.push(1);
 				} else {
 					t_testResult.push(0);
