@@ -37,12 +37,12 @@ const Password = () => {
 
                   <Form.Group>
                     <Form inline>
-                      <Form.Label style={{ width: "8rem" }}>
+                      <Form.Label style={{ width: "10rem" }}>
                         이메일 주소
                       </Form.Label>{""}
                       &nbsp;&nbsp;
                       <Form.Control
-                        style={{ width: "26rem" }}
+                        style={{ width: "24rem" }}
                         placeholder="이메일주소를 입력하세요."
                       />
                       &nbsp;&nbsp;
@@ -55,19 +55,19 @@ const Password = () => {
                     </Form>
 
                     <Form.Text className="text-muted">
-                      <Form.Label style={{ width: "9rem" }}></Form.Label>
+                      <Form.Label style={{ width: "11rem" }}></Form.Label>
                       이메일 형식에 맞게 입력하세요.
                     </Form.Text>
                   </Form.Group>
 
                   <Form.Group>
                     <Form inline>
-                      <Form.Label style={{ width: "8rem" }}>
+                      <Form.Label style={{ width: "10rem" }}>
                         인증번호
                       </Form.Label>{" "}
                       &nbsp;&nbsp;
                       <Form.Control
-                        style={{ width: "26rem" }}
+                        style={{ width: "24rem" }}
                         placeholder="인증번호를 입력하세요."
                       />
                       &nbsp;&nbsp;
@@ -80,39 +80,43 @@ const Password = () => {
                     </Form>
 
                     <Form.Text className="text-muted">
-                      <Form.Label style={{ width: "9rem" }}></Form.Label>
+                      <Form.Label style={{ width: "11rem" }}></Form.Label>
                       귀하의 이메일로 전송된 인증번호를 입력해주세요. 유효시간은
                       3분입니다.
                     </Form.Text>
-                  </Form.Group><br/><br/>
+                  </Form.Group><br/>
 
+                  <h4 >
+                    비밀번호 변경하기
+                  </h4><br/>
                   <Form.Group>
                     <Form inline>
-                      <Form.Label style={{ width: "8rem" }}>
+                      <Form.Label style={{ width: "10rem" }}>
                       새 비밀번호
                       </Form.Label>{" "}
                       &nbsp;&nbsp;
                       <Form.Control
-                        style={{ width: "32rem" }}
+                        style={{ width: "29rem" }}
                         placeholder="변경할 비밀번호를 입력하세요."
                       />
                       &nbsp;&nbsp;
                     </Form>
                   </Form.Group>
                   <Form.Group>
+            
                     <Form inline>
-                      <Form.Label style={{ width: "8rem" }}>
+                      <Form.Label style={{ width: "10rem" }}>
                       &nbsp;새 비밀번호 확인
                       </Form.Label>{" "}
                       &nbsp;&nbsp;
                       <Form.Control
-                        style={{ width: "32rem" }}
+                        style={{ width: "29rem" }}
                         placeholder="변경할 비밀번호를 다시 입력하세요."
                       />
                       &nbsp;&nbsp;
                     </Form>
                  
-                  </Form.Group>
+                  </Form.Group><br/>
                   <button type="submit" className="btn btn-info btn-block">
                     <FontAwesomeIcon icon={faExchangeAlt} className="mr-2" />
                     비밀번호 변경하기

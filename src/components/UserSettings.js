@@ -8,7 +8,7 @@ import axios from "axios";
 import { faExchangeAlt, faPaperPlane, faSave, faUserMinus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "react-bootstrap";
-import profile from "../picture/profile.png"
+
 
 const UserSettings = () => {
   return (
