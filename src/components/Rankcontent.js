@@ -48,7 +48,7 @@ const Rankcontent = ({ isOpen }) => {
                     className="mr-auto p-2 bd-highlight"
                     style={{ width: "25%" }}
                   >
-                    유저네임
+                    사용자명
                   </div>
                   <div
                     className="mr-auto p-2 bd-highlight wrapper"

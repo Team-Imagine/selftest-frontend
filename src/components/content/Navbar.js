@@ -28,7 +28,6 @@ const NavBar = ({ isOpen, point }) => {
   const [test, setTest] = useState(store.getState().isLoggedIn);
   const [userPoint, setUserPoint] = useState("");
   let [cookies] = useCookies(["access_token"]);
-
   let history = useHistory();
 
   useEffect(() => {
