@@ -200,7 +200,7 @@ const Bookmarkscontent = ({ isOpen }) => {
         </ul>
       </div>
 
-      <ul style={{position:"fixed", width:"90%", bottom:"0"}} 
+      <ul
       className="row justify-content-center align-items-center">
         {pages.map((i, index) => (
           <div key={index}>
@@ -213,7 +213,7 @@ const Bookmarkscontent = ({ isOpen }) => {
               onClick={(e) => loadBookmarksPerPage(i, e)}
             >
               {i}
-            </button>
+            </button>&nbsp; 
           </div>
         ))}
       </ul>

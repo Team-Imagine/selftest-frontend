@@ -5,6 +5,7 @@ import Card from "react-bootstrap/Card";
 import axios from "axios";
 
 const Rankcontent = ({ isOpen }) => {
+  const [pages, setPages] = useState([]);
   const [ranks, setRanks] = useState([]);
 
   useEffect(() => {
@@ -13,12 +14,38 @@ const Rankcontent = ({ isOpen }) => {
       .then((res) => {
         console.log(res.data);
         setRanks(res.data.ranks.rows);
+
+        let count = res.data.ranks.count / 50 + 1;
+        let t_pages = [];
+
+        for (var i = 1; i < count; i++) {
+          t_pages.push(i);
+        }
+        setPages(t_pages);
       })
 
       .catch((error) => {
         alert(error.response.data.message);
       });
   }, []);
+
+  const loadRanksPerPage = (index, e) => {
+    e.preventDefault();
+  
+    axios
+    .get(`/api/rank`, {
+      params: {
+        page: index,
+      },
+    })
+    .then((res) => {
+      console.log(res.data);
+      setRanks(res.data.ranks.rows);
+    })
+    .catch((error) => {
+      alert(error.response.data.message);
+    });
+};
 
   return (
     <Container
@@ -108,7 +135,26 @@ const Rankcontent = ({ isOpen }) => {
             </div>
           </div>
         ))}
-      </div>
+      </div><br/>
+
+      <ul 
+      className="row justify-content-center align-items-center">
+        {pages.map((i, index) => (
+          <div key={index}>
+            <button
+              style={{
+                backgroundColor: "#ffffff",
+                border: "1px solid",
+                width: "1.5rem",
+              }}
+              onClick={(e) => loadRanksPerPage(i, e)}
+            >
+              {i}
+            </button>&nbsp; 
+          </div>
+        ))}
+      </ul>
+
     </Container>
   );
 };

@@ -112,7 +112,7 @@ const SubmitSaveChange = (event) => {
   console.log(changeuser);
 
   axios
-    .patch(`/user/`,{changeuser})
+    .patch(`/user/`,changeuser)
     .then((res) => {
       console.log(res.data);
       alert("정보가 변경되었습니다!");

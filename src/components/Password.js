@@ -22,13 +22,18 @@ const Password = () => {
   const [code, setCode] = useState("");
   const [new_password, setNewPassWord] = useState("");
 
+  const changepassword ={
+   code:code,
+   new_password:new_password,
+  };
+
   const onChangeEmail = (e) => {
     setEmail(e.target.value);
   };
   const onChangeCode = (e) => {
     setCode(e.target.value);
   };
-  const onChangePassword = (e) => {
+  const onChangeNewPassword = (e) => {
     setNewPassWord(e.target.value);
   };
 
@@ -61,11 +66,25 @@ const Password = () => {
       });
   };
 
-  const changePassword = (e) => {
+  const changeNewPassword = (e) => {
     e.preventDefault();
     console.log(new_password);
     axios
       .post(`/api/user/verify-change-password/`, { new_password })
+      .then((res) => {
+        console.log(res.data);
+        alert("비밀번호가 변경되었습니다.");
+      })
+      .catch((error) => {
+        alert(error.response.data.message);
+      });
+  };
+
+  const changePassword = (e) => {
+    e.preventDefault();
+    console.log(changepassword);
+    axios
+      .post(`/api/user/verify-change-password/`, changepassword)
       .then((res) => {
         console.log(res.data);
         alert("비밀번호가 변경되었습니다.");
@@ -181,7 +200,7 @@ const Password = () => {
                       </Form.Label>{" "}
                       &nbsp;&nbsp;
                       <Form.Control
-                        onChange={onChangePassword}
+                        onChange={onChangeNewPassword}
                         value={new_password}
                         style={{ width: "29rem" }}
                         placeholder="변경할 비밀번호를 다시 입력하세요."
