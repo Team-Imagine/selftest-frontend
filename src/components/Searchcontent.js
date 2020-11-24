@@ -165,7 +165,7 @@ const Searchcontent = ({ searchtype, keywordtype, keyword, isOpen }) => {
         </ul>
       </div>
 
-      <ul style={{position:"fixed", width:"90%", bottom:"0"}} 
+      <ul 
       className="row justify-content-center align-items-center">
         {pages.map((i, index) => (
           <div key={index}>
@@ -178,7 +178,7 @@ const Searchcontent = ({ searchtype, keywordtype, keyword, isOpen }) => {
               onClick={(e) => loadSearchPerPage(i, e)}
             >
               {i}
-            </button>
+            </button>&nbsp;
           </div>
         ))}
       </ul>

@@ -90,6 +90,7 @@ const Subjectcontent = ({ isOpen }) => {
       fluid
       className={classNames("content", { "is-open": { isOpen } })}
     >
+   
       <div className="d-flex bd-highlight mb-3">
         <div className="mr-auto p-2 bd-highlight">
           <h4 style={{ fontWeight: "bolder" }}>과목</h4>
@@ -151,8 +152,7 @@ const Subjectcontent = ({ isOpen }) => {
           </div>
         ))}
       </ul>
-      <ul style={{position:"fixed", width:"90%", bottom:"0"}} 
-      className="row justify-content-center align-items-center">
+      <ul className="row justify-content-center align-items-center">
         {pages.map((i, index) => (
           <div key={index}>
             <button
@@ -164,10 +164,11 @@ const Subjectcontent = ({ isOpen }) => {
               onClick={(e) => loadSubjectPerPage(i, e)}
             >
               {i}
-            </button>
+            </button>&nbsp;
           </div>
         ))}
       </ul>
+  
     </Container>
   );
 };
