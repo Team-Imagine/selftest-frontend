@@ -35,6 +35,7 @@ const TestPage = ({ isOpen, test_id }) => {
 
 	const [testResult, setTestResult] = useState([]);
 	const [solutionState, setSolutionState] = useState(false);
+	const [questionColor, setQuestionColor] = useState([]);
 
 	const [essayAnswerEditor, setEssayAnswerEditor] = useState(
 		EditorState.createEmpty()
@@ -111,12 +112,14 @@ const TestPage = ({ isOpen, test_id }) => {
 		return root.toString();
 	};
 
+	// 시험 시작 시 문제를 불러오는 함수
 	const startHandler = () => {
 		setState('test');
 
 		let t_state = [];
 		let t_question = [];
 		let t_type = [];
+		let t_color = [];
 		for (var i = 0; i < test.test_questions.length; i++) {
 			test.test_questions[i].question.content = convertUploadedImageUrls(test.test_questions[i].question.content);
 
@@ -148,7 +151,10 @@ const TestPage = ({ isOpen, test_id }) => {
 			} else {
 				t_type.push({ essay_answer: EditorState.createEmpty() });
 			}
+
+			t_color.push({color: 'black'});
 		}
+		setQuestionColor(t_color);
 		setEditorState(t_state);
 		setQuestion(t_question);
 		setSubmittedAnswer(t_type);
@@ -342,22 +348,27 @@ const TestPage = ({ isOpen, test_id }) => {
 			}
 		}
 		setTestResult(t_testResult);
-		//setAnswerList(answerLoaded);
-		//setSolutionState(true);
 		makeSolution(answerLoaded);
 		let correctAnswer = 0;
 		let essayAnswer = 0;
 		let incorrectAnswer = 0;
+		let t_color = [];
 		for (var i = 0; i < t_testResult.length; i++) {
-			if (t_testResult[i] === 1)
+			if (t_testResult[i] === 1) {
 				correctAnswer += 1;
-			else if (t_testResult[i] === 2) {
+				t_color.push({color: 'black'});
+			} else if (t_testResult[i] === 2) {
 				essayAnswer += 1;
+				t_color.push({color: 'black'});
 			} else {
 				incorrectAnswer += 1;
+				t_color.push({color: 'red'});
 			}
 		}
+		setQuestionColor(t_color);
+		
 		alert('맞은개수: ' + correctAnswer + ' 틀린개수: ' + incorrectAnswer + ' 서술형: ' + essayAnswer);
+		console.log(questionColor);
 	}
 
 	const makeSolution = (answerLoaded) => {
@@ -433,7 +444,7 @@ const TestPage = ({ isOpen, test_id }) => {
 								<div className="row h-100 justify-content-center align-items-center">
 
 									<Card className="text-center" variant="info" style={{ width: '20rem' }}>
-										<Card.Body><div style={{ fontWeight: "lighter" }}>{i.question.title}
+										<Card.Body><div style={{ fontWeight: "lighter", color: {questionColor} }}>{i.question.title}
 										</div>
 										</Card.Body>
 									</Card>
@@ -460,7 +471,7 @@ const TestPage = ({ isOpen, test_id }) => {
 								}}
 							>
 								<Card.Body>
-									<div style={{ float: 'left', fontWeight: "bold" }}>제목: {question[Num].title} </div>
+									<div style={{ float: 'left', fontWeight: "bold", color: questionColor[Num].color }}>제목: {question[Num].title} </div>
 									<br />
 									<div style={{ height: "200px !important" }}>
 										<Editor
@@ -579,10 +590,10 @@ const TestPage = ({ isOpen, test_id }) => {
 								{index + 1}번) {i.answer}
 							</div>
 						))} <br/>
-						문제의 해설입니다.<br/>
+						문제의 해설입니다.<br/><br/>
 						{
 							answerList.map((i, index) => (
-							<div>
+							<div key={index}>
 							<Card
 								className="center"
 								style={{
@@ -591,7 +602,7 @@ const TestPage = ({ isOpen, test_id }) => {
 								}}
 							>
 								<Card.Body>
-									<div key={index} style={{ fontWeight: "bold" }}> {index + 1}번 </div>
+									<div style={{ fontWeight: "bold" }}> {index + 1}번 </div>
 									<div style={{ height: "200px !important" }}>
 										<Editor
 											toolbarHidden
