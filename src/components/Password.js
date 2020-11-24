@@ -42,7 +42,7 @@ const Password = () => {
                       </Form.Label>{""}
                       &nbsp;&nbsp;
                       <Form.Control
-                        style={{ width: "26.9rem" }}
+                        style={{ width: "26rem" }}
                         placeholder="이메일주소를 입력하세요."
                       />
                       &nbsp;&nbsp;
@@ -67,7 +67,7 @@ const Password = () => {
                       </Form.Label>{" "}
                       &nbsp;&nbsp;
                       <Form.Control
-                        style={{ width: "26.9rem" }}
+                        style={{ width: "26rem" }}
                         placeholder="인증번호를 입력하세요."
                       />
                       &nbsp;&nbsp;
@@ -89,7 +89,7 @@ const Password = () => {
                   <Form.Group>
                     <Form inline>
                       <Form.Label style={{ width: "8rem" }}>
-                        새 비밀번호
+                      새 비밀번호
                       </Form.Label>{" "}
                       &nbsp;&nbsp;
                       <Form.Control
@@ -102,7 +102,7 @@ const Password = () => {
                   <Form.Group>
                     <Form inline>
                       <Form.Label style={{ width: "8rem" }}>
-                       새 비밀번호 확인
+                      &nbsp;새 비밀번호 확인
                       </Form.Label>{" "}
                       &nbsp;&nbsp;
                       <Form.Control
