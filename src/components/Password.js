@@ -5,6 +5,8 @@ import { Redirect } from "react-router-dom";
 import store from "../store";
 import Card from "react-bootstrap/Card";
 import axios from "axios";
+import { faExchangeAlt, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Password = () => {
   return (
@@ -23,7 +25,6 @@ const Password = () => {
                     비밀번호를 잊어버리셨나요?
                   </h2>
                   <hr />
-
                   <div style={{ color: "gray" }}>
                     SelfTest에 가입했던 이메일을 입력해주세요. 비밀번호 재설정
                     메일을 보내드립니다.
@@ -38,7 +39,7 @@ const Password = () => {
                     </Form.Text>
                   </Form.Group>
                   <button type="submit" className="btn btn-info btn-block">
-                    인증번호 전송하기
+                  <FontAwesomeIcon icon={faPaperPlane} className="mr-2" />인증번호 전송하기
                   </button><br/>
 
                   <Form.Group>
@@ -67,7 +68,7 @@ const Password = () => {
                   </Form.Group>
 
                   <button type="submit" className="btn btn-info btn-block">
-                    비밀번호 변경하기
+                  <FontAwesomeIcon icon={faExchangeAlt} className="mr-2" />비밀번호 변경하기
                   </button>
                 </form>
               </div>
