@@ -51,7 +51,7 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
   const [editorSolution, setEditorSolution] = useState(
     EditorState.createEmpty()
   );
-  const [selectedFile, setSelectedFile] = useState([]);
+  const [selectedFile, setSelectedFile] = useState();
   const [imageURL, setImageURL] = useState("");
   const [title, setTitle] = useState("");
   const [questionType, setQuestionType] = useState("객관식");
@@ -99,10 +99,11 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 
     uploadedImages.push(file);
     setSelectedFile(uploadedImages);
-
+    
     return new Promise((resolve, reject) => {
-      resolve({ data: { link: imageObject.localSrc } });
+      resolve({ data: { link: imageObject.localSrc, entityKey: file } });
     });
+    
   };
 
   const submitHandler = async (event) => {

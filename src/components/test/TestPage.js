@@ -37,6 +37,7 @@ const TestPage = ({ isOpen, test_id }) => {
 	const [testEnd, setTestEnd] = useState(false);
 
 	const [testResult, setTestResult] = useState([]);
+	const [solutionState, setSolutionState] = useState(false);
 
 	const [showExplanation, setShowExplanation] = useState(false);
 
@@ -255,7 +256,6 @@ const TestPage = ({ isOpen, test_id }) => {
 
 		axios.get(`/api/testset/${test.id}/answers`)
 			.then(res => {
-				console.log(res.data);
 
 				let loadedQuestion = res.data.test_set.test_questions.rows;
 
@@ -273,7 +273,7 @@ const TestPage = ({ isOpen, test_id }) => {
 							htmlToEditor_answer = loadedQuestion[i].question.answers[0].content;
 
 							const blocksFromHtml = htmlToDraft(htmlToEditor_answer);
-							
+
 							if (blocksFromHtml) {
 								const { contentBlocks, entityMap } = blocksFromHtml;
 
@@ -300,7 +300,7 @@ const TestPage = ({ isOpen, test_id }) => {
 							htmlToEditor_answer = loadedQuestion[i].question.answers[0].content;
 
 							const blocksFromHtml = htmlToDraft(htmlToEditor_answer);
-							
+
 							if (blocksFromHtml) {
 								const { contentBlocks, entityMap } = blocksFromHtml;
 
@@ -318,13 +318,13 @@ const TestPage = ({ isOpen, test_id }) => {
 
 					} else {
 						let t_editorState_answer = EditorState.createEmpty();
-						
+
 						if (loadedQuestion[i].question.answers.length !== 0) {
-							
+
 							htmlToEditor_answer = loadedQuestion[i].question.answers[0].content;
 
 							const blocksFromHtml = htmlToDraft(htmlToEditor_answer);
-							
+
 							if (blocksFromHtml) {
 								const { contentBlocks, entityMap } = blocksFromHtml;
 
@@ -338,7 +338,7 @@ const TestPage = ({ isOpen, test_id }) => {
 								);
 							}
 						}
-						
+
 						t_answer.push({ answer: "", solution: t_editorState_answer });
 					}
 				}
@@ -348,7 +348,6 @@ const TestPage = ({ isOpen, test_id }) => {
 			.catch((error) => {
 				alert(error.response.data.message);
 			});
-
 	}
 
 	const showScore = (answerLoaded) => {
@@ -360,14 +359,13 @@ const TestPage = ({ isOpen, test_id }) => {
 
 				let count = 0;
 				let check = false;
-				let ssss = 0;
 				for (var j = 0; j < submittedAnswer[i].choiceColor.length; j++) {
 					if (submittedAnswer[i].choiceColor[j].color === 'red') {
 						check = true;
 					}
 					for (var k = 0; k < answerLoaded[i].answer.length; k++) {
-						if (submittedAnswer[i].choiceColor[j].color === 'red') {				
-							if(submittedAnswer[i].choiceList[j].item_text === answerLoaded[i].answer[k]) 
+						if (submittedAnswer[i].choiceColor[j].color === 'red') {
+							if (submittedAnswer[i].choiceList[j].item_text === answerLoaded[i].answer[k])
 								count += 1;
 						}
 					}
@@ -397,8 +395,63 @@ const TestPage = ({ isOpen, test_id }) => {
 			}
 		}
 		setTestResult(t_testResult);
+		//setAnswerList(answerLoaded);
+		//setSolutionState(true);
+		makeSolution(answerLoaded);
+		let correctAnswer = 0;
+		let essayAnswer = 0;
+		let incorrectAnswer = 0;
+		for(var i = 0 ; i < t_testResult.length; i++) {
+			if(t_testResult[i] === 1)
+				correctAnswer += 1;
+			else if(t_testResult[i] === 2) {
+				essayAnswer += 1;
+			} else {
+				incorrectAnswer +=1;
+			}
+		}
+		alert('맞은개수: ' + correctAnswer + ' 틀린개수: ' + incorrectAnswer + ' 서술형: ' + essayAnswer);
+	}
 
-		console.log(t_testResult);
+	const makeSolution = (answerLoaded) => {
+		let solution = [];
+		console.log(answerLoaded);
+
+		for (var i = 0; i < answerLoaded.length; i++) {
+			if (question[i].type === "multiple_choice") {		// 객관식
+				let string = "";
+				for (var j = 0; j < answerLoaded[i].answer.length; j++) {
+					for (var k = 0; k < question[i].multiple_choice_items.length; k++) {
+						if (question[i].multiple_choice_items[k].item_text === answerLoaded[i].answer[j]) {
+
+							string += (k+1);
+							string += "번, ";
+						}
+					}
+				}
+				solution.push({ answer: string, solution: answerLoaded[i].solution });
+				
+				if(solution[i].answer === "") {
+					solution[i].answer = "선택지 중 정답이 없습니다.";
+				} else {
+					solution[i].answer = solution[i].answer.substring(0, solution[i].answer.length - 2);
+				} 
+			} else if (question[i].type === "short_answer") {	// 주관식
+				//solution.push(answerLoaded[i]);
+				let string = "";
+				for(var j = 0; j< answerLoaded[i].answer.length; j++) {
+					string += answerLoaded[i].answer[j] + " 또는 ";
+				}
+				string = string.substring(0, string.length - 3);
+				solution.push({answer: string, solution: answerLoaded[i].solution});
+				
+			} else {	// 서술형
+				solution.push({ answer: '해설을 참조하세요', solution: answerLoaded[i].solution });
+			}
+		}
+		console.log('solution:', solution);
+		setAnswerList(solution);
+		setSolutionState(true);
 	}
 
 	return (
@@ -569,10 +622,17 @@ const TestPage = ({ isOpen, test_id }) => {
 						</Button> : <div style={{ width: '5rem' }}></div>}
 							</div>
 							{testEnd && <div>
-
 							</div>}
 						</div>
 					</div> : <div></div>}
+				{
+					solutionState &&
+					answerList.map((i, index) => (
+						<div>
+							{index + 1}번) {i.answer}
+						</div>
+					))
+				}
 			</ul>
 		</Container >
 	);
