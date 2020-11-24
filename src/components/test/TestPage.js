@@ -26,20 +26,15 @@ const TestPage = ({ isOpen, test_id }) => {
 
 	const [editorState, setEditorState] = useState([]);
 
-	const [editorAnswer, setEditorAnswer] = useState(EditorState.createEmpty());
-
 	const [question, setQuestion] = useState("");
 	const [questionType, setQuestionType] = useState("");
 	const [choiceList, setChoiceList] = useState([]);
 	const [choiceColor, setChoiceColor] = useState([]);
-	const [shortAnswer, setShortAnswer] = useState("");
 
 	const [testEnd, setTestEnd] = useState(false);
 
 	const [testResult, setTestResult] = useState([]);
 	const [solutionState, setSolutionState] = useState(false);
-
-	const [showExplanation, setShowExplanation] = useState(false);
 
 	const [essayAnswerEditor, setEssayAnswerEditor] = useState(
 		EditorState.createEmpty()
@@ -158,54 +153,6 @@ const TestPage = ({ isOpen, test_id }) => {
 		setQuestion(t_question);
 		setSubmittedAnswer(t_type);
 	}
-
-	// 정답을 불러오는 함수
-	const loadAnswer = () => {
-
-		if (questionType === "multiple_choice") {
-			let answerArray = "";
-			for (var i in question.multiple_choice_items) {
-				if (question.multiple_choice_items[i].checked === 1) {
-					i *= 1;
-					i += 1;
-					i += "";
-
-					answerArray += i;
-					answerArray += "번, ";
-				}
-			}
-			setAnswerList([answerArray.substring(0, answerArray.length - 2)]);
-		} else if (questionType === "short_answer") {
-			let answerList = [];
-
-			for (var i in question.short_answer_items) {
-				answerList.push(question.short_answer_items[i].item_text + " ");
-			}
-
-			setAnswerList([...answerList]);
-		} else {
-			axios.get(`/api/answer?question_id=${test.test_questions[Num].question.id}`).then((res) => {
-				console.log(res.data);
-
-				htmlToEditor_answer = res.data.answers.rows[0].content;
-
-				const blocksFromHtml = htmlToDraft(htmlToEditor_answer);
-				if (blocksFromHtml) {
-					const { contentBlocks, entityMap } = blocksFromHtml;
-
-					const contentState = ContentState.createFromBlockArray(
-						contentBlocks,
-						entityMap
-					);
-
-					const t_editorState_answer = EditorState.createWithContent(
-						contentState
-					);
-					setEssayAnswerEditor(t_editorState_answer);
-				}
-			});
-		}
-	};
 
 	const moveHandler = (value, e) => {
 		e.preventDefault();
@@ -401,13 +348,13 @@ const TestPage = ({ isOpen, test_id }) => {
 		let correctAnswer = 0;
 		let essayAnswer = 0;
 		let incorrectAnswer = 0;
-		for(var i = 0 ; i < t_testResult.length; i++) {
-			if(t_testResult[i] === 1)
+		for (var i = 0; i < t_testResult.length; i++) {
+			if (t_testResult[i] === 1)
 				correctAnswer += 1;
-			else if(t_testResult[i] === 2) {
+			else if (t_testResult[i] === 2) {
 				essayAnswer += 1;
 			} else {
-				incorrectAnswer +=1;
+				incorrectAnswer += 1;
 			}
 		}
 		alert('맞은개수: ' + correctAnswer + ' 틀린개수: ' + incorrectAnswer + ' 서술형: ' + essayAnswer);
@@ -424,27 +371,27 @@ const TestPage = ({ isOpen, test_id }) => {
 					for (var k = 0; k < question[i].multiple_choice_items.length; k++) {
 						if (question[i].multiple_choice_items[k].item_text === answerLoaded[i].answer[j]) {
 
-							string += (k+1);
+							string += (k + 1);
 							string += "번, ";
 						}
 					}
 				}
 				solution.push({ answer: string, solution: answerLoaded[i].solution });
-				
-				if(solution[i].answer === "") {
+
+				if (solution[i].answer === "") {
 					solution[i].answer = "선택지 중 정답이 없습니다.";
 				} else {
 					solution[i].answer = solution[i].answer.substring(0, solution[i].answer.length - 2);
-				} 
+				}
 			} else if (question[i].type === "short_answer") {	// 주관식
 				//solution.push(answerLoaded[i]);
 				let string = "";
-				for(var j = 0; j< answerLoaded[i].answer.length; j++) {
+				for (var j = 0; j < answerLoaded[i].answer.length; j++) {
 					string += answerLoaded[i].answer[j] + " 또는 ";
 				}
 				string = string.substring(0, string.length - 3);
-				solution.push({answer: string, solution: answerLoaded[i].solution});
-				
+				solution.push({ answer: string, solution: answerLoaded[i].solution });
+
 			} else {	// 서술형
 				solution.push({ answer: '해설을 참조하세요', solution: answerLoaded[i].solution });
 			}
@@ -626,12 +573,49 @@ const TestPage = ({ isOpen, test_id }) => {
 						</div>
 					</div> : <div></div>}
 				{
-					solutionState &&
-					answerList.map((i, index) => (
-						<div>
-							{index + 1}번) {i.answer}
-						</div>
-					))
+					solutionState && <div> {
+						answerList.map((i, index) => (
+							<div key={index}>
+								{index + 1}번) {i.answer}
+							</div>
+						))} <br/>
+						문제의 해설입니다.<br/>
+						{
+							answerList.map((i, index) => (
+							<div>
+							<Card
+								className="center"
+								style={{
+									height: "20rem !important",
+									overflow: "auto",
+								}}
+							>
+								<Card.Body>
+									<div key={index} style={{ fontWeight: "bold" }}> {index + 1}번 </div>
+									<div style={{ height: "200px !important" }}>
+										<Editor
+											toolbarHidden
+											// 에디터와 툴바 모두에 적용되는 클래스
+											wrapperClassName="wrapper-class"
+											// 에디터 주변에 적용된 클래스
+											editorClassName="editor"
+											// 툴바 주위에 적용된 클래스
+											toolbarClassName="toolbar-class"
+											editorState={i.solution}
+											readOnly
+											// 한국어 설정
+											localization={{
+												locale: "ko",
+											}}
+										/>
+									</div>
+								</Card.Body>
+							</Card>
+							<br/>
+							</div>
+							))
+						}
+					</div>
 				}
 			</ul>
 		</Container >
