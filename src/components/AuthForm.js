@@ -4,6 +4,7 @@ import { Redirect } from "react-router-dom";
 import store from "../store";
 import emailpic from "../picture/email.png";
 import axios from "axios";
+import Card from "react-bootstrap/Card";
 
 const AuthForm = () => {
   const [authCode, setAuthCode] = useState("");
@@ -38,22 +39,21 @@ const AuthForm = () => {
   );
 
   return (
+
+    <div style={{ height: "75rem" }}>
     <div
       style={{
         backgroundColor: "#f7feff",
       }}
     >
+      <div style={{ height: "65rem" }}>
       <div className="container h-100">
         <div className="row h-100 justify-content-center align-items-center">
           {redirect}
-
-          <form onSubmit={submitHandler} className="col-6">
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
+          <Card border="info" style={{ width: "50rem", height: "45rem" }}>
+          <div className="row h-100 justify-content-center align-items-center">
+          <form onSubmit={submitHandler} className="col-10">
+        
             <h2 style={{ fontWeight: "bolder" }}>본인 인증</h2>
             <hr />
             <div className="row h-100 justify-content-center align-items-center">
@@ -79,16 +79,14 @@ const AuthForm = () => {
             <button type="submit" className="btn btn-info btn-block">
               제출
             </button>
-            <br /> <br />
-            <br /> <br />
-            <br /> <br />
-            <br /> <br />
-            <br /> <br />
-            <br /> <br />
-            <br />
+      
           </form>
+          </div>
+          </Card>
         </div>
       </div>
+      </div>
+    </div>
     </div>
   );
 };
