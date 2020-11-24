@@ -44,6 +44,10 @@ const NavBar = ({ isOpen, point }) => {
     history.push("/login");
   };
 
+  const moveUserSettings = () => {
+    history.push("/usersettings");
+  }
+
   const moveSearch = () => {
     history.push(`/search/${searchType}/${questionType}/${searchKeyword}`);
   };
@@ -276,9 +280,11 @@ const NavBar = ({ isOpen, point }) => {
                       />
                       내 활동{" "}
                     </Dropdown.Item>
-                    <Dropdown.Item href="#/action-2">
-                      <FontAwesomeIcon icon={faUserCog} className="ml-auto" />내
-                      설정
+                    <Dropdown.Item href="#/action-2" onClick={moveUserSettings}>
+                      <FontAwesomeIcon 
+                      icon={faUserCog} 
+                      className="ml-auto" />
+                     프로필 설정
                     </Dropdown.Item>
                     <Dropdown.Item href="#/action-3" onClick={signOut}>
                       <FontAwesomeIcon

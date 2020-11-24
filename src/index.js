@@ -19,6 +19,7 @@ import Settings from "./components/Settings";
 import Bookmarks from "./components/Bookmarks";
 import Search from "./components/Search";
 import { CookiesProvider } from 'react-cookie';
+import UserSettings from "./components/UserSettings";
 
 ReactDOM.render(
 
@@ -31,6 +32,7 @@ ReactDOM.render(
       <BrowserRouter>
         <Switch>
           <Redirect exact from='/' to='/home'/>
+          <Route path="/usersettings" component={UserSettings} />
           <Route path="/home" component={App} />
           <Route exact path="/search/:searchtype?/:keywordtype?/:keyword?" component={Search}/>
           <Route exact path="/login" component={LoginForm} />

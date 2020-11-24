@@ -50,7 +50,7 @@ const LoginForm = () => {
           <div className="container h-100">
             <div className="row h-100 justify-content-center align-items-center">
               {redirect}
-              <Card style={{ width: "50rem", height: "45rem" }}>
+              <Card border="info" style={{ width: "50rem", height: "45rem" }}>
                 <div className="row h-100 justify-content-center align-items-center">
                   <form onSubmit={submitHandler} className="col-10">
                     <br />

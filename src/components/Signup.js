@@ -77,7 +77,7 @@ export default class SignUp extends Component {
           <div style={{ height: "65rem" }}>
             <div className="container h-100">
               <div className="row h-100 justify-content-center align-items-center">
-                <Card style={{ width: "50rem", height: "60rem" }}>
+                <Card border="info" style={{ width: "50rem", height: "60rem" }}>
                   <div className="row h-100 justify-content-center align-items-center">
                     <form onSubmit={this.submitHandler} className="col-10">
                       <br />
