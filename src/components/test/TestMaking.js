@@ -98,38 +98,43 @@ const TestMaking = ({ isOpen }) => {
     if (value) {
       if (testState === "info") {
       } else {
-        var result = window.confirm('시험을 생성하시겠습니까?');
+        if (testTitle !== '') {
+          var result = window.confirm('시험을 생성하시겠습니까?');
 
-        if (result) {
-          let t_addTest = [];
-          for (var row = 0; row < selected.length; row++) {
-            for (var col = 0; col < selected[row].length; col++) {
-              if (selected[row][col].selected === 'danger') {
-                console.log(row, col, selected[row][col].question_id);
-                t_addTest.push({ id: selected[row][col].question_id });
+          if (result) {
+            let t_addTest = [];
+            for (var row = 0; row < selected.length; row++) {
+              for (var col = 0; col < selected[row].length; col++) {
+                if (selected[row][col].selected === 'danger') {
+                  console.log(row, col, selected[row][col].question_id);
+                  t_addTest.push({ id: selected[row][col].question_id });
+                }
               }
             }
-          }
-          console.log(t_addTest);
-          setAddTest(t_addTest);
-          let title = testTitle;
-          
-          axios.post(`/api/testset/`, { title })
-            .then(res => {
-              console.log(res.data);
+            console.log(t_addTest);
 
-              let data = {
-                test_set_id: res.data.test_set.id,
-                questions: t_addTest,
-              }
-            	
-              axios.post(`/api/testset/question/`, data)
-                .then(res => {
-                  console.log(res.data);
-                  setTestState('info');
-                  alert(res.data.message);
+            setAddTest(t_addTest);
+            let title = testTitle;
+
+            axios.post(`/api/testset/`, { title })
+              .then(res => {
+                console.log(res.data);
+
+                let data = {
+                  test_set_id: res.data.test_set.id,
+                  questions: t_addTest,
+                }
+
+                axios.post(`/api/testset/question/`, data)
+                  .then(res => {
+                    console.log(res.data);
+                    setTestState('info');
+                    alert(res.data.message);
+                  })
               })
-          })
+          }
+        } else {
+          alert('시험 이름을 입력하세요.');
         }
       }
     } else {
@@ -141,7 +146,6 @@ const TestMaking = ({ isOpen }) => {
 
   const submitForm = () => {
     if (listType === "select") {
-      setState('select');
       axios.get(`/api/question?course_title=${course}`)
         .then(res => {
           console.log(res.data);
@@ -170,21 +174,54 @@ const TestMaking = ({ isOpen }) => {
           }
           setPages(t_pages);
           setTestState("danger");
+          setState('select');
         })
         .catch(error => {
           alert(error.response.data.message);
         })
+    } else if (listType === "auto") {
+      if (testTitle !== '') {
+        axios.get(`/api/question/course/${course}/random?num_questions=${testNumber}&per_page=${testNumber}`)
+          .then(res => {
+            console.log(res.data);
+            let questionList = [];
+            for (var i = 0; i < res.data.questions.rows.length; i++) {
+              questionList.push({ id: res.data.questions.rows[i].id });
+            }
+            let title = testTitle;
+            if (title !== '') {
+              axios.post(`/api/testset/`, { title })
+                .then(res => {
+                  console.log(res.data);
+
+                  let data = {
+                    test_set_id: res.data.test_set.id,
+                    questions: questionList,
+                  }
+
+                  axios.post(`/api/testset/question/`, data)
+                    .then(res => {
+                      console.log(res.data);
+                      setTestState('info');
+                      alert(res.data.message);
+                    })
+                })
+            }
+          })
+          .catch(error => {
+            alert('일치하는 강의가 없습니다.');
+          })
+      } else {
+        alert('시험 이름을 입력하세요.');
+      }
     }
-    console.log(course);
-    console.log(listType);
-    console.log(testNumber);
   }
 
   const testTitleChange = (e) => {
-		e.preventDefault();
+    e.preventDefault();
 
-		setTestTitle(e.target.value);
-	}
+    setTestTitle(e.target.value);
+  }
 
   return (
     <Container
@@ -211,13 +248,19 @@ const TestMaking = ({ isOpen }) => {
               </Form.Control>
 
 
-              {(listType === "auto") &&
+              {(listType === "auto") && <div>
                 <Form.Control as="select" onChange={testNumberSelect}>
                   <option value="default">문항수</option>
                   <option value="10">10</option>
                   <option value="20">20</option>
                   <option value="30">30</option>
                 </Form.Control>
+                <Form.Control
+                  type="course"
+                  placeholder="시험 이름을 입력하세요"
+                  value={testTitle}
+                  onChange={(e) => { setTestTitle(e.target.value) }} />
+                &nbsp;</div>
               }
             </Form.Group>
           </Form>
@@ -226,7 +269,7 @@ const TestMaking = ({ isOpen }) => {
           <div>{(state === '') ?
             <Button variant="info" style={{ width: '19rem', height: '2.5rem' }} onClick={submitForm}
             >시험 생성</Button> : <div>
-              
+
               <FormControl
                 blocktype="text"
                 id="title"

@@ -38,7 +38,7 @@ const Question = ({ subject, course, isOpen }) => {
 				console.log(res.data);
 
 				//setQuestion(res.data.questions.rows);
-				setQuestion({ question: res.data.questions.rows, curPage: 1, totalCount: res.data.questions.count});
+				setQuestion({ question: res.data.questions.rows, curPage: 1, totalCount: res.data.questions.count });
 				let count = res.data.questions.count / 10 + 1;
 				let t_row = [];
 				let t_col = [];
@@ -166,7 +166,7 @@ const Question = ({ subject, course, isOpen }) => {
 								test_set_id: res.data.test_set.id,
 								questions: t_addTest,
 							}
-							
+
 							axios.post(`/api/testset/question/`, data)
 								.then(res => {
 									console.log(res.data);
@@ -199,7 +199,7 @@ const Question = ({ subject, course, isOpen }) => {
 	const refreshSelect = () => {
 		for (var row = 0; row < selected.length; row++) {
 			for (var col = 0; col < selected[row].length; col++) {
-				selected[row][col].selected = 'info';			
+				selected[row][col].selected = 'info';
 			}
 		}
 	}
@@ -214,8 +214,9 @@ const Question = ({ subject, course, isOpen }) => {
 	const selectedTestHandler = (value, e) => {
 		e.preventDefault();
 
-		if(value) {
-			var result = window.confirm('시험을 생성하시겠습니까?');
+		if (value) {
+			if (testTitle !== '') {
+				var result = window.confirm('시험을 생성하시겠습니까?');
 				if (result) {
 					let t_modifyTest = [];
 					for (var row = 0; row < selected.length; row++) {
@@ -227,28 +228,30 @@ const Question = ({ subject, course, isOpen }) => {
 					}
 					console.log(t_modifyTest);
 					let selectedTest_id;
-					for(var i = 0; i< testList.length; i++) {
-						if(testList[i].title === selectedTest) {
+					for (var i = 0; i < testList.length; i++) {
+						if (testList[i].title === selectedTest) {
 							selectedTest_id = testList[i].id;
 						}
 					}
 
 					let data = {
-							test_set_id: selectedTest_id,
-							questions: t_modifyTest,
+						test_set_id: selectedTest_id,
+						questions: t_modifyTest,
 					}
 
 					axios.post(`/api/testset/question/`, data)
-					.then(res => {
-						alert(res.data.message);
-						setSelectedTest('Test+');
-						refreshSelect();
-					})
-					.catch(error => {
-						alert(error.response.data.message);
-					})
-
+						.then(res => {
+							alert(res.data.message);
+							setSelectedTest('Test+');
+							refreshSelect();
+						})
+						.catch(error => {
+							alert(error.response.data.message);
+						})
 				}
+			} else {
+				alert('시험 이름을 입력하세요');
+			}
 		} else {
 			setSelectedTest('Test+');
 			refreshSelect();
@@ -322,28 +325,28 @@ const Question = ({ subject, course, isOpen }) => {
 						&nbsp;
 						<div>
 							<DropdownButton
-							variant="info"
-							title={selectedTest}
-							
-							//id="input-group-dropdown-1"
-							onSelect={handleSelect}
-						>
-							{testList.map((i, index) => <div key={i.id}>
+								variant="info"
+								title={selectedTest}
+
+								//id="input-group-dropdown-1"
+								onSelect={handleSelect}
+							>
+								{testList.map((i, index) => <div key={i.id}>
 									<Dropdown.Item eventKey={i.title}>{i.title}</Dropdown.Item>
 								</div>
-							)}
-							
-						</DropdownButton>
-						{
-							(selectedTest !== 'Test+') && <div>
-								&nbsp;
+								)}
+
+							</DropdownButton>
+							{
+								(selectedTest !== 'Test+') && <div>
+									&nbsp;
 							<Button variant="light" style={{ width: '6rem', height: '2.5rem' }} onClick={(e) => selectedTestHandler(true, e)}
-						>선택 완료</Button>
+									>선택 완료</Button>
 						&nbsp;
 							<Button variant="light" style={{ width: '6rem', height: '2.5rem' }} onClick={(e) => selectedTestHandler(false, e)}
-						>취소</Button> 
-						</div>
-						}
+									>취소</Button>
+								</div>
+							}
 						</div>
 							&nbsp;
 							<Button variant="info" style={{ width: '9.5rem', height: '2.5rem' }} onClick={submitHandler}
