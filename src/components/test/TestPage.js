@@ -466,7 +466,7 @@ const TestPage = ({ isOpen, test_id }) => {
 								}}
 							>
 								<Card.Body>
-									<div style={{ float: 'left', fontWeight: "bold", color: questionColor[Num].color }}>제목: {question[Num].title} </div>
+									<div style={{ float: 'left', fontWeight: "bold", color: questionColor[Num].color }}>{question[Num].title} </div>
 									<br />
 									<div style={{ height: "200px !important" }}>
 										<Editor

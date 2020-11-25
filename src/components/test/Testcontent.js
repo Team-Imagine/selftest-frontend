@@ -9,8 +9,6 @@ import { propTypes } from "react-bootstrap/esm/Image";
 import Form from 'react-bootstrap/Form'
 import FormControl from 'react-bootstrap/FormControl'
 
-
-
 const Testcontent = ({ isOpen }) => {
 	const [tests, setTests] = useState({
 		test_list: [],
@@ -96,6 +94,10 @@ const Testcontent = ({ isOpen }) => {
 		}
 	}
 
+	const makeHandler = () => {
+		history.push(`/test/make_test/${1}`);
+	}
+
 	return (
 		<Container
 			fluid
@@ -108,7 +110,9 @@ const Testcontent = ({ isOpen }) => {
         </h4>
 				</div>
 				<div className="p-2 bd-highlight">
-					<Button variant={buttonColor} style={{ width: '19rem', height: '2.5rem' }} onClick={modifyHandler}
+				<Button variant={buttonColor} style={{ width: '9rem', height: '2.5rem' }} onClick={makeHandler}
+					>시험 생성</Button>&nbsp;
+					<Button variant={buttonColor} style={{ width: '9rem', height: '2.5rem' }} onClick={modifyHandler}
 					>시험 수정</Button>&nbsp;
         </div>
 			</div>
@@ -138,8 +142,7 @@ const Testcontent = ({ isOpen }) => {
 					</div>
 				) : <div className="row justify-content-center align-items-center">등록된 Test가 없습니다. 새로운 Test를 등록해주세요.</div>}
 			</ul>
-			<ul style={{ position: "fixed", width: "90%", bottom: "0" }}
-				className="row justify-content-center align-items-center">
+			<ul className="row justify-content-center align-items-center">
 				{pages.map((i, index) =>
 					<div key={index}>
 						<button style={{ backgroundColor: '#ffffff', border: '1px solid', width: '1.5rem' }} onClick={(e) => loadTestPerPage(i, e)}>{i}</button>&nbsp;
