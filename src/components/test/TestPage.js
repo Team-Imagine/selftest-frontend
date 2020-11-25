@@ -42,14 +42,14 @@ const TestPage = ({ isOpen, test_id }) => {
 	);
 
 	const [complete, setComplete] = useState(false);
+
 	let htmlToEditor = "";
 	let t_choiceColor = [];
 	let htmlToEditor_answer = "";
 	let short_answer = "";
 
 	useEffect(() => {
-
-		axios.get(`/api/testset/${test_id}`)
+		axios.get(`/api/testset/${test_id}?per_page=${50}`)
 			.then(res => {
 				console.log(res.data);
 				setTest(res.data.test_set.rows[0]);
@@ -103,7 +103,6 @@ const TestPage = ({ isOpen, test_id }) => {
 		const img_tags = root.querySelectorAll("img");
 
 		for (let i = 0; i < img_tags.length; i++) {
-
 			let src_attribute = img_tags[i].getAttribute("src");
 
 			img_tags[i].setAttribute("src", "http://localhost:8002" + src_attribute);
@@ -207,7 +206,7 @@ const TestPage = ({ isOpen, test_id }) => {
 
 		console.log('test result:', submittedAnswer);
 
-		axios.get(`/api/testset/${test.id}/answers`)
+		axios.get(`/api/testset/${test.id}/answers?per_page=${50}`)
 			.then(res => {
 
 				let loadedQuestion = res.data.test_set.test_questions.rows;
@@ -368,12 +367,10 @@ const TestPage = ({ isOpen, test_id }) => {
 		setQuestionColor(t_color);
 		
 		alert('맞은개수: ' + correctAnswer + ' 틀린개수: ' + incorrectAnswer + ' 서술형: ' + essayAnswer);
-		console.log(questionColor);
 	}
 
 	const makeSolution = (answerLoaded) => {
 		let solution = [];
-		console.log(answerLoaded);
 
 		for (var i = 0; i < answerLoaded.length; i++) {
 			if (question[i].type === "multiple_choice") {		// 객관식
@@ -395,7 +392,6 @@ const TestPage = ({ isOpen, test_id }) => {
 					solution[i].answer = solution[i].answer.substring(0, solution[i].answer.length - 2);
 				}
 			} else if (question[i].type === "short_answer") {	// 주관식
-				//solution.push(answerLoaded[i]);
 				let string = "";
 				for (var j = 0; j < answerLoaded[i].answer.length; j++) {
 					string += answerLoaded[i].answer[j] + " 또는 ";
@@ -407,7 +403,6 @@ const TestPage = ({ isOpen, test_id }) => {
 				solution.push({ answer: '해설을 참조하세요', solution: answerLoaded[i].solution });
 			}
 		}
-		console.log('solution:', solution);
 		setAnswerList(solution);
 		setSolutionState(true);
 	}
@@ -584,12 +579,7 @@ const TestPage = ({ isOpen, test_id }) => {
 						</div>
 					</div> : <div></div>}
 				{
-					solutionState && <div> {
-						answerList.map((i, index) => (
-							<div key={index}>
-								{index + 1}번) {i.answer}
-							</div>
-						))} <br/>
+					solutionState && <div>
 						문제의 해설입니다.<br/><br/>
 						{
 							answerList.map((i, index) => (
@@ -602,7 +592,7 @@ const TestPage = ({ isOpen, test_id }) => {
 								}}
 							>
 								<Card.Body>
-									<div style={{ fontWeight: "bold" }}> {index + 1}번 </div>
+							<div style={{ fontWeight: "bold" }}> {index + 1}번)&nbsp;{i.answer}</div>
 									<div style={{ height: "200px !important" }}>
 										<Editor
 											toolbarHidden
@@ -616,6 +606,10 @@ const TestPage = ({ isOpen, test_id }) => {
 											readOnly
 											// 한국어 설정
 											localization={{
+
+
+
+
 												locale: "ko",
 											}}
 										/>
