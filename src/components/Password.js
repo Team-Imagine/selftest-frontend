@@ -14,7 +14,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "react-bootstrap";
 
-  //값전달까지만 확인 백엔드 통신 확인해보기
+
 const Password = () => {
 
   const [email, setEmail] = useState("");
