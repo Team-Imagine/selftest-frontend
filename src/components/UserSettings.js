@@ -216,16 +216,9 @@ const UserSettings = () => {
               </div>
 
               <div className="p-2 bd-highlight col-example">
-                <Card border="info" style={{ width: "50em", height: "50rem" }}>
+                <Card border="info" style={{ width: "50em", height: "30rem" }}>
                   <div className="row h-100 justify-content-center align-items-center">
                     <form className="col-10">
-                      
-                    
-                      <br />
-                      <br />
-                      <br />
-                      <br />
-
                       <h2 style={{ fontWeight: "bolder" }}>탈퇴하기</h2>
                       <hr />
                       <Form.Group>
