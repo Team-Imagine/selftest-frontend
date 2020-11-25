@@ -5,153 +5,90 @@ import { Redirect } from "react-router-dom";
 import store from "../store";
 import Card from "react-bootstrap/Card";
 import axios from "axios";
-import { faExchangeAlt, faPaperPlane, faSave, faUserMinus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faExchangeAlt,
+  faPaperPlane,
+  faSave,
+  faUserMinus,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "react-bootstrap";
 
 //한꺼번에 또는 칸마다  값전달 확인 백엔드 연결 x
 
 const UserSettings = () => {
+  const [first_name, setFirstName] = useState("");
+  const [last_name, setLastName] = useState("");
+  const [username, setUserName] = useState("");
+  const [current_password, setCurrentPassword] = useState("");
+  const [new_password, setNewPassword] = useState("");
+  const [new_password_again, setNewPasswordAgain] = useState("");
+  const [password, setPassword] = useState("");
+  const [password_again, setPasswordAgain] = useState("");
 
-const [first_name, setFirstName] = useState("");
-const [last_name, setLastName] = useState("");
-const[username, setUserName] = useState("");
-const[current_password, setCurrentPassword] = useState("");
-const[new_password, setNewPassword] = useState("");
-const[password, setPassword] = useState("");
+  const changeuser = {
+    username: username,
+    current_password: current_password,
+    new_password: new_password,
+    first_name: first_name,
+    last_name: last_name,
+  };
 
-const changeuser ={
-  username: username,
-  current_password: current_password,
-  new_password: new_password,
-  first_name: first_name,
-  last_name: last_name,
-};
+  const FirstName = (e) => {
+    setFirstName(e.target.value);
+  };
+  const LastName = (e) => {
+    setLastName(e.target.value);
+  };
+  const Username = (e) => {
+    setUserName(e.target.value);
+  };
+  const CurrentPassword = (e) => {
+    setCurrentPassword(e.target.value);
+  };
+  const NewPassword = (e) => {
+    setNewPassword(e.target.value);
+  };
+  const NewPasswordAgain = (e) => {
+    setNewPasswordAgain(e.target.value);
+  }
+  const Password = (e) => {
+    setPassword(e.target.value);
+  };
+  const PasswordAgain = (e) => {
+    setPasswordAgain(e.target.value);
+  };
 
-const FirstName = (e) => {
-  setFirstName(e.target.value);
-};
-const LastName = (e) => {
-  setLastName(e.target.value);
-};
-const Username = (e) => {
-  setUserName(e.target.value);
-};
-const CurrentPassword = (e) => {
-  setCurrentPassword(e.target.value);
-};
-const NewPassword = (e) => {
-  setNewPassword(e.target.value);
-};
-const Password = (e) => {
-  setPassword(e.target.value);
-};
+  const SubmitSaveChange = (event) => {
+    event.preventDefault();
+    console.log(changeuser);
 
-const SubmitUsername = (event) => {
-  event.preventDefault();
-  console.log(username);
-
-  axios
-    .patch(`/user/`,{username})
-    .then((res) => {
-      console.log(res.data);
-      alert("사용자명이 변경되었습니다!");
-    })
-    .catch((error) => {
-      alert(error.response.data.message);
-    });
-};
-
-const SubmitFirstName = (event) => {
-  event.preventDefault();
-  console.log(first_name);
-
-  axios
-    .patch(`/user/`,{first_name})
-    .then((res) => {
-      console.log(res.data);
-      alert("이름이 변경되었습니다!");
-    })
-    .catch((error) => {
-      alert(error.response.data.message);
-    });
-};
-
-const SubmitLastName = (event) => {
-  event.preventDefault();
-  console.log(last_name);
-
-  axios
-    .patch(`/user/`,{last_name})
-    .then((res) => {
-      console.log(res.data);
-      alert("성이 변경되었습니다!");
-    })
-    .catch((error) => {
-      alert(error.response.data.message);
-    });
-};
-
-const SubmitChangePassword = (event) => {
-  event.preventDefault();
-  console.log(new_password);
-
-  axios
-    .patch(`/user/`,{new_password})
-    .then((res) => {
-      console.log(res.data);
-      alert("비밀번호가 변경되었습니다!");
-    })
-    .catch((error) => {
-      alert(error.response.data.message);
-    });
-};
-
-const SubmitSaveChange = (event) => {
-  event.preventDefault();
-  console.log(changeuser);
-
-  axios
-    .patch(`/user/`,changeuser)
-    .then((res) => {
-      console.log(res.data);
-      alert("정보가 변경되었습니다!");
-    })
-    .catch((error) => {
-      alert(error.response.data.message);
-    });
-};
-
-const DeleteUser = (event) => {
-  event.preventDefault();
-  console.log(password);
-
-  axios
-    .delete(`/user/`,{password})
-    .then((res) => {
-      console.log(res.data);
-      alert("탈퇴되었습니다!");
-    })
-    .catch((error) => {
-      alert(error.response.data.message);
-    });
-};
-
-
-{/* 이메일 주소 불러올 api 
-  useEffect(() => {
     axios
-      .get(`/api/user`)
+      .patch(`/user/`, changeuser)
       .then((res) => {
         console.log(res.data);
-        setUser(res.data.user.rows);
+        alert("정보가 변경되었습니다!");
       })
-
       .catch((error) => {
         alert(error.response.data.message);
       });
-  }, []);
-*/}
+  };
+
+  const DeleteUser = (event) => {
+    event.preventDefault();
+    console.log(password);
+    console.log(password_again);
+
+    axios
+      .delete(`/user/`, { password })
+      .then((res) => {
+        console.log(res.data);
+        alert("탈퇴되었습니다!");
+      })
+      .catch((error) => {
+        alert(error.response.data.message);
+      });
+  };
 
   return (
     <div
@@ -159,164 +96,187 @@ const DeleteUser = (event) => {
         backgroundColor: "#f7feff",
       }}
     >
-
       <div style={{ height: "70rem" }}>
-
-        
         <div className="container h-100">
           <div className="row h-100 justify-content-center align-items-center">
-          <div className="d-flex flex-nowrap bd-highlight">
-          <div className="p-2 bd-highlight col-example">
-            <Card border="info" style={{ width: "50em", height: "50rem" }}>
-              <div className="row h-100 justify-content-center align-items-center">
-                <form className="col-10">
-                  <h2 style={{ fontWeight: "bolder" }}>
-                    프로필 설정
-                  </h2>
-                  <hr /><br/>
+            <div className="d-flex flex-nowrap bd-highlight">
+              <div className="p-2 bd-highlight col-example">
+                <Card border="info" style={{ width: "50em", height: "50rem" }}>
+                  <div className="row h-100 justify-content-center align-items-center">
+                    <form className="col-10">
+                      <h2 style={{ fontWeight: "bolder" }}>프로필 설정</h2>
+                      <hr />
+                      <br />
 
-                
+                      <Form.Group>
+                        <Form inline>
+                          <Form.Label style={{ width: "10rem" }}>
+                            이름{" "}
+                          </Form.Label>
+                          <Form.Control
+                            onChange={FirstName}
+                            value={first_name}
+                            id="first_name"
+                            style={{ width: "30rem" }}
+                            placeholder="변경할 이름을 입력하세요"
+                          />
+                        </Form>
+                      </Form.Group>
+                      <br />
+
+                      <Form.Group>
+                        <Form inline>
+                          <Form.Label style={{ width: "10rem" }}>성 </Form.Label>
+                          <Form.Control
+                            onChange={LastName}
+                            value={last_name}
+                            id="last_name"
+                            style={{ width: "30rem" }}
+                            placeholder="변경할 성을 입력하세요"
+                          />
+                        </Form>
+                      </Form.Group>
+                      <br />
+
+                      <Form.Group>
+                        <Form inline>
+                          <Form.Label style={{ width: "10rem" }}>
+                            사용자명{" "}
+                          </Form.Label>
+                          <Form.Control
+                            onChange={Username}
+                            value={username}
+                            id="username"
+                            style={{ width: "30rem" }}
+                            placeholder="변경할 사용자명을 입력하세요"
+                          />
+                        </Form>
+                      </Form.Group>
+                      <br />
+                      <h4>비밀번호 변경하기</h4><br/>
+
+                      <Form.Group>
+                        <Form inline>
+                          <Form.Label style={{ width: "10rem" }}>
+                            현재 비밀번호{" "}
+                          </Form.Label>
+                          <Form.Control
+                            onChange={CurrentPassword}
+                            value={current_password}
+                            id="current_password"
+                            type="password"
+                            style={{ width: "30rem" }}
+                            placeholder="현재 비밀번호를 입력하세요"
+                          />
+                        </Form>
+                        <br />
+
+                        <Form inline>
+                          <Form.Label style={{ width: "10rem" }}>
+                            새 비밀번호{" "}
+                          </Form.Label>
+                          <Form.Control
+                            onChange={NewPassword}
+                            value={new_password}
+                            id="new_password"
+                            style={{ width: "30rem" }}
+                            type="password"
+                            placeholder="새 비밀번호를 입력하세요"
+                          />
+                          <br />
+                        </Form><br/>
+
+                        <Form inline>
+                          <Form.Label style={{ width: "10rem" }}>
+                            새 비밀번호 확인{" "}
+                          </Form.Label>
+                          <Form.Control
+                            onChange={NewPasswordAgain}
+                            value={new_password_again}
+                            id="new_password_again"
+                            style={{ width: "30rem" }}
+                            type="password"
+                            placeholder="새 비밀번호를 다시 한번 입력하세요"
+                          />
+                          <br />
+                        </Form>
+                        
+                      </Form.Group>
+                      <button
+                        onClick={SubmitSaveChange}
+                        type="submit"
+                        className="btn btn-info btn-block"
+                      >
+                        <FontAwesomeIcon icon={faSave} className="mr-2" />
+                        변경사항 저장하기
+                      </button>
+                    </form>
+                  </div>
+                </Card>
+              </div>
+
+              <div className="p-2 bd-highlight col-example">
+                <Card border="info" style={{ width: "50em", height: "50rem" }}>
+                  <div className="row h-100 justify-content-center align-items-center">
+                    <form className="col-10">
+                      
                     
-                <Form.Group>
-                  <Form inline>
-                      <Form.Label style={{width:"8rem"}}>이메일 주소 </Form.Label> 
-                      <Form.Label>
-                      이메일 주소 불러올 곳
-                      </Form.Label> 
-                    </Form>
-                    </Form.Group><br/>
+                      <br />
+                      <br />
+                      <br />
+                      <br />
 
-                    <Form.Group>
-                    <Form inline>
-                      <Form.Label style={{width:"8rem"}}>이름 </Form.Label> 
-                      <Form.Control 
-                      onChange={FirstName}
-                      value={first_name}
-                      id="first_name"
-                      style={{width:"27rem"}}placeholder="변경할 이름을 입력하세요" />
-                      &nbsp;&nbsp;
-                      <div>
-                        <Button onClick={SubmitFirstName} variant="info">
-                          <FontAwesomeIcon icon={faExchangeAlt} className="ml-auto" />변경
-                        </Button>
-                      </div>
-                    </Form>
-                    </Form.Group><br/>
+                      <h2 style={{ fontWeight: "bolder" }}>탈퇴하기</h2>
+                      <hr />
+                      <Form.Group>
+                        <Form inline>
+                          <Form.Label style={{ width: "10rem" }}>
+                            비밀번호{" "}
+                          </Form.Label>
+                          <Form.Control
+                            onChange={Password}
+                            value={password}
+                            id="password"
+                            type="password"
+                            style={{ width: "30rem" }}
+                            placeholder="현재 비밀번호를 입력하세요"
+                          />
+                        </Form>
+                        <br />
 
-                    <Form.Group>
-                    <Form inline>
-                      <Form.Label style={{width:"8rem"}}>성 </Form.Label>
-                      <Form.Control 
-                       onChange={LastName}
-                       value={last_name}
-                       id="last_name"
-                      style={{width:"27rem"}}placeholder="변경할 성을 입력하세요" />
-                      &nbsp;&nbsp;
-                      <div>
-                        <Button onClick={SubmitLastName} variant="info">
-                          <FontAwesomeIcon icon={faExchangeAlt} className="ml-auto" />변경
-                        </Button>
-                      </div>
-                    </Form>
-                    </Form.Group><br/>
+                        <Form inline>
+                          <Form.Label style={{ width: "10rem" }}>
+                            비밀번호 확인{" "}
+                          </Form.Label>
+                          <Form.Control
+                            onChange={PasswordAgain}
+                            value={password_again}
+                            id="password_again"
+                            type="password"
+                            style={{ width: "30rem" }}
+                            placeholder="새 비밀번호를 입력하세요"
+                          />
+                          <br />
+                        </Form>
+                        <Form.Text className="text-muted">
+                      <Form.Label style={{ width: "10rem" }}></Form.Label>
+                     비밀번호가 일치하지 않습니다
+                    </Form.Text>
+                      </Form.Group>
 
-                    <Form.Group>
-                    <Form inline>
-                      <Form.Label style={{width:"8rem"}}>사용자명 </Form.Label>
-                      <Form.Control
-                        onChange={Username}
-                        value={username}
-                        id="username"
-                        style={{width:"27rem"}}placeholder="변경할 사용자명을 입력하세요" />
-                      &nbsp;&nbsp;
-                      <div>
-                        <Button onClick={SubmitUsername}
-                        variant="info">
-                          <FontAwesomeIcon icon={faExchangeAlt} className="ml-auto" />변경
-                        </Button>
-                      </div>
-                    </Form>
-                    </Form.Group><br/>
-                  <button
-                  onClick={SubmitSaveChange} 
-                  type="submit" className="btn btn-info btn-block">
-                  <FontAwesomeIcon icon={faSave} className="mr-2" />변경사항 저장하기
-                  </button>
-                </form>
+                      <button
+                        onClick={DeleteUser}
+                        type="submit"
+                        className="btn btn-info btn-block"
+                      >
+                        <FontAwesomeIcon icon={faUserMinus} className="mr-2" />
+                        탈퇴하기
+                      </button>
+                    </form>
+                  </div>
+                </Card>
               </div>
-            </Card>
             </div>
-
-            <div className="p-2 bd-highlight col-example">
-            <Card border="info" style={{ width: "50em", height: "50rem" }}>
-              <div className="row h-100 justify-content-center align-items-center">
-                <form className="col-10">
-
-                <h3 style={{ fontWeight: "bolder" }}>
-                    비밀번호 변경
-                  </h3><hr/>
-                    <Form.Group>  
-                    <Form inline>
-                      <Form.Label style={{width:"10rem"}}>현재 비밀번호 </Form.Label>
-                      <Form.Control 
-                      onChange={CurrentPassword}
-                      value={current_password}
-                      id="current_password"
-                      style={{width:"30rem"}}placeholder="현재 비밀번호를 입력하세요"/>
-                    </Form><br/>
-
-                    <Form inline>
-                      <Form.Label style={{width:"10rem"}}>새 비밀번호 </Form.Label>
-                      <Form.Control 
-                       onChange={NewPassword}
-                       value={new_password}
-                       id="new_password"
-                       style={{width:"30rem"}}placeholder="새 비밀번호를 입력하세요"/>
-                      <br/>
-                     
-                   
-                    </Form>
-                    </Form.Group>
-                    <button 
-                    onClick={SubmitChangePassword}
-                    type="submit" className="btn btn-info btn-block">
-                  <FontAwesomeIcon icon={faExchangeAlt} className="mr-2" />변경하기
-                  </button><br/><br/><br/><br/>
-                     
-                  <h2 style={{ fontWeight: "bolder" }}>
-                    탈퇴하기
-                  </h2>
-                  <hr />
-                  <Form.Group>  
-                    <Form inline>
-                      <Form.Label style={{width:"10rem"}}>비밀번호 </Form.Label>
-                      <Form.Control style={{width:"30rem"}}placeholder="현재 비밀번호를 입력하세요"/>
-                    </Form><br/>
-
-                    <Form inline>
-                      <Form.Label style={{width:"10rem"}}>비밀번호 확인 </Form.Label>
-                      <Form.Control 
-                      onChange={Password}
-                       value={password}
-                       id="password" 
-                       style={{width:"30rem"}}placeholder="새 비밀번호를 입력하세요"/>
-                      <br/>
-                     
-                   
-                    </Form>
-                    </Form.Group>
-
-                  <button 
-                  onClick={DeleteUser}
-                  type="submit" className="btn btn-info btn-block">
-                  <FontAwesomeIcon icon={faUserMinus} className="mr-2" />탈퇴하기
-                  </button>
-                </form>
-              </div>
-            </Card>
-            </div>
-            </div>
-            
           </div>
         </div>
       </div>
