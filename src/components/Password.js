@@ -17,11 +17,12 @@ import { Button } from "react-bootstrap";
   //값전달까지만 확인 백엔드 통신 확인해보기
 const Password = () => {
 
-
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [new_password, setNewPassWord] = useState("");
-
+  const [new_password_again, setNewPassWordAgain] = useState("");
+  const [password_error,setPasswordError] = useState('');
+  const [checkpwd, setCheckPwd] = useState("");
   const changepassword ={
    code:code,
    new_password:new_password,
@@ -36,6 +37,12 @@ const Password = () => {
   const onChangeNewPassword = (e) => {
     setNewPassWord(e.target.value);
   };
+  const onChangeNewPasswordAgain = (e) => {
+    setPasswordError(e.target.value!==new_password);
+    console.log(password_error);
+    setNewPassWordAgain(e.target.value);
+  };
+
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -66,19 +73,6 @@ const Password = () => {
       });
   };
 
-  const changeNewPassword = (e) => {
-    e.preventDefault();
-    console.log(new_password);
-    axios
-      .post(`/api/user/verify-change-password/`, { new_password })
-      .then((res) => {
-        console.log(res.data);
-        alert("비밀번호가 변경되었습니다.");
-      })
-      .catch((error) => {
-        alert(error.response.data.message);
-      });
-  };
 
   const changePassword = (e) => {
     e.preventDefault();
@@ -148,6 +142,10 @@ const Password = () => {
                     </Form.Text>
                   </Form.Group>
 
+         
+                  <br />
+                  <h4>비밀번호 변경하기</h4>
+                  <br />
                   <Form.Group>
                     <Form inline>
                       <Form.Label style={{ width: "10rem" }}>
@@ -155,19 +153,13 @@ const Password = () => {
                       </Form.Label>{" "}
                       &nbsp;&nbsp;
                       <Form.Control
-                        style={{ width: "24rem" }}
+                        style={{ width: "29rem" }}
                         placeholder="인증번호를 입력하세요."
                         onChange={onChangeCode}
                         value={code}
                         id="code"
                       />
                       &nbsp;&nbsp;
-                      <div>
-                        <Button variant="info" onClick={checkHandler}>
-                          <FontAwesomeIcon icon={faCheck} className="ml-auto" />{" "}
-                          확인
-                        </Button>
-                      </div>
                     </Form>
 
                     <Form.Text className="text-muted">
@@ -176,37 +168,41 @@ const Password = () => {
                       3분입니다.
                     </Form.Text>
                   </Form.Group>
-                  <br />
-
-                  <h4>비밀번호 변경하기</h4>
-                  <br />
-                  <Form.Group>
+                  <Form.Group controlId="formBasicPassword">
                     <Form inline>
                       <Form.Label style={{ width: "10rem" }}>
                         새 비밀번호
                       </Form.Label>{" "}
                       &nbsp;&nbsp;
                       <Form.Control
+                        onChange = {onChangeNewPassword}
+                        type="password"
+                        name = "firstpassword"
                         style={{ width: "29rem" }}
                         placeholder="변경할 비밀번호를 입력하세요."
                       />
                       &nbsp;&nbsp;
                     </Form>
                   </Form.Group>
-                  <Form.Group>
+                  <Form.Group controlId="formBasicPassword">
                     <Form inline>
                       <Form.Label id="new_password" style={{ width: "10rem" }}>
                         &nbsp;새 비밀번호 확인
                       </Form.Label>{" "}
                       &nbsp;&nbsp;
                       <Form.Control
-                        onChange={onChangeNewPassword}
-                        value={new_password}
+                        onChange={onChangeNewPasswordAgain}
+                        type="password"
+                        name = "lastpassword"
                         style={{ width: "29rem" }}
                         placeholder="변경할 비밀번호를 다시 입력하세요."
                       />
                       &nbsp;&nbsp;
                     </Form>
+                    <Form.Text className="text-muted">
+                      <Form.Label style={{ width: "11rem" }}></Form.Label>
+                      {password_error&&"비밀번호가 일치하지 않습니다"}
+                    </Form.Text>
                   </Form.Group>
                   <br />
                   <button
