@@ -23,8 +23,8 @@ const UserSettings = () => {
   const [current_password, setCurrentPassword] = useState("");
   const [new_password, setNewPassword] = useState("");
   const [new_password_again, setNewPasswordAgain] = useState("");
-  const [password, setPassword] = useState("");
-  const [password_again, setPasswordAgain] = useState("");
+  const [delete_password, setPassword] = useState("");
+  const [delete_password_again, setPasswordAgain] = useState("");
 
   const changeuser = {
     username: username,
@@ -33,6 +33,10 @@ const UserSettings = () => {
     first_name: first_name,
     last_name: last_name,
   };
+
+  const send = {
+    password: delete_password,
+  }
 
   const FirstName = (e) => {
     setFirstName(e.target.value);
@@ -64,7 +68,7 @@ const UserSettings = () => {
     console.log(changeuser);
 
     axios
-      .patch(`/user/`, changeuser)
+      .patch(`/api/user/`, changeuser)
       .then((res) => {
         console.log(res.data);
         alert("정보가 변경되었습니다!");
@@ -76,11 +80,14 @@ const UserSettings = () => {
 
   const DeleteUser = (event) => {
     event.preventDefault();
-    console.log(password);
-    console.log(password_again);
+
+    console.log(delete_password);
+    console.log(delete_password_again);
+   
+    console.log(send);
 
     axios
-      .delete(`/user/`, { password })
+      .delete(`api/user/`, {send})
       .then((res) => {
         console.log(res.data);
         alert("탈퇴되었습니다!");
@@ -228,8 +235,8 @@ const UserSettings = () => {
                           </Form.Label>
                           <Form.Control
                             onChange={Password}
-                            value={password}
-                            id="password"
+                            value={delete_password}
+                            id="delete_password"
                             type="password"
                             style={{ width: "30rem" }}
                             placeholder="현재 비밀번호를 입력하세요"
@@ -243,8 +250,8 @@ const UserSettings = () => {
                           </Form.Label>
                           <Form.Control
                             onChange={PasswordAgain}
-                            value={password_again}
-                            id="password_again"
+                            value={delete_password_again}
+                            id="delete_password_again"
                             type="password"
                             style={{ width: "30rem" }}
                             placeholder="새 비밀번호를 입력하세요"
