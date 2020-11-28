@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Container, Button, CardDeck, Card } from "react-bootstrap";
+import { Container, Button, CardDeck, Card, Form } from "react-bootstrap";
 import { Link, useHistory } from 'react-router-dom';
 import classNames from "classnames";
 import { Editor } from 'react-draft-wysiwyg';
@@ -15,6 +15,7 @@ import TestPrintPage from './TestPrintPage';
 import axios from "axios";
 import html2canvas from 'html2canvas';
 import ReactToPrint from "react-to-print";
+import NavbarCollapse from "react-bootstrap/esm/NavbarCollapse";
 
 const TestPage = ({ isOpen, test_id }) => {
 	const [test, setTest] = useState();
@@ -42,6 +43,7 @@ const TestPage = ({ isOpen, test_id }) => {
 	const [print, setPrint] = useState(false);
 	const [goPrint, setGoPrint] = useState(false);
 	const [check, setCheck] = useState(false);
+	const [printType, setPrintType] = useState('both');
 
 	const componentRef = useRef();
 	const [pQuestion, setpQuestion] = useState([]);
@@ -211,11 +213,12 @@ const TestPage = ({ isOpen, test_id }) => {
 			t_color.push({ color: 'black' });
 		}
 
-		if(!goPrint) {
+		if(!check) {
 			setQuestionColor(t_color);
 			setEditorState(t_state);
 			setQuestion(t_question);
 			setSubmittedAnswer(t_type);
+			setCheck(true);
 		}
 		
 		if (tState === 'print') {
@@ -337,6 +340,7 @@ const TestPage = ({ isOpen, test_id }) => {
 		let t_testResult = [];
 
 		if (tState === 'print') {
+
 			makeSolution(questionLoaded, answerLoaded, tState, tType);
 		} else {
 			console.log('answer:', answerLoaded);
@@ -456,18 +460,16 @@ const TestPage = ({ isOpen, test_id }) => {
 		}
 	}
 
-	const submitPrint = (type, e) => {
-		e.preventDefault();
+	const submitPrint = (type) => {
 
 		console.log('print type:', type);
-		if(!goPrint) {
-			setCheck(true);
+		if(!goPrint && !check) {
 			loadQuestion('print', type);
 		}
-		if(goPrint) {
+		else {
 			setpType(type);
 			setGoPrint(true);
-		} 
+		}
 	}
 
 	const printHandler = (value, e) => {
@@ -475,12 +477,20 @@ const TestPage = ({ isOpen, test_id }) => {
 
 		if (value) {
 			setPrint(true);
+			submitPrint('both');
 		} else {
 			setPrint(false);
 			setGoPrint(false);
 		}
 	}
 
+	const printTypeSelect = (e) => {
+		//setTestNumber(e.target.value);
+		submitPrint(e.target.value);
+	}
+
+
+	
 	return (
 		<Container
 			fluid
@@ -493,20 +503,22 @@ const TestPage = ({ isOpen, test_id }) => {
 					</h4>
 				</div>
 				<div className="p-2 bd-highlight">
-					{(state !== 'test' && !print) ? <div>
+					{(state !== 'test' && !print) ? <div className="row">
 						<Button variant={buttonColor} style={{ width: '10rem', height: '2.5rem' }} onClick={modifyHandler}
 						>문제 수정</Button>&nbsp;
 						<Button variant="info" style={{ width: '10rem', height: '2.5rem' }} onClick={(e) => {printHandler(true, e)}}
 						>PDF 저장</Button>&nbsp;
 						<Button variant="info" style={{ width: '10rem', height: '2.5rem' }} onClick={startHandler}
-						>시험 시작</Button> </div> : (state !== 'test' && print) ? <div>
-
-							<Button variant="info" style={{ width: '7rem', height: '2.5rem' }} onClick={(e) => { submitPrint('both', e) }}
-							>문제+정답</Button>&nbsp;
-						<Button variant="info" style={{ width: '7rem', height: '2.5rem' }} onClick={(e) => { submitPrint('question', e) }}
-							>문제</Button>&nbsp;
-						<Button variant="info" style={{ width: '7rem', height: '2.5rem' }} onClick={(e) => { submitPrint('answer', e) }}
-							>정답</Button>&nbsp;
+						>시험 시작</Button> </div> : (state !== 'test' && print) ? <div className="d-flex">
+							{goPrint && <ReactToPrint
+        			trigger={() => <div className="row"><Button variant="info" style={{ width: '7rem', height: '2.5rem' }}>Print</Button>&nbsp;&nbsp;&nbsp;&nbsp;</div>}
+        			content={() => componentRef.current}
+      			/>}
+						<Form.Control as="select" onChange={printTypeSelect} style={{width:'10rem'}}>
+              <option value="both">문제+정답</option>
+              <option value="question">문제</option>
+              <option value="answer">정답</option>
+            </Form.Control>&nbsp;&nbsp;		
 						<Button variant="info" style={{ width: '7rem', height: '2.5rem' }} onClick={(e) => {printHandler(false, e)}}
 							>취소</Button>&nbsp;
 						</div> : <div>
@@ -540,14 +552,13 @@ const TestPage = ({ isOpen, test_id }) => {
 						)}
 					</CardDeck>
 				</div>
-					: (state === 'test') ? <div style={{ width: "50rem", left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto', textAlign: 'center' }}>
+					: (state === 'test') ? <div style={{ width: "80%", left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto', textAlign: 'center' }}>
 
 						<div style={{ width: "100%", left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto' }}>
-
 							<Card
 								className="center"
 								style={{
-									width: "100%",
+									width: '100%',
 									height: "20rem !important",
 									overflow: "auto",
 								}}
@@ -639,6 +650,7 @@ const TestPage = ({ isOpen, test_id }) => {
 									</div> : <div></div>
 									}
 								</div>
+								<br/>
 								<div className="row h-100 justify-content-center ">
 								{Num !== 0 ?
 									<Button
@@ -667,8 +679,8 @@ const TestPage = ({ isOpen, test_id }) => {
 						</div>
 					</div> : <div></div>}
 				{
-					solutionState && <div>
-						문제의 해설입니다.<br /><br />
+					solutionState && <div style={{width: "60%", left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto', textAlign: 'center'}}>
+						<br/>문제의 해설입니다.<br /><br />
 						{
 							answerList.map((i, index) => (
 								<div key={index}>
@@ -707,10 +719,7 @@ const TestPage = ({ isOpen, test_id }) => {
 					</div>
 				}
 			</ul>
-			{goPrint && <div><ReactToPrint
-        			trigger={() => <Button>Print</Button>}
-        			content={() => componentRef.current}
-      			/><div style={{visibility: "hidden"}}> <TestPrintPage ref={componentRef} questions={pQuestion} answers={pAnswer} type={pType}/></div></div>}
+			<div style={{visibility: "hidden"}}> <TestPrintPage ref={componentRef} questions={pQuestion} answers={pAnswer} type={pType}/></div>
 		</Container >
 	);
 }
