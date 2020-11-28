@@ -75,19 +75,13 @@ const UserSettings = (isOpen) => {
   const SubmitSaveChange = (event) => {
     event.preventDefault();
 
-    const changeuser = {
-      username: username,
-      current_password: current_password,
-      new_password: new_password,
-      first_name: first_name,
-      last_name: last_name,
-    };
-
-    console.log(changeuser);
-
     axios
       .patch(`/api/user`, {
-        data: changeuser,
+        "username": username,
+        "current_password": current_password,
+        "new_password": new_password,
+        "first_name": first_name,
+        "last_name": last_name,
       })
       .then((res) => {
         console.log(res.data);
