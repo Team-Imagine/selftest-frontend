@@ -12,12 +12,13 @@ class TestPrintPage extends React.Component {
 		this.state = {
 			height: 0,
 		}
+		console.log('component question:', this.props.questions);
 	}
 
 	render() {
 		return (
 			<div>
-				<br /><br />
+				<br/><br/>
 				<div>
 					{this.props.type !== 'answer' && <div><h2 style={{ fontSize: '50px', textAlign: 'center', paddingBottom: '10px', marginLeft: '20px', marginRight: '20px', borderBottom:'3px solid black'}}>Test</h2> {
 					this.props.questions.map((i, index, array) => ((index % 2 === 0) ? <div key={index}>
@@ -52,7 +53,7 @@ class TestPrintPage extends React.Component {
 								</div>
 							</div>
 							
-							<div style={{ width: '50%', float: 'left' }}>
+							<div style={{ width: '50%', float: 'left' }}> {index+1 < array.length && 
 								<div>
 									<br /><div style={{ fontSize: '16px', fontWeight: "bold", color: 'black', margin: '20px'}}>{index + 2}번) {array[index + 1].title} </div><br />
 									<div style={{ width: '90%', height: '300px', left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto' }}>
@@ -86,7 +87,7 @@ class TestPrintPage extends React.Component {
 											풀이:
 										</div>}
 									</div>
-								</div>
+								</div>}
 							</div>
 						</div>
 					</div> : <div key={index}></div>
@@ -114,8 +115,8 @@ class TestPrintPage extends React.Component {
 										/></div>
 								</div>
 							</div>
-							<div style={{ width: '50%', float: 'left' }}>
-								<div>
+							<div style={{ width: '50%', float: 'left' }}> {index+1 < array.length &&
+								<div>  
 									<br /><div style={{ fontWeight: "bold", color: 'black', margin: '20px'}}>{index + 2}번) {array[index + 1].answer} </div><br />
 									<div style={{ width: '90%', height: '300px', left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto' }}>
 										<div style={{ width: '90%', height: '200px', overflow: 'hidden' }} >
@@ -130,7 +131,7 @@ class TestPrintPage extends React.Component {
 												}}
 											/></div>
 									</div>
-								</div>
+								</div>}
 							</div>
 						</div>
 					</div> : <div key={index}></div>
