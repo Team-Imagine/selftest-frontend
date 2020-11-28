@@ -3,21 +3,24 @@ import login from "../picture/login.png";
 import Form from "react-bootstrap/Form";
 import { Redirect } from "react-router-dom";
 import store from "../store";
+import classNames from "classnames";
 import Card from "react-bootstrap/Card";
 import axios from "axios";
 import {
   faExchangeAlt,
+  faHome,
   faPaperPlane,
   faSave,
   faUserMinus,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button } from "react-bootstrap";
+import { Container,Button } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 
-//성공메시지는 뜨나, 데이터 업데이트 x  
+//성공메시지는 뜨나, 데이터 업데이트 x
 
-const UserSettings = () => {
-  const [user,setUser] = useState([]);
+const UserSettings = (isOpen) => {
+  const [user, setUser] = useState([]);
   const [first_name, setFirstName] = useState("");
   const [last_name, setLastName] = useState("");
   const [username, setUserName] = useState("");
@@ -26,6 +29,11 @@ const UserSettings = () => {
   const [new_password_again, setNewPasswordAgain] = useState("");
   const [password, setPassword] = useState("");
   const [password_again, setPasswordAgain] = useState("");
+  let history = useHistory();
+
+  const moveHome = () => {
+    history.push("/home");
+  };
 
   const FirstName = (e) => {
     setFirstName(e.target.value);
@@ -44,7 +52,7 @@ const UserSettings = () => {
   };
   const NewPasswordAgain = (e) => {
     setNewPasswordAgain(e.target.value);
-  }
+  };
   const Password = (e) => {
     setPassword(e.target.value);
   };
@@ -66,7 +74,7 @@ const UserSettings = () => {
   //사용자 정보 변경
   const SubmitSaveChange = (event) => {
     event.preventDefault();
-    
+
     const changeuser = {
       username: username,
       current_password: current_password,
@@ -74,12 +82,13 @@ const UserSettings = () => {
       first_name: first_name,
       last_name: last_name,
     };
-  
+
     console.log(changeuser);
 
     axios
-      .patch(`/api/user`, { 
-       data: changeuser})
+      .patch(`/api/user`, {
+        data: changeuser,
+      })
       .then((res) => {
         console.log(res.data);
         setFirstName("");
@@ -95,16 +104,16 @@ const UserSettings = () => {
       });
   };
 
-  //사용자 탈퇴 
+  //사용자 탈퇴
   const DeleteUser = (e) => {
- 
     e.preventDefault();
     console.log("비밀번호:", password);
     console.log("비밀번호 확인:", password_again);
 
     axios
       .delete(`api/user`, {
-        data: password})
+        data: password,
+      })
       .then((res) => {
         console.log(res.data.message);
 
@@ -115,15 +124,27 @@ const UserSettings = () => {
       });
   };
 
-
   return (
-    <div
-      style={{
-        backgroundColor: "#f7feff",
-      }}
+    <Container
+      fluid
+      className={classNames("content", { "is-open": { isOpen } })}
     >
-    
-      <div style={{ height: "70rem" }}>
+  
+      <div >
+        <div style={{height:"7rem"}}></div>
+        <div style={{height:"4rem"}}className="d-flex bd-highlight mb-3">
+          <div className="mr-auto p-2 bd-highlight">
+          </div>
+          <div className="p-2 bd-highlight">
+            <Button variant="info "onClick={moveHome}>
+              <FontAwesomeIcon icon = {faHome} className="mr-2"/>
+            홈으로 돌아가기
+            </Button>
+          </div>
+         
+        </div>
+
+   
         <div className="container h-100">
           <div className="row h-100 justify-content-center align-items-center">
             <div className="d-flex flex-nowrap bd-highlight">
@@ -138,11 +159,9 @@ const UserSettings = () => {
                       <Form.Group>
                         <Form inline>
                           <Form.Label style={{ width: "10rem" }}>
-                            사용자 ID {" "}  
+                            사용자 ID{" "}
                           </Form.Label>
-                          <Form.Label>
-                          {user.email}
-                          </Form.Label>
+                          <Form.Label>{user.email}</Form.Label>
                         </Form>
                       </Form.Group>
                       <br />
@@ -164,7 +183,9 @@ const UserSettings = () => {
 
                       <Form.Group>
                         <Form inline>
-                          <Form.Label style={{ width: "10rem" }}>성 </Form.Label>
+                          <Form.Label style={{ width: "10rem" }}>
+                            성{" "}
+                          </Form.Label>
                           <Form.Control
                             onChange={LastName}
                             value={last_name}
@@ -191,7 +212,8 @@ const UserSettings = () => {
                         </Form>
                       </Form.Group>
                       <br />
-                      <h4>비밀번호 변경하기</h4><br/>
+                      <h4>비밀번호 변경하기</h4>
+                      <br />
 
                       <Form.Group>
                         <Form inline>
@@ -222,7 +244,8 @@ const UserSettings = () => {
                             placeholder="새 비밀번호를 입력하세요"
                           />
                           <br />
-                        </Form><br/>
+                        </Form>
+                        <br />
 
                         <Form inline>
                           <Form.Label style={{ width: "10rem" }}>
@@ -238,7 +261,6 @@ const UserSettings = () => {
                           />
                           <br />
                         </Form>
-                        
                       </Form.Group>
                       <button
                         onClick={SubmitSaveChange}
@@ -290,9 +312,9 @@ const UserSettings = () => {
                           <br />
                         </Form>
                         <Form.Text className="text-muted">
-                      <Form.Label style={{ width: "10rem" }}></Form.Label>
-                     비밀번호가 일치하지 않습니다
-                    </Form.Text>
+                          <Form.Label style={{ width: "10rem" }}></Form.Label>
+                          비밀번호가 일치하지 않습니다
+                        </Form.Text>
                       </Form.Group>
 
                       <button
@@ -315,7 +337,8 @@ const UserSettings = () => {
       <br />
       <br />
       <br />
-    </div>
+
+    </Container>
   );
 };
 export default UserSettings;
