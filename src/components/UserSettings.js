@@ -93,35 +93,21 @@ const UserSettings = () => {
       .catch((error) => {
         alert(error.response.data.message);
       });
-     
-    axios
-      .get(`/api/user`)
-      .then((res) => {
-        console.log("변경된 사용자 정보");
-        console.log(res.data);
-        setUser(res.data.user);
-      })
-      .catch((error) => {
-        alert(error.response.data.message);
-      });
-    
   };
 
   //사용자 탈퇴 
-  const DeleteUser = (event) => {
-    event.preventDefault();
-    const send = {
-    password,
-    };
-
+  const DeleteUser = (e) => {
+ 
+    e.preventDefault();
     console.log("비밀번호:", password);
     console.log("비밀번호 확인:", password_again);
 
     axios
       .delete(`api/user`, {
-        data: send})
+        data: password})
       .then((res) => {
         console.log(res.data.message);
+
         alert("탈퇴되었습니다!");
       })
       .catch((error) => {

@@ -1,0 +1,110 @@
+import React, { Component, useEffect, useState } from "react";
+import login from "../picture/login.png";
+import Form from "react-bootstrap/Form";
+import { Redirect } from "react-router-dom";
+import store from "../store";
+import Card from "react-bootstrap/Card";
+import { Container } from "react-bootstrap";
+import axios from "axios";
+import Table from "react-bootstrap/Table";
+import classNames from "classnames";
+
+
+const Activity = (isOpen) => {
+  const [user, setUser] = useState([]);
+  const [username, setUsername] = useState([]);
+  const [point_logs, setPointLogs] = useState([]);
+  console.log({user});
+
+  useEffect(() => {
+    
+     //사용자 정보 불러오기
+     axios
+     .get(`/api/user`)
+     .then((res) => {
+       console.log(res.data);
+       setUser(res.data.user);
+       setUsername(res.data.user.username);
+       console.log(res.data.user.username);
+
+     })
+     .catch((error) => {
+       alert(error.response.data.message);
+     });
+     
+     console.log(username);
+
+   //포인트내역 불러오기
+   axios
+   .get(`/api/user/${username}/point-logs`)
+
+   .then((res) => {
+     console.log(res.data);
+     setPointLogs(res.data.point_logs.rows);
+   })
+   .catch((error) => {
+     alert(error.response.data.message);
+   });
+  }, []);
+
+  return (
+    
+    <Container
+      fluid
+      className={classNames("content", { "is-open": { isOpen } })}
+    >
+      <div>
+        <div className="d-flex bd-highlight mb-3">
+          <div className="mr-auto p-2 bd-highlight">
+            <h4 style={{ fontWeight: "bolder" }}>포인트내역</h4>
+          </div>
+        </div>
+        <hr />
+
+        <div className="container h-100">
+          <div className="row h-100 justify-content-center align-items-center">
+            <div className="p-2 bd-highlight col-example">
+              <Card border="info" style={{ width: "80rem", height: "auto" }}>
+                <div className=" justify-content-center align-items-center">
+                  <div style={{ width: "auto" }}>
+                    <Table style={{ height: "auto" }} striped bordered hover>
+                      <thead>
+                        <tr>
+                          <th>번호</th>
+                          <th>날짜</th>
+                          <th>포인트받은내역</th>
+                          <th>포인트</th>
+                        </tr>
+                      </thead>
+                      {point_logs.map((i, index) => (
+                        <tbody>
+                          <tr>
+                            <td style={{ width: "10%" }} key={index + 1}>
+                              {index + 1}{" "}
+                            </td>
+                            <td style={{ width: "20%" }}>{i.created_at}</td>
+                            <td style={{ width: "50%" }}>{i.content}</td>
+                            <td style={{ width: "20%" }}>{i.amount}</td>
+                          </tr>
+                        </tbody>
+                      ))}
+                    </Table>
+                  </div>
+                </div>
+              </Card>
+            </div>
+          </div>
+        </div>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+      </div>
+    </Container>
+  );
+};
+export default Activity;

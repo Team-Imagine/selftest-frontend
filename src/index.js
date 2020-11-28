@@ -20,6 +20,7 @@ import Bookmarks from "./components/Bookmarks";
 import Search from "./components/Search";
 import { CookiesProvider } from 'react-cookie';
 import UserSettings from "./components/UserSettings";
+import Activity from "./components/Activitycontent"
 
 ReactDOM.render(
 
@@ -38,6 +39,7 @@ ReactDOM.render(
           <Route exact path="/login" component={LoginForm} />
           <Route exact path="/auth" component={AuthForm} />
           <Route path="/signup" component={SignUp} />
+          <Route path="/activity" component={Activity}/>
           <Route exact path="/subject" component={Subject} />
           <Route path="/password" component={Password} />
           <Route path="/members" component={Members} />
