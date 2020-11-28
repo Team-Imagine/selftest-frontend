@@ -12,6 +12,8 @@ import { faAppleAlt, faHeart, faStar, faThumbsDown, faThumbsUp } from "@fortawes
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import TestAutoMaking from './TestAutoMaking';
 
+
+
 import axios from "axios";
 
 const TestMaking = ({ isOpen }) => {
@@ -315,10 +317,9 @@ const TestMaking = ({ isOpen }) => {
                     </Card.Body>
                     <Card.Footer>
                       <div className="d-flex bd-highlight mb-3" style={{ height: "0.8rem" }}>
-
                         <div className="mr-auto p-2 bd-highlight">
                           좋아요 &nbsp;
-            <FontAwesomeIcon icon={faThumbsUp} className="ml-auto" />&nbsp;
+            <FontAwesomeIcon icon={faThumbsUp} className="mr-2" />&nbsp;
             {i["likeable_entity.total_likes"]}
 
                         </div>
@@ -327,15 +328,11 @@ const TestMaking = ({ isOpen }) => {
                           싫어요 &nbsp;
             <FontAwesomeIcon icon={faThumbsDown} className="ml-auto" />&nbsp;
             {i["likeable_entity.total_dislikes"]}
-
                         </div>
-
                         <div className="mr-auto p-2 bd-highlight">
-                          신선해요 &nbsp;
-            <FontAwesomeIcon icon={faAppleAlt} className="ml-auto" />&nbsp;
-            {Number(i.average_freshness).toFixed(2)}
+                            <FontAwesomeIcon icon={faAppleAlt} className="ml-auto"/>&nbsp;
+                          {Number(i.average_freshness).toFixed(2)}                    
                         </div>
-
                         <div className="mr-auto p-2 bd-highlight">
                           난이도  &nbsp;
             <FontAwesomeIcon icon={faStar} className="ml-auto" />&nbsp;
@@ -357,7 +354,8 @@ const TestMaking = ({ isOpen }) => {
               </div>
             )}
           </CardDeck>
-          <ul className="row justify-content-center align-items-center">
+          <ul className="row justify-content-center align-items-center"
+          style={{width: '70%', textAlign: 'center', left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto',}}>
             {pages.map((i, index) =>
               <div key={index}>
                 <button style={{ backgroundColor: '#ffffff', border: '1px solid', width: '1.5rem' }} onClick={(e) => loadQuestionPerPage(i, e)}>{i}</button>&nbsp;

@@ -1,0 +1,17 @@
+@media print {
+	page-divide {
+			page-break-after: always;
+	}
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+::-webkit-height {
+    height: auto;
+}
+
+.section {
+    page-break-before:always;
+}

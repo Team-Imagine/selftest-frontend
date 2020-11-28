@@ -1,17 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Container, Button, CardDeck, Card } from "react-bootstrap";
 import { Link, useHistory } from 'react-router-dom';
 import classNames from "classnames";
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-
+import { renderToString, render } from "react-dom/server";
+import jsPDF from "jspdf";
 import styled from 'styled-components';
 import { EditorState, convertToRaw, ContentState } from 'draft-js';
 import htmlToDraft from "html-to-draftjs";
-import TestAutoMaking from './TestAutoMaking';
-import parse from "node-html-parser";
 
+import parse from "node-html-parser";
+import TestPrintPage from './TestPrintPage';
 import axios from "axios";
+import html2canvas from 'html2canvas';
+import ReactToPrint from "react-to-print";
 
 const TestPage = ({ isOpen, test_id }) => {
 	const [test, setTest] = useState();
@@ -36,6 +39,14 @@ const TestPage = ({ isOpen, test_id }) => {
 	const [testResult, setTestResult] = useState([]);
 	const [solutionState, setSolutionState] = useState(false);
 	const [questionColor, setQuestionColor] = useState([]);
+	const [print, setPrint] = useState(false);
+	const [goPrint, setGoPrint] = useState(false);
+	const [check, setCheck] = useState(false);
+
+	const componentRef = useRef();
+	const [pQuestion, setpQuestion] = useState([]);
+	const [pAnswer, setpAnswer] = useState([]);
+	const [pType, setpType] = useState('');
 
 	const [essayAnswerEditor, setEssayAnswerEditor] = useState(
 		EditorState.createEmpty()
@@ -43,10 +54,8 @@ const TestPage = ({ isOpen, test_id }) => {
 
 	const [complete, setComplete] = useState(false);
 
-	let htmlToEditor = "";
 	let t_choiceColor = [];
 	let htmlToEditor_answer = "";
-	let short_answer = "";
 
 	useEffect(() => {
 		axios.get(`/api/testset/${test_id}?per_page=${50}`)
@@ -66,7 +75,7 @@ const TestPage = ({ isOpen, test_id }) => {
 		if (state === 'normal') {
 			setButtonColor('danger');
 			setState('delete');
-		} else {
+		} else if (state === 'delete') {
 			setButtonColor('info');
 			setState('normal');
 		}
@@ -114,49 +123,10 @@ const TestPage = ({ isOpen, test_id }) => {
 	// 시험 시작 시 문제를 불러오는 함수
 	const startHandler = () => {
 		setState('test');
-
-		let t_state = [];
-		let t_question = [];
-		let t_type = [];
-		let t_color = [];
-		for (var i = 0; i < test.test_questions.length; i++) {
-			test.test_questions[i].question.content = convertUploadedImageUrls(test.test_questions[i].question.content);
-
-			htmlToEditor = test.test_questions[i].question.content;
-
-			const blocksFromHtml = htmlToDraft(htmlToEditor);
-			if (blocksFromHtml) {
-				const { contentBlocks, entityMap } = blocksFromHtml;
-
-				const contentState = ContentState.createFromBlockArray(
-					contentBlocks,
-					entityMap
-				);
-
-				const t_editorState = EditorState.createWithContent(contentState);
-				t_state.push(t_editorState);
-			}
-
-			t_question.push(test.test_questions[i].question);
-
-			if (test.test_questions[i].question.type === "multiple_choice") {
-				let t_colorList = [];
-				for (var j = 0; j < test.test_questions[i].question.multiple_choice_items.length; j++) {
-					t_colorList.push({ color: 'black' });
-				}
-				t_type.push({ choiceList: test.test_questions[i].question.multiple_choice_items, choiceColor: t_colorList });
-			} else if (test.test_questions[i].question.type === "short_answer") {
-				t_type.push({ answer: '' });
-			} else {
-				t_type.push({ essay_answer: EditorState.createEmpty() });
-			}
-
-			t_color.push({color: 'black'});
+		
+		if(!check) {
+			loadQuestion(null, null);
 		}
-		setQuestionColor(t_color);
-		setEditorState(t_state);
-		setQuestion(t_question);
-		setSubmittedAnswer(t_type);
 	}
 
 	const moveHandler = (value, e) => {
@@ -200,15 +170,68 @@ const TestPage = ({ isOpen, test_id }) => {
 		setSubmittedAnswer([...t_answer]);
 	};
 
-	// 시험 제출 후 정답을 확인하는 함수
-	const testSubmitHandler = async () => {
-		alert('시험 제출');
+	// 시험 문제를 불러오는 함수
+	const loadQuestion = (tState, tType) => {
+		let t_state = [];
+		let t_question = [];
+		let t_type = [];
+		let t_color = [];
+		let htmlToEditor = "";
+		for (var i = 0; i < test.test_questions.length; i++) {
+			test.test_questions[i].question.content = convertUploadedImageUrls(test.test_questions[i].question.content);
 
-		console.log('test result:', submittedAnswer);
+			htmlToEditor = test.test_questions[i].question.content;
 
+			const blocksFromHtml = htmlToDraft(htmlToEditor);
+			if (blocksFromHtml) {
+				const { contentBlocks, entityMap } = blocksFromHtml;
+
+				const contentState = ContentState.createFromBlockArray(
+					contentBlocks,
+					entityMap
+				);
+
+				const t_editorState = EditorState.createWithContent(contentState);
+				t_state.push(t_editorState);
+			}
+
+			t_question.push(test.test_questions[i].question);
+
+			if (test.test_questions[i].question.type === "multiple_choice") {
+				let t_colorList = [];
+				for (var j = 0; j < test.test_questions[i].question.multiple_choice_items.length; j++) {
+					t_colorList.push({ color: 'black' });
+				}
+				t_type.push({ choiceList: test.test_questions[i].question.multiple_choice_items, choiceColor: t_colorList });
+			} else if (test.test_questions[i].question.type === "short_answer") {
+				t_type.push({ answer: '' });
+			} else {
+				t_type.push({ essay_answer: EditorState.createEmpty() });
+			}
+
+			t_color.push({ color: 'black' });
+		}
+
+		if(!goPrint) {
+			setQuestionColor(t_color);
+			setEditorState(t_state);
+			setQuestion(t_question);
+			setSubmittedAnswer(t_type);
+		}
+		
+		if (tState === 'print') {
+			for(var i = 0; i< t_question.length; i++) {
+				t_question[i].content = t_state[i];
+			}
+			loadAnswer(t_question, tState, tType);
+		}
+	}
+
+	// 정답을 불러오는 함수
+	const loadAnswer = (question, tState, tType) => {
 		axios.get(`/api/testset/${test.id}/answers?per_page=${50}`)
 			.then(res => {
-
+				let htmlToEditor_answer = "";
 				let loadedQuestion = res.data.test_set.test_questions.rows;
 
 				let t_answer = [];
@@ -294,90 +317,108 @@ const TestPage = ({ isOpen, test_id }) => {
 						t_answer.push({ answer: "", solution: t_editorState_answer });
 					}
 				}
-
-				showScore(t_answer);
+				showScore(question, t_answer, tState, tType);
 			})
 			.catch((error) => {
 				alert(error.response.data.message);
 			});
 	}
 
-	const showScore = (answerLoaded) => {
-		let t_testResult = [];
+	// 시험 제출 후 정답을 확인하는 함수
+	const testSubmitHandler = () => {
+		alert('시험 제출');
 
-		console.log('answer:', answerLoaded);
-		for (var i = 0; i < answerLoaded.length; i++) {
-			if (question[i].type === "multiple_choice") {
+		console.log('test result:', submittedAnswer);
 
-				let count = 0;
-				let check = false;
-				for (var j = 0; j < submittedAnswer[i].choiceColor.length; j++) {
-					if (submittedAnswer[i].choiceColor[j].color === 'red') {
-						check = true;
-					}
-					for (var k = 0; k < answerLoaded[i].answer.length; k++) {
-						if (submittedAnswer[i].choiceColor[j].color === 'red') {
-							if (submittedAnswer[i].choiceList[j].item_text === answerLoaded[i].answer[k])
-								count += 1;
-						}
-					}
-				}
-
-				if ((count === answerLoaded[i].answer.length) && answerLoaded[i].answer.length !== 0) {
-					t_testResult.push(1);
-				} else if (!check && answerLoaded[i].answer.length === 0) {
-					t_testResult.push(1);
-				} else {
-					t_testResult.push(0);
-				}
-			} else if (question[i].type === "short_answer") {
-				let check = false;
-				for (var j = 0; j < answerLoaded[i].answer.length; j++) {
-					if (answerLoaded[i].answer[j] === submittedAnswer[i].answer) {
-						check = true;
-					}
-				}
-				if (check) {
-					t_testResult.push(1);
-				} else {
-					t_testResult.push(0);
-				}
-			} else {
-				t_testResult.push(2);
-			}
-		}
-		setTestResult(t_testResult);
-		makeSolution(answerLoaded);
-		let correctAnswer = 0;
-		let essayAnswer = 0;
-		let incorrectAnswer = 0;
-		let t_color = [];
-		for (var i = 0; i < t_testResult.length; i++) {
-			if (t_testResult[i] === 1) {
-				correctAnswer += 1;
-				t_color.push({color: 'black'});
-			} else if (t_testResult[i] === 2) {
-				essayAnswer += 1;
-				t_color.push({color: 'black'});
-			} else {
-				incorrectAnswer += 1;
-				t_color.push({color: 'red'});
-			}
-		}
-		setQuestionColor(t_color);
-		
-		alert('맞은개수: ' + correctAnswer + ' 틀린개수: ' + incorrectAnswer + ' 서술형: ' + essayAnswer);
+		loadAnswer(null, 'test');
 	}
 
-	const makeSolution = (answerLoaded) => {
+	// 채점 결과를 보여주는 함수
+	const showScore = (questionLoaded, answerLoaded, tState, tType) => {
+		let t_testResult = [];
+
+		if (tState === 'print') {
+			makeSolution(questionLoaded, answerLoaded, tState, tType);
+		} else {
+			console.log('answer:', answerLoaded);
+			for (var i = 0; i < answerLoaded.length; i++) {
+				if (question[i].type === "multiple_choice") {
+
+					let count = 0;
+					let check = false;
+					for (var j = 0; j < submittedAnswer[i].choiceColor.length; j++) {
+						if (submittedAnswer[i].choiceColor[j].color === 'red') {
+							check = true;
+						}
+						for (var k = 0; k < answerLoaded[i].answer.length; k++) {
+							if (submittedAnswer[i].choiceColor[j].color === 'red') {
+								if (submittedAnswer[i].choiceList[j].item_text === answerLoaded[i].answer[k])
+									count += 1;
+							}
+						}
+					}
+
+					if ((count === answerLoaded[i].answer.length) && answerLoaded[i].answer.length !== 0) {
+						t_testResult.push(1);
+					} else if (!check && answerLoaded[i].answer.length === 0) {
+						t_testResult.push(1);
+					} else {
+						t_testResult.push(0);
+					}
+				} else if (question[i].type === "short_answer") {
+					let check = false;
+					for (var j = 0; j < answerLoaded[i].answer.length; j++) {
+						if (answerLoaded[i].answer[j] === submittedAnswer[i].answer) {
+							check = true;
+						}
+					}
+					if (check) {
+						t_testResult.push(1);
+					} else {
+						t_testResult.push(0);
+					}
+				} else {
+					t_testResult.push(2);
+				}
+			}
+			setTestResult(t_testResult);
+			let correctAnswer = 0;
+			let essayAnswer = 0;
+			let incorrectAnswer = 0;
+			let t_color = [];
+			for (var i = 0; i < t_testResult.length; i++) {
+				if (t_testResult[i] === 1) {
+					correctAnswer += 1;
+					t_color.push({ color: 'black' });
+				} else if (t_testResult[i] === 2) {
+					essayAnswer += 1;
+					t_color.push({ color: 'black' });
+				} else {
+					incorrectAnswer += 1;
+					t_color.push({ color: 'red' });
+				}
+			}
+			setQuestionColor(t_color);
+			alert('맞은개수: ' + correctAnswer + ' 틀린개수: ' + incorrectAnswer + ' 서술형: ' + essayAnswer);
+			makeSolution(questionLoaded, answerLoaded, tState, tType);
+		}
+	}
+
+	const makeSolution = (questionLoaded, answerLoaded, tState, tType) => {
 		let solution = [];
+		let t_question;
+		if (tState === 'print') {
+			t_question = questionLoaded;
+		} else {
+			t_question = question;
+		}
 
 		for (var i = 0; i < answerLoaded.length; i++) {
-			if (question[i].type === "multiple_choice") {		// 객관식
+			if (t_question[i].type === "multiple_choice") {		// 객관식
 				let string = "";
 				for (var j = 0; j < answerLoaded[i].answer.length; j++) {
-					for (var k = 0; k < question[i].multiple_choice_items.length; k++) {
-						if (question[i].multiple_choice_items[k].item_text === answerLoaded[i].answer[j]) {
+					for (var k = 0; k < t_question[i].multiple_choice_items.length; k++) {
+						if (t_question[i].multiple_choice_items[k].item_text === answerLoaded[i].answer[j]) {
 
 							string += (k + 1);
 							string += "번, ";
@@ -391,7 +432,7 @@ const TestPage = ({ isOpen, test_id }) => {
 				} else {
 					solution[i].answer = solution[i].answer.substring(0, solution[i].answer.length - 2);
 				}
-			} else if (question[i].type === "short_answer") {	// 주관식
+			} else if (t_question[i].type === "short_answer") {	// 주관식
 				let string = "";
 				for (var j = 0; j < answerLoaded[i].answer.length; j++) {
 					string += answerLoaded[i].answer[j] + " 또는 ";
@@ -403,8 +444,42 @@ const TestPage = ({ isOpen, test_id }) => {
 				solution.push({ answer: '해설을 참조하세요', solution: answerLoaded[i].solution });
 			}
 		}
-		setAnswerList(solution);
-		setSolutionState(true);
+
+		if (tState === 'print' && !goPrint) {
+			setpQuestion(t_question);
+			setpAnswer(solution);
+			setpType(tType);
+			setGoPrint(true);
+		}
+		if(tState !== 'print') {
+			setSolutionState(true);
+			setAnswerList(solution);
+		}
+	}
+
+	const submitPrint = (type, e) => {
+		e.preventDefault();
+
+		console.log('print type:', type);
+		if(!goPrint) {
+			setCheck(true);
+			loadQuestion('print', type);
+		}
+		if(goPrint) {
+			setpType(type);
+			setGoPrint(true);
+		} 
+	}
+
+	const printHandler = (value, e) => {
+		e.preventDefault();
+
+		if (value) {
+			setPrint(true);
+		} else {
+			setPrint(false);
+			setGoPrint(false);
+		}
 	}
 
 	return (
@@ -419,14 +494,26 @@ const TestPage = ({ isOpen, test_id }) => {
 					</h4>
 				</div>
 				<div className="p-2 bd-highlight">
-					{(state !== 'test') ? <div>
-						<Button variant={buttonColor} style={{ width: '19rem', height: '2.5rem' }} onClick={modifyHandler}
+					{(state !== 'test' && !print) ? <div>
+						<Button variant={buttonColor} style={{ width: '10rem', height: '2.5rem' }} onClick={modifyHandler}
 						>문제 수정</Button>&nbsp;
-						<Button variant="info" style={{ width: '19rem', height: '2.5rem' }} onClick={startHandler}
-						>시험 시작</Button> </div> : <div>
-							<Button variant="info" style={{ width: '19rem', height: '2.5rem' }} onClick={testSubmitHandler}
-							>시험 제출</Button>
-						</div>
+						<Button variant="info" style={{ width: '10rem', height: '2.5rem' }} onClick={(e) => {printHandler(true, e)}}
+						>PDF 저장</Button>&nbsp;
+						<Button variant="info" style={{ width: '10rem', height: '2.5rem' }} onClick={startHandler}
+						>시험 시작</Button> </div> : (state !== 'test' && print) ? <div>
+
+							<Button variant="info" style={{ width: '7rem', height: '2.5rem' }} onClick={(e) => { submitPrint('both', e) }}
+							>문제+정답</Button>&nbsp;
+						<Button variant="info" style={{ width: '7rem', height: '2.5rem' }} onClick={(e) => { submitPrint('question', e) }}
+							>문제</Button>&nbsp;
+						<Button variant="info" style={{ width: '7rem', height: '2.5rem' }} onClick={(e) => { submitPrint('answer', e) }}
+							>정답</Button>&nbsp;
+						<Button variant="info" style={{ width: '7rem', height: '2.5rem' }} onClick={(e) => {printHandler(false, e)}}
+							>취소</Button>&nbsp;
+						</div> : <div>
+								<Button variant="info" style={{ width: '10rem', height: '2.5rem' }} onClick={testSubmitHandler}
+								>시험 제출</Button>
+							</div>
 					}
 				</div>
 			</div>
@@ -439,7 +526,7 @@ const TestPage = ({ isOpen, test_id }) => {
 								<div className="row h-100 justify-content-center align-items-center">
 
 									<Card className="text-center" variant="info" style={{ width: '20rem' }}>
-										<Card.Body><div style={{ fontWeight: "lighter", color: {questionColor} }}>{i.question.title}
+										<Card.Body><div style={{ fontWeight: "lighter", color: { questionColor } }}>{i.question.title}
 										</div>
 										</Card.Body>
 									</Card>
@@ -466,7 +553,7 @@ const TestPage = ({ isOpen, test_id }) => {
 								}}
 							>
 								<Card.Body>
-									<div style={{ float: 'left', fontWeight: "bold", color: questionColor[Num].color }}>{question[Num].title} </div>
+									<div style={{ float: 'left', fontWeight: "bold", color: questionColor[Num].color }}>{Num +1}번.&nbsp;{question[Num].title} </div>
 									<br />
 									<div style={{ height: "200px !important" }}>
 										<Editor
@@ -580,49 +667,49 @@ const TestPage = ({ isOpen, test_id }) => {
 					</div> : <div></div>}
 				{
 					solutionState && <div>
-						문제의 해설입니다.<br/><br/>
+						문제의 해설입니다.<br /><br />
 						{
 							answerList.map((i, index) => (
-							<div key={index}>
-							<Card
-								className="center"
-								style={{
-									height: "20rem !important",
-									overflow: "auto",
-								}}
-							>
-								<Card.Body>
-							<div style={{ fontWeight: "bold" }}> {index + 1}번)&nbsp;{i.answer}</div>
-									<div style={{ height: "200px !important" }}>
-										<Editor
-											toolbarHidden
-											// 에디터와 툴바 모두에 적용되는 클래스
-											wrapperClassName="wrapper-class"
-											// 에디터 주변에 적용된 클래스
-											editorClassName="editor"
-											// 툴바 주위에 적용된 클래스
-											toolbarClassName="toolbar-class"
-											editorState={i.solution}
-											readOnly
-											// 한국어 설정
-											localization={{
-
-
-
-
-												locale: "ko",
-											}}
-										/>
-									</div>
-								</Card.Body>
-							</Card>
-							<br/>
-							</div>
+								<div key={index}>
+									<Card
+										className="center"
+										style={{
+											height: "20rem !important",
+											overflow: "auto",
+										}}
+									>
+										<Card.Body>
+											<div style={{ fontWeight: "bold" }}> {index + 1}번)&nbsp;{i.answer}</div>
+											<div style={{ height: "200px !important" }}>
+												<Editor
+													toolbarHidden
+													// 에디터와 툴바 모두에 적용되는 클래스
+													wrapperClassName="wrapper-class"
+													// 에디터 주변에 적용된 클래스
+													editorClassName="editor"
+													// 툴바 주위에 적용된 클래스
+													toolbarClassName="toolbar-class"
+													editorState={i.solution}
+													readOnly
+													// 한국어 설정
+													localization={{
+														locale: "ko",
+													}}
+												/>
+											</div>
+										</Card.Body>
+									</Card>
+									<br />
+								</div>
 							))
 						}
 					</div>
 				}
 			</ul>
+			{goPrint && <div><ReactToPrint
+        			trigger={() => <Button>Print this out!</Button>}
+        			content={() => componentRef.current}
+      			/><div style={{visibility: "hidden"}}> <TestPrintPage ref={componentRef} questions={pQuestion} answers={pAnswer} type={pType}/></div></div>}
 		</Container >
 	);
 }
