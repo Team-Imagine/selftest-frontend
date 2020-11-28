@@ -552,7 +552,7 @@ const TestPage = ({ isOpen, test_id }) => {
 						)}
 					</CardDeck>
 				</div>
-					: (state === 'test') ? <div style={{ width: "80%", left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto', textAlign: 'center' }}>
+					: (state === 'test') ? <div style={{ width: "70%", left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto', textAlign: 'center' }}>
 
 						<div style={{ width: "100%", left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto' }}>
 							<Card
