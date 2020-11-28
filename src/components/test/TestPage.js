@@ -17,6 +17,8 @@ import html2canvas from 'html2canvas';
 import ReactToPrint from "react-to-print";
 import NavbarCollapse from "react-bootstrap/esm/NavbarCollapse";
 
+const printIcon = require('../../picture/printer.png');
+
 const TestPage = ({ isOpen, test_id }) => {
 	const [test, setTest] = useState();
 	const [title, setTitle] = useState('');
@@ -511,7 +513,7 @@ const TestPage = ({ isOpen, test_id }) => {
 						<Button variant="info" style={{ width: '10rem', height: '2.5rem' }} onClick={startHandler}
 						>시험 시작</Button> </div> : (state !== 'test' && print) ? <div className="d-flex">
 							{goPrint && <ReactToPrint
-        			trigger={() => <div className="row"><Button variant="info" style={{ width: '7rem', height: '2.5rem' }}>Print</Button>&nbsp;&nbsp;&nbsp;&nbsp;</div>}
+        			trigger={() => <div className="row"><img src={printIcon} style={{ width:'35px', height:'35px'}} />  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>}
         			content={() => componentRef.current}
       			/>}
 						<Form.Control as="select" onChange={printTypeSelect} style={{width:'10rem'}}>
