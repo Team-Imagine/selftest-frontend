@@ -88,7 +88,7 @@ const UserSettings = () => {
         setCurrentPassword("");
         setNewPassword("");
         setNewPasswordAgain("");
-        alert("정보가 변경되었습니다!");
+        alert(res.data.message);
       })
       .catch((error) => {
         alert(error.response.data.message);
