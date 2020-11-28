@@ -1,16 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container, Button, CardDeck, Card } from "react-bootstrap";
-import { Link, useHistory } from 'react-router-dom';
-import classNames from "classnames";
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-
-import styled from 'styled-components';
-import { EditorState, convertToRaw, ContentState } from 'draft-js';
-import htmlToDraft from "html-to-draftjs";
-import parse from "node-html-parser";
-
-import axios from "axios";
 
 import './TestPrintPage.css';
 
@@ -27,7 +18,6 @@ class TestPrintPage extends React.Component {
 		return (
 			<div>
 				<br /><br />
-				
 				<div>
 					{this.props.type !== 'answer' && <div><h2 style={{ fontSize: '50px', textAlign: 'center', paddingBottom: '10px', marginLeft: '20px', marginRight: '20px', borderBottom:'3px solid black'}}>Test</h2> {
 					this.props.questions.map((i, index, array) => ((index % 2 === 0) ? <div key={index}>
@@ -102,7 +92,7 @@ class TestPrintPage extends React.Component {
 					</div> : <div key={index}></div>
 					))}</div>}
 					
-					{this.props.type !== 'question' && <div><div className="section"/><br /><br /><h2 style={{ fontSize: '50px',textAlign: 'center', paddingBottom: '10px', marginLeft: '20px', marginRight: '20px', borderBottom:'3px solid black'}}>
+					{this.props.type !== 'question' && <div>{this.props.type === 'both' && <div className="section"/>}<br /><br /><h2 style={{ fontSize: '50px',textAlign: 'center', paddingBottom: '10px', marginLeft: '20px', marginRight: '20px', borderBottom:'3px solid black'}}>
 						해답</h2>{
 					this.props.answers.map((i, index, array) => ((index % 2 === 0) ? <div key={index}>
 					{index !==0  && index % 3 === 0 && <div className="section"/>}

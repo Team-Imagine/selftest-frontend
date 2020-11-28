@@ -47,7 +47,6 @@ const TestPage = ({ isOpen, test_id }) => {
 	const [pQuestion, setpQuestion] = useState([]);
 	const [pAnswer, setpAnswer] = useState([]);
 	const [pType, setpType] = useState('');
-
 	const [essayAnswerEditor, setEssayAnswerEditor] = useState(
 		EditorState.createEmpty()
 	);
@@ -338,6 +337,8 @@ const TestPage = ({ isOpen, test_id }) => {
 		let t_testResult = [];
 
 		if (tState === 'print') {
+			console.log('question:', questionLoaded);
+			console.log('answer:', answerLoaded);
 			makeSolution(questionLoaded, answerLoaded, tState, tType);
 		} else {
 			console.log('answer:', answerLoaded);
