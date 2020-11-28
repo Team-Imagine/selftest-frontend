@@ -29,13 +29,13 @@ class TestPrintPage extends React.Component {
 				<br /><br />
 				
 				<div>
-					{this.props.type !== 'answer' && <div><h2 style={{ textAlign: 'center' }}>Test</h2> {
+					{this.props.type !== 'answer' && <div><h2 style={{ fontSize: '50px', textAlign: 'center', paddingBottom: '10px', marginLeft: '20px', marginRight: '20px', borderBottom:'3px solid black'}}>Test</h2> {
 					this.props.questions.map((i, index, array) => ((index % 2 === 0) ? <div key={index}>
 						{index !==0  && index % 3 === 0 && <div className="section"/>}
 						<div style={{ width: '100%', display: 'flex', flexDirection: 'row', overflow: 'hidden' }}>
 							<div style={{ width: '50%', float: 'left' }}>
 
-								<br /><div style={{ fontWeight: "bold", color: 'black', margin: '20px' }}>{index + 1}번) {array[index].title} </div><br />
+								<br /><div style={{ fontSize: '16px', fontWeight: "bold", color: 'black', margin: '20px' }}>{index + 1}번) {array[index].title} </div><br />
 								<div style={{ width: '90%', height: '300px', left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto' }}>
 									<div style={{ width: '90%', height: '200px', overflow: 'hidden' }} >
 										<Editor
@@ -61,9 +61,10 @@ class TestPrintPage extends React.Component {
 										</div>}
 								</div>
 							</div>
+							
 							<div style={{ width: '50%', float: 'left' }}>
 								<div>
-									<br /><div style={{ fontWeight: "bold", color: 'black', margin: '20px'}}>{index + 2}번) {array[index + 1].title} </div><br />
+									<br /><div style={{ fontSize: '16px', fontWeight: "bold", color: 'black', margin: '20px'}}>{index + 2}번) {array[index + 1].title} </div><br />
 									<div style={{ width: '90%', height: '300px', left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto' }}>
 										<div style={{ width: '90%', height: '200px', overflow: 'hidden' }} >
 											<Editor
@@ -101,7 +102,8 @@ class TestPrintPage extends React.Component {
 					</div> : <div key={index}></div>
 					))}</div>}
 					
-					{this.props.type !== 'question' && <div><div className="section"/><br /><br /><h2 style={{ textAlign: 'center' }}>해답</h2>{
+					{this.props.type !== 'question' && <div><div className="section"/><br /><br /><h2 style={{ fontSize: '50px',textAlign: 'center', paddingBottom: '10px', marginLeft: '20px', marginRight: '20px', borderBottom:'3px solid black'}}>
+						해답</h2>{
 					this.props.answers.map((i, index, array) => ((index % 2 === 0) ? <div key={index}>
 					{index !==0  && index % 3 === 0 && <div className="section"/>}
 						<div style={{ width: '100%', display: 'flex', flexDirection: 'row', overflow: 'hidden' }}>

@@ -707,7 +707,7 @@ const TestPage = ({ isOpen, test_id }) => {
 				}
 			</ul>
 			{goPrint && <div><ReactToPrint
-        			trigger={() => <Button>Print this out!</Button>}
+        			trigger={() => <Button>Print</Button>}
         			content={() => componentRef.current}
       			/><div style={{visibility: "hidden"}}> <TestPrintPage ref={componentRef} questions={pQuestion} answers={pAnswer} type={pType}/></div></div>}
 		</Container >
