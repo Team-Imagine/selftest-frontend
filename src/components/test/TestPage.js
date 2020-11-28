@@ -337,8 +337,6 @@ const TestPage = ({ isOpen, test_id }) => {
 		let t_testResult = [];
 
 		if (tState === 'print') {
-			console.log('question:', questionLoaded);
-			console.log('answer:', answerLoaded);
 			makeSolution(questionLoaded, answerLoaded, tState, tType);
 		} else {
 			console.log('answer:', answerLoaded);
@@ -544,11 +542,12 @@ const TestPage = ({ isOpen, test_id }) => {
 				</div>
 					: (state === 'test') ? <div style={{ width: "50rem", left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto', textAlign: 'center' }}>
 
-						<div style={{ width: "50rem", left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto' }}>
+						<div style={{ width: "100%", left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto' }}>
 
 							<Card
 								className="center"
 								style={{
+									width: "100%",
 									height: "20rem !important",
 									overflow: "auto",
 								}}
@@ -575,8 +574,8 @@ const TestPage = ({ isOpen, test_id }) => {
 									</div>
 								</Card.Body>
 							</Card>
-							<div className="row h-100 justify-content-center ">
-								<div style={{ width: "50rem", border: '0.1px ridge #dddddd' }}>
+							<div >
+								<div style={{ width: "100%", border: '0.1px ridge #dddddd' }}>
 									{question[Num].type === "multiple_choice" && submittedAnswer[Num].choiceList !== null ? <div>
 										<div style={{ textAlign: 'center' }}>위 문제에 대한 알맞은 정답을 선택하세요.</div><br />
 										{submittedAnswer[Num].choiceList.map((i, index) => (
@@ -640,6 +639,7 @@ const TestPage = ({ isOpen, test_id }) => {
 									</div> : <div></div>
 									}
 								</div>
+								<div className="row h-100 justify-content-center ">
 								{Num !== 0 ?
 									<Button
 										variant="info"
@@ -660,7 +660,7 @@ const TestPage = ({ isOpen, test_id }) => {
 									onClick={(e) => moveHandler(true, e)}
 								>
 									다음
-						</Button> : <div style={{ width: '5rem' }}></div>}
+						</Button> : <div style={{ width: '5rem' }}></div>}</div>
 							</div>
 							{testEnd && <div>
 							</div>}
