@@ -26,7 +26,7 @@ class TestPrintPage extends React.Component {
 							<div style={{ width: '50%', float: 'left'}}>
 								<br /><div style={{ fontSize: '16px', fontWeight: "bold", color: 'black', margin: '20px' }}>{index + 1}번) {array[index].title} </div><br />
 								<div style={{ width: '90%', height: '300px', left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto' }}>
-									<div id="editor"style={{ width: '90%', height: '200px', overflow: 'hidden' }} >
+									<div id="editor" style={{ width: '90%', height: '300px', overflow: 'hidden' }}>
 										<Editor
 											scrollbarHidden
 											toolbarHidden
