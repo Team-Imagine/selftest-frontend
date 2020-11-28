@@ -513,7 +513,7 @@ const TestPage = ({ isOpen, test_id }) => {
 						<Button variant="info" style={{ width: '10rem', height: '2.5rem' }} onClick={startHandler}
 						>시험 시작</Button> </div> : (state !== 'test' && print) ? <div className="d-flex">
 							{goPrint && <ReactToPrint
-        			trigger={() => <div className="row"><img src={printIcon} style={{ width:'35px', height:'35px'}} />  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>}
+        			trigger={() => <div className="row"><Button variant="light"><img src={printIcon} style={{ width:'25px', height:'25px'}} /></Button>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>}
         			content={() => componentRef.current}
       			/>}
 						<Form.Control as="select" onChange={printTypeSelect} style={{width:'10rem'}}>
