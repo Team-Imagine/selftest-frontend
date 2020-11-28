@@ -14,29 +14,18 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "react-bootstrap";
 
-//한꺼번에 또는 칸마다  값전달 확인 백엔드 연결 x
+//성공메시지는 뜨나, 데이터 업데이트 x  
 
 const UserSettings = () => {
+  const [user,setUser] = useState([]);
   const [first_name, setFirstName] = useState("");
   const [last_name, setLastName] = useState("");
   const [username, setUserName] = useState("");
   const [current_password, setCurrentPassword] = useState("");
   const [new_password, setNewPassword] = useState("");
   const [new_password_again, setNewPasswordAgain] = useState("");
-  const [delete_password, setPassword] = useState("");
-  const [delete_password_again, setPasswordAgain] = useState("");
-
-  const changeuser = {
-    username: username,
-    current_password: current_password,
-    new_password: new_password,
-    first_name: first_name,
-    last_name: last_name,
-  };
-
-  const send = {
-    password: delete_password,
-  }
+  const [password, setPassword] = useState("");
+  const [password_again, setPasswordAgain] = useState("");
 
   const FirstName = (e) => {
     setFirstName(e.target.value);
@@ -62,34 +51,77 @@ const UserSettings = () => {
   const PasswordAgain = (e) => {
     setPasswordAgain(e.target.value);
   };
-
+  //사용자 정보 불러오기
+  useEffect(() => {
+    axios
+      .get(`/api/user`)
+      .then((res) => {
+        console.log(res.data);
+        setUser(res.data.user);
+      })
+      .catch((error) => {
+        alert(error.response.data.message);
+      });
+  }, []);
+  //사용자 정보 변경
   const SubmitSaveChange = (event) => {
     event.preventDefault();
+    
+    const changeuser = {
+      username: username,
+      current_password: current_password,
+      new_password: new_password,
+      first_name: first_name,
+      last_name: last_name,
+    };
+  
     console.log(changeuser);
 
     axios
-      .patch(`/api/user/`, changeuser)
+      .patch(`/api/user`, { 
+       data: changeuser})
       .then((res) => {
         console.log(res.data);
+        setFirstName("");
+        setLastName("");
+        setUserName("");
+        setCurrentPassword("");
+        setNewPassword("");
+        setNewPasswordAgain("");
         alert("정보가 변경되었습니다!");
       })
       .catch((error) => {
         alert(error.response.data.message);
       });
+     
+    axios
+      .get(`/api/user`)
+      .then((res) => {
+        console.log("변경된 사용자 정보");
+        console.log(res.data);
+        setUser(res.data.user);
+      })
+      .catch((error) => {
+        alert(error.response.data.message);
+      });
+    
   };
 
+  //사용자 탈퇴 
   const DeleteUser = (event) => {
     event.preventDefault();
+    const send = {
+    password,
+    };
 
-    console.log(delete_password);
-    console.log(delete_password_again);
-   
-    console.log(send);
+    console.log("비밀번호:", password);
+    console.log("비밀번호 확인:", password_again);
 
     axios
-      .delete(`api/user/`, {send})
+      .delete(`api/user`, {
+        data: send})
       .then((res) => {
-        console.log(res.data);
+        console.log(res.data.message);
         alert("탈퇴되었습니다!");
       })
       .catch((error) => {
@@ -97,12 +129,14 @@ const UserSettings = () => {
       });
   };
 
+
   return (
     <div
       style={{
         backgroundColor: "#f7feff",
       }}
     >
+    
       <div style={{ height: "70rem" }}>
         <div className="container h-100">
           <div className="row h-100 justify-content-center align-items-center">
@@ -115,6 +149,17 @@ const UserSettings = () => {
                       <hr />
                       <br />
 
+                      <Form.Group>
+                        <Form inline>
+                          <Form.Label style={{ width: "10rem" }}>
+                            사용자 ID {" "}  
+                          </Form.Label>
+                          <Form.Label>
+                          {user.email}
+                          </Form.Label>
+                        </Form>
+                      </Form.Group>
+                      <br />
                       <Form.Group>
                         <Form inline>
                           <Form.Label style={{ width: "10rem" }}>
@@ -235,8 +280,8 @@ const UserSettings = () => {
                           </Form.Label>
                           <Form.Control
                             onChange={Password}
-                            value={delete_password}
-                            id="delete_password"
+                            value={password}
+                            id="password"
                             type="password"
                             style={{ width: "30rem" }}
                             placeholder="현재 비밀번호를 입력하세요"
@@ -250,8 +295,8 @@ const UserSettings = () => {
                           </Form.Label>
                           <Form.Control
                             onChange={PasswordAgain}
-                            value={delete_password_again}
-                            id="delete_password_again"
+                            value={password_again}
+                            id="password_again"
                             type="password"
                             style={{ width: "30rem" }}
                             placeholder="새 비밀번호를 입력하세요"
