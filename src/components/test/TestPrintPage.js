@@ -26,7 +26,6 @@ class TestPrintPage extends React.Component {
 
 
 	render() {
-
 		return (
 			<div>
 				<br />
@@ -37,7 +36,6 @@ class TestPrintPage extends React.Component {
 							{this.props.questions.map((i, index, array) =>
 								<div key={index}>
 									<div style={{ width: '100%', display: 'flex', flexDirection: 'row', overflow: 'hidden', }}>
-										<ReactHeight onHeightReady={height => test(height)}>
 											<div style={{ width: '100%', float: 'left' }}>
 												<div style={{ fontSize: '16px', fontWeight: "bold", color: 'black', marginLeft: '30px' }}>{index + 1}번) {array[index].title} </div><br />
 												<div style={{ width: '90%', left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto' }}>
@@ -65,7 +63,6 @@ class TestPrintPage extends React.Component {
 													<br /><br />
 												</div>
 											</div>
-										</ReactHeight>
 									</div>
 								</div>
 							)}
@@ -74,7 +71,7 @@ class TestPrintPage extends React.Component {
 					{this.props.type !== 'question' && <div>
 								{this.props.type === 'both' && <div className="section" />}
 								<h2 style={{ fontSize: '50px', textAlign: 'center', paddingBottom: '10px', marginLeft: '20px', marginRight: '20px', marginBottom: '30px', borderBottom: '3px solid black' }}>해답</h2>
-								<div style={{ columnCount: '2', columnGap: '10px' }}>
+								<div style={{ columnCount: '2', columnGap: '10px', columnRule: '3px solid black' }}>
 									{this.props.answers.map((i, index, array) =>
 										<div key={index}>
 											<div style={{ width: '100%', display: 'flex', flexDirection: 'row', overflow: 'hidden', }}>
