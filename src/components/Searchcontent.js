@@ -49,7 +49,6 @@ const Searchcontent = ({ searchtype, keywordtype, keyword, isOpen }) => {
 
   const loadSearchPerPage = (index, e) => {
     e.preventDefault();
-
     axios
       .get(`/api/question?question_type=${keywordType}&${searchtype}=${keyword}`, {
         params: {
@@ -73,11 +72,11 @@ const Searchcontent = ({ searchtype, keywordtype, keyword, isOpen }) => {
       <div>
         <div className="d-flex bd-highlight mb-3">
           <div className="mr-auto p-2 bd-highlight">
-            <h4 style={{ fontWeight: "bolder" }}>문제 검색결과 - {keyword}</h4>
+            <h3 style={{ fontWeight: "bolder" }}>문제 검색결과 - 검색한 단어: "{keyword}"</h3>
           </div>
         </div>
         <hr />
-        <ul>
+        <ul style={{minHeight:"120rem"}}>
           <CardDeck>
             {searchresults.map((i) => (
               <div className="container h-100" key={i.id}>

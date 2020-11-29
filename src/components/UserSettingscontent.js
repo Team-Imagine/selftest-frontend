@@ -296,7 +296,7 @@ const UserSettings = (isOpen) => {
               </div>
 
               <div className="p-2 bd-highlight col-example">
-                <Card border="info" style={{ width: "40em", height: "30rem" }}>
+                <Card border="info" style={{ width: "40em", height: "22rem" }}>
                   <div className="row h-100 justify-content-center align-items-center">
                     <form className="col-10">
                       <h2 style={{ fontWeight: "bolder" }}>탈퇴하기</h2>
