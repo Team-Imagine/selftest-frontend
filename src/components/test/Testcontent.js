@@ -117,6 +117,8 @@ const Testcontent = ({ isOpen }) => {
         </div>
 			</div>
 			<hr />
+			<div 
+			 style={{height: "auto", minHeight:"48em", maxHeight:"48em" }}>
 			<ul>
 				{tests.test_list.length ? tests.test_list.map((i, index) =>
 					<div key={i.title}>
@@ -142,6 +144,7 @@ const Testcontent = ({ isOpen }) => {
 					</div>
 				) : <div className="row justify-content-center align-items-center">등록된 Test가 없습니다. 새로운 Test를 등록해주세요.</div>}
 			</ul>
+			</div>
 			<ul className="row justify-content-center align-items-center">
 				{pages.map((i, index) =>
 					<div key={index}>

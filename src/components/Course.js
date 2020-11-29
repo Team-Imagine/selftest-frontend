@@ -131,6 +131,8 @@ const Course = ({ subject, isOpen }) => {
         </div>
       </div>
       <hr />
+      <div
+      style={{height: "auto", minHeight:"48em", maxHeight:"48em" }}>
       <ul>
         {course.map((i) => (
           <div className="container h-100" key={i.title}>
@@ -154,6 +156,7 @@ const Course = ({ subject, isOpen }) => {
           </div>
         ))}
       </ul>
+      </div>
       <ul className="row justify-content-center align-items-center">
         {pages.map((i, index) => (
           <div key={index}>

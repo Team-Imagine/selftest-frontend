@@ -130,6 +130,8 @@ const Subjectcontent = ({ isOpen }) => {
         </div>
       </div>
       <hr />
+      <div className="과목 카드"
+      style={{height: "auto", minHeight:"48em", maxHeight:"48em" }}>
       <ul>
         {subject.map((i) => (
           <div className="container h-100" key={i.title}>
@@ -152,6 +154,8 @@ const Subjectcontent = ({ isOpen }) => {
           </div>
         ))}
       </ul>
+      </div>
+     
       <ul className="row justify-content-center align-items-center">
         {pages.map((i, index) => (
           <div key={index}>
@@ -168,7 +172,8 @@ const Subjectcontent = ({ isOpen }) => {
           </div>
         ))}
       </ul>
-  
+     
+    
     </Container>
   );
 };
