@@ -721,7 +721,7 @@ const TestPage = ({ isOpen, test_id }) => {
 					</div>
 				}
 			</ul>
-			<div style={{visibility: "hidden"}}> <TestPrintPage ref={componentRef} questions={pQuestion} answers={pAnswer} type={pType}/></div>
+			<div style={{visibility: "hidden"}}> <TestPrintPage ref={componentRef} questions={pQuestion} answers={pAnswer} type={pType} title={title}/></div>
 		</Container >
 	);
 }
