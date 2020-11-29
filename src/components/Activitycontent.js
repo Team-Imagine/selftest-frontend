@@ -5,7 +5,12 @@ import axios from "axios";
 import Table from "react-bootstrap/Table";
 import classNames from "classnames";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCoins, faHandPaper, faHome, faUserCheck } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCoins,
+  faHandPaper,
+  faHome,
+  faUserCheck,
+} from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router-dom";
 import Badge from "react-bootstrap/Badge";
 
@@ -22,6 +27,7 @@ const Activitycontent = (isOpen) => {
     history.push("/home");
   };
 
+  //처음페이지들어갔을때 바로 불러오기
   useEffect(() => {
     //사용자 정보 불러오기
     axios
@@ -29,45 +35,46 @@ const Activitycontent = (isOpen) => {
       .then((res) => {
         console.log(res.data);
         setUser(res.data.user.rows);
-      })
-      .catch((error) => {
-        alert(error.response.data.message);
-      });
+        setUsername(res.data.user.username);
+        const username = res.data.user.username;
+        //포인트내역 불러오기
+        axios
+          .get(`/api/user/${username}/point-logs`)
 
-    //포인트내역 불러오기
-    axios
-      .get(`/api/user/suna/point-logs`)
+          .then((res) => {
+            console.log(res.data);
+            setPointLogs(res.data.point_logs.rows);
 
-      .then((res) => {
-        console.log(res.data);
-        setPointLogs(res.data.point_logs.rows);
+            let count = res.data.point_logs.count /10 + 1;
+            let t_pages = [];
 
-        let count = res.data.point_logs.count / 10 + 1;
-        let t_pages = [];
+            for (var i = 1; i < count; i++) {
+              t_pages.push(i);
+            }
+            setPages(t_pages);
+          })
+          .catch((error) => {
+            alert(error.response.data.message);
+          });
 
-        for (var i = 1; i < count; i++) {
-          t_pages.push(i);
-        }
-        setPages(t_pages);
-      })
-      .catch((error) => {
-        alert(error.response.data.message);
-      });
+        //제재내역 불러오기
+        axios
+          .get(`/api/user/${username}/penalty-logs`)
 
-    //제재내역 불러오기
-    axios
-      .get(`/api/user/suna/penalty-logs`)
+          .then((res) => {
+            console.log(res.data);
+            setPenaltyLogs(res.data.penalty_logs.rows);
+            let count = res.data.penalty_logs.count / 10 + 1;
+            let t_pages = [];
 
-      .then((res) => {
-        console.log(res.data);
-        setPenaltyLogs(res.data.penalty_logs.rows);
-        let count = res.data.penalty_logs.count / 10 + 1;
-        let t_pages = [];
-
-        for (var i = 1; i < count; i++) {
-          t_pages.push(i);
-        }
-        setPages(t_pages);
+            for (var i = 1; i < count; i++) {
+              t_pages.push(i);
+            }
+            setPages(t_pages);
+          })
+          .catch((error) => {
+            alert(error.response.data.message);
+          });
       })
       .catch((error) => {
         alert(error.response.data.message);
@@ -93,12 +100,20 @@ const Activitycontent = (isOpen) => {
       });
   }, []);
 
+
   //포인트 페이지별로 가져오기
   const loadPointPerPage = (index, e) => {
     e.preventDefault();
-
+    //사용자 정보 불러오기
     axios
-      .get(`/api/user/suna/point-logs`, {
+      .get(`/api/user`)
+      .then((res) => {
+        console.log(res.data);
+        setUser(res.data.user.rows);
+        setUsername(res.data.user.username);
+        const username = res.data.user.username;
+      axios
+      .get(`/api/user/${username}/point-logs`, {
         params: {
           page: index,
         },
@@ -110,14 +125,25 @@ const Activitycontent = (isOpen) => {
       .catch((error) => {
         alert(error.response.data.message);
       });
+      })
+      .catch((error) => {
+        alert(error.response.data.message);
+    });
   };
 
-  //포인트 페이지별로 가져오기
+  //제재내용 페이지별로 가져오기
   const loadPenaltyPerPage = (index, e) => {
     e.preventDefault();
-
+    //username가져오기
     axios
-      .get(`/api/user/suna/penalty-logs`, {
+      .get(`/api/user`)
+      .then((res) => {
+        console.log(res.data);
+        setUser(res.data.user.rows);
+        setUsername(res.data.user.username);
+        const username = res.data.user.username;
+    axios
+      .get(`/api/user/${username}/penalty-logs`, {
         params: {
           page: index,
         },
@@ -129,6 +155,10 @@ const Activitycontent = (isOpen) => {
       .catch((error) => {
         alert(error.response.data.message);
       });
+    })
+    .catch((error) => {
+      alert(error.response.data.message);
+  });
   };
 
   //출석 페이지별로 가져오기
@@ -155,7 +185,6 @@ const Activitycontent = (isOpen) => {
       fluid
       className={classNames("content", { "is-open": { isOpen } })}
     >
-       
       <div>
         <div className="d-flex bd-highlight mb-3">
           <div className="mr-auto p-2 bd-highlight"></div>
@@ -166,30 +195,45 @@ const Activitycontent = (isOpen) => {
             </Button>
           </div>
         </div>
-       
+
         <div className="container h-100">
-       
           <div className="row h-100 justify-content-center align-items-center">
-            
             <div className="d-flex flex-nowrap bd-highlight">
               <div className="p-2 bd-highlight col-example">
-                
                 <h2 style={{ fontWeight: "bolder" }}>
                   포인트&nbsp;
                   <Badge
                     pill
-                    style={{ height: "2.3rem", paddingTop: "0.4rem", paddingRight :"0.4rem" }}
+                    style={{
+                      height: "2.3rem",
+                      paddingTop: "0.4rem",
+                      paddingRight: "0.4rem",
+                    }}
                     variant="danger"
                   >
                     <FontAwesomeIcon icon={faCoins} className="mr-2" />
                   </Badge>
                 </h2>
 
-                <Card border="info" style={{ width: "35em",height: "auto", minHeight:"53.5em", maxHeight:"53.5em" }}>
+                <Card
+                  border="info"
+                  style={{
+                    width: "35em",
+                    height: "auto",
+                    minHeight: "53.5em",
+                    maxHeight: "53.5em",
+                  }}
+                >
                   <div className="column justify-content-center align-items-center">
-                    <div style={{ width: "auto", maxHeight:"49em", minHeight:"49em"}}>
+                    <div
+                      style={{
+                        width: "auto",
+                        maxHeight: "49em",
+                        minHeight: "49em",
+                      }}
+                    >
                       <Table style={{ height: "auto" }} responsive>
-                        <thead style={{background:"pink"}}>
+                        <thead style={{ background: "pink" }}>
                           <tr>
                             <th>No</th>
                             <th>날짜</th>
@@ -210,51 +254,65 @@ const Activitycontent = (isOpen) => {
                           </tbody>
                         ))}
                       </Table>
-                      </div>
-                        
-                      <ul style = {{Height:"auto", maxHeight:"2rem"}}className="row justify-content-center align-items-center">
-                    {pages.map((i, index) => (
-                      <div key={index}>
-                        <button
-                          style={{
-                            backgroundColor: "#ffffff",
-                            border: "1px solid",
-                            width: "1.5rem",
-                          }}
-                          onClick={(e) => loadPointPerPage(i, e)}
-                        >
-                          {i}
-                        </button>
-                        &nbsp;
-                      </div>
-                    ))}
-                  </ul>
-                      </div>
-                 
-                  
-               
-                 
-                  
+                    </div>
+
+                    <ul
+                      style={{ Height: "auto", maxHeight: "2rem" }}
+                      className="row justify-content-center align-items-center"
+                    >
+                      {pages.map((i, index) => (
+                        <div key={index}>
+                          <button
+                            style={{
+                              backgroundColor: "#ffffff",
+                              border: "1px solid",
+                              width: "1.5rem",
+                            }}
+                            onClick={(e) => loadPointPerPage(i, e)}
+                          >
+                            {i}
+                          </button>
+                          &nbsp;
+                        </div>
+                      ))}
+                    </ul>
+                  </div>
                 </Card>
-                
               </div>
               <div className="p-2 bd-highlight col-example">
-                <h2 style={{ fontWeight: "bolder" }}>제재&nbsp;
-                <Badge
+                <h2 style={{ fontWeight: "bolder" }}>
+                  제재&nbsp;
+                  <Badge
                     pill
-                    style={{ height: "2.3rem", paddingTop: "0.4rem", paddingRight :"0.6rem" }}
+                    style={{
+                      height: "2.3rem",
+                      paddingTop: "0.4rem",
+                      paddingRight: "0.6rem",
+                    }}
                     variant="warning"
-                    
                   >
                     <FontAwesomeIcon icon={faHandPaper} className="mr-2" />
                   </Badge>
-                
                 </h2>
-                <Card border="info" style={{ width: "35em", height: "auto", minHeight:"53.5em", maxHeight:"53.5em" }}>
+                <Card
+                  border="info"
+                  style={{
+                    width: "35em",
+                    height: "auto",
+                    minHeight: "53.5em",
+                    maxHeight: "53.5em",
+                  }}
+                >
                   <div className=" justify-content-center align-items-center">
-                  <div style={{ width: "auto", maxHeight:"49em", minHeight:"49em"}}>
+                    <div
+                      style={{
+                        width: "auto",
+                        maxHeight: "49em",
+                        minHeight: "49em",
+                      }}
+                    >
                       <Table style={{ height: "auto" }} responsive>
-                        <thead style={{background:"lightyellow"}}>
+                        <thead style={{ background: "lightyellow" }}>
                           <tr>
                             <th>No</th>
                             <th>날짜</th>
@@ -278,24 +336,27 @@ const Activitycontent = (isOpen) => {
                         ))}
                       </Table>
                     </div>
-                      
-                    <ul style = {{Height:"auto", maxHeight:"2rem"}}className="row justify-content-center align-items-center">
-                    {pages.map((i, index) => (
-                      <div key={index}>
-                        <button
-                          style={{
-                            backgroundColor: "#ffffff",
-                            border: "1px solid",
-                            width: "1.5rem",
-                          }}
-                          onClick={(e) => loadPenaltyPerPage(i, e)}
-                        >
-                          {i}
-                        </button>
-                        &nbsp;
-                      </div>
-                    ))}
-                  </ul>
+
+                    <ul
+                      style={{ Height: "auto", maxHeight: "2rem" }}
+                      className="row justify-content-center align-items-center"
+                    >
+                      {pages.map((i, index) => (
+                        <div key={index}>
+                          <button
+                            style={{
+                              backgroundColor: "#ffffff",
+                              border: "1px solid",
+                              width: "1.5rem",
+                            }}
+                            onClick={(e) => loadPenaltyPerPage(i, e)}
+                          >
+                            {i}
+                          </button>
+                          &nbsp;
+                        </div>
+                      ))}
+                    </ul>
                   </div>
                 </Card>
               </div>
@@ -305,18 +366,35 @@ const Activitycontent = (isOpen) => {
                   출석&nbsp;
                   <Badge
                     pill
-                    style={{ height: "2.3rem", paddingTop: "0.4rem", paddingRight :"0.3rem" }}
+                    style={{
+                      height: "2.3rem",
+                      paddingTop: "0.4rem",
+                      paddingRight: "0.3rem",
+                    }}
                     variant="success"
-                    
                   >
                     <FontAwesomeIcon icon={faUserCheck} className="mr-2" />
                   </Badge>
                 </h2>
-                <Card border="info" style={{ width: "20em", height: "auto", minHeight:"53.5em", maxHeight:"53.5em" }}>
+                <Card
+                  border="info"
+                  style={{
+                    width: "20em",
+                    height: "auto",
+                    minHeight: "53.5em",
+                    maxHeight: "53.5em",
+                  }}
+                >
                   <div className=" justify-content-center align-items-center">
-                  <div style={{ width: "auto", maxHeight:"49em", minHeight:"49em"}}>
+                    <div
+                      style={{
+                        width: "auto",
+                        maxHeight: "49em",
+                        minHeight: "49em",
+                      }}
+                    >
                       <Table style={{ height: "auto" }} responsive>
-                        <thead style={{background:"lightgreen"}}>
+                        <thead style={{ background: "lightgreen" }}>
                           <tr>
                             <th>No</th>
                             <th>날짜</th>
@@ -334,35 +412,34 @@ const Activitycontent = (isOpen) => {
                         ))}
                       </Table>
                     </div>
-                       
-                    <ul style = {{Height:"auto", maxHeight:"2rem"}}className="row justify-content-center align-items-center">
-                    {pages.map((i, index) => (
-                      <div key={index}>
-                        <button
-                          style={{
-                            backgroundColor: "#ffffff",
-                            border: "1px solid",
-                            width: "1.5rem",
-                          }}
-                          onClick={(e) => loadAttendancePerPage(i, e)}
-                        >
-                          {i}
-                        </button>
-                        &nbsp;
-                      </div>
-                    ))}
-                  </ul>
+
+                    <ul
+                      style={{ Height: "auto", maxHeight: "2rem" }}
+                      className="row justify-content-center align-items-center"
+                    >
+                      {pages.map((i, index) => (
+                        <div key={index}>
+                          <button
+                            style={{
+                              backgroundColor: "#ffffff",
+                              border: "1px solid",
+                              width: "1.5rem",
+                            }}
+                            onClick={(e) => loadAttendancePerPage(i, e)}
+                          >
+                            {i}
+                          </button>
+                          &nbsp;
+                        </div>
+                      ))}
+                    </ul>
                   </div>
                 </Card>
               </div>
             </div>
-          
           </div>
-         
         </div>
-        
       </div>
-   
     </Container>
   );
 };
