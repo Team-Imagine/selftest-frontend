@@ -146,6 +146,7 @@ const Searchcontent = ({ searchtype, keywordtype, keyword, isOpen }) => {
             </h3>
           </div>
           <div className="p-2 bd-highlight">
+            {/* 
             <Form.Control
              as="select"
              onChange={onSelectSortChange.bind(this)}>
@@ -156,6 +157,7 @@ const Searchcontent = ({ searchtype, keywordtype, keyword, isOpen }) => {
             <Button variant="info" onClick={SortPage}>
               정렬
             </Button>
+            */}
           </div>
         </div>
         <hr />
