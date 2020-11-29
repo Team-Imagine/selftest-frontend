@@ -25,7 +25,10 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Question = ({ subject, course, isOpen }) => {
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 	const [question, setQuestion] = useState({
 		question: [],
 		curPage: 1,

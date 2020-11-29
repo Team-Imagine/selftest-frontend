@@ -39,7 +39,7 @@ class TestPrintPage extends React.Component {
 											<div style={{ width: '100%', float: 'left' }}>
 												<div style={{ fontSize: '16px', fontWeight: "bold", color: 'black', marginLeft: '30px' }}>{index + 1}번) {array[index].title} </div><br />
 												<div style={{ width: '90%', left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto' }}>
-													<div style={{ width: '90%', overflow: 'hidden', marginLeft: '20px' }}>
+													<div style={{ width: '90%', overflowX: '90%', overflowY: '200px', marginLeft: '20px' }}>
 														<Editor
 															scrollbarHidden
 															toolbarHidden
@@ -78,7 +78,7 @@ class TestPrintPage extends React.Component {
 													<div style={{ width: '100%', float: 'left' }}>
 														<div style={{ fontSize: '16px', fontWeight: "bold", color: 'black', marginLeft: '30px' }}>{index + 1}번) {array[index].answer} </div><br />
 														<div style={{ width: '90%', left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto' }}>
-															<div style={{ width: '90%', overflow: 'hidden', marginLeft: '20px' }}>
+															<div style={{ width: '90%', overflowX: '90%', overflowY: '200px', marginLeft: '20px' }}>
 																<Editor
 																	scrollbarHidden
 																	toolbarHidden
