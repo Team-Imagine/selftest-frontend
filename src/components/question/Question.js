@@ -359,7 +359,7 @@ const Question = ({ subject, course, isOpen }) => {
 					</div>
 				</div>
 				<hr />
-				<ul>
+				<ul style={{minHeight:"120rem"}}>
 					<CardDeck>
 						{question.question.map((i, index) =>
 							<div className="container h-100" key={i.id}>
