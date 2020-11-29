@@ -28,7 +28,7 @@ const UserSettings = (isOpen) => {
   const [password, setPassword] = useState("");
   const [password_again, setPasswordAgain] = useState("");
   const [password_error,setPasswordError] = useState('');
-  const [checkpwd, setCheckPwd] = useState("");
+  const [newpassword_error,setNewPasswordError] = useState('');
   let history = useHistory();
 
   const moveHome = () => {
@@ -51,15 +51,15 @@ const UserSettings = (isOpen) => {
     setNewPassword(e.target.value);
   };
   const NewPasswordAgain = (e) => {
-    setPasswordError(e.target.value!==new_password);
-    console.log(password_error);
+    setNewPasswordError(e.target.value!==new_password);
+    console.log(newpassword_error);
     setNewPasswordAgain(e.target.value);
   };
   const Password = (e) => {
     setPassword(e.target.value);
   };
   const PasswordAgain = (e) => {
-    setPasswordError(e.target.value!==new_password);
+    setPasswordError(e.target.value!==password);
     console.log(password_error);
     setPasswordAgain(e.target.value);
   };
@@ -109,7 +109,7 @@ const UserSettings = (isOpen) => {
     axios
       .delete(`api/user/`,{
         data: {
-          password:password,
+          password:"password",
         }})
       
       .then((res) => {
@@ -261,7 +261,7 @@ const UserSettings = (isOpen) => {
                         </Form>
                         <Form.Text className="text-muted">
                       <Form.Label style={{ width: "10rem" }}></Form.Label>
-                      {password_error&&"비밀번호가 일치하지 않습니다"}
+                      {newpassword_error&&"비밀번호가 일치하지 않습니다"}
                     </Form.Text>
                       </Form.Group>
                       <button

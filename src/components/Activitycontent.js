@@ -231,7 +231,7 @@ const Activitycontent = (isOpen) => {
                   </Badge>
                 </h2>
 
-                <Card
+                <Card 
                   border="info"
                   style={{
                     overflow: "auto",
@@ -242,7 +242,7 @@ const Activitycontent = (isOpen) => {
                   }}
                 >
                   <div className="column justify-content-center align-items-center">
-                    <div
+                    <div 
                       style={{
                         overflow:"auto",
                         width: "auto",
