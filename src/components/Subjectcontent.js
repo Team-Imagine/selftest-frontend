@@ -19,9 +19,7 @@ const Subjectcontent = ({ isOpen }) => {
   let history = useHistory();
 
   useEffect(() => {
-    axios
-    .get("/api/subject/")
-    .then((res) => {
+    axios.get("/api/subject/").then((res) => {
       console.log(res.data);
       setSubject(res.data.subjects.rows);
 
@@ -90,7 +88,6 @@ const Subjectcontent = ({ isOpen }) => {
       fluid
       className={classNames("content", { "is-open": { isOpen } })}
     >
-   
       <div className="d-flex bd-highlight mb-3">
         <div className="mr-auto p-2 bd-highlight">
           <h3 style={{ fontWeight: "bolder" }}>과목</h3>
@@ -130,32 +127,34 @@ const Subjectcontent = ({ isOpen }) => {
         </div>
       </div>
       <hr />
-      <div className="과목 카드"
-      style={{height: "auto", minHeight:"48em", maxHeight:"48em" }}>
-      <ul>
-        {subject.map((i) => (
-          <div className="container h-100" key={i.title}>
-            <div className="row h-100 justify-content-center align-items-center">
-              <Alert
-                className="text-center"
-                variant="info"
-                style={{ width: "25rem" }}
-              >
-                <Link
-                  to={{
-                    pathname: `/subject/${i.title}`,
-                  }}
+      <div
+        className="과목 카드"
+        style={{ height: "auto", minHeight: "48em", maxHeight: "48em" }}
+      >
+        <ul>
+          {subject.map((i) => (
+            <div className="container h-100" key={i.title}>
+              <div className="row h-100 justify-content-center align-items-center">
+                <Alert
+                  className="text-center"
+                  variant="info"
+                  style={{ width: "25rem" }}
                 >
-                  <div style={{ fontSize: 18 }}>{i.title}</div>
-                </Link>
-              </Alert>
-              <br />
+                  <Link
+                    to={{
+                      pathname: `/subject/${i.title}`,
+                    }}
+                  >
+                    <div style={{ fontSize: 18 }}>{i.title}</div>
+                  </Link>
+                </Alert>
+                <br />
+              </div>
             </div>
-          </div>
-        ))}
-      </ul>
+          ))}
+        </ul>
       </div>
-     
+
       <ul className="row justify-content-center align-items-center">
         {pages.map((i, index) => (
           <div key={index}>
@@ -168,12 +167,11 @@ const Subjectcontent = ({ isOpen }) => {
               onClick={(e) => loadSubjectPerPage(i, e)}
             >
               {i}
-            </button>&nbsp;
+            </button>
+            &nbsp;
           </div>
         ))}
       </ul>
-     
-    
     </Container>
   );
 };

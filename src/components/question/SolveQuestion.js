@@ -81,7 +81,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
     points_to_own: null,
     points_to_solve: null,
     points_to_unlock: null,
-  })
+  });
 
   const [showExplanation, setShowExplanation] = useState(false);
   const [comments, setComments] = useState([]);
@@ -128,17 +128,19 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
       axios.get(`/api/question/${question_id}`).then((res) => {
         console.log(res.data);
 
-        res.data.question.content = convertUploadedImageUrls(res.data.question.content);
+        res.data.question.content = convertUploadedImageUrls(
+          res.data.question.content
+        );
         console.log(res.data.question.content);
 
         setQuestionType(res.data.question.type);
         setQuestion(res.data.question);
 
         setPointControl({
-          points_to_own: res.data.question.points_to_own, 
+          points_to_own: res.data.question.points_to_own,
           points_to_solve: res.data.question.points_to_solve,
           points_to_unlock: res.data.question.points_to_unlock,
-        })
+        });
 
         if (res.data.question.type === "multiple_choice") {
           let t_choiceList = [];
@@ -216,9 +218,8 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
   const convertUploadedImageUrls = function (content) {
     const root = parse(content);
     const img_tags = root.querySelectorAll("img");
-    
+
     for (let i = 0; i < img_tags.length; i++) {
-      
       let src_attribute = img_tags[i].getAttribute("src");
       /*
       // 업로드한 이미지가 아닐 경우 blob이 붙지 않음
@@ -227,9 +228,9 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
       }
       // 업로드한 이미지일 경우, uploaded_images 배열의 url로 대체
       */
-      img_tags[i].setAttribute("src", "http://localhost:8002"+ src_attribute);
+      img_tags[i].setAttribute("src", "http://localhost:8002" + src_attribute);
       img_tags[i].setAttribute("target", "_blank");
-    } 
+    }
     return root.toString();
   };
 
@@ -314,32 +315,32 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
     event.preventDefault();
 
     var result;
-    if(pointControl.points_to_solve) {
+    if (pointControl.points_to_solve) {
       result = window.confirm(
-        "풀이를 제출하시겠습니까? 포인트 "+ pointControl.points_to_solve+ "점이 차감됩니다."
+        "풀이를 제출하시겠습니까? 포인트 " +
+          pointControl.points_to_solve +
+          "점이 차감됩니다."
       );
     } else {
-      result = window.confirm(
-        "풀이를 제출하시겠습니까?"
-      );
+      result = window.confirm("풀이를 제출하시겠습니까?");
     }
 
     if (result) {
-
-      if(pointControl.points_to_solve) {
+      if (pointControl.points_to_solve) {
         let t_point = pointControl.points_to_solve;
-        setPointControl({points_to_unlock: 0, points_to_own: pointControl.points_to_own - t_point});
+        setPointControl({
+          points_to_unlock: 0,
+          points_to_own: pointControl.points_to_own - t_point,
+        });
       }
 
       axios
         .get(`/api/question/solve/${question_id}`)
         .then((res) => {
-
           axios.get(`/api/user`).then((res) => {
             store.dispatch({ type: "POINT", value: res.data.user.point });
             console.log(store.getState().point);
           });
-          
         })
         .catch((error) => {
           alert(error.response.data.message);
@@ -412,34 +413,36 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
   const show_Explanation = () => {
     var result;
 
-    if(pointControl.points_to_unlock) {
+    if (pointControl.points_to_unlock) {
       result = window.confirm(
-        "문제의 해설을 확인하시겠습니까? "+ pointControl.points_to_unlock+ "포인트가 차감됩니다."
+        "문제의 해설을 확인하시겠습니까? " +
+          pointControl.points_to_unlock +
+          "포인트가 차감됩니다."
       );
     } else {
-      result = window.confirm(
-        "문제의 해설을 확인하시겠습니까? "
-      );
+      result = window.confirm("문제의 해설을 확인하시겠습니까? ");
     }
 
     if (result) {
       axios
         .get(`/api/question/unlock/${question_id}`)
         .then((res) => {
-            axios.get(`/api/user`).then((res) => {
-              store.dispatch({ type: "POINT", value: res.data.user.point });
-              console.log(store.getState().point);
-            });
-            
+          axios.get(`/api/user`).then((res) => {
+            store.dispatch({ type: "POINT", value: res.data.user.point });
+            console.log(store.getState().point);
+          });
         })
         .catch((error) => {
           alert(error.response.data.message);
         });
 
       axios.get(`/api/answer?question_id=${question_id}`).then((res) => {
-        if(pointControl.points_to_unlock) {
+        if (pointControl.points_to_unlock) {
           let t_point = pointControl.points_to_unlock;
-          setPointControl({points_to_unlock: 0, points_to_own: pointControl.points_to_own - t_point});
+          setPointControl({
+            points_to_unlock: 0,
+            points_to_own: pointControl.points_to_own - t_point,
+          });
         }
 
         console.log(res.data);
@@ -464,7 +467,6 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
       loadAnswer();
 
       setShowExplanation(true);
-
     }
   };
 
@@ -474,17 +476,18 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 
     var result;
 
-    if(!pointControl.points_to_own) {
+    if (!pointControl.points_to_own) {
       result = window.confirm(
-        "문제를 소장하시겠습니까? "+ pointControl.points_to_own+ "포인트가 차감됩니다."
+        "문제를 소장하시겠습니까? " +
+          pointControl.points_to_own +
+          "포인트가 차감됩니다."
       );
     } else {
-      alert('이미 소장 중인 문제입니다.');
+      alert("이미 소장 중인 문제입니다.");
     }
-    if(result) {
+    if (result) {
       ownQuestion();
     }
-    
   };
 
   const ownQuestion = () => {
@@ -492,12 +495,11 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 
     axios
       .get(`/api/question/own/${question_id}`)
-      .then((res) => {
-      })
+      .then((res) => {})
       .catch((error) => {
         alert(error.response.data.message);
       });
-  }
+  };
 
   // 좋아요 처리
   const addLike = (e) => {

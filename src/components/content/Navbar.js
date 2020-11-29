@@ -45,7 +45,7 @@ const NavBar = ({ isOpen, point }) => {
 
   const moveUserSettings = () => {
     history.push("/usersettings");
-  }
+  };
 
   const moveSearch = () => {
     history.push(`/search/${searchType}/${questionType}/${searchKeyword}`);
@@ -53,7 +53,7 @@ const NavBar = ({ isOpen, point }) => {
 
   const moveActivity = () => {
     history.push("/activity");
-  }
+  };
 
   const onSearchChange = (e) => {
     setSearchKeyword(e.target.value);
@@ -276,7 +276,7 @@ const NavBar = ({ isOpen, point }) => {
                     프로필
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
-                    <Dropdown.Item  onClick={moveActivity}>
+                    <Dropdown.Item onClick={moveActivity}>
                       <FontAwesomeIcon
                         icon={faUserGraduate}
                         className="ml-auto"
@@ -284,10 +284,8 @@ const NavBar = ({ isOpen, point }) => {
                       내 활동{" "}
                     </Dropdown.Item>
                     <Dropdown.Item onClick={moveUserSettings}>
-                      <FontAwesomeIcon 
-                      icon={faUserCog} 
-                      className="ml-auto" />
-                     프로필 설정
+                      <FontAwesomeIcon icon={faUserCog} className="ml-auto" />
+                      프로필 설정
                     </Dropdown.Item>
                     <Dropdown.Item onClick={signOut}>
                       <FontAwesomeIcon

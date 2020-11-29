@@ -45,7 +45,7 @@ const Activitycontent = (isOpen) => {
             console.log(res.data);
             setPointLogs(res.data.point_logs.rows);
 
-            let count = res.data.point_logs.count /10 + 1;
+            let count = res.data.point_logs.count / 10 + 1;
             let t_pages = [];
 
             for (var i = 1; i < count; i++) {
@@ -131,7 +131,6 @@ const Activitycontent = (isOpen) => {
           .get(`/api/user/${username}/point-logs`, {
             params: {
               page: index,
-              
             },
           })
           .then((res) => {
@@ -231,7 +230,7 @@ const Activitycontent = (isOpen) => {
                   </Badge>
                 </h2>
 
-                <Card 
+                <Card
                   border="info"
                   style={{
                     overflow: "auto",
@@ -242,15 +241,18 @@ const Activitycontent = (isOpen) => {
                   }}
                 >
                   <div className="column justify-content-center align-items-center">
-                    <div 
+                    <div
                       style={{
-                        overflow:"auto",
+                        overflow: "auto",
                         width: "auto",
                         maxHeight: "49em",
                         minHeight: "49em",
                       }}
                     >
-                      <Table style={{  overflow: "auto",height: "auto" }} responsive>
+                      <Table
+                        style={{ overflow: "auto", height: "auto" }}
+                        responsive
+                      >
                         <thead style={{ background: "pink" }}>
                           <tr>
                             <th style={{ width: "10%" }}>No</th>
@@ -315,7 +317,7 @@ const Activitycontent = (isOpen) => {
                 <Card
                   border="info"
                   style={{
-                    overflow:"auto",
+                    overflow: "auto",
                     width: "35em",
                     height: "auto",
                     minHeight: "53.5em",
@@ -325,13 +327,16 @@ const Activitycontent = (isOpen) => {
                   <div className=" justify-content-center align-items-center">
                     <div
                       style={{
-                        overflow:"auto",
+                        overflow: "auto",
                         width: "auto",
                         maxHeight: "49em",
                         minHeight: "49em",
                       }}
                     >
-                      <Table style={{ overflow:"auto",height: "auto" }} responsive>
+                      <Table
+                        style={{ overflow: "auto", height: "auto" }}
+                        responsive
+                      >
                         <thead style={{ background: "lightyellow" }}>
                           <tr>
                             <th style={{ width: "10%" }}>No</th>
@@ -382,7 +387,7 @@ const Activitycontent = (isOpen) => {
               </div>
 
               <div className="p-2 bd-highlight col-example">
-                <h2 style={{ overflow:"auto", fontWeight: "bolder" }}>
+                <h2 style={{ overflow: "auto", fontWeight: "bolder" }}>
                   출석&nbsp;
                   <Badge
                     pill
@@ -399,7 +404,7 @@ const Activitycontent = (isOpen) => {
                 <Card
                   border="info"
                   style={{
-                    overflow:"auto",
+                    overflow: "auto",
                     width: "20em",
                     height: "auto",
                     minHeight: "53.5em",
@@ -409,13 +414,16 @@ const Activitycontent = (isOpen) => {
                   <div className=" justify-content-center align-items-center">
                     <div
                       style={{
-                        overflow:"auto",
+                        overflow: "auto",
                         width: "auto",
                         maxHeight: "49em",
                         minHeight: "49em",
                       }}
                     >
-                      <Table style={{ overflow:"auto", height: "auto" }} responsive>
+                      <Table
+                        style={{ overflow: "auto", height: "auto" }}
+                        responsive
+                      >
                         <thead style={{ background: "lightgreen" }}>
                           <tr>
                             <th style={{ width: "20%" }}>No</th>

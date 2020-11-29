@@ -72,7 +72,7 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 
   let checkedList = [];
 
-  useEffect(() => { }, []);
+  useEffect(() => {}, []);
 
   const moveBack = () => {
     history.push(`/subject/${subject}/${course}`);
@@ -99,11 +99,10 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 
     uploadedImages.push(file);
     setSelectedFile(uploadedImages);
-    
+
     return new Promise((resolve, reject) => {
       resolve({ data: { link: imageObject.localSrc, entityKey: file } });
     });
-    
   };
 
   const submitHandler = async (event) => {
@@ -130,7 +129,6 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
         answer_items.push({ item_text: answer[i] });
       }
       question_type = "short_answer";
-    
     } else if (questionType === "객관식") {
       for (var i in answer) {
         answer_items.push({ item_text: answer[i], checked: checked[i] });
@@ -138,7 +136,6 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 
       console.log(checked);
       question_type = "multiple_choice";
-     
     } else {
       let editorToHtml_answer = draftToHtml(
         convertToRaw(editorChoice.getCurrentContent())
@@ -169,7 +166,7 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
         setSelectedFile([]);
 
         for (var i = 0; i < res.data.images.length; i++) {
-          images.push({url: res.data.images[i].url});
+          images.push({ url: res.data.images[i].url });
         }
 
         console.log(images);
@@ -203,9 +200,9 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
         }
 
         // 정답에 이미지 첨부 미포함 *이후 구현*
-        axios.post(`/api/question/`, data)
+        axios
+          .post(`/api/question/`, data)
           .then((res) => {
-            
             setEditorState("");
             let temp = [];
             const nData = {
@@ -214,7 +211,8 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
               uploaded_images: temp,
             };
 
-            axios.post(`/api/answer/`, nData)
+            axios
+              .post(`/api/answer/`, nData)
               .then((res) => {
                 setEditorSolution("");
               })
@@ -228,222 +226,219 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
             alert(error.response.data.message);
           });
       });
+  };
 
+  const onChange = (e) => {
+    setTitle(e.target.value);
+  };
 
+  const handleSelect = (e) => {
+    setChoices([0]);
+    setChecks([false]);
+    setQuestionType(e);
+  };
 
-};
+  const makeAnswer = (index, e) => {
+    answerList = choices;
 
-const onChange = (e) => {
-  setTitle(e.target.value);
-};
+    answerList[index] = e.target.value;
 
-const handleSelect = (e) => {
-  setChoices([0]);
-  setChecks([false]);
-  setQuestionType(e);
-};
+    setAnswer([...answerList]);
+  };
 
-const makeAnswer = (index, e) => {
-  answerList = choices;
+  const controlCheck = (index, e) => {
+    checkedList = checks;
+    checkedList[index] = e.target.checked;
 
-  answerList[index] = e.target.value;
+    setChecked([...checkedList]);
+  };
 
-  setAnswer([...answerList]);
-};
+  const addChoice = (e) => {
+    choiceNumber = choices;
+    choiceNumber.push(0);
 
-const controlCheck = (index, e) => {
-  checkedList = checks;
-  checkedList[index] = e.target.checked;
+    t_checkList = checks;
+    t_checkList.push(false);
 
-  setChecked([...checkedList]);
-};
+    setChoices([...choiceNumber]);
+    setChecks([...t_checkList]);
+  };
 
-const addChoice = (e) => {
-  choiceNumber = choices;
-  choiceNumber.push(0);
-
-  t_checkList = checks;
-  t_checkList.push(false);
-
-  setChoices([...choiceNumber]);
-  setChecks([...t_checkList]);
-};
-
-return (
-  <Container
-    fluid
-    className={classNames("content", { "is-open": { isOpen } })}
-  >
-    <div className="d-flex bd-highlight mb-3">
-      <div className="mr-auto p-2 bd-highlight">
-        <div style={{ height: "2.5rem" }}>
-          <h3 style={{ fontWeight: "bolder" }}>
-            과목 {">"} {subject} {">"} {course} {">"} 문제 생성
+  return (
+    <Container
+      fluid
+      className={classNames("content", { "is-open": { isOpen } })}
+    >
+      <div className="d-flex bd-highlight mb-3">
+        <div className="mr-auto p-2 bd-highlight">
+          <div style={{ height: "2.5rem" }}>
+            <h3 style={{ fontWeight: "bolder" }}>
+              과목 {">"} {subject} {">"} {course} {">"} 문제 생성
             </h3>
+          </div>
         </div>
       </div>
-    </div>
-    <hr />
-    <InputGroup className="mb-3">
-      <DropdownButton
-        variant="outline-secondary"
-        title={questionType}
-        id="input-group-dropdown-1"
-        onSelect={handleSelect}
-      >
-        <Dropdown.Item eventKey="객관식">객관식</Dropdown.Item>
-        <Dropdown.Item eventKey="주관식">주관식</Dropdown.Item>
-        <Dropdown.Item eventKey="서술형">서술형</Dropdown.Item>
-      </DropdownButton>
-    </InputGroup>
-    <MyBlock>
-      <input
-        type="text"
-        id="title"
-        className="input"
-        placeholder="문제 제목"
-        fontSize="40"
-        onChange={onChange}
-      />
-      <Editor
-        // 에디터와 툴바 모두에 적용되는 클래스
-        wrapperClassName="wrapper-class"
-        // 에디터 주변에 적용된 클래스
-        editorClassName="editor"
-        // 툴바 주위에 적용된 클래스
-        toolbarClassName="toolbar-class"
-        // 툴바 설정
-        toolbar={{
-          // inDropdown: 해당 항목과 관련된 항목을 드롭다운으로 나타낼것인지
+      <hr />
+      <InputGroup className="mb-3">
+        <DropdownButton
+          variant="outline-secondary"
+          title={questionType}
+          id="input-group-dropdown-1"
+          onSelect={handleSelect}
+        >
+          <Dropdown.Item eventKey="객관식">객관식</Dropdown.Item>
+          <Dropdown.Item eventKey="주관식">주관식</Dropdown.Item>
+          <Dropdown.Item eventKey="서술형">서술형</Dropdown.Item>
+        </DropdownButton>
+      </InputGroup>
+      <MyBlock>
+        <input
+          type="text"
+          id="title"
+          className="input"
+          placeholder="문제 제목"
+          fontSize="40"
+          onChange={onChange}
+        />
+        <Editor
+          // 에디터와 툴바 모두에 적용되는 클래스
+          wrapperClassName="wrapper-class"
+          // 에디터 주변에 적용된 클래스
+          editorClassName="editor"
+          // 툴바 주위에 적용된 클래스
+          toolbarClassName="toolbar-class"
+          // 툴바 설정
+          toolbar={{
+            // inDropdown: 해당 항목과 관련된 항목을 드롭다운으로 나타낼것인지
 
-          inline: { inDropdown: true },
-          list: { inDropdown: true },
-          textAlign: { inDropdown: true },
-          link: { inDropdown: true },
-          history: { inDropdown: true },
+            inline: { inDropdown: true },
+            list: { inDropdown: true },
+            textAlign: { inDropdown: true },
+            link: { inDropdown: true },
+            history: { inDropdown: true },
 
-          image: {
-            uploadCallback: imageUploadCallback,
-            previewImage: true,
-          },
-        }}
-        placeholder="내용을 작성해주세요."
-        // 한국어 설정
-        localization={{
-          locale: "ko",
-        }}
-        // 초기값 설정
-        editorState={editorState}
-        // 에디터의 값이 변경될 때마다 onEditorStateChange 호출
-        onEditorStateChange={(editorState) => {
-          onEditorChange(1, editorState);
-        }}
-      />
-    </MyBlock>
-    <div>
-      {questionType === "객관식" ? (
-        <div>
-          <Button variant="outline-info" onClick={addChoice}>
-            선택지 추가
-            </Button>{" "}
-          <hr />
-          <p>*답을 입력하고 정답에 체크해주세요.</p>
-          {choices.map((i, index) => (
-            <div key={index}>
-              <InputGroup className="mb-3">
-                <FormControl
-                  aria-label="Text input with checkbox"
-                  onChange={(e) => makeAnswer(index, e)}
-                />
-                <InputGroup.Prepend>
-                  <InputGroup.Checkbox
-                    aria-label="Checkbox for following text input"
-                    onChange={(e) => controlCheck(index, e)}
-                  />
-                </InputGroup.Prepend>
-              </InputGroup>
-            </div>
-          ))}
-          <hr />
-        </div>
-      ) : questionType === "주관식" ? (
-        <div>
+            image: {
+              uploadCallback: imageUploadCallback,
+              previewImage: true,
+            },
+          }}
+          placeholder="내용을 작성해주세요."
+          // 한국어 설정
+          localization={{
+            locale: "ko",
+          }}
+          // 초기값 설정
+          editorState={editorState}
+          // 에디터의 값이 변경될 때마다 onEditorStateChange 호출
+          onEditorStateChange={(editorState) => {
+            onEditorChange(1, editorState);
+          }}
+        />
+      </MyBlock>
+      <div>
+        {questionType === "객관식" ? (
           <div>
             <Button variant="outline-info" onClick={addChoice}>
               선택지 추가
-              </Button>{" "}
+            </Button>{" "}
+            <hr />
+            <p>*답을 입력하고 정답에 체크해주세요.</p>
+            {choices.map((i, index) => (
+              <div key={index}>
+                <InputGroup className="mb-3">
+                  <FormControl
+                    aria-label="Text input with checkbox"
+                    onChange={(e) => makeAnswer(index, e)}
+                  />
+                  <InputGroup.Prepend>
+                    <InputGroup.Checkbox
+                      aria-label="Checkbox for following text input"
+                      onChange={(e) => controlCheck(index, e)}
+                    />
+                  </InputGroup.Prepend>
+                </InputGroup>
+              </div>
+            ))}
             <hr />
           </div>
-          {choices.map((i, index) => (
-            <div key={index}>
-              <FormControl
-                placeholder="정답을 작성해주세요."
-                type="text"
-                id="title"
-                className="input"
-                style={{ width: "100%", height: "3rem" }}
-                onChange={(e) => makeAnswer(index, e)}
-              />
-            </div>
-          ))}
-          <hr />
-        </div>
-      ) : (
-            <div style={{ backgroundColor: "white" }}>
-              <Editor
-                toolbarHidden
-                wrapperClassName="wrapper-class"
-                editorClassName="editor"
-                placeholder="정답을 작성해주세요."
-                toolbarClassName="toolbar-class"
-                editorState={editorChoice}
-                onEditorStateChange={(editorState) => {
-                  onEditorChange(2, editorState);
-                }}
-                localization={{
-                  locale: "ko",
-                }}
-              />{" "}
+        ) : questionType === "주관식" ? (
+          <div>
+            <div>
+              <Button variant="outline-info" onClick={addChoice}>
+                선택지 추가
+              </Button>{" "}
               <hr />
             </div>
-          )}
-    </div>
-    <div>
-      {questionType !== "서술형" ? (
-        <div style={{ backgroundColor: "white", height: "20rem" }}>
-          {" "}
-          <Editor
-            wrapperClassName="wrapper-class"
-            editorClassName="editor"
-            toolbarClassName="toolbar-class"
-            toolbar={{
-              inline: { inDropdown: true },
-              list: { inDropdown: true },
-              textAlign: { inDropdown: true },
-              link: { inDropdown: true },
-              history: { inDropdown: true },
-            }}
-            placeholder="문제의 해설을 작성해주세요."
-            editorState={editorSolution}
-            onEditorStateChange={(editorState) => {
-              onEditorChange(3, editorState);
-            }}
-            localization={{
-              locale: "ko",
-            }}
-          />
-        </div>
-      ) : (
+            {choices.map((i, index) => (
+              <div key={index}>
+                <FormControl
+                  placeholder="정답을 작성해주세요."
+                  type="text"
+                  id="title"
+                  className="input"
+                  style={{ width: "100%", height: "3rem" }}
+                  onChange={(e) => makeAnswer(index, e)}
+                />
+              </div>
+            ))}
+            <hr />
+          </div>
+        ) : (
+          <div style={{ backgroundColor: "white" }}>
+            <Editor
+              toolbarHidden
+              wrapperClassName="wrapper-class"
+              editorClassName="editor"
+              placeholder="정답을 작성해주세요."
+              toolbarClassName="toolbar-class"
+              editorState={editorChoice}
+              onEditorStateChange={(editorState) => {
+                onEditorChange(2, editorState);
+              }}
+              localization={{
+                locale: "ko",
+              }}
+            />{" "}
+            <hr />
+          </div>
+        )}
+      </div>
+      <div>
+        {questionType !== "서술형" ? (
+          <div style={{ backgroundColor: "white", height: "20rem" }}>
+            {" "}
+            <Editor
+              wrapperClassName="wrapper-class"
+              editorClassName="editor"
+              toolbarClassName="toolbar-class"
+              toolbar={{
+                inline: { inDropdown: true },
+                list: { inDropdown: true },
+                textAlign: { inDropdown: true },
+                link: { inDropdown: true },
+                history: { inDropdown: true },
+              }}
+              placeholder="문제의 해설을 작성해주세요."
+              editorState={editorSolution}
+              onEditorStateChange={(editorState) => {
+                onEditorChange(3, editorState);
+              }}
+              localization={{
+                locale: "ko",
+              }}
+            />
+          </div>
+        ) : (
           <div></div>
         )}
-    </div>
-    <br />
+      </div>
+      <br />
 
-    <Button className="btn-block" variant="info" onClick={submitHandler}>
-      문제 등록
+      <Button className="btn-block" variant="info" onClick={submitHandler}>
+        문제 등록
       </Button>
-  </Container>
-);
+    </Container>
+  );
 };
 
 export default MakeQuestion;

@@ -52,12 +52,11 @@ class Activity extends React.Component {
   };
 
   render() {
-   
     return (
       <div>
         <NavBar toggle={this.toggle} isOpen={this.state.isOpen} />
         <div className="App wrapper">
-          <UserSettings toggle={this.toggle} isOpen={this.state.isOpen}/>
+          <UserSettings toggle={this.toggle} isOpen={this.state.isOpen} />
         </div>
       </div>
     );

@@ -56,9 +56,7 @@ const UserSettings = (isOpen) => {
   };
   const NewPasswordAgain = (e) => {
     setNewPasswordError(e.target.value!==new_password);
-    console.log(newpassword_error);
     setNewPasswordMatch(e.target.value===new_password);
-    console.log(newpassword_match);
     setNewPasswordAgain(e.target.value);
   };
   const Password = (e) => {
@@ -66,9 +64,7 @@ const UserSettings = (isOpen) => {
   };
   const PasswordAgain = (e) => {
     setPasswordError(e.target.value!==password);
-    console.log(password_error);
     setPasswordMatch(e.target.value===password);
-    console.log(password_match);
     setPasswordAgain(e.target.value);
   };
   //사용자 정보 불러오기
@@ -122,20 +118,17 @@ const UserSettings = (isOpen) => {
     e.preventDefault();
     if(password === password_again){
     axios
-      .delete(`api/user/`,{
-        data: {
-          password
-        }})
+      .delete(`api/user/`, {password})
       
       .then((res) => {
         console.log(res.data.message);
         setPassword("");
         setPasswordAgain("");
-        console.log("성공", {password:password})
+        console.log("성공", {"password":password})
         alert(res.data.message);
       })
       .catch((error) => {
-        console.log("에러", {password:password})
+        console.log("에러", {"password":password})
         alert(error.response.data.message);
       });
     }else if(password !== password_again)

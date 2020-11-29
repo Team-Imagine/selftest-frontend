@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Button, CardDeck } from "react-bootstrap";
+import { Container, Button, CardDeck, Dropdown } from "react-bootstrap";
 import classNames from "classnames";
 import { Link, useHistory } from "react-router-dom";
 import Card from "react-bootstrap/Card";
@@ -13,7 +13,9 @@ import {
   faTrashAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import queryString from "query-string";
+
+import Form from "react-bootstrap/Form";
+import FormControl from "react-bootstrap/FormControl";
 
 const Searchcontent = ({ searchtype, keywordtype, keyword, isOpen }) => {
   const [searchresults, setSearchresults] = useState([]);
@@ -33,7 +35,7 @@ const Searchcontent = ({ searchtype, keywordtype, keyword, isOpen }) => {
         );
         console.log(res.data);
         setSearchresults(res.data.questions.rows);
-        
+
         let count = res.data.questions.count / 10 + 1;
         let t_pages = [];
 
@@ -50,14 +52,18 @@ const Searchcontent = ({ searchtype, keywordtype, keyword, isOpen }) => {
   const loadSearchPerPage = (index, e) => {
     e.preventDefault();
     axios
-      .get(`/api/question?question_type=${keywordType}&${searchtype}=${keyword}`, {
-        params: {
-          page: index,
-        },
-      })
+      .get(
+        `/api/question?question_type=${keywordType}&${searchtype}=${keyword}`,
+        {
+          params: {
+            page: index,
+          },
+        }
+      )
       .then((res) => {
         console.log(
-          `/api/question?question_type=${keywordType}&${searchtype}=${keyword}`);
+          `/api/question?question_type=${keywordType}&${searchtype}=${keyword}`
+        );
       })
       .catch((error) => {
         alert(error.response.data.message);
@@ -72,11 +78,20 @@ const Searchcontent = ({ searchtype, keywordtype, keyword, isOpen }) => {
       <div>
         <div className="d-flex bd-highlight mb-3">
           <div className="mr-auto p-2 bd-highlight">
-            <h3 style={{ fontWeight: "bolder" }}>문제 검색결과 - 검색한 단어: "{keyword}"</h3>
+            <h3 style={{ fontWeight: "bolder" }}>
+              문제 검색결과 - 검색한 단어: "{keyword}"
+            </h3>
+          </div>
+          <div className="p-2 bd-highlight">
+            <Form.Control as="select">
+              <option value="default">정렬</option>
+              <option value="multiple_choice">오름차순</option>
+              <option value="short_answer">내림차순</option>
+            </Form.Control>
           </div>
         </div>
         <hr />
-        <ul style={{minHeight:"120rem"}}>
+        <ul style={{ minHeight: "120rem" }}>
           <CardDeck>
             {searchresults.map((i) => (
               <div className="container h-100" key={i.id}>
@@ -164,8 +179,7 @@ const Searchcontent = ({ searchtype, keywordtype, keyword, isOpen }) => {
         </ul>
       </div>
 
-      <ul 
-      className="row justify-content-center align-items-center">
+      <ul className="row justify-content-center align-items-center">
         {pages.map((i, index) => (
           <div key={index}>
             <button
@@ -177,7 +191,8 @@ const Searchcontent = ({ searchtype, keywordtype, keyword, isOpen }) => {
               onClick={(e) => loadSearchPerPage(i, e)}
             >
               {i}
-            </button>&nbsp;
+            </button>
+            &nbsp;
           </div>
         ))}
       </ul>
