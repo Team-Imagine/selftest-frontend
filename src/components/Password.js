@@ -78,6 +78,7 @@ const Password = () => {
 
   const changePassword = (e) => {
     e.preventDefault();
+    if(new_password === new_password_again){
     console.log(changepassword);
     axios
       .post(`/api/user/verify-change-password/`, changepassword)
@@ -88,6 +89,8 @@ const Password = () => {
       .catch((error) => {
         alert(error.response.data.message);
       });
+    }else if(new_password !== new_password_again)
+    alert("비밀번호가 일치하지 않습니다.");
   };
 
   return (

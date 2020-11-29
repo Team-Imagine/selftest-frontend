@@ -88,7 +88,9 @@ const UserSettings = (isOpen) => {
   const SubmitSaveChange = (event) => {
     event.preventDefault();
 
+    if(new_password === new_password_again){
     axios
+      
       .patch(`/api/user`, {
         "username": username,
         "current_password": current_password,
@@ -96,6 +98,7 @@ const UserSettings = (isOpen) => {
         "first_name": first_name,
         "last_name": last_name,
       })
+    
       .then((res) => {
         console.log(res.data);
         setFirstName("");
@@ -109,11 +112,15 @@ const UserSettings = (isOpen) => {
       .catch((error) => {
         alert(error.response.data.message);
       });
+  }else if(new_password !== new_password_again)
+  alert("비밀번호가 일치하지 않습니다");
   };
+
 
   //사용자 탈퇴
   const DeleteUser = (e) => {
     e.preventDefault();
+    if(password === password_again){
     axios
       .delete(`api/user/`,{
         data: {
@@ -131,6 +138,8 @@ const UserSettings = (isOpen) => {
         console.log("에러", {password:password})
         alert(error.response.data.message);
       });
+    }else if(password !== password_again)
+    alert("비밀번호가 일치하지 않습니다");
   };
 
   return (
