@@ -53,17 +53,22 @@ const Rankcontent = ({ isOpen }) => {
       className={classNames("content", { "is-open": { isOpen } })}
     >
       <div>
+        
         <div className="d-flex bd-highlight mb-3">
           <div className="mr-auto p-2 bd-highlight">
             <h4 style={{ fontWeight: "bolder" }}>회원 순위</h4>
           </div>
         </div>
         <hr />
-
+        <div className="row h-100 justify-content-center align-items-center">
+        <Card style={{width:"70rem"}}>
+        <div>
         <div className="container h-100">
+         
           <div className="row h-100 justify-content-center align-items-center">
-            <Card Header style={{ width: "100rem", fontWeight: "bold" }}>
-              <Card.Header style={{ paddingBottom: "1px" }}>
+            
+            <Card Header style={{ background:"lightblue", width: "100rem", fontWeight: "bolder" }}>
+              <Card.Header variant="info" style={{ paddingBottom: "1px" }}>
                 <div className="d-flex bd-highlight mb-3">
                   <div
                     className="mr-auto p-2 bd-highlight"
@@ -93,8 +98,9 @@ const Rankcontent = ({ isOpen }) => {
               </Card.Header>
             </Card>
           </div>
+         
         </div>
-
+        
         {ranks.map((i, index) => (
           <div className="container h-100">
             <div className="row h-100 justify-content-center align-items-center">
@@ -132,10 +138,16 @@ const Rankcontent = ({ isOpen }) => {
                   </div>
                 </Card.Body>
               </Card>
+            
             </div>
           </div>
         ))}
+        </div>
+        </Card>
+        </div>
+
       </div><br/>
+
 
       <ul 
       className="row justify-content-center align-items-center">
