@@ -48,7 +48,9 @@ const NavBar = ({ isOpen, point }) => {
   };
 
   const moveSearch = () => {
+   
     history.push(`/search/${searchType}/${questionType}/${searchKeyword}`);
+    window.location.reload(); 
   };
 
   const moveActivity = () => {
