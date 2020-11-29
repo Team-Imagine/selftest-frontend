@@ -114,11 +114,13 @@ const UserSettings = (isOpen) => {
 
 
   //사용자 탈퇴
-  const DeleteUser = (e) => {
+  const DeleteUser  = (e) => {
     e.preventDefault();
+
     if(password === password_again){
     axios
-      .delete(`api/user/`, {password})
+      .delete(`/api/user`,
+       {data:{password}})
       
       .then((res) => {
         console.log(res.data.message);
@@ -128,6 +130,7 @@ const UserSettings = (isOpen) => {
         alert(res.data.message);
       })
       .catch((error) => {
+
         console.log("에러", {"password":password})
         alert(error.response.data.message);
       });

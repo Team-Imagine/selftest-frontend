@@ -333,6 +333,7 @@ const TestMaking = ({ isOpen }) => {
       <ul>
         {state === "select" && (
           <div>
+            <div style={{minHeight:"90rem"}}>
             <CardDeck
               style={{
                 width: "70%",
@@ -415,6 +416,7 @@ const TestMaking = ({ isOpen }) => {
                 </div>
               ))}
             </CardDeck>
+            </div>
             <ul
               className="row justify-content-center align-items-center"
               style={{
