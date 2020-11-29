@@ -34,8 +34,8 @@ const Activitycontent = (isOpen) => {
       .get(`/api/user`)
       .then((res) => {
         console.log(res.data);
-        
-      
+        setUser(res.data.user.rows);
+        setUsername(res.data.user.username);
         const username = res.data.user.username;
         //포인트내역 불러오기
         axios
@@ -78,7 +78,7 @@ const Activitycontent = (isOpen) => {
           .then((res) => {
             console.log(res.data);
             setPenaltyLogs(res.data.penalty_logs.rows);
-            let count = res.data.penalty_logs.count / 10+ 1;
+            let count = res.data.penalty_logs.count / 10 + 1;
             let t_pages = [];
 
             for (var i = 1; i < count; i++) {
@@ -131,6 +131,7 @@ const Activitycontent = (isOpen) => {
           .get(`/api/user/${username}/point-logs`, {
             params: {
               page: index,
+              
             },
           })
           .then((res) => {
