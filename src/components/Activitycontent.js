@@ -234,6 +234,7 @@ const Activitycontent = (isOpen) => {
                 <Card
                   border="info"
                   style={{
+                    overflow: "auto",
                     width: "35em",
                     height: "auto",
                     minHeight: "53.5em",
@@ -243,18 +244,19 @@ const Activitycontent = (isOpen) => {
                   <div className="column justify-content-center align-items-center">
                     <div
                       style={{
+                        overflow:"auto",
                         width: "auto",
                         maxHeight: "49em",
                         minHeight: "49em",
                       }}
                     >
-                      <Table style={{ height: "auto" }} responsive>
+                      <Table style={{  overflow: "auto",height: "auto" }} responsive>
                         <thead style={{ background: "pink" }}>
                           <tr>
-                            <th>No</th>
-                            <th>날짜</th>
-                            <th>내용</th>
-                            <th>P</th>
+                            <th style={{ width: "10%" }}>No</th>
+                            <th style={{ width: "20%" }}>날짜</th>
+                            <th style={{ width: "50%" }}>내용</th>
+                            <th style={{ width: "20%" }}>P</th>
                           </tr>
                         </thead>
                         {point_logs.map((i, index) => (
@@ -313,6 +315,7 @@ const Activitycontent = (isOpen) => {
                 <Card
                   border="info"
                   style={{
+                    overflow:"auto",
                     width: "35em",
                     height: "auto",
                     minHeight: "53.5em",
@@ -322,18 +325,19 @@ const Activitycontent = (isOpen) => {
                   <div className=" justify-content-center align-items-center">
                     <div
                       style={{
+                        overflow:"auto",
                         width: "auto",
                         maxHeight: "49em",
                         minHeight: "49em",
                       }}
                     >
-                      <Table style={{ height: "auto" }} responsive>
+                      <Table style={{ overflow:"auto",height: "auto" }} responsive>
                         <thead style={{ background: "lightyellow" }}>
                           <tr>
-                            <th>No</th>
-                            <th>날짜</th>
-                            <th>내용</th>
-                            <th>제재종료일</th>
+                            <th style={{ width: "10%" }}>No</th>
+                            <th style={{ width: "20%" }}>날짜</th>
+                            <th style={{ width: "50%" }}>내용</th>
+                            <th style={{ width: "20%" }}>제재종료일</th>
                           </tr>
                         </thead>
                         {penalty_logs.map((i, index) => (
@@ -378,7 +382,7 @@ const Activitycontent = (isOpen) => {
               </div>
 
               <div className="p-2 bd-highlight col-example">
-                <h2 style={{ fontWeight: "bolder" }}>
+                <h2 style={{ overflow:"auto", fontWeight: "bolder" }}>
                   출석&nbsp;
                   <Badge
                     pill
@@ -395,6 +399,7 @@ const Activitycontent = (isOpen) => {
                 <Card
                   border="info"
                   style={{
+                    overflow:"auto",
                     width: "20em",
                     height: "auto",
                     minHeight: "53.5em",
@@ -404,16 +409,17 @@ const Activitycontent = (isOpen) => {
                   <div className=" justify-content-center align-items-center">
                     <div
                       style={{
+                        overflow:"auto",
                         width: "auto",
                         maxHeight: "49em",
                         minHeight: "49em",
                       }}
                     >
-                      <Table style={{ height: "auto" }} responsive>
+                      <Table style={{ overflow:"auto", height: "auto" }} responsive>
                         <thead style={{ background: "lightgreen" }}>
                           <tr>
-                            <th>No</th>
-                            <th>날짜</th>
+                            <th style={{ width: "20%" }}>No</th>
+                            <th style={{ width: "80%" }}>날짜</th>
                           </tr>
                         </thead>
                         {attendances.map((i, index) => (
