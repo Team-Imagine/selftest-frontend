@@ -51,7 +51,7 @@ class Activity extends React.Component {
   };
 
   render() {
-   
+    const username = this.props.match.params.username;
     return (
       <div>
         <NavBar toggle={this.toggle} isOpen={this.state.isOpen} />
