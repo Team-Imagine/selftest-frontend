@@ -185,7 +185,7 @@ const Activitycontent = (isOpen) => {
                   </Badge>
                 </h2>
 
-                <Card border="info" style={{ width: "50em",height: "auto", minHeight:"53.5em", maxHeight:"53.5em" }}>
+                <Card border="info" style={{ width: "35em",height: "auto", minHeight:"53.5em", maxHeight:"53.5em" }}>
                   <div className="column justify-content-center align-items-center">
                     <div style={{ width: "auto", maxHeight:"49em", minHeight:"49em"}}>
                       <Table style={{ height: "auto" }} responsive>
@@ -250,7 +250,7 @@ const Activitycontent = (isOpen) => {
                   </Badge>
                 
                 </h2>
-                <Card border="info" style={{ width: "40em", height: "auto", minHeight:"53.5em", maxHeight:"53.5em" }}>
+                <Card border="info" style={{ width: "35em", height: "auto", minHeight:"53.5em", maxHeight:"53.5em" }}>
                   <div className=" justify-content-center align-items-center">
                   <div style={{ width: "auto", maxHeight:"49em", minHeight:"49em"}}>
                       <Table style={{ height: "auto" }} responsive>

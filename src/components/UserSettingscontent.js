@@ -136,12 +136,12 @@ const UserSettings = (isOpen) => {
             </Button>
           </div>
         </div>
-        
+
         <div className="container h-100">
           <div className="row h-100 justify-content-center align-items-center">
             <div className="d-flex flex-nowrap bd-highlight">
               <div className="p-2 bd-highlight col-example">
-                <Card border="info" style={{ width: "50em", height: "50rem" }}>
+                <Card border="info" style={{ width: "42em", height: "50rem" }}>
                   <div className="row h-100 justify-content-center align-items-center">
                     <form className="col-10">
                       <h2 style={{ fontWeight: "bolder" }}>프로필 설정</h2>
@@ -166,7 +166,7 @@ const UserSettings = (isOpen) => {
                             onChange={FirstName}
                             value={first_name}
                             id="first_name"
-                            style={{ width: "30rem" }}
+                            style={{ width: "24rem" }}
                             placeholder="변경할 이름을 입력하세요"
                           />
                         </Form>
@@ -182,7 +182,7 @@ const UserSettings = (isOpen) => {
                             onChange={LastName}
                             value={last_name}
                             id="last_name"
-                            style={{ width: "30rem" }}
+                            style={{ width: "24rem" }}
                             placeholder="변경할 성을 입력하세요"
                           />
                         </Form>
@@ -198,7 +198,7 @@ const UserSettings = (isOpen) => {
                             onChange={Username}
                             value={username}
                             id="username"
-                            style={{ width: "30rem" }}
+                            style={{ width: "24rem" }}
                             placeholder="변경할 사용자명을 입력하세요"
                           />
                         </Form>
@@ -217,7 +217,7 @@ const UserSettings = (isOpen) => {
                             value={current_password}
                             id="current_password"
                             type="password"
-                            style={{ width: "30rem" }}
+                            style={{ width: "24rem" }}
                             placeholder="현재 비밀번호를 입력하세요"
                           />
                         </Form>
@@ -231,7 +231,7 @@ const UserSettings = (isOpen) => {
                             onChange={NewPassword}
                             value={new_password}
                             id="new_password"
-                            style={{ width: "30rem" }}
+                            style={{ width: "24rem" }}
                             type="password"
                             placeholder="새 비밀번호를 입력하세요"
                           />
@@ -247,7 +247,7 @@ const UserSettings = (isOpen) => {
                             onChange={NewPasswordAgain}
                             value={new_password_again}
                             id="new_password_again"
-                            style={{ width: "30rem" }}
+                            style={{ width: "24rem" }}
                             type="password"
                             placeholder="새 비밀번호를 다시 한번 입력하세요"
                           />
@@ -268,14 +268,14 @@ const UserSettings = (isOpen) => {
               </div>
 
               <div className="p-2 bd-highlight col-example">
-                <Card border="info" style={{ width: "50em", height: "30rem" }}>
+                <Card border="info" style={{ width: "40em", height: "30rem" }}>
                   <div className="row h-100 justify-content-center align-items-center">
                     <form className="col-10">
                       <h2 style={{ fontWeight: "bolder" }}>탈퇴하기</h2>
                       <hr />
                       <Form.Group>
                         <Form inline>
-                          <Form.Label style={{ width: "10rem" }}>
+                          <Form.Label style={{ width: "8rem" }}>
                             비밀번호{" "}
                           </Form.Label>
                           <Form.Control
@@ -283,14 +283,14 @@ const UserSettings = (isOpen) => {
                             value={password}
                             id="password"
                             type="password"
-                            style={{ width: "30rem" }}
+                            style={{ width: "24rem" }}
                             placeholder="비밀번호를 입력하세요"
                           />
                         </Form>
                         <br />
 
                         <Form inline>
-                          <Form.Label style={{ width: "10rem" }}>
+                          <Form.Label style={{ width: "8rem" }}>
                             비밀번호 확인{" "}
                           </Form.Label>
                           <Form.Control
@@ -298,7 +298,7 @@ const UserSettings = (isOpen) => {
                             value={password_again}
                             id="password_again"
                             type="password"
-                            style={{ width: "30rem" }}
+                            style={{ width: "24rem" }}
                             placeholder="비밀번호를 다시 한번 입력하세요"
                           />
                           <br />
