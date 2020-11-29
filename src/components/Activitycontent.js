@@ -133,7 +133,7 @@ const Activitycontent = (isOpen) => {
                   <div className="column justify-content-center align-items-center">
                     <div style={{ width: "auto" }}>
                       <Table style={{ height: "auto" }} responsive>
-                        <thead>
+                        <thead style={{background:"pink"}}>
                           <tr>
                             <th>No</th>
                             <th>날짜</th>
@@ -181,7 +181,7 @@ const Activitycontent = (isOpen) => {
                 <h2 style={{ fontWeight: "bolder" }}>제재&nbsp;
                 <Badge
                     pill
-                    style={{ height: "2.3rem", paddingTop: "0.4rem", paddingRight :"0.4rem" }}
+                    style={{ height: "2.3rem", paddingTop: "0.4rem", paddingRight :"0.6rem" }}
                     variant="warning"
                     
                   >
@@ -193,7 +193,7 @@ const Activitycontent = (isOpen) => {
                   <div className=" justify-content-center align-items-center">
                     <div style={{ width: "auto" }}>
                       <Table style={{ height: "auto" }} responsive>
-                        <thead>
+                        <thead style={{background:"lightyellow"}}>
                           <tr>
                             <th>No</th>
                             <th>날짜</th>
@@ -226,7 +226,7 @@ const Activitycontent = (isOpen) => {
                   출석&nbsp;
                   <Badge
                     pill
-                    style={{ height: "2.3rem", paddingTop: "0.4rem", paddingRight :"0.4rem" }}
+                    style={{ height: "2.3rem", paddingTop: "0.4rem", paddingRight :"0.3rem" }}
                     variant="success"
                     
                   >
@@ -237,7 +237,7 @@ const Activitycontent = (isOpen) => {
                   <div className=" justify-content-center align-items-center">
                     <div style={{ width: "auto" }}>
                       <Table style={{ height: "auto" }} responsive>
-                        <thead>
+                        <thead style={{background:"lightgreen"}}>
                           <tr>
                             <th>No</th>
                             <th>날짜</th>
