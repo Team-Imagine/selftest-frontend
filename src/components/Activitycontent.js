@@ -61,6 +61,13 @@ const Activitycontent = (isOpen) => {
       .then((res) => {
         console.log(res.data);
         setPenaltyLogs(res.data.penalty_logs.rows);
+        let count = res.data.penalty_logs.count / 10 + 1;
+        let t_pages = [];
+
+        for (var i = 1; i < count; i++) {
+          t_pages.push(i);
+        }
+        setPages(t_pages);
       })
       .catch((error) => {
         alert(error.response.data.message);
@@ -73,6 +80,13 @@ const Activitycontent = (isOpen) => {
       .then((res) => {
         console.log(res.data);
         setAttendances(res.data.attendances.rows);
+        let count = res.data.attendances.count / 10 + 1;
+        let t_pages = [];
+
+        for (var i = 1; i < count; i++) {
+          t_pages.push(i);
+        }
+        setPages(t_pages);
       })
       .catch((error) => {
         alert(error.response.data.message);
@@ -98,11 +112,50 @@ const Activitycontent = (isOpen) => {
       });
   };
 
+  //포인트 페이지별로 가져오기
+  const loadPenaltyPerPage = (index, e) => {
+    e.preventDefault();
+
+    axios
+      .get(`/api/user/suna/penalty-logs`, {
+        params: {
+          page: index,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setPenaltyLogs(res.data.penalty_logs.rows);
+      })
+      .catch((error) => {
+        alert(error.response.data.message);
+      });
+  };
+
+  //출석 페이지별로 가져오기
+  const loadAttendancePerPage = (index, e) => {
+    e.preventDefault();
+
+    axios
+      .get(`/api/attendance`, {
+        params: {
+          page: index,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setAttendances(res.data.attendances.rows);
+      })
+      .catch((error) => {
+        alert(error.response.data.message);
+      });
+  };
+
   return (
     <Container
       fluid
       className={classNames("content", { "is-open": { isOpen } })}
     >
+       
       <div>
         <div className="d-flex bd-highlight mb-3">
           <div className="mr-auto p-2 bd-highlight"></div>
@@ -113,11 +166,14 @@ const Activitycontent = (isOpen) => {
             </Button>
           </div>
         </div>
-
+       
         <div className="container h-100">
+       
           <div className="row h-100 justify-content-center align-items-center">
+            
             <div className="d-flex flex-nowrap bd-highlight">
               <div className="p-2 bd-highlight col-example">
+                
                 <h2 style={{ fontWeight: "bolder" }}>
                   포인트&nbsp;
                   <Badge
@@ -129,9 +185,9 @@ const Activitycontent = (isOpen) => {
                   </Badge>
                 </h2>
 
-                <Card border="info" style={{ width: "50em", height: "50em" }}>
+                <Card border="info" style={{ width: "50em",height: "auto", minHeight:"53.5em", maxHeight:"53.5em" }}>
                   <div className="column justify-content-center align-items-center">
-                    <div style={{ width: "auto" }}>
+                    <div style={{ width: "auto", maxHeight:"49em", minHeight:"49em"}}>
                       <Table style={{ height: "auto" }} responsive>
                         <thead style={{background:"pink"}}>
                           <tr>
@@ -154,10 +210,9 @@ const Activitycontent = (isOpen) => {
                           </tbody>
                         ))}
                       </Table>
-                    </div>
-                  </div>
-               
-                  <ul style = {{position:"inherit"}}className="row justify-content-center align-items-center">
+                      </div>
+                        
+                      <ul style = {{Height:"auto", maxHeight:"2rem"}}className="row justify-content-center align-items-center">
                     {pages.map((i, index) => (
                       <div key={index}>
                         <button
@@ -174,8 +229,14 @@ const Activitycontent = (isOpen) => {
                       </div>
                     ))}
                   </ul>
+                      </div>
+                 
+                  
+               
+                 
                   
                 </Card>
+                
               </div>
               <div className="p-2 bd-highlight col-example">
                 <h2 style={{ fontWeight: "bolder" }}>제재&nbsp;
@@ -189,9 +250,9 @@ const Activitycontent = (isOpen) => {
                   </Badge>
                 
                 </h2>
-                <Card border="info" style={{ width: "40em", height: "50em" }}>
+                <Card border="info" style={{ width: "40em", height: "auto", minHeight:"53.5em", maxHeight:"53.5em" }}>
                   <div className=" justify-content-center align-items-center">
-                    <div style={{ width: "auto" }}>
+                  <div style={{ width: "auto", maxHeight:"49em", minHeight:"49em"}}>
                       <Table style={{ height: "auto" }} responsive>
                         <thead style={{background:"lightyellow"}}>
                           <tr>
@@ -217,6 +278,24 @@ const Activitycontent = (isOpen) => {
                         ))}
                       </Table>
                     </div>
+                      
+                    <ul style = {{Height:"auto", maxHeight:"2rem"}}className="row justify-content-center align-items-center">
+                    {pages.map((i, index) => (
+                      <div key={index}>
+                        <button
+                          style={{
+                            backgroundColor: "#ffffff",
+                            border: "1px solid",
+                            width: "1.5rem",
+                          }}
+                          onClick={(e) => loadPenaltyPerPage(i, e)}
+                        >
+                          {i}
+                        </button>
+                        &nbsp;
+                      </div>
+                    ))}
+                  </ul>
                   </div>
                 </Card>
               </div>
@@ -233,9 +312,9 @@ const Activitycontent = (isOpen) => {
                     <FontAwesomeIcon icon={faUserCheck} className="mr-2" />
                   </Badge>
                 </h2>
-                <Card border="info" style={{ width: "20em", height: "50em" }}>
+                <Card border="info" style={{ width: "20em", height: "auto", minHeight:"53.5em", maxHeight:"53.5em" }}>
                   <div className=" justify-content-center align-items-center">
-                    <div style={{ width: "auto" }}>
+                  <div style={{ width: "auto", maxHeight:"49em", minHeight:"49em"}}>
                       <Table style={{ height: "auto" }} responsive>
                         <thead style={{background:"lightgreen"}}>
                           <tr>
@@ -255,13 +334,35 @@ const Activitycontent = (isOpen) => {
                         ))}
                       </Table>
                     </div>
+                       
+                    <ul style = {{Height:"auto", maxHeight:"2rem"}}className="row justify-content-center align-items-center">
+                    {pages.map((i, index) => (
+                      <div key={index}>
+                        <button
+                          style={{
+                            backgroundColor: "#ffffff",
+                            border: "1px solid",
+                            width: "1.5rem",
+                          }}
+                          onClick={(e) => loadAttendancePerPage(i, e)}
+                        >
+                          {i}
+                        </button>
+                        &nbsp;
+                      </div>
+                    ))}
+                  </ul>
                   </div>
                 </Card>
               </div>
             </div>
+          
           </div>
+         
         </div>
+        
       </div>
+   
     </Container>
   );
 };
