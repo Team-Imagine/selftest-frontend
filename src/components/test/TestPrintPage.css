@@ -1,8 +1,16 @@
 @media print {
 	page-divide {
 			page-break-after: always;
-	}
+    }
+    body {
+        margin: 0mm 10mm 0mm 10mm;
+    }
 }
+
+@page  
+{ 
+    margin: 25mm 0mm 15mm 0mm;  
+} 
 
 ::-webkit-scrollbar {
     display: none;
