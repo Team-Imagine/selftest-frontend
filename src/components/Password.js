@@ -22,7 +22,7 @@ const Password = () => {
   const [new_password, setNewPassWord] = useState("");
   const [new_password_again, setNewPassWordAgain] = useState("");
   const [password_error,setPasswordError] = useState('');
-  const [checkpwd, setCheckPwd] = useState("");
+  const [password_match,setPasswordMatch] = useState('');
   const changepassword ={
    code:code,
    new_password:new_password,
@@ -40,6 +40,8 @@ const Password = () => {
   const onChangeNewPasswordAgain = (e) => {
     setPasswordError(e.target.value!==new_password);
     console.log(password_error);
+    setPasswordMatch(e.target.value===new_password);
+    console.log(password_match);
     setNewPassWordAgain(e.target.value);
   };
 
@@ -176,6 +178,7 @@ const Password = () => {
                       &nbsp;&nbsp;
                       <Form.Control
                         onChange = {onChangeNewPassword}
+                        value={new_password}
                         type="password"
                         name = "firstpassword"
                         style={{ width: "29rem" }}
@@ -193,6 +196,7 @@ const Password = () => {
                       <Form.Control
                         onChange={onChangeNewPasswordAgain}
                         type="password"
+                        value={new_password_again}
                         name = "lastpassword"
                         style={{ width: "29rem" }}
                         placeholder="변경할 비밀번호를 다시 입력하세요."
@@ -202,6 +206,7 @@ const Password = () => {
                     <Form.Text className="text-muted">
                       <Form.Label style={{ width: "11rem" }}></Form.Label>
                       {password_error&&"비밀번호가 일치하지 않습니다"}
+                      {password_match&&"비밀번호가 일치합니다"}
                     </Form.Text>
                   </Form.Group>
                   <br />

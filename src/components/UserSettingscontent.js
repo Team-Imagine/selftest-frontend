@@ -27,8 +27,12 @@ const UserSettings = (isOpen) => {
   const [new_password_again, setNewPasswordAgain] = useState("");
   const [password, setPassword] = useState("");
   const [password_again, setPasswordAgain] = useState("");
+
   const [password_error,setPasswordError] = useState('');
+  const [password_match,setPasswordMatch] = useState('');
   const [newpassword_error,setNewPasswordError] = useState('');
+  const [newpassword_match,setNewPasswordMatch] = useState('');
+  
   let history = useHistory();
 
   const moveHome = () => {
@@ -53,6 +57,8 @@ const UserSettings = (isOpen) => {
   const NewPasswordAgain = (e) => {
     setNewPasswordError(e.target.value!==new_password);
     console.log(newpassword_error);
+    setNewPasswordMatch(e.target.value===new_password);
+    console.log(newpassword_match);
     setNewPasswordAgain(e.target.value);
   };
   const Password = (e) => {
@@ -61,6 +67,8 @@ const UserSettings = (isOpen) => {
   const PasswordAgain = (e) => {
     setPasswordError(e.target.value!==password);
     console.log(password_error);
+    setPasswordMatch(e.target.value===password);
+    console.log(password_match);
     setPasswordAgain(e.target.value);
   };
   //사용자 정보 불러오기
@@ -109,7 +117,7 @@ const UserSettings = (isOpen) => {
     axios
       .delete(`api/user/`,{
         data: {
-          password:"password",
+          password
         }})
       
       .then((res) => {
@@ -262,6 +270,7 @@ const UserSettings = (isOpen) => {
                         <Form.Text className="text-muted">
                       <Form.Label style={{ width: "10rem" }}></Form.Label>
                       {newpassword_error&&"비밀번호가 일치하지 않습니다"}
+                      {newpassword_match&&"비밀번호가 일치합니다"}
                     </Form.Text>
                       </Form.Group>
                       <button
@@ -316,6 +325,7 @@ const UserSettings = (isOpen) => {
                         <Form.Text className="text-muted">
                       <Form.Label style={{ width: "8rem" }}></Form.Label>
                       {password_error&&"비밀번호가 일치하지 않습니다"}
+                      {password_match&&"비밀번호가 일치합니다"}
                     </Form.Text>
                       </Form.Group>
 
