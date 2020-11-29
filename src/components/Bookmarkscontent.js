@@ -94,7 +94,7 @@ const Bookmarkscontent = ({ isOpen }) => {
           </div>
         </div>
         <hr />
-        <ul>
+        <ul style={{minHeight:"120rem"}}>
           <CardDeck>
             {bookmarks.map((i) => (
               <div className="container h-100" key={i["question.id"]}>

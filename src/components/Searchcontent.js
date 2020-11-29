@@ -20,9 +20,25 @@ import FormControl from "react-bootstrap/FormControl";
 const Searchcontent = ({ searchtype, keywordtype, keyword, isOpen }) => {
   const [searchresults, setSearchresults] = useState([]);
   const [pages, setPages] = useState([]);
+  const [sort, setSort] = useState("");
+  const [selected, setSelected] = useState([]);
+  const [question, setQuestion] = useState({
+      question: [],
+      curPage: 1,
+      totalCount: 0,
+    });
+
+  let history = useHistory();
+
 
   var keywordType = "";
   keywordtype === "default" ? (keywordType = "") : (keywordType = keywordtype);
+
+  const onSelectSortChange = (e)=>{
+    setSort(e.target.value); 
+  }
+
+  console.log(sort);
 
   useEffect(() => {
     axios
@@ -34,36 +50,83 @@ const Searchcontent = ({ searchtype, keywordtype, keyword, isOpen }) => {
           `/api/question?question_type=${keywordType}&${searchtype}=${keyword}`
         );
         console.log(res.data);
-        setSearchresults(res.data.questions.rows);
-
+         setQuestion({
+          question: res.data.questions.rows,
+          curPage: 1,
+          totalCount: res.data.questions.count,
+        });
         let count = res.data.questions.count / 10 + 1;
+        let t_row = [];
+        let t_col = [];
+
+        for (var i = 1; i <= count; i++) {
+          t_col = [];
+          for (var j = 0; j < 10; j++) {
+            if ((i - 1) * 10 + j < res.data.questions.count) {
+              t_col.push({
+                selected: "info",
+                question_id: res.data.questions.rows[j].id,
+              });
+            }
+          }
+          t_row.push(t_col);
+        }
+
+        setSelected(t_row);
+
         let t_pages = [];
 
         for (var i = 1; i < count; i++) {
           t_pages.push(i);
         }
         setPages(t_pages);
+
+        
       })
       .catch((error) => {
         alert(error.response.data.message);
       });
+
+      
+       
   }, []);
+
+  const SortPage = (sort, e) => {
+    axios
+      .get(
+        `/api/question?question_type=${keywordType}&${searchtype}=${keyword}&sort=title:${sort}`
+      )
+      .then((res) => {
+        console.log(
+          `/api/question?question_type=${keywordType}&${searchtype}=${keyword}&sort=title:${sort}`
+        );
+        console.log(res.data);
+        setSearchresults(res.data.questions.rows);
+      })
+      .catch((error) => {
+        alert(error.response.data.message);
+      });
+  };
 
   const loadSearchPerPage = (index, e) => {
     e.preventDefault();
     axios
       .get(
-        `/api/question?question_type=${keywordType}&${searchtype}=${keyword}`,
-        {
-          params: {
-            page: index,
-          },
-        }
+        `/api/question?page=${index}&question_type=${keywordType}&${searchtype}=${keyword}`,
       )
       .then((res) => {
-        console.log(
-          `/api/question?question_type=${keywordType}&${searchtype}=${keyword}`
-        );
+        console.log(res.data);
+        let tSelected = selected;
+        for (var col = 0; col < res.data.questions.rows.length; col++) {
+          tSelected[index - 1][col].question_id =
+            res.data.questions.rows[col].id;
+        }
+
+        //setQuestion(res.data.questions.rows);
+        setQuestion({ question: res.data.questions.rows, curPage: index });
+
+        //setCurPage(index);
+        setSelected([...tSelected]);
       })
       .catch((error) => {
         alert(error.response.data.message);
@@ -83,17 +146,22 @@ const Searchcontent = ({ searchtype, keywordtype, keyword, isOpen }) => {
             </h3>
           </div>
           <div className="p-2 bd-highlight">
-            <Form.Control as="select">
+            <Form.Control
+             as="select"
+             onChange={onSelectSortChange.bind(this)}>
               <option value="default">정렬</option>
-              <option value="multiple_choice">오름차순</option>
-              <option value="short_answer">내림차순</option>
+              <option value="asc">오름차순</option>
+              <option value="desc">내림차순</option>
             </Form.Control>
+            <Button variant="info" onClick={SortPage}>
+              정렬
+            </Button>
           </div>
         </div>
         <hr />
         <ul style={{ minHeight: "120rem" }}>
           <CardDeck>
-            {searchresults.map((i) => (
+            {question.question.map((i,index) => (
               <div className="container h-100" key={i.id}>
                 <div className="row h-100 justify-content-center align-items-center">
                   <Card
