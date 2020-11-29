@@ -14,9 +14,9 @@ class Content extends React.Component {
         className={classNames("content", { "is-open": this.props.isOpen })}
       >
         <div style={{ height: "3.2rem", paddingTop: "10px" }}>
-          <h4 style={{ fontWeight: "bolder" }}>
+          <h3 style={{ fontWeight: "bolder" }}>
             인기 과목 <Badge variant="warning">HOT</Badge>
-          </h4>
+          </h3>
         </div>
         <hr />
 
