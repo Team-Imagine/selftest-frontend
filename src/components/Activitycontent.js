@@ -15,6 +15,7 @@ const Activitycontent = (isOpen) => {
   const [point_logs, setPointLogs] = useState([]);
   const [penalty_logs, setPenaltyLogs] = useState([]);
   const [attendances, setAttendances] = useState([]);
+  const [pages, setPages] = useState([]);
   let history = useHistory();
 
   const moveHome = () => {
@@ -40,7 +41,15 @@ const Activitycontent = (isOpen) => {
    .then((res) => {
      console.log(res.data);
      setPointLogs(res.data.point_logs.rows);
-   })
+
+     let count = res.data.point_logs.count / 10 + 1;
+        let t_pages = [];
+  
+        for (var i = 1; i < count; i++) {
+          t_pages.push(i);
+        }
+        setPages(t_pages);
+      })
    .catch((error) => {
      alert(error.response.data.message);
    });
@@ -69,6 +78,25 @@ const Activitycontent = (isOpen) => {
      alert(error.response.data.message);
    });
   }, []);
+
+  //포인트 페이지별로 가져오기
+  const loadPointPerPage = (index,e) => {
+    e.preventDefault();
+  
+    axios
+    .get(`/api/user/suna/point-logs`, {
+      params: {
+        page: index,
+      },
+    })
+    .then((res) => {
+      console.log(res.data);
+      setPointLogs(res.data.point_logs.rows);
+    })
+    .catch((error) => {
+      alert(error.response.data.message);
+    });
+};
 
   return (
     
@@ -121,6 +149,24 @@ const Activitycontent = (isOpen) => {
                     </Table>
                   </div>
                 </div>
+
+                <ul
+      className="row justify-content-center align-items-center">
+        {pages.map((i, index) => (
+          <div key={index}>
+            <button
+              style={{
+                backgroundColor: "#ffffff",
+                border: "1px solid",
+                width: "1.5rem",
+              }}
+              onClick={(e) => loadPointPerPage(i, e)}
+            >
+              {i}
+            </button>&nbsp; 
+          </div>
+        ))}
+      </ul>
               </Card>
             </div>
           </div>

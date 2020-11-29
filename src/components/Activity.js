@@ -1,6 +1,5 @@
 import React from "react";
 import SideBar from "./sidebar/SideBar";
-import Searchcontent from "./Searchcontent";
 import NavBar from "./content/Navbar";
 import Activitycontent from "./Activitycontent"
 
@@ -57,7 +56,6 @@ class Activity extends React.Component {
       <div>
         <NavBar toggle={this.toggle} isOpen={this.state.isOpen} />
         <div className="App wrapper">
-          <SideBar toggle={this.toggle} isOpen={this.state.isOpen} />
           <Activitycontent toggle={this.toggle} isOpen={this.state.isOpen}/>
         </div>
       </div>
