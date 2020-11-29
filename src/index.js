@@ -19,7 +19,7 @@ import Settings from "./components/Settings";
 import Bookmarks from "./components/Bookmarks";
 import Search from "./components/Search";
 import { CookiesProvider } from 'react-cookie';
-import UserSettings from "./components/UserSettings";
+import UserSettings from "./components/UserSettingscontent";
 import Activity from "./components/Activity";
 
 ReactDOM.render(
