@@ -126,7 +126,6 @@ const UserSettings = (isOpen) => {
     >
   
       <div >
-        
         <div style={{height:"4rem"}}className="d-flex bd-highlight mb-3">
           <div className="mr-auto p-2 bd-highlight">
           </div>
@@ -136,10 +135,8 @@ const UserSettings = (isOpen) => {
             홈으로 돌아가기
             </Button>
           </div>
-         
         </div>
-
-   
+        
         <div className="container h-100">
           <div className="row h-100 justify-content-center align-items-center">
             <div className="d-flex flex-nowrap bd-highlight">
