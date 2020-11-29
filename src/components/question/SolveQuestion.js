@@ -842,9 +842,9 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
       <div className="d-flex bd-highlight mb-3">
         <div className="mr-auto p-2 bd-highlight">
           <div style={{ height: "2.5rem" }}>
-            <h4 style={{ fontWeight: "bolder" }}>
+            <h3 style={{ fontWeight: "bolder" }}>
               과목 {">"} {subject} {">"} {course} {">"} 문제 풀이
-            </h4>
+            </h3>
           </div>
         </div>
         <div className="p-2 bd-highlight">

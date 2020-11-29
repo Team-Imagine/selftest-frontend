@@ -92,7 +92,7 @@ const Bookmarkscontent = ({ isOpen }) => {
       <div>
         <div className="d-flex bd-highlight mb-3">
           <div className="mr-auto p-2 bd-highlight">
-            <h4 style={{ fontWeight: "bolder" }}>즐겨찾기</h4>
+            <h3 style={{ fontWeight: "bolder" }}>즐겨찾기</h3>
           </div>
         </div>
         <hr />

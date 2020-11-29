@@ -500,9 +500,9 @@ const TestPage = ({ isOpen, test_id }) => {
 		>
 			<div className="d-flex bd-highlight mb-3">
 				<div className="mr-auto p-2 bd-highlight">
-					<h4 style={{ fontWeight: "bolder" }}>
+					<h3 style={{ fontWeight: "bolder" }}>
 						{title}
-					</h4>
+					</h3>
 				</div>
 				<div className="p-2 bd-highlight">
 					{(state !== 'test' && !print) ? <div className="row">

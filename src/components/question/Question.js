@@ -269,9 +269,9 @@ const Question = ({ subject, course, isOpen }) => {
 			<div>
 				<div className="d-flex bd-highlight mb-3">
 					<div className="mr-auto p-2 bd-highlight">
-						<h4 style={{ fontWeight: "bolder" }}>
+						<h3 style={{ fontWeight: "bolder" }}>
 							과목 {'>'} {subject} {'>'} {course}
-						</h4>
+						</h3>
 					</div>
 					<div className="d-flex p-2 bd-highlight">
 

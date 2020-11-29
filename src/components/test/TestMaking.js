@@ -232,9 +232,9 @@ const TestMaking = ({ isOpen }) => {
     >
       <div className="d-flex bd-highlight mb-3">
         <div className="mr-auto p-2 bd-highlight">
-          <h4 style={{ fontWeight: "bolder" }}>
+          <h3 style={{ fontWeight: "bolder" }}>
             시험 문제 생성
-              </h4>
+              </h3>
           <Form inline>
             <Form.Control
               type="course"

@@ -105,9 +105,9 @@ const Testcontent = ({ isOpen }) => {
 		>
 			<div className="d-flex bd-highlight mb-3">
 				<div className="mr-auto p-2 bd-highlight">
-					<h4 style={{ fontWeight: "bolder" }}>
+					<h3 style={{ fontWeight: "bolder" }}>
 						시험
-        </h4>
+        </h3>
 				</div>
 				<div className="p-2 bd-highlight">
 				<Button variant={buttonColor} style={{ width: '9rem', height: '2.5rem' }} onClick={makeHandler}
