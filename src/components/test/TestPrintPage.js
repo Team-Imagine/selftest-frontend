@@ -72,7 +72,7 @@ class TestPrintPage extends React.Component {
 						</div>
 					</div>}
 					{this.props.type !== 'question' && <div>
-								<div className="section" />
+								{this.props.type === 'both' && <div className="section" />}
 								<h2 style={{ fontSize: '50px', textAlign: 'center', paddingBottom: '10px', marginLeft: '20px', marginRight: '20px', marginBottom: '30px', borderBottom: '3px solid black' }}>해답</h2>
 								<div style={{ columnCount: '2', columnGap: '10px' }}>
 									{this.props.answers.map((i, index, array) =>
