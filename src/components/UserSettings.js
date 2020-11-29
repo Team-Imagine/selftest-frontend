@@ -17,8 +17,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Container,Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 
-//성공메시지는 뜨나, 데이터 업데이트 x
-
 const UserSettings = (isOpen) => {
   const [user, setUser] = useState([]);
   const [first_name, setFirstName] = useState("");
@@ -71,6 +69,7 @@ const UserSettings = (isOpen) => {
         alert(error.response.data.message);
       });
   }, []);
+
   //사용자 정보 변경
   const SubmitSaveChange = (event) => {
     event.preventDefault();
@@ -101,19 +100,21 @@ const UserSettings = (isOpen) => {
   //사용자 탈퇴
   const DeleteUser = (e) => {
     e.preventDefault();
-    console.log("비밀번호:", password);
-    console.log("비밀번호 확인:", password_again);
-
     axios
-      .delete(`api/user`, {
-        data: password,
-      })
+      .delete(`api/user/`,{
+        data: {
+          password:password,
+        }})
+      
       .then((res) => {
         console.log(res.data.message);
-
-        alert("탈퇴되었습니다!");
+        setPassword("");
+        setPasswordAgain("");
+        console.log("성공", {password:password})
+        alert(res.data.message);
       })
       .catch((error) => {
+        console.log("에러", {password:password})
         alert(error.response.data.message);
       });
   };
@@ -286,7 +287,7 @@ const UserSettings = (isOpen) => {
                             id="password"
                             type="password"
                             style={{ width: "30rem" }}
-                            placeholder="현재 비밀번호를 입력하세요"
+                            placeholder="비밀번호를 입력하세요"
                           />
                         </Form>
                         <br />
@@ -301,7 +302,7 @@ const UserSettings = (isOpen) => {
                             id="password_again"
                             type="password"
                             style={{ width: "30rem" }}
-                            placeholder="새 비밀번호를 입력하세요"
+                            placeholder="비밀번호를 다시 한번 입력하세요"
                           />
                           <br />
                         </Form>

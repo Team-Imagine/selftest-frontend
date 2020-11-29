@@ -14,6 +14,7 @@ const Activitycontent = (isOpen) => {
   const [username, setUsername] = useState("");
   const [point_logs, setPointLogs] = useState([]);
   const [penalty_logs, setPenaltyLogs] = useState([]);
+  const [attendances, setAttendances] = useState([]);
   let history = useHistory();
 
   const moveHome = () => {
@@ -21,9 +22,6 @@ const Activitycontent = (isOpen) => {
   };
 
   useEffect(() => {
-    
-  
-
      //사용자 정보 불러오기
      axios
      .get(`/api/user`)
@@ -37,7 +35,7 @@ const Activitycontent = (isOpen) => {
 
    //포인트내역 불러오기
    axios
-   .get(`/api/user/임선아지메일/point-logs`)
+   .get(`/api/user/suna/point-logs`)
 
    .then((res) => {
      console.log(res.data);
@@ -49,11 +47,23 @@ const Activitycontent = (isOpen) => {
 
    //제재내역 불러오기
    axios
-   .get(`/api/user/임선아지메일/penalty-logs`)
+   .get(`/api/user/suna/penalty-logs`)
 
    .then((res) => {
      console.log(res.data);
      setPenaltyLogs(res.data.penalty_logs.rows);
+   })
+   .catch((error) => {
+     alert(error.response.data.message);
+   });
+
+   //출석내역 불러오기
+   axios
+   .get(`/api/attendance`)
+   
+   .then((res) => {
+     console.log(res.data);
+     setAttendances(res.data.attendances.rows)
    })
    .catch((error) => {
      alert(error.response.data.message);
@@ -184,13 +194,13 @@ const Activitycontent = (isOpen) => {
                          
                         </tr>
                       </thead>
-                      {point_logs.map((i, index) => (
+                      {attendances.map((i, index) => (
                         <tbody>
                           <tr>
                             <td style={{ width: "20%" }} key={index + 1}>
                               {index + 1}{" "}
                             </td>
-                            <td style={{ width: "80%" }}>{i.created_at}</td>
+                            <td style={{ width: "80%" }}>{i.createdAt}</td>
                           </tr>
                         </tbody>
                       ))}
