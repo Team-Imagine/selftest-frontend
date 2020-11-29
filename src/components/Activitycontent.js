@@ -34,8 +34,8 @@ const Activitycontent = (isOpen) => {
       .get(`/api/user`)
       .then((res) => {
         console.log(res.data);
-        setUser(res.data.user.rows);
-        setUsername(res.data.user.username);
+        
+      
         const username = res.data.user.username;
         //포인트내역 불러오기
         axios
@@ -56,7 +56,21 @@ const Activitycontent = (isOpen) => {
           .catch((error) => {
             alert(error.response.data.message);
           });
+      })
+      .catch((error) => {
+        alert(error.response.data.message);
+      });
+  }, []);
 
+  useEffect(() => {
+    //사용자 정보 불러오기
+    axios
+      .get(`/api/user`)
+      .then((res) => {
+        console.log(res.data);
+        setUser(res.data.user.rows);
+        setUsername(res.data.user.username);
+        const username = res.data.user.username;
         //제재내역 불러오기
         axios
           .get(`/api/user/${username}/penalty-logs`)
@@ -64,7 +78,7 @@ const Activitycontent = (isOpen) => {
           .then((res) => {
             console.log(res.data);
             setPenaltyLogs(res.data.penalty_logs.rows);
-            let count = res.data.penalty_logs.count / 10 + 1;
+            let count = res.data.penalty_logs.count / 10+ 1;
             let t_pages = [];
 
             for (var i = 1; i < count; i++) {
@@ -79,7 +93,9 @@ const Activitycontent = (isOpen) => {
       .catch((error) => {
         alert(error.response.data.message);
       });
+  }, []);
 
+  useEffect(() => {
     //출석내역 불러오기
     axios
       .get(`/api/attendance`)
@@ -100,7 +116,6 @@ const Activitycontent = (isOpen) => {
       });
   }, []);
 
-
   //포인트 페이지별로 가져오기
   const loadPointPerPage = (index, e) => {
     e.preventDefault();
@@ -112,23 +127,23 @@ const Activitycontent = (isOpen) => {
         setUser(res.data.user.rows);
         setUsername(res.data.user.username);
         const username = res.data.user.username;
-      axios
-      .get(`/api/user/${username}/point-logs`, {
-        params: {
-          page: index,
-        },
-      })
-      .then((res) => {
-        console.log(res.data);
-        setPointLogs(res.data.point_logs.rows);
+        axios
+          .get(`/api/user/${username}/point-logs`, {
+            params: {
+              page: index,
+            },
+          })
+          .then((res) => {
+            console.log(res.data);
+            setPointLogs(res.data.point_logs.rows);
+          })
+          .catch((error) => {
+            alert(error.response.data.message);
+          });
       })
       .catch((error) => {
         alert(error.response.data.message);
       });
-      })
-      .catch((error) => {
-        alert(error.response.data.message);
-    });
   };
 
   //제재내용 페이지별로 가져오기
@@ -142,23 +157,23 @@ const Activitycontent = (isOpen) => {
         setUser(res.data.user.rows);
         setUsername(res.data.user.username);
         const username = res.data.user.username;
-    axios
-      .get(`/api/user/${username}/penalty-logs`, {
-        params: {
-          page: index,
-        },
-      })
-      .then((res) => {
-        console.log(res.data);
-        setPenaltyLogs(res.data.penalty_logs.rows);
+        axios
+          .get(`/api/user/${username}/penalty-logs`, {
+            params: {
+              page: index,
+            },
+          })
+          .then((res) => {
+            console.log(res.data);
+            setPenaltyLogs(res.data.penalty_logs.rows);
+          })
+          .catch((error) => {
+            alert(error.response.data.message);
+          });
       })
       .catch((error) => {
         alert(error.response.data.message);
       });
-    })
-    .catch((error) => {
-      alert(error.response.data.message);
-  });
   };
 
   //출석 페이지별로 가져오기
