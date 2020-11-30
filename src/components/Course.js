@@ -131,31 +131,30 @@ const Course = ({ subject, isOpen }) => {
         </div>
       </div>
       <hr />
-      <div
-      style={{height: "auto", minHeight:"48em", maxHeight:"48em" }}>
-      <ul>
-        {course.map((i) => (
-          <div className="container h-100" key={i.title}>
-            <div className="row h-100 justify-content-center align-items-center">
-              <Alert
-                className="text-center"
-                variant="info"
-                style={{ width: "25rem" }}
-              >
-                <Link
-                  key={i.title}
-                  to={{
-                    pathname: `/subject/${subject}/${i.title}`,
-                  }}
+      <div style={{ height: "auto", minHeight: "48em", maxHeight: "48em" }}>
+        <ul>
+          {course.map((i) => (
+            <div className="container h-100" key={i.title}>
+              <div className="row h-100 justify-content-center align-items-center">
+                <Alert
+                  className="text-center"
+                  variant="info"
+                  style={{ width: "25rem" }}
                 >
-                  <div style={{ fontSize: 18 }}>{i.title}</div>
-                </Link>
-              </Alert>
-              <br />
+                  <Link
+                    key={i.title}
+                    to={{
+                      pathname: `/subject/${subject}/${i.title}`,
+                    }}
+                  >
+                    <div style={{ fontSize: 18 }}>{i.title}</div>
+                  </Link>
+                </Alert>
+                <br />
+              </div>
             </div>
-          </div>
-        ))}
-      </ul>
+          ))}
+        </ul>
       </div>
       <ul className="row justify-content-center align-items-center">
         {pages.map((i, index) => (

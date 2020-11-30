@@ -27,8 +27,12 @@ const UserSettings = (isOpen) => {
   const [new_password_again, setNewPasswordAgain] = useState("");
   const [password, setPassword] = useState("");
   const [password_again, setPasswordAgain] = useState("");
+
   const [password_error,setPasswordError] = useState('');
-  const [checkpwd, setCheckPwd] = useState("");
+  const [password_match,setPasswordMatch] = useState('');
+  const [newpassword_error,setNewPasswordError] = useState('');
+  const [newpassword_match,setNewPasswordMatch] = useState('');
+  
   let history = useHistory();
 
   const moveHome = () => {
@@ -51,16 +55,16 @@ const UserSettings = (isOpen) => {
     setNewPassword(e.target.value);
   };
   const NewPasswordAgain = (e) => {
-    setPasswordError(e.target.value!==new_password);
-    console.log(password_error);
+    setNewPasswordError(e.target.value!==new_password);
+    setNewPasswordMatch(e.target.value===new_password);
     setNewPasswordAgain(e.target.value);
   };
   const Password = (e) => {
     setPassword(e.target.value);
   };
   const PasswordAgain = (e) => {
-    setPasswordError(e.target.value!==new_password);
-    console.log(password_error);
+    setPasswordError(e.target.value!==password);
+    setPasswordMatch(e.target.value===password);
     setPasswordAgain(e.target.value);
   };
   //사용자 정보 불러오기
@@ -80,7 +84,9 @@ const UserSettings = (isOpen) => {
   const SubmitSaveChange = (event) => {
     event.preventDefault();
 
+    if(new_password === new_password_again){
     axios
+      
       .patch(`/api/user`, {
         "username": username,
         "current_password": current_password,
@@ -88,6 +94,7 @@ const UserSettings = (isOpen) => {
         "first_name": first_name,
         "last_name": last_name,
       })
+    
       .then((res) => {
         console.log(res.data);
         setFirstName("");
@@ -101,28 +108,34 @@ const UserSettings = (isOpen) => {
       .catch((error) => {
         alert(error.response.data.message);
       });
+  }else if(new_password !== new_password_again)
+  alert("비밀번호가 일치하지 않습니다");
   };
 
+
   //사용자 탈퇴
-  const DeleteUser = (e) => {
+  const DeleteUser  = (e) => {
     e.preventDefault();
+
+    if(password === password_again){
     axios
-      .delete(`api/user/`,{
-        data: {
-          password:password,
-        }})
+      .delete(`/api/user`,
+       {data:{password}})
       
       .then((res) => {
         console.log(res.data.message);
         setPassword("");
         setPasswordAgain("");
-        console.log("성공", {password:password})
+        console.log("성공", {"password":password})
         alert(res.data.message);
       })
       .catch((error) => {
-        console.log("에러", {password:password})
+
+        console.log("에러", {"password":password})
         alert(error.response.data.message);
       });
+    }else if(password !== password_again)
+    alert("비밀번호가 일치하지 않습니다");
   };
 
   return (
@@ -261,7 +274,8 @@ const UserSettings = (isOpen) => {
                         </Form>
                         <Form.Text className="text-muted">
                       <Form.Label style={{ width: "10rem" }}></Form.Label>
-                      {password_error&&"비밀번호가 일치하지 않습니다"}
+                      {newpassword_error&&"비밀번호가 일치하지 않습니다"}
+                      {newpassword_match&&"비밀번호가 일치합니다"}
                     </Form.Text>
                       </Form.Group>
                       <button
@@ -278,7 +292,7 @@ const UserSettings = (isOpen) => {
               </div>
 
               <div className="p-2 bd-highlight col-example">
-                <Card border="info" style={{ width: "40em", height: "30rem" }}>
+                <Card border="info" style={{ width: "40em", height: "22rem" }}>
                   <div className="row h-100 justify-content-center align-items-center">
                     <form className="col-10">
                       <h2 style={{ fontWeight: "bolder" }}>탈퇴하기</h2>
@@ -316,6 +330,7 @@ const UserSettings = (isOpen) => {
                         <Form.Text className="text-muted">
                       <Form.Label style={{ width: "8rem" }}></Form.Label>
                       {password_error&&"비밀번호가 일치하지 않습니다"}
+                      {password_match&&"비밀번호가 일치합니다"}
                     </Form.Text>
                       </Form.Group>
 

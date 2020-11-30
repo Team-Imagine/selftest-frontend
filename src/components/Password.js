@@ -14,18 +14,16 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "react-bootstrap";
 
-
 const Password = () => {
-
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [new_password, setNewPassWord] = useState("");
   const [new_password_again, setNewPassWordAgain] = useState("");
-  const [password_error,setPasswordError] = useState('');
-  const [checkpwd, setCheckPwd] = useState("");
-  const changepassword ={
-   code:code,
-   new_password:new_password,
+  const [password_error, setPasswordError] = useState("");
+  const [password_match, setPasswordMatch] = useState("");
+  const changepassword = {
+    code: code,
+    new_password: new_password,
   };
 
   const onChangeEmail = (e) => {
@@ -38,11 +36,12 @@ const Password = () => {
     setNewPassWord(e.target.value);
   };
   const onChangeNewPasswordAgain = (e) => {
-    setPasswordError(e.target.value!==new_password);
+    setPasswordError(e.target.value !== new_password);
     console.log(password_error);
+    setPasswordMatch(e.target.value === new_password);
+    console.log(password_match);
     setNewPassWordAgain(e.target.value);
   };
-
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -73,19 +72,21 @@ const Password = () => {
       });
   };
 
-
   const changePassword = (e) => {
     e.preventDefault();
-    console.log(changepassword);
-    axios
-      .post(`/api/user/verify-change-password/`, changepassword)
-      .then((res) => {
-        console.log(res.data);
-        alert("비밀번호가 변경되었습니다.");
-      })
-      .catch((error) => {
-        alert(error.response.data.message);
-      });
+    if (new_password === new_password_again) {
+      console.log(changepassword);
+      axios
+        .post(`/api/user/verify-change-password/`, changepassword)
+        .then((res) => {
+          console.log(res.data);
+          alert("비밀번호가 변경되었습니다.");
+        })
+        .catch((error) => {
+          alert(error.response.data.message);
+        });
+    } else if (new_password !== new_password_again)
+      alert("비밀번호가 일치하지 않습니다.");
   };
 
   return (
@@ -142,7 +143,6 @@ const Password = () => {
                     </Form.Text>
                   </Form.Group>
 
-         
                   <br />
                   <h4>비밀번호 변경하기</h4>
                   <br />
@@ -175,9 +175,10 @@ const Password = () => {
                       </Form.Label>{" "}
                       &nbsp;&nbsp;
                       <Form.Control
-                        onChange = {onChangeNewPassword}
+                        onChange={onChangeNewPassword}
+                        value={new_password}
                         type="password"
-                        name = "firstpassword"
+                        name="firstpassword"
                         style={{ width: "29rem" }}
                         placeholder="변경할 비밀번호를 입력하세요."
                       />
@@ -193,7 +194,8 @@ const Password = () => {
                       <Form.Control
                         onChange={onChangeNewPasswordAgain}
                         type="password"
-                        name = "lastpassword"
+                        value={new_password_again}
+                        name="lastpassword"
                         style={{ width: "29rem" }}
                         placeholder="변경할 비밀번호를 다시 입력하세요."
                       />
@@ -201,7 +203,8 @@ const Password = () => {
                     </Form>
                     <Form.Text className="text-muted">
                       <Form.Label style={{ width: "11rem" }}></Form.Label>
-                      {password_error&&"비밀번호가 일치하지 않습니다"}
+                      {password_error && "비밀번호가 일치하지 않습니다"}
+                      {password_match && "비밀번호가 일치합니다"}
                     </Form.Text>
                   </Form.Group>
                   <br />

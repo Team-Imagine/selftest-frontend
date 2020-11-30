@@ -18,7 +18,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const Bookmarkscontent = ({ isOpen }) => {
   const [pages, setPages] = useState([]);
   const [bookmarks, setBookmarks] = useState([]);
-  
 
   useEffect(() => {
     axios
@@ -29,7 +28,7 @@ const Bookmarkscontent = ({ isOpen }) => {
 
         let count = res.data.bookmarks.count / 10 + 1;
         let t_pages = [];
-  
+
         for (var i = 1; i < count; i++) {
           t_pages.push(i);
         }
@@ -42,25 +41,24 @@ const Bookmarkscontent = ({ isOpen }) => {
 
   const loadBookmarksPerPage = (index, e) => {
     e.preventDefault();
-  
+
     axios
-    .get(`/api/bookmark`, {
-      params: {
-        page: index,
-      },
-    })
-    .then((res) => {
-      console.log(res.data);
-      setBookmarks(res.data.bookmarks.rows);
-    })
-    .catch((error) => {
-      alert(error.response.data.message);
-    });
-};
+      .get(`/api/bookmark`, {
+        params: {
+          page: index,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setBookmarks(res.data.bookmarks.rows);
+      })
+      .catch((error) => {
+        alert(error.response.data.message);
+      });
+  };
 
   const DeleteBookmarks = (id) => (e) => {
     e.preventDefault();
-    
 
     console.log("id:", id);
     axios
@@ -96,7 +94,7 @@ const Bookmarkscontent = ({ isOpen }) => {
           </div>
         </div>
         <hr />
-        <ul>
+        <ul style={{minHeight:"120rem"}}>
           <CardDeck>
             {bookmarks.map((i) => (
               <div className="container h-100" key={i["question.id"]}>
@@ -200,8 +198,7 @@ const Bookmarkscontent = ({ isOpen }) => {
         </ul>
       </div>
 
-      <ul
-      className="row justify-content-center align-items-center">
+      <ul className="row justify-content-center align-items-center">
         {pages.map((i, index) => (
           <div key={index}>
             <button
@@ -213,11 +210,11 @@ const Bookmarkscontent = ({ isOpen }) => {
               onClick={(e) => loadBookmarksPerPage(i, e)}
             >
               {i}
-            </button>&nbsp; 
+            </button>
+            &nbsp;
           </div>
         ))}
       </ul>
-
     </Container>
   );
 };

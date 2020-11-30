@@ -73,7 +73,7 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 
   let checkedList = [];
 
-  useEffect(() => { }, []);
+  useEffect(() => {}, []);
 
   const moveBack = () => {
     history.push(`/subject/${subject}/${course}`);
@@ -104,7 +104,6 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
     return new Promise((resolve, reject) => {
       resolve({ data: { link: imageObject.localSrc, entityKey: file } });
     });
-
   };
 
   const submitHandler = async (event) => {
@@ -205,7 +204,6 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 
         axios.post(`/api/question/`, data)
           .then((res) => {
-
             setEditorState("");
             let temp = [];
             const nData = {
@@ -214,7 +212,8 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
               uploaded_images: temp,
             };
 
-            axios.post(`/api/answer/`, nData)
+            axios
+              .post(`/api/answer/`, nData)
               .then((res) => {
                 setEditorSolution("");
               })
@@ -228,7 +227,6 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
             alert(error.response.data.message);
         });
       });
-    
   };
 
   const onChange = (e) => {
@@ -267,19 +265,6 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
     setChecks([...t_checkList]);
   };
 
-<<<<<<< Updated upstream
-return (
-  <Container
-    fluid
-    className={classNames("content", { "is-open": { isOpen } })}
-  >
-    <div className="d-flex bd-highlight mb-3">
-      <div className="mr-auto p-2 bd-highlight">
-        <div style={{ height: "2.5rem" }}>
-          <h3 style={{ fontWeight: "bolder" }}>
-            과목 {">"} {subject} {">"} {course} {">"} 문제 생성
-            </h3>
-=======
   return (
     <Container
       fluid
@@ -288,11 +273,11 @@ return (
       <div className="d-flex bd-highlight mb-3">
         <div className="mr-auto p-2 bd-highlight">
           <div style={{ height: "2.5rem" }}>
-            <h4 style={{ fontWeight: "bolder" }}>
+            <h3 style={{ fontWeight: "bolder" }}>
               과목 {">"} {subject} {">"} {course} {">"} 문제 생성
-            </h4>
+            </h3>
           </div>
->>>>>>> Stashed changes
+
         </div>
       </div>
       <hr />
@@ -401,6 +386,7 @@ return (
             <hr />
           </div>
         ) : (
+
               <div style={{ backgroundColor: "white" }}>
                 <Editor
                   toolbarHidden
@@ -419,6 +405,7 @@ return (
                 <hr />
               </div>
             )}
+
       </div>
       <div>
         {questionType !== "서술형" ? (
@@ -446,8 +433,10 @@ return (
             />
           </div>
         ) : (
+
             <div></div>
           )}
+
       </div>
       <br />
 

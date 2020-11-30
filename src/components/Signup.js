@@ -27,7 +27,7 @@ export default class SignUp extends Component {
   submitHandler = (event) => {
     event.preventDefault();
     console.log(this.state);
-    
+
     const userRegister = {
       email: this.state.email,
       username: this.state.username,

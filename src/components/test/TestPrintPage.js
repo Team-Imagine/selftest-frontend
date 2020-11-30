@@ -23,8 +23,6 @@ class TestPrintPage extends React.Component {
 		}
 	}
 
-
-
 	render() {
 		return (
 			<div>
