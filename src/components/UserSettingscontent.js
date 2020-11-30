@@ -16,6 +16,8 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Container,Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+import { useCookies } from "react-cookie";
+
 
 const UserSettings = (isOpen) => {
   const [user, setUser] = useState([]);
@@ -32,13 +34,15 @@ const UserSettings = (isOpen) => {
   const [password_match,setPasswordMatch] = useState('');
   const [newpassword_error,setNewPasswordError] = useState('');
   const [newpassword_match,setNewPasswordMatch] = useState('');
-  
-  let history = useHistory();
 
+  let [cookies] = useCookies(["access_token"]);
+  let history = useHistory();
   const moveHome = () => {
     history.push("/home");
   };
-
+  const moveLogin = () => {
+    history.push("/login");
+  };
   const FirstName = (e) => {
     setFirstName(e.target.value);
   };
@@ -116,34 +120,39 @@ const UserSettings = (isOpen) => {
   //사용자 탈퇴
   const DeleteUser  = (e) => {
     e.preventDefault();
-
     if(password === password_again){
+    var isDelete = window.confirm("정말 탈퇴하시겠습니까?");
+    if(isDelete){
     axios
-      .delete(`/api/user`,
-       {data:{password}})
-      
+      .delete(`/api/user`)
       .then((res) => {
         console.log(res.data.message);
         setPassword("");
         setPasswordAgain("");
-        console.log("성공", {"password":password})
         alert(res.data.message);
+        cookies.access_token = null;
+        store.dispatch({ type: "LOGIN", value: 0 });
+        store.dispatch({ type: "VERIFIED", value: 0 });
+        alert("다시 로그인하세요!");
+        moveLogin();
       })
       .catch((error) => {
-
-        console.log("에러", {"password":password})
         alert(error.response.data.message);
       });
+    }else{alert("취소되었습니다.");
+  }
     }else if(password !== password_again)
     alert("비밀번호가 일치하지 않습니다");
+
+    
   };
+
 
   return (
     <Container
       fluid
       className={classNames("content", { "is-open": { isOpen } })}
     >
-  
       <div >
         <div style={{height:"4rem"}}className="d-flex bd-highlight mb-3">
           <div className="mr-auto p-2 bd-highlight">
