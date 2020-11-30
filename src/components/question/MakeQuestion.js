@@ -23,6 +23,7 @@ const MyBlock = styled.div`
     width: 100%;
     margin: 0;
     margin-bottom: 1rem;
+    text-align: center;
   }
   .editor {
     height: 350px !important;
@@ -51,7 +52,7 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
   const [editorSolution, setEditorSolution] = useState(
     EditorState.createEmpty()
   );
-  const [selectedFile, setSelectedFile] = useState();
+  const [selectedFile, setSelectedFile] = useState([]);
   const [imageURL, setImageURL] = useState("");
   const [title, setTitle] = useState("");
   const [questionType, setQuestionType] = useState("객관식");
@@ -129,6 +130,7 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
         answer_items.push({ item_text: answer[i] });
       }
       question_type = "short_answer";
+
     } else if (questionType === "객관식") {
       for (var i in answer) {
         answer_items.push({ item_text: answer[i], checked: checked[i] });
@@ -136,6 +138,7 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 
       console.log(checked);
       question_type = "multiple_choice";
+
     } else {
       let editorToHtml_answer = draftToHtml(
         convertToRaw(editorChoice.getCurrentContent())
@@ -199,9 +202,7 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
           };
         }
 
-        // 정답에 이미지 첨부 미포함 *이후 구현*
-        axios
-          .post(`/api/question/`, data)
+        axios.post(`/api/question/`, data)
           .then((res) => {
             setEditorState("");
             let temp = [];
@@ -224,7 +225,7 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
           })
           .catch((error) => {
             alert(error.response.data.message);
-          });
+        });
       });
   };
 
@@ -276,6 +277,7 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
               과목 {">"} {subject} {">"} {course} {">"} 문제 생성
             </h3>
           </div>
+
         </div>
       </div>
       <hr />
@@ -384,24 +386,26 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
             <hr />
           </div>
         ) : (
-          <div style={{ backgroundColor: "white" }}>
-            <Editor
-              toolbarHidden
-              wrapperClassName="wrapper-class"
-              editorClassName="editor"
-              placeholder="정답을 작성해주세요."
-              toolbarClassName="toolbar-class"
-              editorState={editorChoice}
-              onEditorStateChange={(editorState) => {
-                onEditorChange(2, editorState);
-              }}
-              localization={{
-                locale: "ko",
-              }}
-            />{" "}
-            <hr />
-          </div>
-        )}
+
+              <div style={{ backgroundColor: "white" }}>
+                <Editor
+                  toolbarHidden
+                  wrapperClassName="wrapper-class"
+                  editorClassName="editor"
+                  placeholder="정답을 작성해주세요."
+                  toolbarClassName="toolbar-class"
+                  editorState={editorChoice}
+                  onEditorStateChange={(editorState) => {
+                    onEditorChange(2, editorState);
+                  }}
+                  localization={{
+                    locale: "ko",
+                  }}
+                />{" "}
+                <hr />
+              </div>
+            )}
+
       </div>
       <div>
         {questionType !== "서술형" ? (
@@ -429,8 +433,10 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
             />
           </div>
         ) : (
-          <div></div>
-        )}
+
+            <div></div>
+          )}
+
       </div>
       <br />
 
