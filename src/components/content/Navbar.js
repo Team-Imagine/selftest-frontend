@@ -165,6 +165,7 @@ const NavBar = ({ isOpen, point }) => {
             />
           </div>
           <div>
+            
             <Nav.Link onClick={moveHome}>
               <div>
                 <h1 style={{ fontWeight: "bolder" }}>SelfTest</h1>
@@ -175,7 +176,8 @@ const NavBar = ({ isOpen, point }) => {
             <FormControl
               type="text"
               placeholder="검색하기"
-              className="mr-sm-2 "
+              className="mr-sm-2"
+             
             />
             <div>
               <Button variant="info">
@@ -199,9 +201,11 @@ const NavBar = ({ isOpen, point }) => {
                     <FontAwesomeIcon icon={faUser} className="ml-auto" /> 로그인
                   </Dropdown.Toggle>
                 </Dropdown>
+                {/*
                 <Nav.Link href="#">
                   <FontAwesomeIcon icon={faBell} className="ml-auto" style />
                 </Nav.Link>
+                */}
               </div>
             </Nav>
           </Navbar.Collapse>
@@ -250,8 +254,9 @@ const NavBar = ({ isOpen, point }) => {
               value={searchKeyword}
               onChange={onSearchChange}
               className="mr-sm-2 "
+              
             />
-            <Button variant="info" onClick={moveSearch}>
+            <Button variant="info" onClick={moveSearch}  >
               <FontAwesomeIcon icon={faSearch} className="ml-auto" />
             </Button>
           </Form>
@@ -298,10 +303,12 @@ const NavBar = ({ isOpen, point }) => {
                     </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
-
+                
+                {/*
                 <Nav.Link href="#">
                   <FontAwesomeIcon icon={faBell} className="ml-auto" style />
                 </Nav.Link>
+                */}
               </div>
             </Nav>
           </Navbar.Collapse>

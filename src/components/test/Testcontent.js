@@ -9,6 +9,7 @@ import { propTypes } from "react-bootstrap/esm/Image";
 import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 
+
 const Testcontent = ({ isOpen }) => {
   const [tests, setTests] = useState({
     test_list: [],
@@ -159,8 +160,8 @@ const Testcontent = ({ isOpen }) => {
               </div>
             ))
           ) : (
-            <div className="row justify-content-center align-items-center">
-              등록된 Test가 없습니다. 새로운 Test를 등록해주세요.
+            <div>
+            <h5>등록된 시험이 없습니다. 새로운 시험을 등록해주세요.</h5>
             </div>
           )}
         </ul>

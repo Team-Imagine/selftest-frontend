@@ -137,7 +137,8 @@ const Course = ({ subject, isOpen }) => {
       <hr />
       <div style={{ height: "auto", minHeight: "48em", maxHeight: "48em" }}>
         <ul>
-          {course.map((i) => (
+          {course.length ? (
+          course.map((i) => (
             <div className="container h-100" key={i.title}>
               <div className="row h-100 justify-content-center align-items-center">
                 <Alert
@@ -157,7 +158,12 @@ const Course = ({ subject, isOpen }) => {
                 <br />
               </div>
             </div>
-          ))}
+          ))
+          ) : (
+            <div>
+            <h5>등록된 강의가 없습니다. 새로운 강의을 등록해주세요.</h5>
+            </div>
+          )}
         </ul>
       </div>
       <ul className="row justify-content-center align-items-center">

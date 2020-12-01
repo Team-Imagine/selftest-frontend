@@ -132,7 +132,8 @@ const Subjectcontent = ({ isOpen }) => {
         style={{ height: "auto", minHeight: "48em", maxHeight: "48em" }}
       >
         <ul>
-          {subject.map((i) => (
+          {subject.length ? (
+          subject.map((i) => (
             <div className="container h-100" key={i.title}>
               <div className="row h-100 justify-content-center align-items-center">
                 <Alert
@@ -151,7 +152,12 @@ const Subjectcontent = ({ isOpen }) => {
                 <br />
               </div>
             </div>
-          ))}
+          ))
+          ) : (
+            <div>
+            <h5>등록된 과목이 없습니다. 새로운 과목을 등록해주세요.</h5>
+            </div>
+          )}
         </ul>
       </div>
 

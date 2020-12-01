@@ -101,13 +101,15 @@ const SideBar = ({ toggle, isOpen }) => {
               순위
             </Nav.Link>
           </Nav.Item>
-
+        
+        {/*
           <Nav.Item>
             <Nav.Link onClick={moveSettings}>
               <FontAwesomeIcon icon={faCog} className="mr-2" />
               설정
             </Nav.Link>
           </Nav.Item>
+        */}
         </div>
       </Nav>
     </div>

@@ -4,6 +4,7 @@ import classNames from "classnames";
 import { Link, useHistory } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import axios from "axios";
+import Alert from "react-bootstrap/Alert"; 
 import store from "../store";
 import {
   faAppleAlt,
@@ -96,7 +97,8 @@ const Bookmarkscontent = ({ isOpen }) => {
         <hr />
         <ul style={{minHeight:"120rem"}}>
           <CardDeck>
-            {bookmarks.map((i) => (
+            {bookmarks.length ? (
+            bookmarks.map((i) => (
               <div className="container h-100" key={i["question.id"]}>
                 <div className="row h-100 justify-content-center align-items-center">
                   <Card
@@ -193,8 +195,14 @@ const Bookmarkscontent = ({ isOpen }) => {
                 </div>
                 <br />
               </div>
-            ))}
-          </CardDeck>
+               
+            ))
+            ):(
+            <div>
+            <h5>등록된 즐겨찾기 문제가 없습니다. 새로운 문제를 등록해주세요.</h5>
+            </div>
+            )}</CardDeck>
+         
         </ul>
       </div>
 
