@@ -111,6 +111,18 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
   let htmlToEditor_answer = "";
   let t_choiceColor = [];
 
+  const moveLecture = () => {
+		history.push(`/subject/${subject}/${course}`);
+  };
+  
+  const moveCourse = () => {
+		history.push(`/subject/${subject}`);
+  };
+  
+  const moveSubject = () => {
+		history.push(`/subject`);
+	};
+
   useEffect(() => {
     if (store.getState().isLoggedIn) {
       axios.get(`/api/user`).then((res) => {
@@ -845,7 +857,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
         <div className="mr-auto p-2 bd-highlight">
           <div style={{ height: "2.5rem" }}>
             <h3 style={{ fontWeight: "bolder" }}>
-              과목 {">"} {subject} {">"} {course} {">"} 문제 풀이
+              <Form.Label onClick={moveSubject}>과목</Form.Label> {">"} <Form.Label onClick={moveCourse}>{subject}</Form.Label> {">"} <Form.Label onClick={moveLecture}>{course}</Form.Label> {">"} 문제 풀이
             </h3>
           </div>
         </div>

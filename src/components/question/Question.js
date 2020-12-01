@@ -9,6 +9,7 @@ import {
   DropdownButton,
   InputGroup,
   Dropdown,
+  Form,
 } from "react-bootstrap";
 import classNames from "classnames";
 import { Link, useHistory } from "react-router-dom";
@@ -43,6 +44,14 @@ const Question = ({ subject, course, isOpen }) => {
 	const [selectedTest, setSelectedTest] = useState('Test+');
 
 	let history = useHistory();
+
+	const moveSubject = () => {
+		history.push("/subject");
+	  };
+	 
+	const moveCourse = () => {
+		history.push(`/subject/${subject}`);
+	};
 
 
 	useEffect(() => {
@@ -270,7 +279,7 @@ const Question = ({ subject, course, isOpen }) => {
 				<div className="d-flex bd-highlight mb-3">
 					<div className="mr-auto p-2 bd-highlight">
 						<h3 style={{ fontWeight: "bolder" }}>
-							과목 {'>'} {subject} {'>'} {course}
+							<Form.Label onClick={moveSubject}>과목</Form.Label> {'>'} <Form.Label onClick={moveCourse}>{subject}</Form.Label> {'>'} {course}
 						</h3>
 					</div>
 					<div className="d-flex p-2 bd-highlight">

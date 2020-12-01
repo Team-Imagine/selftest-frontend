@@ -16,6 +16,10 @@ const Course = ({ subject, isOpen }) => {
 
   let history = useHistory();
 
+  const moveSubject = () => {
+    history.push("/subject");
+  };
+
   useEffect(() => {
     const subject_title = subject;
 
@@ -93,7 +97,7 @@ const Course = ({ subject, isOpen }) => {
       <div className="d-flex bd-highlight mb-3">
         <div className="mr-auto p-2 bd-highlight">
           <h3 style={{ fontWeight: "bolder" }}>
-            과목 {">"} {subject}
+          <Form.Label onClick={moveSubject}>과목</Form.Label> {">"} {subject}
           </h3>
         </div>
         <div className="p-2 bd-highlight">
