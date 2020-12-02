@@ -7,6 +7,7 @@ import { faHandPointUp } from "@fortawesome/free-solid-svg-icons";
 import Card from "react-bootstrap/Card";
 
 export default class SignUp extends Component {
+  
   constructor(props) {
     super(props);
 
@@ -38,6 +39,8 @@ export default class SignUp extends Component {
       phone_number: this.state.phone_number,
     };
 
+    if(this.state.password === this.state.password_again){
+    console.log("비밀번호 일치");
     axios
       .post(`/api/auth/register`, userRegister)
 
@@ -59,6 +62,10 @@ export default class SignUp extends Component {
       .catch((error) => {
         alert(error.response.data.message);
       });
+    }else if (this.state.password !== this.state.password_again){
+      alert("비밀번호가 일치하지 않습니다!")
+      console.log("비밀번호 불일치");}
+    
   };
 
   render() {
@@ -147,6 +154,7 @@ export default class SignUp extends Component {
                           name="password_again"
                           value={password_again}
                           style={{ width: "30rem" }}
+                          onChange={this.changeHandler}
                           placeholder="비밀번호를 다시 한번 입력하세요."
                         /></Form>
                       </Form.Group>
