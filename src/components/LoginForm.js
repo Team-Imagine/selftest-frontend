@@ -50,7 +50,7 @@ const LoginForm = () => {
           <div className="container h-100">
             <div className="row h-100 justify-content-center align-items-center">
               {redirect}
-              <Card border="info" style={{ width: "50rem", height: "45rem" }}>
+              <Card border="info" style={{ width: "50rem", height: "40rem" }}>
                 <div className="row h-100 justify-content-center align-items-center">
                   <form onSubmit={submitHandler} className="col-10">
                     <br />
@@ -65,29 +65,38 @@ const LoginForm = () => {
                     </div>
 
                     <Form.Group controlId="formBasicEmail">
-                      <Form.Label>이메일 주소</Form.Label>
+                      <Form inline>
+                      <Form.Label style ={{width: "10rem"}}>이메일 주소</Form.Label>
                       <Form.Control
                         type="email"
                         name="email"
                         value={email}
+                        style={{width:"30rem"}}
                         onChange={({ target: { value } }) => setEmail(value)}
                         placeholder="이메일을 입력하세요."
                       />
-
-                      <Form.Text className="text-muted">
+                      </Form>
+                      <Form inline>
+                    <Form.Label style ={{width: "10rem"}}></Form.Label>
+                    <Form.Text className="text-muted">
                         이메일 형식에 맞게 입력해주세요.
                       </Form.Text>
+                      </Form>
                     </Form.Group>
+                   
 
                     <Form.Group controlId="formBasicPassword">
-                      <Form.Label>비밀번호</Form.Label>
+                    <Form inline>
+                      <Form.Label style ={{width: "10rem"}}>비밀번호</Form.Label>
                       <Form.Control
                         type="password"
                         name="password"
                         value={password}
+                        style={{width:"30rem"}}
                         onChange={({ target: { value } }) => setPassword(value)}
                         placeholder="비밀번호를 입력하세요."
                       />
+                       </Form>
                     </Form.Group>
 
                     <Form.Group controlId="formBasicCheckbox">
