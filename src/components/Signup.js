@@ -14,6 +14,7 @@ export default class SignUp extends Component {
       email: "",
       username: "",
       password: "",
+      password_again:"",
       first_name: "",
       last_name: "",
       phone_number: "",
@@ -47,6 +48,7 @@ export default class SignUp extends Component {
           email: "",
           username: "",
           password: "",
+          password_again:"",
           first_name: "",
           last_name: "",
           phone_number: "",
@@ -64,26 +66,29 @@ export default class SignUp extends Component {
       email,
       username,
       password,
+      password_again,
       first_name,
       last_name,
       phone_number,
     } = this.state;
+
     return (
-      <div style={{ height: "75rem" }}>
-        <div
+      <div style={{ height: "90rem" }}>
+        <div 
           style={{
             backgroundColor: "#f7feff",
           }}
         >
-          <div style={{ height: "65rem" }}>
+          <div style={{ height: "10rem" }}> </div>
+          <div style={{ height: "50rem" }}>
             <div className="container h-100">
               <div className="row h-100 justify-content-center align-items-center">
-                <Card border="info" style={{ width: "50rem", height: "60rem" }}>
+                <Card border="info" style={{ width: "50rem", height: "50rem" }}>
                   <div className="row h-100 justify-content-center align-items-center">
                     <form onSubmit={this.submitHandler} className="col-10">
                       <br />
                       <br />
-
+                      <br />
                       <h2 style={{ fontWeight: "bolder" }}>회원가입</h2>
                       <hr />
 
@@ -95,73 +100,98 @@ export default class SignUp extends Component {
                           alt="signup"
                         />
                       </div>
-                      <Form.Group controlId="formBasicEmail">
-                        <Form.Label>*이메일 주소</Form.Label>
+                      <Form.Group>
+                        <Form inline>
+                        <Form.Label style={{ width: "10rem" }}>*이메일 주소</Form.Label>
                         <Form.Control
                           type="email"
                           name="email"
                           value={email}
+                          style={{ width: "30rem" }}
                           onChange={this.changeHandler}
                           placeholder="이메일을 입력하세요."
-                        />
+                        /> </Form>
                       </Form.Group>
-
-                      <Form.Group controlId="formBasicUsername">
-                        <Form.Label>*사용자명</Form.Label>
+                     
+                      <Form.Group>
+                        <Form inline>
+                        <Form.Label style={{ width: "10rem" }}>*사용자명</Form.Label>
                         <Form.Control
                           type="text"
                           name="username"
                           value={username}
+                          style={{ width: "30rem" }}
                           onChange={this.changeHandler}
                           placeholder="사용자명을 입력하세요."
-                        />
+                        /></Form>
                       </Form.Group>
 
-                      <Form.Group controlId="formBasicPassword">
-                        <Form.Label>*비밀번호</Form.Label>
+                      <Form.Group>
+                        <Form inline>
+                        <Form.Label style={{ width: "10rem" }} >*비밀번호</Form.Label>
                         <Form.Control
                           type="password"
                           name="password"
                           value={password}
+                          style={{ width: "30rem" }}
                           onChange={this.changeHandler}
                           placeholder="비밀번호를 입력하세요."
-                        />
+                        /></Form>
                       </Form.Group>
 
-                      <Form.Group controlId="formBasicFirstname">
-                        <Form.Label>*이름</Form.Label>
+                      <Form.Group>
+                      <Form inline>
+                        <Form.Label style={{ width: "10rem" }}>*비밀번호 확인</Form.Label>
+                        <Form.Control
+                          type="password"
+                          name="password_again"
+                          value={password_again}
+                          style={{ width: "30rem" }}
+                          placeholder="비밀번호를 다시 한번 입력하세요."
+                        /></Form>
+                      </Form.Group>
+                      
+                      <Form.Group>
+                      <Form inline>
+                        <Form.Label style={{ width: "10rem" }}>*이름</Form.Label>
                         <Form.Control
                           type="text"
                           name="first_name"
                           value={first_name}
                           onChange={this.changeHandler}
                           placeholder="이름을 입력하세요."
+                          style={{ width: "12.5rem" }}
                         />
-                      </Form.Group>
-
-                      <Form.Group controlId="formBasicLastname">
-                        <Form.Label>*성</Form.Label>
+                    
+                    
+                        <Form.Label style={{ width: "5rem" }}>*성</Form.Label>
                         <Form.Control
                           type="text"
                           name="last_name"
                           value={last_name}
                           onChange={this.changeHandler}
                           placeholder="성을 입력하세요."
-                        />
-                      </Form.Group>
+                          style={{ width: "12.5rem" }}
+                        /> 
+                    </Form>
+                    </Form.Group>
 
-                      <Form.Group controlId="formBasicPhoneNumber">
-                        <Form.Label>전화번호</Form.Label>
+                    <Form.Group>
+                    <Form inline>
+                        <Form.Label style={{ width: "10rem" }}>전화번호</Form.Label>
                         <Form.Control
                           type="number"
                           name="phone_number"
                           value={phone_number}
                           onChange={this.changeHandler}
+                          style={{ width: "30rem" }}
                           placeholder="전화번호를 입력하세요."
                         />
+                      </Form>
                       </Form.Group>
 
-                      <Form.Text className="text-muted">
+
+                      <Form.Text  className="text-muted">
                         *은 필수항목입니다.
                       </Form.Text>
 

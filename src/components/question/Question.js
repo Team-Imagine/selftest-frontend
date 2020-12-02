@@ -7,7 +7,6 @@ import {
   FormControl,
   ButtonGroup,
   DropdownButton,
-  InputGroup,
   Dropdown,
   Form,
 } from "react-bootstrap";
@@ -18,7 +17,6 @@ import axios from "axios";
 import store from "../../store";
 import {
   faAppleAlt,
-  faHeart,
   faStar,
   faThumbsDown,
   faThumbsUp,
