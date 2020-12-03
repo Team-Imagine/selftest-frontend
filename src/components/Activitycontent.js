@@ -234,7 +234,7 @@ const Activitycontent = (isOpen) => {
                   border="info"
                   style={{
                     overflow: "auto",
-                    width: "35em",
+                    width: "25em",
                     height: "auto",
                     minHeight: "53.5em",
                     maxHeight: "53.5em",
@@ -256,8 +256,8 @@ const Activitycontent = (isOpen) => {
                         <thead style={{ background: "pink" }}>
                           <tr>
                             <th style={{ width: "10%" }}>No</th>
-                            <th style={{ width: "20%" }}>날짜</th>
-                            <th style={{ width: "50%" }}>내용</th>
+                            <th style={{ width: "30%" }}>날짜</th>
+                            <th style={{ width: "40%" }}>내용</th>
                             <th style={{ width: "20%" }}>P</th>
                           </tr>
                         </thead>
@@ -267,8 +267,8 @@ const Activitycontent = (isOpen) => {
                               <td style={{ width: "10%" }} key={index + 1}>
                                 {index + 1}{" "}
                               </td>
-                              <td style={{ width: "20%" }}>{i.created_at}</td>
-                              <td style={{ width: "50%" }}>{i.content}</td>
+                              <td style={{ width: "30%" }}>{i.created_at}</td>
+                              <td style={{ width: "40%" }}>{i.content}</td>
                               <td style={{ width: "20%" }}>{i.amount}</td>
                             </tr>
                           </tbody>
@@ -318,7 +318,7 @@ const Activitycontent = (isOpen) => {
                   border="info"
                   style={{
                     overflow: "auto",
-                    width: "35em",
+                    width: "25em",
                     height: "auto",
                     minHeight: "53.5em",
                     maxHeight: "53.5em",
@@ -340,9 +340,9 @@ const Activitycontent = (isOpen) => {
                         <thead style={{ background: "lightyellow" }}>
                           <tr>
                             <th style={{ width: "10%" }}>No</th>
-                            <th style={{ width: "20%" }}>날짜</th>
-                            <th style={{ width: "50%" }}>내용</th>
-                            <th style={{ width: "20%" }}>제재종료일</th>
+                            <th style={{ width: "30%" }}>날짜</th>
+                            <th style={{ width: "30%" }}>내용</th>
+                            <th style={{ width: "30%" }}>제재종료일</th>
                           </tr>
                         </thead>
                         {penalty_logs.map((i, index) => (
@@ -351,9 +351,9 @@ const Activitycontent = (isOpen) => {
                               <td style={{ width: "10%" }} key={index + 1}>
                                 {index + 1}{" "}
                               </td>
-                              <td style={{ width: "20%" }}>{i.created_at}</td>
-                              <td style={{ width: "50%" }}>{i.content}</td>
-                              <td style={{ width: "20%" }}>
+                              <td style={{ width: "30%" }}>{i.created_at}</td>
+                              <td style={{ width: "30%" }}>{i.content}</td>
+                              <td style={{ width: "30%" }}>
                                 {i.termination_date}
                               </td>
                             </tr>
@@ -405,7 +405,7 @@ const Activitycontent = (isOpen) => {
                   border="info"
                   style={{
                     overflow: "auto",
-                    width: "20em",
+                    width: "15em",
                     height: "auto",
                     minHeight: "53.5em",
                     maxHeight: "53.5em",

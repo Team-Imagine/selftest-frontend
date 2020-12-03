@@ -5,7 +5,7 @@ import { Redirect } from "react-router-dom";
 import store from "../store";
 import Card from "react-bootstrap/Card";
 import axios from "axios";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import {
   faCheck,
   faExchangeAlt,
@@ -21,6 +21,7 @@ const Password = () => {
   const [new_password_again, setNewPassWordAgain] = useState("");
   const [password_error, setPasswordError] = useState("");
   const [password_match, setPasswordMatch] = useState("");
+  let history = useHistory();
   const changepassword = {
     code: code,
     new_password: new_password,
@@ -80,13 +81,16 @@ const Password = () => {
         .post(`/api/user/verify-change-password/`, changepassword)
         .then((res) => {
           console.log(res.data);
-          alert("비밀번호가 변경되었습니다.");
+          alert("비밀번호가 성공적으로 변경되었습니다. 다시 로그인하세요.");
         })
         .catch((error) => {
           alert(error.response.data.message);
         });
-    } else if (new_password !== new_password_again)
-      alert("비밀번호가 일치하지 않습니다.");
+        history.push(`/login`);
+    } else if (new_password !== new_password_again){
+      alert("비밀번호가 일치하지 않습니다.");}
+    
+      
   };
 
   return (

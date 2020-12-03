@@ -39,7 +39,6 @@ const Subjectcontent = ({ isOpen }) => {
 
   const loadSubjectPerPage = (index, e) => {
     e.preventDefault();
-
     axios
       .get(`/api/subject/`, {
         params: {
@@ -49,6 +48,7 @@ const Subjectcontent = ({ isOpen }) => {
       .then((res) => {
         console.log(res.data);
         setSubject(res.data.subjects.rows);
+        
       })
       .catch((error) => {
         alert(error.response.data.message);
