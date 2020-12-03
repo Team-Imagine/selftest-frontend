@@ -47,7 +47,8 @@ const LoginForm = () => {
         }}
       >
         <div style={{ height: "65rem" }}>
-          <div className="container h-100">
+          <div style={{height:"7rem"}}></div>
+          <div className="container">
             <div className="row h-100 justify-content-center align-items-center">
               {redirect}
               <Card border="info" style={{ width: "50rem", height: "40rem" }}>

@@ -86,7 +86,7 @@ export default class SignUp extends Component {
             backgroundColor: "#f7feff",
           }}
         >
-          <div style={{ height: "10rem" }}> </div>
+          <div style={{ height: "4rem" }}> </div>
           <div style={{ height: "50rem" }}>
             <div className="container h-100">
               <div className="row h-100 justify-content-center align-items-center">

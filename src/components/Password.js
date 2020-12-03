@@ -100,7 +100,8 @@ const Password = () => {
       }}
     >
       <div style={{ height: "70rem" }}>
-        <div className="container h-100">
+        <div className="container">
+          <div style={{height:"7rem"}}></div>
           <div className="row h-100 justify-content-center align-items-center">
             <Card border="info" style={{ width: "50em", height: "45rem" }}>
               <div className="row h-100 justify-content-center align-items-center">
