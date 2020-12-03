@@ -60,7 +60,7 @@ const Rankcontent = ({ isOpen }) => {
         </div>
         <hr />
         <div className="row h-100 justify-content-center align-items-center">
-          <Card style={{ width: "70rem" }}>
+          <Card style={{ width: "60rem" }}>
             <div>
               <div className="container h-100">
                 <div className="row h-100 justify-content-center align-items-center">
