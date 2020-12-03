@@ -7,7 +7,7 @@ import Card from "react-bootstrap/Card";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import {
-  faCheck,
+  faHome, faKey,
   faExchangeAlt,
   faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons";
@@ -42,6 +42,14 @@ const Password = () => {
     setPasswordMatch(e.target.value === new_password);
     console.log(password_match);
     setNewPassWordAgain(e.target.value);
+  };
+
+  const moveLogin = () => {
+    history.push("/login");
+  };
+
+  const moveHome= () => {
+    history.push("/home");
   };
 
   const submitHandler = (event) => {
@@ -101,8 +109,18 @@ const Password = () => {
     >
       <div style={{ height: "70rem" }}>
         <div className="container">
-          <div style={{height:"7rem"}}></div>
+          <div style={{height:"4rem"}}></div>
           <div className="row h-100 justify-content-center align-items-center">
+          <div className="p-2 bd-highlight">
+          <Button variant="info " onClick={moveLogin}>
+              <FontAwesomeIcon icon={faKey} className="mr-2" />
+              로그인
+            </Button> &nbsp;
+
+            <Button variant="info " onClick={moveHome}>
+              <FontAwesomeIcon icon={faHome} className="mr-2" />
+              홈
+            </Button> <br/> <br/>
             <Card border="info" style={{ width: "50em", height: "45rem" }}>
               <div className="row h-100 justify-content-center align-items-center">
                 <form className="col-10">
@@ -224,6 +242,7 @@ const Password = () => {
                 </form>
               </div>
             </Card>
+            </div>
           </div>
         </div>
       </div>
