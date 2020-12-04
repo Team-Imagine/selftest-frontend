@@ -878,7 +878,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 
       <div className="column justify-content-center align-items-center">
         {/*<Card border="light" style={{ backgroundColor: "#f7feff" }}>*/}
-        <Card.Header style={{ width: "85rem" }}>
+        <Card.Header style={{ width: "50%" }}>
           <div className="d-flex bd-highlight mb-3" style={{ height: "1rem" }}>
             <div className="mr-auto p-2 bd-highlight">
               <div style={{ fontWeight: "bold", fontsize: "rem" }}>
@@ -901,7 +901,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
         <Card
           className="center"
           style={{
-            width: "85rem",
+            width: "50%",
             height: "20rem !important",
             overflow: "auto",
           }}
@@ -936,7 +936,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
             paddingBottom: "1rem",
             backgroundColor: "#ffffff",
             border: "light",
-            width: "85rem",
+            width: "50%",
           }}
         >
           <div
@@ -1125,7 +1125,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
                 textAlign: "center",
                 marginBottom: "2rem",
                 marginTop: "1rem",
-                width: "86rem",
+                width: "50%",
               }}
             >
               <div>
@@ -1137,7 +1137,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
                   type="text"
                   id="title"
                   className="input"
-                  style={{ width: "42rem", height: "2rem" }}
+                  style={{ width: "25%", height: "2rem" }}
                   onChange={(e) => makeAnswer(e)}
                 />
                 <br />
@@ -1149,7 +1149,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
                     textAlign: "center",
                     marginBottom: "2rem",
                     marginTop: "1rem",
-                    width: "86rem",
+                    width: "100%",
                   }}
                 >
                   {questionType ? (
@@ -1157,7 +1157,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
                       className="btn pull-right"
                       variant="info"
                       style={{
-                        width: "20rem",
+                        width: "25%",
                         height: "2rem",
                         fontSize: "15px",
                         marginRight: "1rem",
@@ -1173,7 +1173,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
                     className="btn pull-right"
                     variant="info"
                     style={{
-                      width: "20rem",
+                      width: "25%",
                       height: "2rem",
                       fontSize: "15px",
                       marginLeft: "1rem",
@@ -1187,7 +1187,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
             </div>
           ) : (
             <div>
-              <MyBlock style={{ width: "85rem" }}>
+              <MyBlock style={{ width: "50%" }}>
                 <br />
                 <div style={{ height: "20rem !important" }}>
                   <Editor
@@ -1224,7 +1224,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
                       textAlign: "center",
                       marginBottom: "2rem",
                       marginTop: "1rem",
-                      width: "85rem",
+                      width: "100%",
                     }}
                   >
                     {questionType ? (
@@ -1232,7 +1232,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
                         className="btn pull-right"
                         variant="info"
                         style={{
-                          width: "41.5rem",
+                          width: "20%",
                           height: "2rem",
                           fontSize: "15px",
                           marginRight: "1rem",
@@ -1248,7 +1248,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
                       className="btn pull-right"
                       variant="info"
                       style={{
-                        width: "41.5rem",
+                        width: "20%",
                         height: "2rem",
                         fontSize: "15px",
                         marginLeft: "1rem",
@@ -1271,7 +1271,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
             <div>
               {answerList.map((i, index) => (
                 <div key={index}>
-                  <Card className="center" style={{ width: "85rem" }}>
+                  <Card className="center" style={{ width: "50%" }}>
                     <Card.Body style={{ backgroundColor: "white" }}>
                       {i}
                       <br />
@@ -1286,7 +1286,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
               <Card style={{ backgroundColor: "#f7feff" }}>
                 <Card
                   className="center"
-                  style={{ width: "85rem", height: "20rem !important" }}
+                  style={{ width: "50%", height: "20rem !important" }}
                 >
                   <Card.Body>
                     <br />
@@ -1316,7 +1316,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
             <div>
               {answerList.map((i, index) => (
                 <div key={index}>
-                  <Card className="center" style={{ width: "85rem" }}>
+                  <Card className="center" style={{ width: "50%" }}>
                     <Card.Body style={{ backgroundColor: "white" }}>
                       {i}
                       <br />
@@ -1328,7 +1328,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 
               <Card
                 className="center"
-                style={{ width: "85rem", height: "20rem", overflow: "auto" }}
+                style={{ width: "51%", height: "20rem", overflow: "auto" }}
               >
                 <Card.Body>
                   <br />
@@ -1352,8 +1352,8 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
                 </Card.Body>
               </Card>
 
-              <Accordion>
-                <Card className="center" style={{ width: "85rem" }}>
+              <Accordion style={{ width: "50%" }}>
+                <Card className="center">
                   <Accordion.Toggle
                     className="center"
                     as={Button}
@@ -1382,7 +1382,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
                                       type="text"
                                       id="title"
                                       className="input"
-                                      style={{ width: "85rem", height: "3rem" }}
+                                      style={{ width: "50%", height: "3rem" }}
                                     />
                                     <Button
                                       onClick={(e) =>
@@ -1447,10 +1447,10 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
                 type="text"
                 id="title"
                 className="input"
-                style={{ width: "85rem", height: "3rem" }}
+                style={{ width: "50%", height: "3rem" }}
               />
               <Button
-                style={{ width: "85rem" }}
+                style={{ width: "50%" }}
                 variant="info"
                 onClick={submitComment}
               >
@@ -1460,7 +1460,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
           ) : (
             <div>
               <Accordion>
-                <Card className="center" style={{ width: "85rem" }}>
+                <Card className="center" style={{ width: "51%" }}>
                   <Accordion.Toggle
                     className="center"
                     as={Button}
@@ -1489,7 +1489,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
                                       type="text"
                                       id="title"
                                       className="input"
-                                      style={{ width: "85rem", height: "3rem" }}
+                                      style={{ width: "51%", height: "3rem" }}
                                     />
                                     <Button
                                       onClick={(e) =>
@@ -1554,10 +1554,10 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
                 type="text"
                 id="title"
                 className="input"
-                style={{ width: "85rem", height: "3rem" }}
+                style={{ width: "51%", height: "3rem" }}
               />
               <Button
-                style={{ width: "85rem" }}
+                style={{ width: "51%" }}
                 variant="info"
                 onClick={submitComment}
               >

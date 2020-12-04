@@ -34,6 +34,8 @@ const MyBlock = styled.div`
   }
   .input {
     width: 100%;
+    align-items: center;
+    justify-content: center;
     margin: 0;
     margin-bottom: 1rem;
     height: 60px !important;
@@ -73,7 +75,7 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
 
   let checkedList = [];
 
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
 
   const moveBack = () => {
     history.push(`/subject/${subject}/${course}`);
@@ -225,7 +227,7 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
           })
           .catch((error) => {
             alert(error.response.data.message);
-        });
+          });
       });
   };
 
@@ -281,96 +283,107 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
         </div>
       </div>
       <hr />
-      <InputGroup className="mb-3">
-        <DropdownButton
-          variant="outline-secondary"
-          title={questionType}
-          id="input-group-dropdown-1"
-          onSelect={handleSelect}
-        >
-          <Dropdown.Item eventKey="객관식">객관식</Dropdown.Item>
-          <Dropdown.Item eventKey="주관식">주관식</Dropdown.Item>
-          <Dropdown.Item eventKey="서술형">서술형</Dropdown.Item>
-        </DropdownButton>
-      </InputGroup>
-      <MyBlock>
-        <input
-          type="text"
-          id="title"
-          className="input"
-          placeholder="문제 제목"
-          fontSize="40"
-          onChange={onChange}
-        />
-        <Editor
-          // 에디터와 툴바 모두에 적용되는 클래스
-          wrapperClassName="wrapper-class"
-          // 에디터 주변에 적용된 클래스
-          editorClassName="editor"
-          // 툴바 주위에 적용된 클래스
-          toolbarClassName="toolbar-class"
-          // 툴바 설정
-          toolbar={{
-            // inDropdown: 해당 항목과 관련된 항목을 드롭다운으로 나타낼것인지
 
-            inline: { inDropdown: true },
-            list: { inDropdown: true },
-            textAlign: { inDropdown: true },
-            link: { inDropdown: true },
-            history: { inDropdown: true },
+      <div className="row justify-content-center align-items-center">
+        <MyBlock>
+          <div className="d-flex">
 
-            image: {
-              uploadCallback: imageUploadCallback,
-              previewImage: true,
-            },
-          }}
-          placeholder="내용을 작성해주세요."
-          // 한국어 설정
-          localization={{
-            locale: "ko",
-          }}
-          // 초기값 설정
-          editorState={editorState}
-          // 에디터의 값이 변경될 때마다 onEditorStateChange 호출
-          onEditorStateChange={(editorState) => {
-            onEditorChange(1, editorState);
-          }}
-        />
-      </MyBlock>
-      <div>
+            <InputGroup style={{ width: '15%' }}>
+              <DropdownButton
+                variant="outline-secondary"
+                title={questionType}
+                id="input-group-dropdown-1"
+                onSelect={handleSelect}
+              >
+                <Dropdown.Item eventKey="객관식">객관식</Dropdown.Item>
+                <Dropdown.Item eventKey="주관식">주관식</Dropdown.Item>
+                <Dropdown.Item eventKey="서술형">서술형</Dropdown.Item>
+              </DropdownButton>
+            </InputGroup>
+            <input
+              type="text"
+              style={{ textAlign: 'center', width: '85%' }}
+              id="title"
+              className="input"
+              placeholder="문제 제목"
+              fontSize="40"
+              onChange={onChange}
+            />
+          </div>
+          <Editor
+            // 에디터와 툴바 모두에 적용되는 클래스
+            wrapperClassName="wrapper-class"
+            // 에디터 주변에 적용된 클래스
+            editorClassName="editor"
+            // 툴바 주위에 적용된 클래스
+            toolbarClassName="toolbar-class"
+            // 툴바 설정
+            toolbar={{
+              // inDropdown: 해당 항목과 관련된 항목을 드롭다운으로 나타낼것인지
+
+              inline: { inDropdown: true },
+              list: { inDropdown: true },
+              textAlign: { inDropdown: true },
+              link: { inDropdown: true },
+              history: { inDropdown: true },
+
+              image: {
+                uploadCallback: imageUploadCallback,
+                previewImage: true,
+              },
+            }}
+            placeholder="내용을 작성해주세요."
+            // 한국어 설정
+            localization={{
+              locale: "ko",
+            }}
+            // 초기값 설정
+            editorState={editorState}
+            // 에디터의 값이 변경될 때마다 onEditorStateChange 호출
+            onEditorStateChange={(editorState) => {
+              onEditorChange(1, editorState);
+            }}
+          />
+        </MyBlock>
+      </div>
+      <div className="row justify-content-center align-items-center">
         {questionType === "객관식" ? (
-          <div>
-            <Button variant="outline-info" onClick={addChoice}>
-              선택지 추가
-            </Button>{" "}
-            <hr />
-            <p>*답을 입력하고 정답에 체크해주세요.</p>
-            {choices.map((i, index) => (
-              <div key={index}>
-                <InputGroup className="mb-3">
-                  <FormControl
-                    aria-label="Text input with checkbox"
-                    onChange={(e) => makeAnswer(index, e)}
-                  />
-                  <InputGroup.Prepend>
-                    <InputGroup.Checkbox
-                      aria-label="Checkbox for following text input"
-                      onChange={(e) => controlCheck(index, e)}
+          <div className="d-flex">
+            <div>
+              <Button style={{ height: '2rem' }} variant="outline-info" onClick={addChoice}>
+                추가
+            </Button>
+            </div>
+            <br />
+            <div className="justify-content-center align-items-center">
+              <p>*답을 입력하고 정답에 체크해주세요.</p>
+              {choices.map((i, index) => (
+                <div key={index}>
+                  <InputGroup className="mb-3">
+                    <FormControl
+                      aria-label="Text input with checkbox"
+                      onChange={(e) => makeAnswer(index, e)}
                     />
-                  </InputGroup.Prepend>
-                </InputGroup>
-              </div>
-            ))}
-            <hr />
+                    <InputGroup.Prepend>
+                      <InputGroup.Checkbox
+                        aria-label="Checkbox for following text input"
+                        onChange={(e) => controlCheck(index, e)}
+                      />
+                    </InputGroup.Prepend>
+                  </InputGroup>
+                </div>
+              ))}</div>
+
           </div>
         ) : questionType === "주관식" ? (
-          <div>
+          <div className="d-flex">
             <div>
-              <Button variant="outline-info" onClick={addChoice}>
-                선택지 추가
+              <Button style={{height: '2rem'}}variant="outline-info" onClick={addChoice}>
+                추가
               </Button>{" "}
-              <hr />
+              <br />
             </div>
+            <div className="justify-content-center align-items-center">
             {choices.map((i, index) => (
               <div key={index}>
                 <FormControl
@@ -382,67 +395,42 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
                   onChange={(e) => makeAnswer(index, e)}
                 />
               </div>
-            ))}
-            <hr />
+            ))}</div>
           </div>
-        ) : (
-
-              <div style={{ backgroundColor: "white" }}>
-                <Editor
-                  toolbarHidden
-                  wrapperClassName="wrapper-class"
-                  editorClassName="editor"
-                  placeholder="정답을 작성해주세요."
-                  toolbarClassName="toolbar-class"
-                  editorState={editorChoice}
-                  onEditorStateChange={(editorState) => {
-                    onEditorChange(2, editorState);
-                  }}
-                  localization={{
-                    locale: "ko",
-                  }}
-                />{" "}
-                <hr />
-              </div>
-            )}
-
-      </div>
-      <div>
-        {questionType !== "서술형" ? (
-          <div style={{ backgroundColor: "white", height: "20rem" }}>
-            {" "}
-            <Editor
-              wrapperClassName="wrapper-class"
-              editorClassName="editor"
-              toolbarClassName="toolbar-class"
-              toolbar={{
-                inline: { inDropdown: true },
-                list: { inDropdown: true },
-                textAlign: { inDropdown: true },
-                link: { inDropdown: true },
-                history: { inDropdown: true },
-              }}
-              placeholder="문제의 해설을 작성해주세요."
-              editorState={editorSolution}
-              onEditorStateChange={(editorState) => {
-                onEditorChange(3, editorState);
-              }}
-              localization={{
-                locale: "ko",
-              }}
-            />
-          </div>
-        ) : (
-
-            <div></div>
-          )}
-
+        ) : <div></div>}
       </div>
       <br />
-
-      <Button className="btn-block" variant="info" onClick={submitHandler}>
-        문제 등록
-      </Button>
+      <div className="row justify-content-center align-items-center">
+        <div style={{ backgroundColor: "white", height: "20rem" }}>
+          {" "}
+          <Editor
+            wrapperClassName="wrapper-class"
+            editorClassName="editor"
+            toolbarClassName="toolbar-class"
+            toolbar={{
+              inline: { inDropdown: true },
+              list: { inDropdown: true },
+              textAlign: { inDropdown: true },
+              link: { inDropdown: true },
+              history: { inDropdown: true },
+            }}
+            placeholder="문제의 해설을 작성해주세요."
+            editorState={editorSolution}
+            onEditorStateChange={(editorState) => {
+              onEditorChange(3, editorState);
+            }}
+            localization={{
+              locale: "ko",
+            }}
+          />
+        </div>
+      </div>
+      <br />
+      <div className="row justify-content-center align-items-center">
+        <Button className="btn-block" variant="info" onClick={submitHandler} style={{ width: '50%' }}>
+          문제 등록
+        </Button>
+      </div>
     </Container>
   );
 };

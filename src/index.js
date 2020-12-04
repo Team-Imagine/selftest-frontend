@@ -21,6 +21,7 @@ import Search from "./components/Search";
 import { CookiesProvider } from 'react-cookie';
 import UserSettings from "./components/UserSettings";
 import Activity from "./components/Activity";
+import Admin from "./components/admin/Admin";
 
 ReactDOM.render(
 
@@ -54,6 +55,8 @@ ReactDOM.render(
           <Route exact path="/subject/:subject/:course/:question_id" component={Subject} />
           <Route exact path="/subject/:subject/:course/make/:make_question" component={Subject} />
           <Route exact path="/subject/:subject/:course/:question_id/problem_solving/:problem_solving" component={Subject} />
+          <Route exact path="/admin/blocked/" component={Admin} />
+          <Route exact path="/admin/blocked/:question_id" component={Admin} />
           
         </Switch>
       </BrowserRouter>

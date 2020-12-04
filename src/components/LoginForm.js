@@ -7,11 +7,15 @@ import Card from "react-bootstrap/Card";
 import axios from "axios";
 import { faKey } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useHistory } from "react-router-dom";
+
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(0);
+
+  let history = useHistory();
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -24,7 +28,12 @@ const LoginForm = () => {
     axios
       .post(`/api/auth/login`, user)
       .then((res) => {
-        console.log(res.data);
+        console.log('check:', res.data);
+
+        if(res.data.is_admin) {
+          alert('관리자 계정입니다.');
+          history.push(`/admin/blocked`);
+        }
 
         store.dispatch({ type: "LOGIN", value: res.data.uid });
         store.dispatch({ type: "VERIFIED", value: res.data.verified });
