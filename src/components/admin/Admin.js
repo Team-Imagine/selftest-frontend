@@ -1,22 +1,23 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faHome,
-  faTimes,
-  faBookmark,
-  faCog,
-  faCheck,
-  faTrophy,
-  faBook,
+	faHome,
+	faTimes,
+	faBookmark,
+	faCog,
+	faCheck,
+	faTrophy,
+	faBook,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { Nav, Button } from "react-bootstrap";
 import classNames from "classnames";
 
 import AdminPage from "./AdminPage";
-import NavBar from "../content/Navbar";
+import AdminNavbar from "./AdminNavbar";
 import AdminSideBar from "./AdminSideBar";
 import AdminQuestion from "./AdminQuestion";
+import AdminOpened from "./AdminOpened";
 
 class Admin extends React.Component {
 
@@ -26,7 +27,8 @@ class Admin extends React.Component {
 		// Moblie first
 		this.state = {
 			isOpen: false,
-			isMobile: true
+			isMobile: true,
+			blocked: true,
 		};
 
 		this.previousWidth = -1;
@@ -66,23 +68,58 @@ class Admin extends React.Component {
 		this.setState({ isOpen: !this.state.isOpen });
 	};
 
+	selectType = (type, e) => {
+		e.preventDefault();
+
+		if (type === 'blocked') {
+			this.setState({
+				blocked: true
+			})
+		} else {
+			this.setState({
+				blocked: false
+			})
+		}
+	}
+
 	render() {
+
 		if (this.props.match.params.question_id) {
 			return (
 				<div>
-					<NavBar toggle={this.toggle} isOpen={this.state.isOpen} />
+					<AdminNavbar toggle={this.toggle} isOpen={this.state.isOpen} />
 					<div className="App wrapper">
 						<AdminQuestion toggle={this.toggle} isOpen={this.state.isOpen} question_id={this.props.match.params.question_id} />
 					</div>
 				</div>
-
 			);
 		} else {
 			return (
 				<div>
-					<NavBar toggle={this.toggle} isOpen={this.state.isOpen} />
+					<AdminNavbar toggle={this.toggle} isOpen={this.state.isOpen} />
 					<div className="App wrapper">
-						<AdminPage toggle={this.toggle} isOpen={this.state.isOpen} />
+						<div style={{width: '10%', }} className="row h-100 justify-content-center align-items-center">
+							<br /><br /><br />
+							<Button
+								variant="secondary"
+								style={{width: '100%'}}
+								onClick={(e) => { this.selectType('blocked', e) }}
+							>Blocked
+							</Button>
+							<br />
+							<Button
+								variant="secondary"
+								style={{width: '100%'}}
+								onClick={(e) => { this.selectType('opened', e) }}
+							>Opened
+							</Button>
+						</div>
+						<div style={{width: '90%'}}>
+						{this.state.blocked ?
+							<AdminPage toggle={this.toggle} isOpen={this.state.isOpen} />
+							: <AdminOpened toggle={this.toggle} isOpen={this.state.isOpen} />
+						}
+						</div>
 					</div>
 				</div>
 

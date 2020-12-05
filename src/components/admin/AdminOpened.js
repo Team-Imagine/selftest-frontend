@@ -23,7 +23,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const AdminPage = ({ isOpen, blocked }) => {
+const AdminOpened = ({ isOpen }) => {
   const [question, setQuestion] = useState({
     question: [],
     curPage: 1,
@@ -35,9 +35,8 @@ const AdminPage = ({ isOpen, blocked }) => {
   let history = useHistory();
 
   useEffect(() => {
-		console.log('test:', blocked);
     axios
-      .get(`/api/question/blocked`)
+      .get(`/api/question/`)
       .then((res) => {
         console.log(res.data);
 
@@ -82,7 +81,7 @@ const AdminPage = ({ isOpen, blocked }) => {
     e.preventDefault();
 
     axios
-      .get(`/api/question/blocked`, {
+      .get(`/api/question/`, {
         params: {
           page: index,
         },
@@ -142,7 +141,7 @@ const AdminPage = ({ isOpen, blocked }) => {
                 <br />
               </div>
             )): <div>
-							<h5>Blocked된 문제가 없습니다.</h5>
+							<h5>Opened된 문제가 없습니다.</h5>
 							</div>}
           </CardDeck>
         </ul>
@@ -169,4 +168,4 @@ const AdminPage = ({ isOpen, blocked }) => {
 };
 
 
-export default AdminPage;
+export default AdminOpened;
