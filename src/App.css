@@ -47,7 +47,7 @@ a:focus {
   margin-left: -250px;
   transition: all 0.5s;
   position: sticky;
-  min-height: 800px;
+  min-height: max-content;
   max-height: 20000px;
   text-align: center;
 }

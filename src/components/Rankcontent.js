@@ -79,27 +79,33 @@ const Rankcontent = ({ isOpen }) => {
                       <div className="d-flex bd-highlight mb-3">
                         <div
                           className="mr-auto p-2 bd-highlight"
-                          style={{ width: "25%" }}
+                          style={{ width: "10%" }}
                         >
                           순위
                         </div>
                         <div
                           className="mr-auto p-2 bd-highlight"
-                          style={{ width: "25%" }}
+                          style={{ width: "20%" }}
                         >
                           사용자명
                         </div>
                         <div
-                          className="mr-auto p-2 bd-highlight wrapper"
-                          style={{ width: "25%" }}
+                          className="mr-auto p-2 bd-highlight"
+                          style={{ width: "20%" }}
                         >
-                          올린 문제 수
+                          포인트
+                        </div>
+                        <div
+                          className="mr-auto p-2 bd-highlight wrapper"
+                          style={{ width: "20%" }}
+                        >
+                          푼 문제 수
                         </div>
                         <div
                           className="mr-auto p-2 bd-highlight"
-                          style={{ width: "25%" }}
+                          style={{ width: "20%" }}
                         >
-                          푼 문제 수
+                          올린 문제 수
                         </div>
                       </div>
                     </Card.Header>
@@ -117,27 +123,33 @@ const Rankcontent = ({ isOpen }) => {
                         <div className="d-flex bd-highlight mb-3">
                           <div
                             className="mr-auto p-2 bd-highlight"
-                            style={{ width: "25%" }}
+                            style={{ width: "10%" }}
                           >
                             <div key={index + 1}>{index + 1}</div>
                           </div>
                           <div
                             className="mr-auto p-2 bd-highlight"
-                            style={{ width: "25%" }}
+                            style={{ width: "20%" }}
                           >
                             {i.username}
                           </div>
                           <div
-                            className="mr-auto p-2 bd-highlight wrapper"
-                            style={{ width: "25%" }}
+                            className="mr-auto p-2 bd-highlight"
+                            style={{ width: "20%" }}
                           >
-                            {i.num_uploaded_questions}
+                            {i.point}
                           </div>
                           <div
                             className="mr-auto p-2 bd-highlight"
-                            style={{ width: "25%" }}
+                            style={{ width: "20%" }}
                           >
                             {i.num_solved_questions}
+                          </div>
+                          <div
+                            className="mr-auto p-2 bd-highlight wrapper"
+                            style={{ width: "20%" }}
+                          >
+                            {i.num_uploaded_questions}
                           </div>
                         </div>
                       </Card.Body>
