@@ -161,14 +161,16 @@ const AdminQuestion = ({ question_id, isOpen }) => {
 
 	useEffect(() => { }, [choiceList, choiceColor]);
 
-	const selectHandler = () => {
+	const selectHandler = (value, e) => {
+		e.preventDefault();
+
 		let data = {
-			blocked: false,
+			blocked: value,
 		}
 
 		axios.patch(`/api/question/${question_id}`, data)
 		.then(res => {
-			console.log(res.data);
+			alert(res.data.message);
 			history.push("/admin/blocked");
 		})
 		.catch((error) => {
@@ -190,12 +192,16 @@ const AdminQuestion = ({ question_id, isOpen }) => {
 							</div>
 						</div>
 						
-							{ blocked &&			
+							{ blocked ?			
 								<Button
-									style={{ width: "4.8rem !important", height: "2rem" }}
+									style={{ width: "4.8rem !important", height: "2.4rem" }}
 									variant='success'
-									onClick={selectHandler}
-								>허가</Button>
+									onClick={(e) => {selectHandler(false, e)}}
+								>Open</Button> : <Button
+								style={{ width: "4.8rem !important", height: "2.4rem" }}
+								variant='success'
+								onClick={(e) => {selectHandler(true, e)}}
+							>Block</Button>
 								}
 							
 					</div>
