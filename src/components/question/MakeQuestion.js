@@ -222,7 +222,7 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
               .catch((error) => {
                 alert(error.response.data.message);
               });
-            alert(res.data.message);
+            alert("관리자 승인 후 문제가 등록됩니다.");
             moveBack();
           })
           .catch((error) => {

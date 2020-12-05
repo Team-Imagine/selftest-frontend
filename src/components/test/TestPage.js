@@ -664,7 +664,7 @@ const TestPage = ({ isOpen, test_id }) => {
         ) : state === "test" ? (
           <div
             style={{
-              width: "70%",
+              width: "50%",
               left: "0",
               right: "0",
               marginLeft: "auto",

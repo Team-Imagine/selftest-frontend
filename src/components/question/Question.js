@@ -314,24 +314,24 @@ const Question = ({ subject, course, isOpen }) => {
                           문제 선택
                         </Button>
                       ) : (
-                        <ButtonGroup>
-                          <Button
-                            variant="light"
-                            style={{ width: "8.5rem" }}
-                            onClick={(e) => makeTestHandler(true, e)}
-                          >
-                            선택 완료
+                          <ButtonGroup>
+                            <Button
+                              variant="light"
+                              style={{ width: "8.5rem" }}
+                              onClick={(e) => makeTestHandler(true, e)}
+                            >
+                              선택 완료
                           </Button>
-                          <Button
-                            variant="light"
-                            block
-                            style={{ width: "8.5rem" }}
-                            onClick={(e) => makeTestHandler(false, e)}
-                          >
-                            생성 취소
+                            <Button
+                              variant="light"
+                              block
+                              style={{ width: "8.5rem" }}
+                              onClick={(e) => makeTestHandler(false, e)}
+                            >
+                              생성 취소
                           </Button>
-                        </ButtonGroup>
-                      )}
+                          </ButtonGroup>
+                        )}
                     </div>
                   </Card.Body>
                 </Accordion.Collapse>
@@ -397,9 +397,8 @@ const Question = ({ subject, course, isOpen }) => {
                     <Link
                       key={i.id}
                       to={{
-                        pathname: `/subject/${subject}/${course}/${
-                          i.id
-                        }/problem_solving/${1}`,
+                        pathname: `/subject/${subject}/${course}/${i.id
+                          }/problem_solving/${1}`,
                       }}
                     >
                       <Card.Header>
@@ -413,44 +412,78 @@ const Question = ({ subject, course, isOpen }) => {
                       <Card.Footer>
                         <div
                           className="d-flex bd-highlight mb-3"
-                          style={{ height: "0.8rem" }}
+                          style={{ height: "0.7rem" }}
                         >
                           <div className="mr-auto p-2 bd-highlight">
                             좋아요 &nbsp;
-                            <FontAwesomeIcon
-                              icon={faThumbsUp}
-                              className="ml-auto"
-                            />
+                            <Button
+                              style={{
+                                padding: "9px",
+                                paddingRight: "2px",
+                                paddingTop: "2px",
+                                paddingBottom: "2px",
+                              }}
+                              disabled
+                            >
+                              <FontAwesomeIcon icon={faThumbsUp} className="mr-2" />
+                            </Button>
                             &nbsp;
                             {i["likeable_entity.total_likes"]}
                           </div>
 
                           <div className="mr-auto p-2 bd-highlight">
                             싫어요 &nbsp;
-                            <FontAwesomeIcon
-                              icon={faThumbsDown}
-                              className="ml-auto"
-                            />
+                            <Button
+                              style={{
+                                paddingLeft: "9px",
+                                paddingRight: "2px",
+                                paddingTop: "4px",
+                                paddingBottom: "0px",
+                              }}
+                              disabled
+                            >
+                              <FontAwesomeIcon icon={faThumbsDown} className="mr-2" />
+                            </Button>
                             &nbsp;
                             {i["likeable_entity.total_dislikes"]}
                           </div>
 
                           <div className="mr-auto p-2 bd-highlight">
                             신선해요 &nbsp;
-                            <FontAwesomeIcon
-                              icon={faAppleAlt}
-                              className="ml-auto"
-                            />
+                            <Button
+                              variant="danger"
+                              style={{
+                                padding: "9px",
+                                paddingRight: "2px",
+                                paddingTop: "3px",
+                                paddingBottom: "1px",
+                              }}
+                              disabled
+                            >
+                              <FontAwesomeIcon icon={faAppleAlt} className="mr-2" />
+                            </Button>
                             &nbsp;
                             {Number(i.average_freshness).toFixed(2)}
                           </div>
 
                           <div className="mr-auto p-2 bd-highlight">
                             난이도 &nbsp;
-                            <FontAwesomeIcon
-                              icon={faStar}
-                              className="ml-auto"
-                            />
+                            <Button
+                              variant="warning"
+                              style={{
+                                padding: "7px",
+                                paddingRight: "0px",
+                                paddingTop: "3px",
+                                paddingBottom: "1px",
+                              }}
+                              disabled
+                            >
+                              <FontAwesomeIcon
+                                icon={faStar}
+                                style={{ color: "white" }}
+                                className="mr-2"
+                              />
+                            </Button>
                             &nbsp;
                             {Number(i.average_difficulty).toFixed(2)}
                           </div>

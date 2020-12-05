@@ -96,31 +96,7 @@ const NavBar = ({ isOpen, point }) => {
         });
     }
   };
-  /*
-  useEffect(() => {
-    if(cookies.access_token && store.getState().verified) {
-      axios.get(`/api/user/`)
-      .then((res) => {
-        //console.log(res.data.user.point);
-        setUserPoint(res.data.user.point);
-      })
-      .catch(error => {
-				alert(error.response.data.message);
-			})
-    }
-  }, [point]);
-  */
-  /*
-  useEffect(() => {
-    if(cookies.access_token && store.getState().verified) {
-      axios.get(`/api/user/`)
-      .then((res) => {
-        console.log(res.data.user.point);
-        setUserPoint(res.data.user.point);
-      })
-    }
-  }, [point]);
-  */
+
   const signOut = async () => {
     await axios
       .post(`/api/auth/logout`)
@@ -225,6 +201,7 @@ const NavBar = ({ isOpen, point }) => {
               <h1 style={{ paddingTop: "0.5rem" }}>SelfTest</h1>
             </Nav.Link>
           </div>
+          <Navbar.Collapse id="responsive-navbar-nav">
           <Form inline>
             <Form.Group>
               <Form.Control
@@ -257,6 +234,7 @@ const NavBar = ({ isOpen, point }) => {
               <FontAwesomeIcon icon={faSearch} className="ml-auto" />
             </Button>
           </Form>
+          </Navbar.Collapse>
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="ml-auto" navbar>
               <div

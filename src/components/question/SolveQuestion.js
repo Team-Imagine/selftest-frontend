@@ -867,7 +867,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
           <div>
             <Button
               variant="info"
-              style={{ width: "19rem", height: "2.5rem" }}
+              style={{ width: "100%", height: "2.5rem" }}
               onClick={isOwnedHandler}
             >
               문제 소장
