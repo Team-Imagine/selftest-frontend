@@ -41,6 +41,14 @@ const Question = ({ subject, course, isOpen }) => {
 
   let history = useHistory();
 
+  const moveSubject = () => {
+		history.push("/subject");
+	  };
+	 
+	const moveCourse = () => {
+		history.push(`/subject/${subject}`);
+	};
+
   useEffect(() => {
     // 강의 목록에 맞는 문제 목록을 가져옴
     axios
@@ -270,7 +278,7 @@ const Question = ({ subject, course, isOpen }) => {
         <div className="d-flex bd-highlight mb-3">
           <div className="mr-auto p-2 bd-highlight">
             <h3 style={{ fontWeight: "bolder" }}>
-              과목 {">"} {subject} {">"} {course}
+            <Form.Label onClick={moveSubject}>과목</Form.Label> {'>'} <Form.Label onClick={moveCourse}>{subject}</Form.Label> {'>'} {course}
             </h3>
           </div>
           <div className="d-flex p-2 bd-highlight">

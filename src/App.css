@@ -55,7 +55,7 @@ a:focus {
   margin-left: 0;
   transition: 0.5s;
   max-height: max-content;
-  min-height: 800px;
+  min-height: 1000px;
 }
 
 .sidebar-header h3 {
