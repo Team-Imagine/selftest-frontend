@@ -104,14 +104,14 @@ class Admin extends React.Component {
 								variant="secondary"
 								style={{width: '100%'}}
 								onClick={(e) => { this.selectType('blocked', e) }}
-							>Blocked
+							>비공개
 							</Button>
 							<br />
 							<Button
 								variant="secondary"
 								style={{width: '100%'}}
 								onClick={(e) => { this.selectType('opened', e) }}
-							>Opened
+							>공개
 							</Button>
 						</div>
 						<div style={{width: '90%'}}>
