@@ -116,8 +116,10 @@ const AdminQuestion = ({ question_id, isOpen }) => {
 				// 해설 불러오기
 				axios.get(`/api/answer?question_id=${question_id}`).then((res) => {
 					console.log(res.data);
-
-					htmlToEditor_answer = res.data.answers.rows[0].content;
+					if(res.data.answers.rows.length !== 0)
+						htmlToEditor_answer = res.data.answers.rows[0].content;
+					else 
+					htmlToEditor_answer = '<p></p>';
 
 					const blocksFromHtml = htmlToDraft(htmlToEditor_answer);
 					if (blocksFromHtml) {
