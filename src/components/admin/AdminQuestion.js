@@ -33,32 +33,6 @@ import store from "../../store";
 
 import axios from "axios";
 
-const MyBlock = styled.div`
-  .wrapper-class {
-    width: 100%;
-    margin: 0;
-    margin-bottom: 1rem;
-    justify-content: center;
-  }
-  .editor {
-    height: auto;
-    border: 1px solid #f1f1f1 !important;
-    padding: 5px !important;
-    border-radius: 2px !important;
-    background-color: white;
-  }
-  .input {
-    width: 100%;
-    margin: 0;
-    margin-bottom: 1rem;
-    height: 60px !important;
-    border: 1px solid #f1f1f1 !important;
-    padding: 5px !important;
-    border-radius: 2px !important;
-    background-color: white;
-  }
-`;
-
 const AdminQuestion = ({ question_id, isOpen }) => {
 	// useState로 상태관리하기 초기값은 EditorState.createEmpty()
 	// EditorState의 비어있는 ContentState 기본 구성으로 새 개체를 반환 => 이렇게 안하면 상태 값을 나중에 변경할 수 없음.
@@ -74,6 +48,8 @@ const AdminQuestion = ({ question_id, isOpen }) => {
 	const [essayAnswerEditor, setEssayAnswerEditor] = useState(
 		EditorState.createEmpty()
 	);
+
+	const [blocked, setBlocked] = useState(1);
 
 	const [pages, setPages] = useState([]);
 
@@ -95,6 +71,7 @@ const AdminQuestion = ({ question_id, isOpen }) => {
 
 				setQuestionType(res.data.question.type);
 				setQuestion(res.data.question);
+				setBlocked(res.data.question.blocked);
 
 				if (res.data.question.type === "multiple_choice") {
 					let t_choiceList = [];
@@ -208,13 +185,19 @@ const AdminQuestion = ({ question_id, isOpen }) => {
 				<Card.Header style={{ width: "50%", left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto' }}>
 					<div className="d-flex bd-highlight mb-3" style={{ height: "1rem" }}>
 						<div className="mr-auto p-2 bd-highlight">
-							<div className="d-flex" style={{ fontWeight: "bold", fontsize: "rem" }}>
-								#{question.id}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								<Button
-									onClick={selectHandler}
-								>허가</Button>		
+							<div style={{ fontWeight: "bold", fontsize: "rem"}}>
+								#{question.id}
 							</div>
 						</div>
+						
+							{ blocked &&			
+								<Button
+									style={{ width: "4.8rem !important", height: "2rem" }}
+									variant='success'
+									onClick={selectHandler}
+								>허가</Button>
+								}
+							
 					</div>
 				</Card.Header>
 				<Card
@@ -260,7 +243,7 @@ const AdminQuestion = ({ question_id, isOpen }) => {
 								>
 									<br />
 									<div>
-										<p>선택지</p>
+										<p style={{fontSize: '18px'}}>선택지</p>
 									</div>
 									<br />
 									<div className="justify-content-center align-items-center">
@@ -291,7 +274,7 @@ const AdminQuestion = ({ question_id, isOpen }) => {
 							</div>
 						</Card>) : questionType === "short_answer" ?
 							<div>
-								<p style={{ width: "50%",left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto', }}>주관식 답안</p>
+								<p style={{ fontSize: '18px', width: "50%",left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto', }}>주관식 답안</p>
               {answerList.map((i, index) => (
 								<div key={index}>
 									<Card className="center" style={{ width: "50%", left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto', }}>
@@ -305,7 +288,7 @@ const AdminQuestion = ({ question_id, isOpen }) => {
 							))}
 							</div> : <div></div>}
 					<br />
-					<p style={{ width: "50%",left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto', }}>해설</p>
+					<p style={{ fontSize: '18px', width: "50%",left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto', }}>해설</p>
 					<Card
 						className="center"
 						style={{ width: "50%", height: "20rem", overflow: "auto", left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto', }}
