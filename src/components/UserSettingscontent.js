@@ -149,7 +149,7 @@ const UserSettings = (isOpen) => {
               <div className="p-2 bd-highlight col-example">
                 <Card border="info" style={{ width: "42em", height: "55rem" }}>
                   <div className="row h-100 justify-content-center align-items-center">
-                    <form className="col-10">
+                    <form onSubmit = {SubmitSaveChange} className="col-10">
                       <h2 style={{ fontWeight: "bolder" }}>프로필 설정</h2>
                       <hr />
                       <br />
