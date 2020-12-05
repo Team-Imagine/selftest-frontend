@@ -430,9 +430,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 
     if (pointControl.points_to_unlock) {
       result = window.confirm(
-        "문제의 해설을 확인하시겠습니까? " +
-        pointControl.points_to_unlock +
-        "포인트가 차감됩니다."
+        "문제의 해설을 확인하시겠습니까?"
       );
     } else {
       result = window.confirm("문제의 해설을 확인하시겠습니까? ");
@@ -461,9 +459,12 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
         }
 
         console.log(res.data);
-
-        htmlToEditor_answer = res.data.answers.rows[0].content;
-
+        
+        if (res.data.answers.rows.length !== 0)
+          htmlToEditor_answer = res.data.answers.rows[0].content;
+        else
+          htmlToEditor_answer = '<p></p>';
+        
         const blocksFromHtml = htmlToDraft(htmlToEditor_answer);
         if (blocksFromHtml) {
           const { contentBlocks, entityMap } = blocksFromHtml;
@@ -493,9 +494,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 
     if (!pointControl.points_to_own) {
       result = window.confirm(
-        "문제를 소장하시겠습니까? " +
-        pointControl.points_to_own +
-        "포인트가 차감됩니다."
+        "문제를 소장하시겠습니까? "
       );
     } else {
       alert("이미 소장 중인 문제입니다.");
@@ -881,7 +880,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 
       <div className="column justify-content-center align-items-center">
         {/*<Card border="light" style={{ backgroundColor: "#f7feff" }}>*/}
-        <Card.Header style={{ width: "50%" }}>
+        <Card.Header style={{ width: "50%", left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto' }}>
           <div className="d-flex bd-highlight mb-3" style={{ height: "1rem" }}>
             <div className="mr-auto p-2 bd-highlight">
               <div style={{ fontWeight: "bold", fontsize: "rem" }}>
@@ -905,6 +904,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
           className="center"
           style={{
             width: "50%",
+            left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto',
             height: "20rem !important",
             overflow: "auto",
           }}
@@ -935,11 +935,11 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
         </Card>
         <Card.Footer
           style={{
+            width: "50%", left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto',
             paddingTop: "0rem",
             paddingBottom: "1rem",
             backgroundColor: "#ffffff",
             border: "light",
-            width: "50%",
           }}
         >
           <div
@@ -1041,7 +1041,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
           <br />
           {questionType === "multiple_choice" && choiceList !== null ? (
             //문제 푸는 곳
-            <Card style={{ width: "85rem", marginRight: "10px" }}>
+            <Card style={{ width: "50%", left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto' }}>
               <div className="container h">
                 <div
                   className="justify-content-center align-items-center"
@@ -1060,7 +1060,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
                           variant="outline-light"
                           style={{
                             height: "2rem",
-                            width: "40rem",
+                            width: "40%",
                             color: choiceColor[index],
                             fontSize: "18px",
                             backgroundColor: "lavender",
@@ -1093,7 +1093,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
                     className="btn pull-right"
                     variant="info"
                     style={{
-                      width: "18rem",
+                      width: "23%",
                       height: "2rem",
                       fontSize: "15px",
                       marginRight: "2rem",
@@ -1109,7 +1109,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
                   className="btn pull-right"
                   variant="info"
                   style={{
-                    width: "18rem",
+                    width: "23%",
                     height: "2rem",
                     fontSize: "15px",
                     marginLeft: "2rem",
@@ -1121,30 +1121,8 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
               </div>
             </Card>
           ) : questionType === "short_answer" ? (
-            <div
-              className="justify-content-center align-items-center"
-              style={{
-                float: "left",
-                textAlign: "center",
-                marginBottom: "2rem",
-                marginTop: "1rem",
-                width: "50%",
-              }}
-            >
-              <div>
-                <h3> 아래에 정답을 입력하세요.</h3>
-              </div>
-
-              <div>
-                <input
-                  type="text"
-                  id="title"
-                  className="input"
-                  style={{ width: "25%", height: "2rem" }}
-                  onChange={(e) => makeAnswer(e)}
-                />
-                <br />
-
+            <div>
+              <div style={{ width: '50%', left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto', }}>
                 <div
                   className="justify-content-center align-items-center"
                   style={{
@@ -1155,12 +1133,20 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
                     width: "100%",
                   }}
                 >
+                  <h3 style={{ width: '50%', left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto' }}> 아래에 정답을 입력하세요.</h3>
+                  <input
+                    type="text"
+                    id="title"
+                    className="input"
+                    style={{ width: "50%", height: "2rem", left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto', }}
+                    onChange={(e) => makeAnswer(e)}
+                  /><br /><br />
                   {questionType ? (
                     <Button
                       className="btn pull-right"
                       variant="info"
                       style={{
-                        width: "25%",
+                        width: "23%",
                         height: "2rem",
                         fontSize: "15px",
                         marginRight: "1rem",
@@ -1176,7 +1162,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
                     className="btn pull-right"
                     variant="info"
                     style={{
-                      width: "25%",
+                      width: "23%",
                       height: "2rem",
                       fontSize: "15px",
                       marginLeft: "1rem",
@@ -1185,12 +1171,13 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
                   >
                     풀이 제출{" "}
                   </Button>
+
                 </div>
               </div>
             </div>
           ) : (
                 <div>
-                  <MyBlock style={{ width: "50%" }}>
+                  <MyBlock style={{ width: "50%", left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto' }}>
                     <br />
                     <div style={{ height: "20rem !important" }}>
                       <Editor
@@ -1266,15 +1253,15 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
                 </div>
               )}
         </div>
-
-        <div style={{ height: "0.5rem" }}>
+        <br />
+        <div style={{ height: "0.5rem", width: '100%', left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto' }}>
           {showAnswer &&
             (questionType === "short_answer" ||
               questionType === "multiple_choice") ? (
-              <div>
+              <div style={{}}>
                 {answerList.map((i, index) => (
                   <div key={index}>
-                    <Card className="center" style={{ width: "50%" }}>
+                    <Card className="center">
                       <Card.Body style={{ backgroundColor: "white" }}>
                         {i}
                         <br />
@@ -1316,10 +1303,12 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
                 <div></div>
               )}
           {showExplanation ? (
-            <div>
+            <div style={{ width: "50%", left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto', }}>
+              <br />
+              정답)
               {answerList.map((i, index) => (
                 <div key={index}>
-                  <Card className="center" style={{ width: "50%" }}>
+                  <Card className="center">
                     <Card.Body style={{ backgroundColor: "white" }}>
                       {i}
                       <br />
@@ -1328,10 +1317,10 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
                   <br />
                 </div>
               ))}
-
+              해설)
               <Card
                 className="center"
-                style={{ width: "51%", height: "20rem", overflow: "auto" }}
+                style={{ height: "20rem", overflow: "auto" }}
               >
                 <Card.Body>
                   <br />
@@ -1354,8 +1343,8 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
                   </div>
                 </Card.Body>
               </Card>
-
-              <Accordion style={{ width: "50%" }}>
+              <br />
+              <Accordion>
                 <Card className="center">
                   <Accordion.Toggle
                     className="center"
@@ -1443,27 +1432,28 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
                   </Accordion.Collapse>
                 </Card>
               </Accordion>
-
-              <FormControl
-                placeholder="댓글 작성하기"
-                onChange={(e) => inputCommentContent(e)}
-                type="text"
-                id="title"
-                className="input"
-                style={{ width: "50%", height: "3rem" }}
-              />
-              <Button
-                style={{ width: "50%" }}
-                variant="info"
-                onClick={submitComment}
-              >
-                제출
+              <div >
+                <FormControl
+                  placeholder="댓글 작성하기"
+                  onChange={(e) => inputCommentContent(e)}
+                  type="text"
+                  id="title"
+                  className="input"
+                  style={{ height: "3rem" }}
+                />
+                <Button
+                  style={{ width: "100%" }}
+                  variant="info"
+                  onClick={submitComment}
+                >
+                  제출
               </Button>
+              </div>
             </div>
           ) : (
-              <div>
+              <div style={{ width: "50%", left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto', }}>
                 <Accordion>
-                  <Card className="center" style={{ width: "51%" }}>
+                  <Card className="center">
                     <Accordion.Toggle
                       className="center"
                       as={Button}
@@ -1492,7 +1482,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
                                         type="text"
                                         id="title"
                                         className="input"
-                                        style={{ width: "51%", height: "3rem" }}
+                                        style={{ width: "50%", height: "3rem" }}
                                       />
                                       <Button
                                         onClick={(e) =>
@@ -1557,16 +1547,17 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
                   type="text"
                   id="title"
                   className="input"
-                  style={{ width: "51%", height: "3rem" }}
+                  style={{ height: "3rem" }}
                 />
                 <Button
-                  style={{ width: "51%" }}
+                  style={{ width: '100%' }}
                   variant="info"
                   onClick={submitComment}
                 >
                   제출
               </Button>
               </div>
+
             )}
         </div>
       </div>

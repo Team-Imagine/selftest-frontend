@@ -5,6 +5,7 @@ import { Link, useHistory } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Alert from "react-bootstrap/Alert";
 import axios from "axios";
+import store from "../../store";
 import { propTypes } from "react-bootstrap/esm/Image";
 import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
@@ -55,12 +56,17 @@ const Testcontent = ({ isOpen }) => {
   };
 
   const modifyHandler = () => {
-    if (state === "normal") {
-      setButtonColor("danger");
-      setState("delete");
+    if (store.getState().isLoggedIn) {
+      if (state === "normal") {
+        setButtonColor("danger");
+        setState("delete");
+      } else {
+        setButtonColor("info");
+        setState("normal");
+      }
     } else {
-      setButtonColor("info");
-      setState("normal");
+      alert("로그인이 필요한 기능입니다.");
+      history.push("/login");
     }
   };
   const deleteHandler = (index, e) => {
@@ -97,7 +103,13 @@ const Testcontent = ({ isOpen }) => {
   };
 
   const makeHandler = () => {
-    history.push(`/test/make_test/${1}`);
+    if (store.getState().isLoggedIn) {
+      history.push(`/test/make_test/${1}`);
+    } else {
+      alert("로그인이 필요한 기능입니다.");
+      history.push("/login");
+    }
+
   };
 
   return (
@@ -108,7 +120,7 @@ const Testcontent = ({ isOpen }) => {
         </div>
         <div className="p-2 bd-highlight">
           <Button
-            variant={buttonColor}
+            variant="info"
             style={{ width: "9rem", height: "2.5rem" }}
             onClick={makeHandler}
           >
@@ -160,10 +172,10 @@ const Testcontent = ({ isOpen }) => {
               </div>
             ))
           ) : (
-            <div>
-            <h5>등록된 시험이 없습니다. 새로운 시험을 등록해주세요.</h5>
-            </div>
-          )}
+              <div>
+                <h5>등록된 시험이 없습니다. 새로운 시험을 등록해주세요.</h5>
+              </div>
+            )}
         </ul>
       </div>
       <ul className="row justify-content-center align-items-center">

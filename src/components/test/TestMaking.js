@@ -222,6 +222,9 @@ const TestMaking = ({ isOpen }) => {
 
                 axios.post(`/api/testset/question/`, data).then((res) => {
                   console.log(res.data);
+                  setTestTitle('');
+                  setTestNumber('');
+                  setCourse('');
                   setTestState("info");
                   alert(res.data.message);
                 });
