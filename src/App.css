@@ -49,7 +49,6 @@ a:focus {
   position: sticky;
   min-height: max-content;
   max-height: 20000px;
-  text-align: center;
 }
 
 .sidebar.is-open {
