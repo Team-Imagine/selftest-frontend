@@ -11,6 +11,7 @@ import { Link, useHistory } from "react-router-dom";
 import classNames from "classnames";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import Card from "react-bootstrap/Card";
 
 import styled from "styled-components";
 import { EditorState, convertToRaw, ContentState } from "draft-js";
@@ -348,6 +349,9 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
         </MyBlock>
       </div>
       <div className="row justify-content-center align-items-center">
+      <Card border="light" style={{width:"80%", backgroundColor:"#DDF2F1", paddingTop:"1rem", paddingBottom:"1rem"}}>
+      <div className="row justify-content-center align-items-center">
+        
         {questionType === "객관식" ? (
           <div className="d-flex">
             <div className="justify-content-center align-items-center">
@@ -398,6 +402,8 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
             </div>
           </div>
         ) : <div></div>}
+      </div>
+      </Card>
       </div>
       <br />
       <div className="row justify-content-center align-items-center">
