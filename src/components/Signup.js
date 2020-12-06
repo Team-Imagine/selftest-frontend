@@ -58,6 +58,7 @@ if(password === password_again){
       .post(`/api/auth/register`, signupinfo)
       .then((res) => {
         console.log(res.data);
+        alert(res.data.message);
       })
       .catch((error) => {
         alert(error.response.data.message);

@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component, useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import { Redirect } from "react-router-dom";
 import store from "../store";
@@ -9,6 +9,20 @@ import Card from "react-bootstrap/Card";
 const AuthForm = () => {
   const [authCode, setAuthCode] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(0);
+
+  const [user, setUser] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`/api/user`)
+      .then((res) => {
+        console.log(res.data);
+        setUser(res.data.user);
+      })
+      .catch((error) => {
+        alert(error.response.data.message);
+      });
+  }, []);
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -49,7 +63,7 @@ const AuthForm = () => {
           <div className="container h-100">
             <div className="row h-100 justify-content-center align-items-center">
               {redirect}
-              <Card border="info" style={{ width: "50rem", height: "45rem" }}>
+              <Card border="info" style={{ width: "50rem", height: "40rem" }}>
                 <div className="row h-100 justify-content-center align-items-center">
                   <form onSubmit={submitHandler} className="col-10">
                     <h2 style={{ fontWeight: "bolder" }}>본인 인증</h2>
@@ -66,7 +80,8 @@ const AuthForm = () => {
                     </div>
                     <hr />
                     <div className="row h-100 justify-content-center align-items-center">
-                      <h4>귀하의 메일로 인증 메일이 발송되었습니다.</h4>
+                      <h4>귀하의 메일({user.email})로&nbsp;</h4>
+                      <h4>인증 메일이 발송되었습니다.</h4>
                       <p>인증하시면 Selftest 이용이 가능합니다.</p>
                     </div>
                     <Form.Group controlId="formBasicAuthCode">
