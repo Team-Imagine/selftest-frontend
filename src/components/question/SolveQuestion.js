@@ -1054,11 +1054,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen, toggle }) => {
                 >
                   <br />
                   <div>
-<<<<<<< Updated upstream
-                    <h5> 위 문제에 대한 알맞은 정답을 선택하세요.</h5>
-=======
                     <div style={{fontSize: '1.1rem'}}>위 문제에 대한 알맞은 정답을 선택하세요.</div>
->>>>>>> Stashed changes
                   </div>
                   <br />
                   <div className="justify-content-center align-items-center">
@@ -1071,11 +1067,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen, toggle }) => {
                             height: "2rem",
                             width: "60%",
                             color: choiceColor[index],
-<<<<<<< Updated upstream
-                            fontSize: "15px",
-=======
                             fontSize: "1rem",
->>>>>>> Stashed changes
                             backgroundColor: "lavender",
                           }}
                           onClick={(e) => {
