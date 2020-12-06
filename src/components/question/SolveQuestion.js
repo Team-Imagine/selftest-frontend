@@ -851,7 +851,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
   };
 
   return (
-    <Container
+    <Container style={{height:"2000px"}}
       fluid
       className={classNames("content", { "is-open": { isOpen } })}
     >
@@ -1049,7 +1049,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
                 >
                   <br />
                   <div>
-                    <h4> 위 문제에 대한 알맞은 정답을 선택하세요.</h4>
+                    <h5> 위 문제에 대한 알맞은 정답을 선택하세요.</h5>
                   </div>
                   <br />
                   <div className="justify-content-center align-items-center">
@@ -1060,9 +1060,9 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
                           variant="outline-light"
                           style={{
                             height: "2rem",
-                            width: "40%",
+                            width: "60%",
                             color: choiceColor[index],
-                            fontSize: "18px",
+                            fontSize: "15px",
                             backgroundColor: "lavender",
                           }}
                           onClick={(e) => {

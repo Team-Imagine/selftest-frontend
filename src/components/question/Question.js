@@ -413,7 +413,7 @@ const Question = ({ subject, course, isOpen }) => {
                       <Card.Footer>
                         <div
                           className="d-flex bd-highlight mb-3"
-                          style={{ height: "0.7rem" }}
+                          style={{ height: "0.1em",paddingBottom:"1rem"}}
                         >
                           <div className="mr-auto p-2 bd-highlight">
                             좋아요 &nbsp;
