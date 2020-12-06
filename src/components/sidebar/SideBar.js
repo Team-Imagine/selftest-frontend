@@ -52,7 +52,7 @@ const SideBar = ({ toggle, isOpen }) => {
     <div>
      <div
         className={classNames("sidebar", { "is-open": isOpen })}
-        style={{ height: "auto" }}
+        //style={{ height: "auto" }}
       >
         <br />
         <div className="sidebar-header">

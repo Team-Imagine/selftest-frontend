@@ -26,6 +26,7 @@ const moveRank = () => {
       <Container
       fluid
       id="jb-container"
+      style={{maxHeight: 'max-content', minHeight: '1000px'}}
     >
         <SideBarSmall toggle={toggle} isOpen={!isOpen} />
         <br/>

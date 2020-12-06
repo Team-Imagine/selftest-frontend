@@ -47,10 +47,11 @@ class App extends React.Component {
   /**
    * Remove event listener
    */
+  
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateWidth.bind(this));
   }
-
+  
   toggle = () => {
     this.setState({ isOpen: !this.state.isOpen });
   };
