@@ -386,7 +386,8 @@ const Question = ({ subject, course, isOpen }) => {
         <hr />
         <ul style={{ minHeight: "120rem" }}>
           <CardDeck>
-            {question.question.map((i, index) => (
+            {question.question.length ?
+            question.question.map((i, index) => (
               <div className="container h-100" key={i.id}>
                 <div className="row h-100 justify-content-center align-items-center">
                   <Card
@@ -504,7 +505,12 @@ const Question = ({ subject, course, isOpen }) => {
                 </div>
                 <br />
               </div>
-            ))}
+            )
+            ): (
+            <div>
+            <h5>등록된 문제가 없습니다. 새로운 문제를 등록해주세요.</h5>
+            </div>
+          )}
           </CardDeck>
         </ul>
         <ul className="row justify-content-center align-items-center">

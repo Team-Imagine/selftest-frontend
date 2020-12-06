@@ -6,6 +6,7 @@ import axios from "axios";
 import { faHandPointUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useHistory } from "react-router-dom";
+import { set } from "js-cookie";
 
 const Signup= () => {
  const [email, setEmail] = useState("");
@@ -59,6 +60,13 @@ if(password === password_again){
       .then((res) => {
         console.log(res.data);
         alert(res.data.message);
+        setEmail("");
+        setUserName("");
+        setPassword("");
+        setPasswordAgain("");
+        setFirstName("");
+        setLastName("");
+        setPhonenumber("");
       })
       .catch((error) => {
         alert(error.response.data.message);
