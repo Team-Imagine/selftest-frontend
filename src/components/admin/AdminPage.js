@@ -111,7 +111,7 @@ const AdminPage = ({ isOpen, blocked }) => {
       className={classNames("content", { "is-open": { isOpen } })}
     >
     <div>
-    <ul style={{ minHeight: "120rem" }}>
+    <ul style={{ minHeight: "80rem" }}>
           <CardDeck>
 					{question.question.length ? 
             question.question.map((i, index) => (
@@ -153,7 +153,8 @@ const AdminPage = ({ isOpen, blocked }) => {
                 style={{
                   backgroundColor: "#ffffff",
                   border: "1px solid",
-                  width: "1.5rem",
+                  width: "1rem",
+                  paddingLeft:"0.1em"
                 }}
                 onClick={(e) => loadQuestionPerPage(i, e)}
               >

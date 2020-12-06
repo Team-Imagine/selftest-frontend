@@ -110,7 +110,7 @@ const AdminOpened = ({ isOpen }) => {
       className={classNames("content", { "is-open": { isOpen } })}
     >
     <div>
-    <ul style={{ minHeight: "120rem" }}>
+    <ul style={{ minHeight: "80rem" }}>
           <CardDeck>
 					{question.question.length ? 
             question.question.map((i, index) => (
