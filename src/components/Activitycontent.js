@@ -318,7 +318,7 @@ const Activitycontent = (isOpen) => {
                   border="info"
                   style={{
                     overflow: "auto",
-                    width: "25em",
+                    width: "35em",
                     height: "auto",
                     minHeight: "53.5em",
                     maxHeight: "53.5em",
