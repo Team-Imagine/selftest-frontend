@@ -865,6 +865,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
         </div>
         <div className="p-2 bd-highlight">
           <div>
+            {/*
             <Button
               variant="info"
               style={{ width: "100%", height: "2.5rem" }}
@@ -872,6 +873,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
             >
               문제 소장
             </Button>
+            */}
           </div>
         </div>
       </div>
