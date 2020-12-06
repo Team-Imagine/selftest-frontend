@@ -22,8 +22,10 @@ import {
   faThumbsUp,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import './Question.css';
+import SideBarSmall from '../sidebar/SideBarSmall';
 
-const Question = ({ subject, course, isOpen }) => {
+const Question = ({ subject, course, isOpen, toggle }) => {
   const [question, setQuestion] = useState({
     question: [],
     curPage: 1,
@@ -272,18 +274,20 @@ const Question = ({ subject, course, isOpen }) => {
   return (
     <Container
       fluid
-      className={classNames("content", { "is-open": { isOpen } })}
+      id="jb-container"
     >
+      <SideBarSmall toggle={toggle} isOpen={!isOpen} />
       <div>
         <div className="d-flex bd-highlight mb-3">
           <div className="mr-auto p-2 bd-highlight">
+            {isOpen &&
             <h3 style={{ fontWeight: "bolder" }}>
             <Form.Label onClick={moveSubject}>과목</Form.Label> {'>'} <Form.Label onClick={moveCourse}>{subject}</Form.Label> {'>'} {course}
-            </h3>
+            </h3>}
           </div>
           <div className="d-flex p-2 bd-highlight">
             <Accordion>
-              <Card border="info" style={{ width: "19rem" }}>
+              <Card border="info" style={{ width: "19rem !important" }}>
                 <Accordion.Toggle
                   as={Button}
                   variant={testState}
@@ -302,13 +306,13 @@ const Question = ({ subject, course, isOpen }) => {
                         value={testTitle}
                         placeholder="추가할 시험명을 입력하세요."
                         fontSize="20"
-                        style={{ width: "17rem" }}
+                        style={{ width: "19rem !important" }}
                         onChange={testTitleChange}
                       />
                       {testState === "info" ? (
                         <Button
                           variant="light"
-                          style={{ width: "17rem" }}
+                          style={{ width: "19rem !important" }}
                           onClick={(e) => makeTestHandler(true, e)}
                         >
                           문제 선택
@@ -317,7 +321,7 @@ const Question = ({ subject, course, isOpen }) => {
                           <ButtonGroup>
                             <Button
                               variant="light"
-                              style={{ width: "8.5rem" }}
+                              style={{ width: "8.5rem !important" }}
                               onClick={(e) => makeTestHandler(true, e)}
                             >
                               선택 완료
@@ -393,7 +397,7 @@ const Question = ({ subject, course, isOpen }) => {
                   <Card
                     className="text-center"
                     variant="info"
-                    style={{ width: "30rem" }}
+                    style={{ width: "30rem !important" }}
                   >
                     <Link
                       key={i.id}
@@ -416,7 +420,7 @@ const Question = ({ subject, course, isOpen }) => {
                           style={{ height: "0.1em",paddingBottom:"1rem"}}
                         >
                           <div className="mr-auto p-2 bd-highlight">
-                            좋아요 &nbsp;
+                            
                             <Button
                               style={{
                                 padding: "9px",
@@ -433,7 +437,7 @@ const Question = ({ subject, course, isOpen }) => {
                           </div>
 
                           <div className="mr-auto p-2 bd-highlight">
-                            싫어요 &nbsp;
+                            
                             <Button
                               style={{
                                 paddingLeft: "9px",
@@ -450,7 +454,7 @@ const Question = ({ subject, course, isOpen }) => {
                           </div>
 
                           <div className="mr-auto p-2 bd-highlight">
-                            신선해요 &nbsp;
+                            
                             <Button
                               variant="danger"
                               style={{
@@ -468,7 +472,7 @@ const Question = ({ subject, course, isOpen }) => {
                           </div>
 
                           <div className="mr-auto p-2 bd-highlight">
-                            난이도 &nbsp;
+                            
                             <Button
                               variant="warning"
                               style={{

@@ -1,0 +1,46 @@
+#jb-container {
+    width: 100%;
+    overflow:'auto';
+}
+
+#jb-header {
+	padding: 20px;
+	margin-bottom: 20px;
+	border: 1px solid #bcbcbc;
+}
+
+#jb-content {
+	width: 90%;
+	left: 0;
+	right: 0;
+	margin-left: auto; 
+	margin-right: auto;
+}
+
+#jb-sidebar {
+	width: 100%;
+	padding: 20px;
+	margin-bottom: 20px;
+	float: right;
+	border: 1px solid #bcbcbc;
+}
+
+#jb-footer {
+	clear: both;
+	padding: 20px;
+	border: 1px solid #bcbcbc;
+}
+
+@media ( max-width: 1000px) {
+	#jb-container {
+		width: auto;
+	}
+	#jb-content {
+		float: none;
+		width: auto;
+	}
+	#jb-sidebar {
+		float: none;
+		width: auto;
+	}
+}

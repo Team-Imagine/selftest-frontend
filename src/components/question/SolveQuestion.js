@@ -32,6 +32,8 @@ import htmlToDraft from "html-to-draftjs";
 import store from "../../store";
 
 import axios from "axios";
+import SideBarSmall from '../sidebar/SideBarSmall';
+import '../Responsive.css';
 
 const MyBlock = styled.div`
   .wrapper-class {
@@ -59,7 +61,7 @@ const MyBlock = styled.div`
   }
 `;
 
-const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
+const SolveQuestion = ({ subject, course, question_id, isOpen, toggle }) => {
   // useState로 상태관리하기 초기값은 EditorState.createEmpty()
   // EditorState의 비어있는 ContentState 기본 구성으로 새 개체를 반환 => 이렇게 안하면 상태 값을 나중에 변경할 수 없음.
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
@@ -853,12 +855,13 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
   return (
     <Container style={{height:"2000px"}}
       fluid
-      className={classNames("content", { "is-open": { isOpen } })}
+      id="jb-container"
     >
+      <SideBarSmall toggle={toggle} isOpen={!isOpen} />
       <div className="d-flex bd-highlight mb-3">
         <div className="mr-auto p-2 bd-highlight">
           <div style={{ height: "2.5rem" }}>
-            <h3 style={{ fontWeight: "bolder" }}>
+            <h3 style={{ fontWeight: "bolder", fontSize: '1.5rem'}}>
               <Form.Label onClick={moveSubject}>과목</Form.Label> {">"} <Form.Label onClick={moveCourse}>{subject}</Form.Label> {">"} <Form.Label onClick={moveLecture}>{course}</Form.Label> {">"} 문제 풀이
             </h3>
           </div>
@@ -880,16 +883,16 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
 
       <div className="column justify-content-center align-items-center">
         {/*<Card border="light" style={{ backgroundColor: "#f7feff" }}>*/}
-        <Card.Header style={{ width: "50%", left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto' }}>
+        <Card.Header style={{ width: "70%", left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto' }}>
           <div className="d-flex bd-highlight mb-3" style={{ height: "1rem" }}>
             <div className="mr-auto p-2 bd-highlight">
-              <div style={{ fontWeight: "bold", fontsize: "rem" }}>
+              <div style={{ fontWeight: "bold", fontsize: "1rem" }}>
                 #{question.id} {subject} - {course}
               </div>
             </div>
             <Button
               variant="info"
-              style={{ width: "2.4rem", height: "2rem" }}
+              style={{ width: "2.4rem !important", height: "2rem" }}
               onClick={isBookmarked ? DeleteBookmarks : AddBookmarks}
             >
               <FontAwesomeIcon
@@ -903,7 +906,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
         <Card
           className="center"
           style={{
-            width: "50%",
+            width: "70%",
             left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto',
             height: "20rem !important",
             overflow: "auto",
@@ -935,7 +938,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
         </Card>
         <Card.Footer
           style={{
-            width: "50%", left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto',
+            width: "70%", left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto',
             paddingTop: "0rem",
             paddingBottom: "1rem",
             backgroundColor: "#ffffff",
@@ -1041,7 +1044,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
           <br />
           {questionType === "multiple_choice" && choiceList !== null ? (
             //문제 푸는 곳
-            <Card style={{ width: "50%", left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto' }}>
+            <Card style={{ width: "70%", left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto' }}>
               <div className="container h">
                 <div
                   className="justify-content-center align-items-center"
@@ -1049,7 +1052,11 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
                 >
                   <br />
                   <div>
+<<<<<<< Updated upstream
                     <h5> 위 문제에 대한 알맞은 정답을 선택하세요.</h5>
+=======
+                    <div style={{fontSize: '1.1rem'}}>위 문제에 대한 알맞은 정답을 선택하세요.</div>
+>>>>>>> Stashed changes
                   </div>
                   <br />
                   <div className="justify-content-center align-items-center">
@@ -1062,7 +1069,11 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
                             height: "2rem",
                             width: "60%",
                             color: choiceColor[index],
+<<<<<<< Updated upstream
                             fontSize: "15px",
+=======
+                            fontSize: "1rem",
+>>>>>>> Stashed changes
                             backgroundColor: "lavender",
                           }}
                           onClick={(e) => {
@@ -1095,7 +1106,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
                     style={{
                       width: "23%",
                       height: "2rem",
-                      fontSize: "15px",
+                      fontSize: "1rem",
                       marginRight: "2rem",
                     }}
                     onClick={show_Explanation}
@@ -1111,7 +1122,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
                   style={{
                     width: "23%",
                     height: "2rem",
-                    fontSize: "15px",
+                    fontSize: "1rem",
                     marginLeft: "2rem",
                   }}
                   onClick={submitHandler}
@@ -1122,7 +1133,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
             </Card>
           ) : questionType === "short_answer" ? (
             <div>
-              <div style={{ width: '50%', left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto', }}>
+              <div style={{ width: '70%', left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto', }}>
                 <div
                   className="justify-content-center align-items-center"
                   style={{
@@ -1133,12 +1144,12 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
                     width: "100%",
                   }}
                 >
-                  <h3 style={{ width: '50%', left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto' }}> 아래에 정답을 입력하세요.</h3>
+                  <h3 style={{ width: '70%', left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto' }}> 아래에 정답을 입력하세요.</h3>
                   <input
                     type="text"
                     id="title"
                     className="input"
-                    style={{ width: "50%", height: "2rem", left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto', }}
+                    style={{ width: "50%", height: "2rem !important", left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto', }}
                     onChange={(e) => makeAnswer(e)}
                   /><br /><br />
                   {questionType ? (
@@ -1148,7 +1159,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
                       style={{
                         width: "23%",
                         height: "2rem",
-                        fontSize: "15px",
+                        fontSize: "1rem",
                         marginRight: "1rem",
                       }}
                       onClick={show_Explanation}
@@ -1164,7 +1175,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
                     style={{
                       width: "23%",
                       height: "2rem",
-                      fontSize: "15px",
+                      fontSize: "1rem",
                       marginLeft: "1rem",
                     }}
                     onClick={submitHandler}
@@ -1177,7 +1188,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
             </div>
           ) : (
                 <div>
-                  <MyBlock style={{ width: "50%", left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto' }}>
+                  <MyBlock style={{ width: "70%", left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto' }}>
                     <br />
                     <div style={{ height: "20rem !important" }}>
                       <Editor
@@ -1276,7 +1287,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
                 <Card style={{ backgroundColor: "#f7feff" }}>
                   <Card
                     className="center"
-                    style={{ width: "50%", height: "20rem !important" }}
+                    style={{ width: "70%", height: "20rem !important" }}
                   >
                     <Card.Body>
                       <br />
@@ -1303,7 +1314,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
                 <div></div>
               )}
           {showExplanation ? (
-            <div style={{ width: "50%", left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto', }}>
+            <div style={{ width: "70%", left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto', }}>
               <br />
               정답)
               {answerList.map((i, index) => (
@@ -1320,7 +1331,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
               해설)
               <Card
                 className="center"
-                style={{ height: "20rem", overflow: "auto" }}
+                style={{ height: "20rem !important", overflow: "auto" }}
               >
                 <Card.Body>
                   <br />
@@ -1451,7 +1462,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen }) => {
               </div>
             </div>
           ) : (
-              <div style={{ width: "50%", left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto', }}>
+              <div style={{ width: "70%", left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto', }}>
                 <Accordion>
                   <Card className="center">
                     <Accordion.Toggle

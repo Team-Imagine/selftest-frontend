@@ -9,8 +9,10 @@ import store from "../store";
 import { propTypes } from "react-bootstrap/esm/Image";
 import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
+import './Responsive.css';
+import SideBarSmall from './sidebar/SideBarSmall';
 
-const Subjectcontent = ({ isOpen }) => {
+const Subjectcontent = ({ toggle, isOpen }) => {
   const [subject, setSubject] = useState([]);
   const [title, setTitle] = useState("");
   const [state, setState] = useState(0);
@@ -86,15 +88,17 @@ const Subjectcontent = ({ isOpen }) => {
   return (
     <Container
       fluid
-      className={classNames("content", { "is-open": { isOpen } })}
+      id="jb-container"
     >
+      <SideBarSmall toggle={toggle} isOpen={!isOpen} />
       <div className="d-flex bd-highlight mb-3">
+        
         <div className="mr-auto p-2 bd-highlight">
           <h3 style={{ fontWeight: "bolder" }}>과목</h3>
         </div>
         <div className="p-2 bd-highlight">
           <Accordion>
-            <Card border="info" style={{ width: "19rem" }}>
+            <Card border="info" style={{ width: "19rem !important" }}>
               <Accordion.Toggle as={Button} variant="info" block eventKey="0">
                 과목 추가
               </Accordion.Toggle>

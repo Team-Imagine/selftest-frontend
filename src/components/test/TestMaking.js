@@ -29,10 +29,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import TestAutoMaking from "./TestAutoMaking";
+import '../Responsive.css';
+import SideBarSmall from '../sidebar/SideBarSmall';
 
 import axios from "axios";
 
-const TestMaking = ({ isOpen }) => {
+const TestMaking = ({ isOpen, toggle }) => {
   const [listType, setListType] = useState("select");
   const [testNumber, setTestNumber] = useState(10);
   const [autoForm, setAutoForm] = useState(false);
@@ -247,7 +249,8 @@ const TestMaking = ({ isOpen }) => {
   };
 
   return (
-    <Container fluid className={classNames("content", { "is-open": isOpen })}>
+    <Container fluid id='jb-container'>
+      <SideBarSmall toggle={toggle} isOpen={!isOpen} />
       <div className="d-flex bd-highlight mb-3">
         <div className="mr-auto p-2 bd-highlight">
           <h3 style={{ fontWeight: "bolder" }}>시험 문제 생성</h3>
@@ -294,7 +297,7 @@ const TestMaking = ({ isOpen }) => {
             {state === "" ? (
               <Button
                 variant="info"
-                style={{ width: "19rem", height: "2.5rem" }}
+                style={{ width: "7.5rem ", height: "2.5rem" }}
                 onClick={submitForm}
               >
                 시험 생성
@@ -307,13 +310,13 @@ const TestMaking = ({ isOpen }) => {
                   value={testTitle}
                   placeholder="추가할 시험명을 입력하세요."
                   fontSize="20"
-                  style={{ width: "17rem" }}
+                  style={{ width: "17rem !important" }}
                   onChange={testTitleChange}
                 />
                 <ButtonGroup>
                   <Button
                     variant="light"
-                    style={{ width: "8.5rem" }}
+                    style={{ width: "8.5rem !important" }}
                     onClick={(e) => makeTestHandler(true, e)}
                   >
                     선택 완료
@@ -321,7 +324,7 @@ const TestMaking = ({ isOpen }) => {
                   <Button
                     variant="light"
                     block
-                    style={{ width: "8.5rem" }}
+                    style={{ width: "8.5rem !important" }}
                     onClick={(e) => makeTestHandler(false, e)}
                   >
                     생성 취소
@@ -353,7 +356,7 @@ const TestMaking = ({ isOpen }) => {
                     <Card
                       className="text-center"
                       variant="info"
-                      style={{ width: "30rem" }}
+                      style={{ width: "30rem !important" }}
                     >
                       <Card.Body>
                         <div style={{ fontWeight: "lighter" }}>{i.title}</div>

@@ -18,6 +18,7 @@ import { EditorState, convertToRaw, ContentState } from "draft-js";
 import draftToHtml from "draftjs-to-html";
 
 import axios from "axios";
+import SideBarSmall from '../sidebar/SideBarSmall';
 
 const MyBlock = styled.div`
   .wrapper-class {
@@ -47,7 +48,7 @@ const MyBlock = styled.div`
   }
 `;
 
-const MakeQuestion = ({ subject, course, isOpen }) => {
+const MakeQuestion = ({ subject, course, isOpen, toggle }) => {
   // useState로 상태관리하기 초기값은 EditorState.createEmpty()
   // EditorState의 비어있는 ContentState 기본 구성으로 새 개체를 반환 => 이렇게 안하면 상태 값을 나중에 변경할 수 없음.
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
@@ -271,8 +272,9 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
   return (
     <Container
       fluid
-      className={classNames("content", { "is-open": { isOpen } })}
+      id="jb-container"
     >
+      <SideBarSmall toggle={toggle} isOpen={!isOpen} />
       <div className="d-flex bd-highlight mb-3">
         <div className="mr-auto p-2 bd-highlight">
           <div style={{ height: "2.5rem" }}>

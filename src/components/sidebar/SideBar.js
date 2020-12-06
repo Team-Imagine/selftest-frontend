@@ -11,7 +11,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import { useHistory } from "react-router-dom";
-import { Nav, Button } from "react-bootstrap";
+import { Nav, Button, Navbar } from "react-bootstrap";
 import classNames from "classnames";
 
 const SideBar = ({ toggle, isOpen }) => {
@@ -49,70 +49,63 @@ const SideBar = ({ toggle, isOpen }) => {
   };
 
   return (
-    <div
-      className={classNames("sidebar", { "is-open": isOpen })}
-      style={{ height: "auto" }}
-    >
-      <br />
-      <div className="sidebar-header">
-        <Button
-          variant="link"
-          onClick={toggle}
-          style={{ color: "#fff" }}
-          className="mt-4"
-        >
-          <FontAwesomeIcon icon={faTimes} pull="right" size="xs" />
-        </Button>
-      </div>
-      <Nav className="flex-column pt-2">
-        <div style={{ fontSize: "2rem" }}>
-          <p className="ml-3">메뉴</p>
+    <div>
+     <div
+        className={classNames("sidebar", { "is-open": isOpen })}
+        style={{ height: "auto" }}
+      >
+        <br />
+        <div className="sidebar-header">
+          <Button
+            variant="link"
+            onClick={toggle}
+            style={{ color: "#fff" }}
+            className="mt-4"
+          >
+            <FontAwesomeIcon icon={faTimes} pull="right" size="xs" />
+          </Button>
         </div>
-        <div style={{ fontSize: "1.5rem", fontWeight: "lighter" }}>
-          <Nav.Item className="/">
-            <Nav.Link onClick={moveHome}>
-              <FontAwesomeIcon icon={faHome} className="mr-2" />홈
+        <Nav className="flex-column pt-2">
+          <div style={{ fontSize: "2rem" }}>
+            <p className="ml-3">메뉴</p>
+          </div>
+          <div style={{ fontSize: "1.5rem", fontWeight: "lighter" }}>
+            <Nav.Item className="/">
+              <Nav.Link onClick={moveHome}>
+                <FontAwesomeIcon icon={faHome} className="mr-2" />홈
             </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link onClick={moveSubject}>
-              <FontAwesomeIcon icon={faBook} className="mr-2" />
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link onClick={moveSubject}>
+                <FontAwesomeIcon icon={faBook} className="mr-2" />
               과목
             </Nav.Link>
-          </Nav.Item>
+            </Nav.Item>
 
-          <Nav.Item>
-            <Nav.Link onClick={moveBookmarks}>
-              <FontAwesomeIcon icon={faBookmark} className="mr-2" />
+            <Nav.Item>
+              <Nav.Link onClick={moveBookmarks}>
+                <FontAwesomeIcon icon={faBookmark} className="mr-2" />
               즐겨찾기
             </Nav.Link>
-          </Nav.Item>
+            </Nav.Item>
 
-          <Nav.Item>
-            <Nav.Link onClick={moveTest}>
-              <FontAwesomeIcon icon={faCheck} className="mr-2" />
+            <Nav.Item>
+              <Nav.Link onClick={moveTest}>
+                <FontAwesomeIcon icon={faCheck} className="mr-2" />
               시험
             </Nav.Link>
-          </Nav.Item>
+            </Nav.Item>
 
-          <Nav.Item>
-            <Nav.Link onClick={moveMembers}>
-              <FontAwesomeIcon icon={faTrophy} className="mr-2" />
+            <Nav.Item>
+              <Nav.Link onClick={moveMembers}>
+                <FontAwesomeIcon icon={faTrophy} className="mr-2" />
               순위
             </Nav.Link>
-          </Nav.Item>
-        
-        {/*
-          <Nav.Item>
-            <Nav.Link onClick={moveSettings}>
-              <FontAwesomeIcon icon={faCog} className="mr-2" />
-              설정
-            </Nav.Link>
-          </Nav.Item>
-        */}
-        </div>
-      </Nav>
-    </div>
+            </Nav.Item>
+          </div>
+        </Nav>
+      </div>
+      </div>
   );
 };
 

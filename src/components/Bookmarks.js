@@ -2,6 +2,7 @@ import React from "react";
 import SideBar from "./sidebar/SideBar";
 import Bookmarkscontent from "../components/Bookmarkscontent";
 import NavBar from "./content/Navbar";
+import SideBarSmall from './sidebar/SideBarSmall';
 
 class Bookmarks extends React.Component {
   constructor(props) {
@@ -18,7 +19,7 @@ class Bookmarks extends React.Component {
 
   updateWidth() {
     const width = window.innerWidth;
-    const widthLimit = 576;
+    const widthLimit = 1000;
     const isMobile = width <= widthLimit;
     const wasMobile = this.previousWidth <= widthLimit;
 

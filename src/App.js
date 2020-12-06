@@ -22,7 +22,7 @@ class App extends React.Component {
 
   updateWidth() {
     const width = window.innerWidth;
-    const widthLimit = 200;
+    const widthLimit = 700;
     const isMobile = width <= widthLimit;
     const wasMobile = this.previousWidth <= widthLimit;
 
@@ -61,7 +61,7 @@ class App extends React.Component {
         <NavBar toggle ={this.toggle} isOpen={this.state.isOpen} />
          <div className="App wrapper">
           <SideBar toggle={this.toggle} isOpen={this.state.isOpen} />
-          <Content toggle={this.toggle} isOpen={this.state.isOpen} />
+          <Content toggle={this.toggle} isOpen={this.state.isOpen}/>
         </div>
       </div>
      

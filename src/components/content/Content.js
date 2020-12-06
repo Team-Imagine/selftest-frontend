@@ -7,8 +7,11 @@ import { Button } from "react-bootstrap";
 import image1 from "../../picture/1.png"
 import image2 from "../../picture/2.png"
 import { useHistory } from "react-router-dom";
+import SideBarSmall from '../sidebar/SideBarSmall';
 
-const Content =({isOpen}) => {
+import './Content.css';
+
+const Content =({isOpen, toggle}) => {
   
 let history = useHistory();
 
@@ -19,18 +22,14 @@ const moveRank = () => {
   history.push("/rank");
 };
 
-
-
-  
-
     return (
       <Container
       fluid
-      className={classNames("content", { "is-open": { isOpen } })}
+      id="jb-container"
     >
-
+        <SideBarSmall toggle={toggle} isOpen={!isOpen} />
         <CardDeck>
-          <Card border="dark" style={{ width: "18rem" }}>
+          <Card border="dark" style={{ width: "18rem !important" }}>
             <Card.Body>
             <Card.Img variant="top" src={image1} />
             </Card.Body>
@@ -42,7 +41,7 @@ const moveRank = () => {
             </Card.Footer>
           </Card>
 
-          <Card border="dark" style={{ width: "18rem" }}>
+          <Card border="dark" style={{ width: "18rem !important" }}>
           <Card.Body>
           <Card.Img variant="top" src={image2} />
           </Card.Body>
