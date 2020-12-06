@@ -28,6 +28,7 @@ const moveRank = () => {
       id="jb-container"
     >
         <SideBarSmall toggle={toggle} isOpen={!isOpen} />
+        <br/>
         <CardDeck>
           <Card border="dark" style={{ width: "18rem !important" }}>
             <Card.Body>
