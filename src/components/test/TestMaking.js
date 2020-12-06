@@ -310,13 +310,13 @@ const TestMaking = ({ isOpen, toggle }) => {
                   value={testTitle}
                   placeholder="추가할 시험명을 입력하세요."
                   fontSize="20"
-                  style={{ width: "17rem !important" }}
+                  style={{ width: "15rem" }}
                   onChange={testTitleChange}
                 />
-                <ButtonGroup>
+                <ButtonGroup style={{paddingLeft:"2rem"}}>
                   <Button
                     variant="light"
-                    style={{ width: "8.5rem !important" }}
+                    style={{ width: "50%" }}
                     onClick={(e) => makeTestHandler(true, e)}
                   >
                     선택 완료
@@ -324,7 +324,7 @@ const TestMaking = ({ isOpen, toggle }) => {
                   <Button
                     variant="light"
                     block
-                    style={{ width: "8.5rem !important" }}
+                    style={{ width:"50%" }}
                     onClick={(e) => makeTestHandler(false, e)}
                   >
                     생성 취소
