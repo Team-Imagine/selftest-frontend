@@ -289,7 +289,7 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
           <div className="d-flex">
 
             <InputGroup style={{ width: '15%' }}>
-              <DropdownButton
+              <DropdownButton style={{paddingTop:"0.6rem"}}
                 variant="outline-secondary"
                 title={questionType}
                 id="input-group-dropdown-1"
@@ -300,15 +300,16 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
                 <Dropdown.Item eventKey="서술형">서술형</Dropdown.Item>
               </DropdownButton>
             </InputGroup>
+      
             <input
               type="text"
-              style={{ textAlign: 'center', width: '85%' }}
               id="title"
               className="input"
               placeholder="문제 제목"
               fontSize="40"
               onChange={onChange}
             />
+ 
           </div>
           <Editor
             // 에디터와 툴바 모두에 적용되는 클래스
@@ -349,12 +350,6 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
       <div className="row justify-content-center align-items-center">
         {questionType === "객관식" ? (
           <div className="d-flex">
-            <div>
-              <Button style={{ height: '2rem' }} variant="outline-info" onClick={addChoice}>
-                추가
-            </Button>
-            </div>
-            <br />
             <div className="justify-content-center align-items-center">
               <p>*답을 입력하고 정답에 체크해주세요.</p>
               {choices.map((i, index) => (
@@ -372,17 +367,17 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
                     </InputGroup.Prepend>
                   </InputGroup>
                 </div>
-              ))}</div>
+              ))}</div> &nbsp;&nbsp;
+              
+              <div style={{paddingTop:"2.6rem"}}>
+              <Button style={{ height: '2rem' }} variant="outline-info" onClick={addChoice}>
+                추가
+            </Button>
+            </div>
 
           </div>
         ) : questionType === "주관식" ? (
           <div className="d-flex">
-            <div>
-              <Button style={{height: '2rem'}}variant="outline-info" onClick={addChoice}>
-                추가
-              </Button>{" "}
-              <br />
-            </div>
             <div className="justify-content-center align-items-center">
             {choices.map((i, index) => (
               <div key={index}>
@@ -395,7 +390,12 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
                   onChange={(e) => makeAnswer(index, e)}
                 />
               </div>
-            ))}</div>
+            ))}</div> &nbsp;&nbsp;
+            <div style={{paddingTop:"0.4rem"}}>
+              <Button style={{ height: '2rem' }} variant="outline-info" onClick={addChoice}>
+                추가
+            </Button>
+            </div>
           </div>
         ) : <div></div>}
       </div>
