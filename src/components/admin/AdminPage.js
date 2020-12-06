@@ -142,7 +142,7 @@ const AdminPage = ({ isOpen, blocked }) => {
                 <br />
               </div>
             )): <div>
-							<h5>Blocked된 문제가 없습니다.</h5>
+							<h5>비공개된 문제가 없습니다.</h5>
 							</div>}
           </CardDeck>
         </ul>

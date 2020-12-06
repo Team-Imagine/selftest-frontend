@@ -133,7 +133,7 @@ li a.dropdown-toggle::after {
 .content {
   padding: 20px;
   margin-left: 0;
-  min-height: auto;
+  min-height: "100px";
   max-height: "auto";
   
 }
@@ -144,16 +144,19 @@ li a.dropdown-toggle::after {
   }
 
   .content.is-open {
-    /*margin-left: 100%;*/
     display: none;
     transition: all 0.5s;
-    min-width: "auto"
+    min-width: "auto";
+    min-height: "100px";
+    max-height: "auto";
   }
 
   .sidebar.is-open {
     min-width: 100%;
     max-width: 100%;
     margin-left: 0;
+    min-height: "100ox";
+    max-height: "auto";
     transition: all 0.5s, height 0s;
     height: 100vh !important;
   }

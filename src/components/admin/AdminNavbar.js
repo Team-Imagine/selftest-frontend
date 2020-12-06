@@ -98,7 +98,7 @@ const AdminNavbar = ({ isOpen}) => {
           </div>
           <div>				
             <div>
-                <h1 style={{ fontWeight: "bolder" }}>SelfTest</h1>
+                <h1 style={{ fontWeight: "bolder" }}>SelfTest 관리자 페이지 </h1>
             </div>   
           </div>
           <Navbar.Collapse id="responsive-navbar-nav">
@@ -138,7 +138,7 @@ const AdminNavbar = ({ isOpen}) => {
 					&nbsp;&nbsp;&nbsp;
           <div>
 						<div>
-              <h1 style={{ paddingTop: "0.5rem" }}>SelfTest</h1>    
+              <h1 style={{ paddingTop: "0.5rem" }}>SelfTest 관리자 페이지 </h1>    
 						</div>  
           </div>
           <Navbar.Collapse id="responsive-navbar-nav">

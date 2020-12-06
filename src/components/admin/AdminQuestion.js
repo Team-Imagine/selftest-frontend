@@ -24,6 +24,8 @@ import {
 	faThumbsDown,
 	faThumbsUp,
 	faAlignCenter,
+	faUndo,
+	faChevronLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import parse from "node-html-parser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -32,6 +34,7 @@ import htmlToDraft from "html-to-draftjs";
 import store from "../../store";
 
 import axios from "axios";
+
 
 const AdminQuestion = ({ question_id, isOpen }) => {
 	// useState로 상태관리하기 초기값은 EditorState.createEmpty()
@@ -57,6 +60,11 @@ const AdminQuestion = ({ question_id, isOpen }) => {
 	let htmlToEditor = "";
 	let htmlToEditor_answer = "";
 	let t_choiceColor = [];
+
+	const moveBack = () => {
+		history.push("/admin/blocked");
+	  };
+	
 
 	useEffect(() => {
 		if (store.getState().isLoggedIn) {
@@ -181,27 +189,33 @@ const AdminQuestion = ({ question_id, isOpen }) => {
 	}
 
 	return (
-		<Container
+		<Container style={{minHeight:"1000px"}}
 			fluid
 			className={classNames("content", { "is-open": { isOpen } })}
 		>
 			<div className="column justify-content-center align-items-center">
+				<div>
+				<Button variant = "info" onClick={moveBack} style={{width:"8rem"}}>
+				<FontAwesomeIcon icon={faChevronLeft} className="mr-2" />
+					뒤로가기
+				</Button>
+				</div>
 				<Card.Header style={{ width: "50%", left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto' }}>
 					<div className="d-flex bd-highlight mb-3" style={{ height: "1rem" }}>
 						<div className="mr-auto p-2 bd-highlight">
 							<div style={{ fontWeight: "bold", fontsize: "rem"}}>
-								#{question.id}
+								문제 #{question.id} {question["course.subject.title"]} - {question["course.title"]}
 							</div>
 						</div>
 						
 							{ blocked ?			
 								<Button
 									style={{ width: "4.8rem !important", height: "2.4rem" }}
-									variant='success'
+									variant='info'
 									onClick={(e) => {selectHandler(false, e)}}
 								>Open</Button> : <Button
 								style={{ width: "4.8rem !important", height: "2.4rem" }}
-								variant='success'
+								variant='info'
 								onClick={(e) => {selectHandler(true, e)}}
 							>Block</Button>
 								}

@@ -100,19 +100,21 @@ class Admin extends React.Component {
 					<div className="App wrapper">
 						<div style={{width: '10%', }} className="row h-100 justify-content-center align-items-center">
 							<br /><br /><br />
+							<div style={{paddingLeft:"2rem", paddingTop:"1.1rem", width:"10rem"}}>
 							<Button
 								variant="secondary"
 								style={{width: '100%'}}
 								onClick={(e) => { this.selectType('blocked', e) }}
 							>비공개
 							</Button>
-							<br />
+							<br /><br/>
 							<Button
 								variant="secondary"
 								style={{width: '100%'}}
 								onClick={(e) => { this.selectType('opened', e) }}
 							>공개
 							</Button>
+							</div>
 						</div>
 						<div style={{width: '90%'}}>
 						{this.state.blocked ?
