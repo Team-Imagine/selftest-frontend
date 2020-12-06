@@ -150,7 +150,7 @@ const UserSettings = (isOpen) => {
                 <Card border="info" style={{ width: "42em", height: "55rem" }}>
                   <div className="row h-100 justify-content-center align-items-center">
                     <form onSubmit = {SubmitSaveChange} className="col-10">
-                      <h2 style={{ fontWeight: "bolder" }}>프로필 설정</h2>
+                      <h2 style={{ fontWeight: "bolder" }}>{user.username}의 프로필 설정</h2>
                       <hr />
                       <br />
 
