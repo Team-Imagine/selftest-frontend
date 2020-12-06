@@ -90,12 +90,14 @@ const UserSettings = (isOpen) => {
           setNewPassword("");
           setNewPasswordAgain("");
           alert(res.data.message);
+         
         })
         .catch((error) => {
           alert(error.response.data.message);
         });
-    } else if (new_password !== new_password_again)
-      alert("비밀번호가 일치하지 않습니다");
+    } else if (new_password !== new_password_again){
+      alert("비밀번호가 일치하지 않습니다");}
+    window.location.reload(); 
   };
 
   //사용자 탈퇴
