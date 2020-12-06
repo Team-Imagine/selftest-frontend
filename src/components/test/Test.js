@@ -18,13 +18,12 @@ class Test extends React.Component {
       
           this.previousWidth = -1;
         }
-      
         updateWidth() {
           const width = window.innerWidth;
-          const widthLimit = 576;
+          const widthLimit = 700;
           const isMobile = width <= widthLimit;
           const wasMobile = this.previousWidth <= widthLimit;
-      
+          
           if (isMobile !== wasMobile) {
             this.setState({
               isOpen: !isMobile

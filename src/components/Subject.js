@@ -22,7 +22,7 @@ class Subject extends React.Component {
 
   updateWidth() {
     const width = window.innerWidth;
-    const widthLimit = 200;
+    const widthLimit = 700;
     const isMobile = width <= widthLimit;
     const wasMobile = this.previousWidth <= widthLimit;
 

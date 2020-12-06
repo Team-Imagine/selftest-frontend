@@ -16,10 +16,12 @@ import axios from "axios";
 import html2canvas from "html2canvas";
 import ReactToPrint from "react-to-print";
 import NavbarCollapse from "react-bootstrap/esm/NavbarCollapse";
+import '../Responsive.css';
+import SideBarSmall from '../sidebar/SideBarSmall';
 
 const printIcon = require("../../picture/printer.png");
 
-const TestPage = ({ isOpen, test_id }) => {
+const TestPage = ({ isOpen, test_id, toggle }) => {
   const [test, setTest] = useState();
   const [title, setTitle] = useState("");
   const [state, setState] = useState("normal");
@@ -533,7 +535,8 @@ const TestPage = ({ isOpen, test_id }) => {
   };
 
   return (
-    <Container fluid className={classNames("content", { "is-open": isOpen })}>
+    <Container fluid id='jb-container'>
+      <SideBarSmall toggle={toggle} isOpen={!isOpen} />
       <div className="d-flex bd-highlight mb-3">
         <div className="mr-auto p-2 bd-highlight">
           <h3 style={{ fontWeight: "bolder" }}>{title}</h3>
@@ -543,7 +546,7 @@ const TestPage = ({ isOpen, test_id }) => {
             <div className="row">
               <Button
                 variant={buttonColor}
-                style={{ width: "10rem", height: "2.5rem" }}
+                style={{ width: "10rem !important", height: "2.5rem" }}
                 onClick={modifyHandler}
               >
                 문제 수정
@@ -551,7 +554,7 @@ const TestPage = ({ isOpen, test_id }) => {
               &nbsp;
               <Button
                 variant="info"
-                style={{ width: "10rem", height: "2.5rem" }}
+                style={{ width: "10rem !important", height: "2.5rem" }}
                 onClick={(e) => {
                   printHandler(true, e);
                 }}
@@ -561,14 +564,14 @@ const TestPage = ({ isOpen, test_id }) => {
               &nbsp;
               <Button
                 variant="info"
-                style={{ width: "10rem", height: "2.5rem" }}
+                style={{ width: "10rem !important", height: "2.5rem" }}
                 onClick={startHandler}
               >
                 시험 시작
               </Button>{" "}
             </div>
           ) : state !== "test" && print ? (
-            <div className="d-flex">
+            <div className="row">
               {goPrint && (
                 <ReactToPrint
                   trigger={() => (
@@ -597,7 +600,7 @@ const TestPage = ({ isOpen, test_id }) => {
               &nbsp;&nbsp;
               <Button
                 variant="info"
-                style={{ width: "7rem", height: "2.5rem" }}
+                style={{ width: "5rem", height: "2.5rem" }}
                 onClick={(e) => {
                   printHandler(false, e);
                 }}
@@ -610,7 +613,7 @@ const TestPage = ({ isOpen, test_id }) => {
             <div>
               <Button
                 variant="info"
-                style={{ width: "10rem", height: "2.5rem" }}
+                style={{ width: "10rem !important", height: "2.5rem" }}
                 onClick={testSubmitHandler}
               >
                 시험 제출
@@ -636,7 +639,7 @@ const TestPage = ({ isOpen, test_id }) => {
                     <Card
                       className="text-center"
                       variant="info"
-                      style={{ width: "20rem" }}
+                      style={{ width: "20rem !important" }}
                     >
                       <Card.Body>
                         <div
@@ -664,7 +667,7 @@ const TestPage = ({ isOpen, test_id }) => {
         ) : state === "test" ? (
           <div
             style={{
-              width: "50%",
+              width: "70%",
               left: "0",
               right: "0",
               marginLeft: "auto",
@@ -685,7 +688,7 @@ const TestPage = ({ isOpen, test_id }) => {
                 className="center"
                 style={{
                   width: "100%",
-                  height: "20rem !important",
+                  height: "20rem",
                   overflow: "auto",
                 }}
               >

@@ -16,8 +16,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
+import './Responsive.css';
+import SideBarSmall from './sidebar/SideBarSmall';
 
-const Searchcontent = ({ searchtype, keywordtype, keyword, isOpen }) => {
+const Searchcontent = ({ searchtype, keywordtype, keyword, isOpen, toggle }) => {
   const [searchresults, setSearchresults] = useState([]);
   const [pages, setPages] = useState([]);
   const [sort, setSort] = useState("");
@@ -136,8 +138,9 @@ const Searchcontent = ({ searchtype, keywordtype, keyword, isOpen }) => {
   return (
     <Container
       fluid
-      className={classNames("content", { "is-open": { isOpen } })}
+      id='jb-container'
     >
+      <SideBarSmall toggle={toggle} isOpen={!isOpen} />
       <div>
         <div className="d-flex bd-highlight mb-3">
           <div className="mr-auto p-2 bd-highlight">

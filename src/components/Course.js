@@ -7,8 +7,10 @@ import Alert from "react-bootstrap/Alert";
 import store from "../store";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
+import './Responsive.css';
+import SideBarSmall from './sidebar/SideBarSmall';
 
-const Course = ({ subject, isOpen }) => {
+const Course = ({ subject, toggle, isOpen }) => {
   const [course, setCourse] = useState([]);
   const [state, setState] = useState(0);
   const [title, setTitle] = useState("");
@@ -92,8 +94,9 @@ const Course = ({ subject, isOpen }) => {
   return (
     <Container
       fluid
-      className={classNames("content", { "is-open": { isOpen } })}
+      id="jb-container"
     >
+      <SideBarSmall toggle={toggle} isOpen={!isOpen} />
       <div className="d-flex bd-highlight mb-3">
         <div className="mr-auto p-2 bd-highlight">
           <h3 style={{ fontWeight: "bolder" }}>
@@ -102,7 +105,7 @@ const Course = ({ subject, isOpen }) => {
         </div>
         <div className="p-2 bd-highlight">
           <Accordion>
-            <Card border="info" style={{ width: "19rem" }}>
+            <Card border="info" style={{ width: "19rem !important" }}>
               <Accordion.Toggle as={Button} variant="info" block eventKey="0">
                 강의 추가
               </Accordion.Toggle>
@@ -116,13 +119,13 @@ const Course = ({ subject, isOpen }) => {
                       value={title}
                       placeholder="추가할 강의명을 입력하세요."
                       fontSize="20"
-                      style={{ width: "17rem" }}
+                      style={{ width: "17rem !important" }}
                       onChange={onChange}
                     />
                     <Button
                       variant="light"
                       block
-                      style={{ width: "17rem" }}
+                      style={{ width: "17rem !important" }}
                       onClick={submitHandler}
                     >
                       강의 등록

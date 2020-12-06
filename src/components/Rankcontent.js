@@ -3,8 +3,10 @@ import { Container, Button, CardDeck } from "react-bootstrap";
 import classNames from "classnames";
 import Card from "react-bootstrap/Card";
 import axios from "axios";
+import './Responsive.css';
+import SideBarSmall from './sidebar/SideBarSmall';
 
-const Rankcontent = ({ isOpen }) => {
+const Rankcontent = ({ isOpen, toggle }) => {
   const [pages, setPages] = useState([]);
   const [ranks, setRanks] = useState([]);
 
@@ -50,8 +52,9 @@ const Rankcontent = ({ isOpen }) => {
   return (
     <Container
       fluid
-      className={classNames("content", { "is-open": { isOpen } })}
+      id='jb-container'
     >
+      <SideBarSmall toggle={toggle} isOpen={!isOpen} />
       <div>
         <div className="d-flex bd-highlight mb-3">
           <div className="mr-auto p-2 bd-highlight">
@@ -60,7 +63,7 @@ const Rankcontent = ({ isOpen }) => {
         </div>
         <hr />
         <div className="row h-100 justify-content-center align-items-center">
-          <Card style={{ width: "60rem" }}>
+          <Card style={{ width: "60%" }}>
             <div>
               <div className="container h-100">
                 <div className="row h-100 justify-content-center align-items-center">
@@ -68,7 +71,7 @@ const Rankcontent = ({ isOpen }) => {
                     Header
                     style={{
                       background: "lightblue",
-                      width: "100rem",
+                      width: "100%",
                       fontWeight: "bolder",
                     }}
                   >
@@ -116,7 +119,7 @@ const Rankcontent = ({ isOpen }) => {
               {ranks.map((i, index) => (
                 <div className="container h-100">
                   <div className="row h-100 justify-content-center align-items-center">
-                    <Card style={{ width: "100rem", height: "4rem" }}>
+                    <Card style={{ width: "100%", height: "4rem" }}>
                       <Card.Body
                         style={{ paddingTop: "4px", paddingBottom: "4px" }}
                       >

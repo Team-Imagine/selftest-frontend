@@ -15,8 +15,10 @@ import {
   faTrashAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import './Responsive.css';
+import SideBarSmall from './sidebar/SideBarSmall';
 
-const Bookmarkscontent = ({ isOpen }) => {
+const Bookmarkscontent = ({ toggle, isOpen }) => {
   const [pages, setPages] = useState([]);
   const [bookmarks, setBookmarks] = useState([]);
 
@@ -86,9 +88,10 @@ const Bookmarkscontent = ({ isOpen }) => {
   return (
     <Container
       fluid
-      className={classNames("content", { "is-open": { isOpen } })}
+      id='jb-container'
     >
       <div>
+      <SideBarSmall toggle={toggle} isOpen={!isOpen} />
         <div className="d-flex bd-highlight mb-3">
           <div className="mr-auto p-2 bd-highlight">
             <h3 style={{ fontWeight: "bolder" }}>즐겨찾기</h3>
@@ -104,7 +107,7 @@ const Bookmarkscontent = ({ isOpen }) => {
                   <Card
                     className="text-center"
                     variant="info"
-                    style={{ width: "30rem" }}
+                    style={{ width: "30rem !important" }}
                   >
                     <Link
                       key={i["question.id"]}
@@ -205,6 +208,7 @@ const Bookmarkscontent = ({ isOpen }) => {
          
         </ul>
       </div>
+
 
       <ul className="row justify-content-center align-items-center">
         {pages.map((i, index) => (

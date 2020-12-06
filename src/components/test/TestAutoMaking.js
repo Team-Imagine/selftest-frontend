@@ -6,18 +6,6 @@ const TestAutoMaking = ({ onClose, onSubmit }) => {
   const [testNumber, setTestNumber] = useState(0);
 
   useEffect(() => {
-    /*
-    if(color === 'auto') {
-      setColorValue('auto');
-    } else {
-      if(color === 'black') {
-        setColorValue('white');
-      }
-      if(color === 'white') {
-        setColorValue('black');
-      }
-    }
-    */
   }, [subject]);
 
   useEffect(() => {}, [course]);

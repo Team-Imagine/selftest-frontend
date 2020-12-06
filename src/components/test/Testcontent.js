@@ -9,9 +9,10 @@ import store from "../../store";
 import { propTypes } from "react-bootstrap/esm/Image";
 import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
+import '../Responsive.css';
+import SideBarSmall from '../sidebar/SideBarSmall';
 
-
-const Testcontent = ({ isOpen }) => {
+const Testcontent = ({ isOpen, toggle }) => {
   const [tests, setTests] = useState({
     test_list: [],
     curPage: 1,
@@ -109,11 +110,11 @@ const Testcontent = ({ isOpen }) => {
       alert("로그인이 필요한 기능입니다.");
       history.push("/login");
     }
-
   };
 
   return (
-    <Container fluid className={classNames("content", { "is-open": isOpen })}>
+    <Container fluid id="jb-container">
+      <SideBarSmall toggle={toggle} isOpen={!isOpen} />
       <div className="d-flex bd-highlight mb-3">
         <div className="mr-auto p-2 bd-highlight">
           <h3 style={{ fontWeight: "bolder" }}>시험</h3>
@@ -121,7 +122,7 @@ const Testcontent = ({ isOpen }) => {
         <div className="p-2 bd-highlight">
           <Button
             variant="info"
-            style={{ width: "9rem", height: "2.5rem" }}
+            style={{ width: "9rem !important", height: "2.5rem" }}
             onClick={makeHandler}
           >
             시험 생성
@@ -129,7 +130,7 @@ const Testcontent = ({ isOpen }) => {
           &nbsp;
           <Button
             variant={buttonColor}
-            style={{ width: "9rem", height: "2.5rem" }}
+            style={{ width: "9rem !important", height: "2.5rem" }}
             onClick={modifyHandler}
           >
             시험 수정
@@ -147,7 +148,7 @@ const Testcontent = ({ isOpen }) => {
                   <Alert
                     className="text-center"
                     variant="info"
-                    style={{ width: "30%", height: "10%" }}
+                    style={{ width: "40%", height: "10%" }}
                   >
                     <Link
                       key={i.title}
@@ -155,7 +156,7 @@ const Testcontent = ({ isOpen }) => {
                         pathname: `/test/${i.id}`,
                       }}
                     >
-                      <div style={{ fontSize: 18 }}>{i.title}</div>
+                      <div style={{ fontSize: 16 }}>{i.title}</div>
                     </Link>
                   </Alert>
                   &nbsp;&nbsp;
