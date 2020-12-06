@@ -1,6 +1,6 @@
 #jb-container {
 	width: 100%;
-	overflow:'scroll';
+	overflow:'auto';
 	margin-left: auto; 
 	margin-right: auto;
 }

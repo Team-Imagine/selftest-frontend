@@ -100,7 +100,7 @@ const Course = ({ subject, toggle, isOpen }) => {
       <div className="d-flex bd-highlight mb-3">
         <div className="mr-auto p-2 bd-highlight">
           <h3 style={{ fontWeight: "bolder" }}>
-          <Form.Label onClick={moveSubject}>과목</Form.Label> {">"} {subject}
+          <Form.Label onClick={moveSubject} style={{fontSize:'1.5rem'}}>과목</Form.Label> {">"} {subject}
           </h3>
         </div>
         <div className="p-2 bd-highlight">

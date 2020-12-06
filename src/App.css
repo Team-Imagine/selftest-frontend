@@ -47,7 +47,7 @@ a:focus {
   margin-left: -250px;
   transition: all 0.5s;
   position: sticky;
-  min-height: 5000px;
+  min-height: max-content;
   max-height: 20000px;
 }
 
@@ -55,7 +55,7 @@ a:focus {
   margin-left: 0;
   transition: 0.5s;
   max-height: max-content;
-  min-height: 5000px;
+  min-height: 1000px;
 }
 
 .sidebar-header h3 {
@@ -133,14 +133,14 @@ li a.dropdown-toggle::after {
 .content {
   padding: 20px;
   margin-left: 0;
-  min-height: "1000px";
+  min-height: "100px";
   max-height: "auto";
   
 }
 
 @media only screen and (max-width: 575.98px) {
   body {
-    overflow: hidden;
+    overflow: auto;
   }
 
   .content.is-open {
@@ -154,11 +154,13 @@ li a.dropdown-toggle::after {
   .sidebar.is-open {
     min-width: 100%;
     max-width: 100%;
+    
     margin-left: 0;
-    min-height: "auto";
+    min-height: "100ox";
     max-height: "auto";
     transition: all 0.5s, height 0s;
     height: 100vh !important;
+    
   }
 
   .sidebar.is-open > .sidebar-header button {

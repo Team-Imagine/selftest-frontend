@@ -278,7 +278,7 @@ const MakeQuestion = ({ subject, course, isOpen, toggle }) => {
       <div className="d-flex bd-highlight mb-3">
         <div className="mr-auto p-2 bd-highlight">
           <div style={{ height: "2.5rem" }}>
-            <h3 style={{ fontWeight: "bolder" }}>
+            <h3 style={{ fontWeight: "bolder", fontSize: '1.5rem' }}>
               과목 {">"} {subject} {">"} {course} {">"} 문제 생성
             </h3>
           </div>
@@ -290,7 +290,6 @@ const MakeQuestion = ({ subject, course, isOpen, toggle }) => {
       <div className="row justify-content-center align-items-center">
         <MyBlock>
           <div className="d-flex">
-
             <InputGroup style={{ width: '15%' }}>
               <DropdownButton style={{paddingTop:"0.6rem"}}
                 variant="outline-secondary"
@@ -351,7 +350,7 @@ const MakeQuestion = ({ subject, course, isOpen, toggle }) => {
         </MyBlock>
       </div>
       <div className="row justify-content-center align-items-center">
-      <Card border="light" style={{width:"47rem", backgroundColor:"#DDF2F1", paddingTop:"1rem", paddingBottom:"1rem"}}>
+      <Card border="light" style={{width: '47rem', backgroundColor:"#DDF2F1", paddingTop:"1rem", paddingBottom:"1rem"}}>
       <div className="row justify-content-center align-items-center">
         
         {questionType === "객관식" ? (

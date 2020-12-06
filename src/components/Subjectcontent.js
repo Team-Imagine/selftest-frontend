@@ -89,12 +89,13 @@ const Subjectcontent = ({ toggle, isOpen }) => {
     <Container
       fluid
       id="jb-container"
+      style={{overflow:'scroll'}}
     >
       <SideBarSmall toggle={toggle} isOpen={!isOpen} />
       <div className="d-flex bd-highlight mb-3">
         
         <div className="mr-auto p-2 bd-highlight">
-          <h3 style={{ fontWeight: "bolder" }}>과목</h3>
+          <h3 style={{ fontWeight: "bolder", fontSize: '1.5rem'}}>과목</h3>
         </div>
         <div className="p-2 bd-highlight">
           <Accordion>
