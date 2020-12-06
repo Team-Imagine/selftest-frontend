@@ -98,9 +98,9 @@ class Admin extends React.Component {
 				<div>
 					<AdminNavbar toggle={this.toggle} isOpen={this.state.isOpen} />
 					<div className="App wrapper">
-						<div style={{width: '10%', }} className="row h-100 justify-content-center align-items-center">
-							<br /><br /><br />
-							<div style={{paddingLeft:"2rem", paddingTop:"1.1rem", width:"10rem"}}>
+						<div>
+
+							<div style={{paddingLeft:"1.2rem", paddingTop:"1.2rem", width:"10rem"}}>
 							<Button
 								variant="secondary"
 								style={{width: '100%'}}

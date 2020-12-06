@@ -195,7 +195,7 @@ const AdminQuestion = ({ question_id, isOpen }) => {
 		>
 			<div className="column justify-content-center align-items-center">
 				<div>
-				<Button variant = "info" onClick={moveBack} style={{width:"8rem"}}>
+				<Button variant = "info" onClick={moveBack} style={{width:"8.8rem"}}>
 				<FontAwesomeIcon icon={faChevronLeft} className="mr-2" />
 					뒤로가기
 				</Button>
