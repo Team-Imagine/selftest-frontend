@@ -349,7 +349,7 @@ const MakeQuestion = ({ subject, course, isOpen }) => {
         </MyBlock>
       </div>
       <div className="row justify-content-center align-items-center">
-      <Card border="light" style={{width:"80%", backgroundColor:"#DDF2F1", paddingTop:"1rem", paddingBottom:"1rem"}}>
+      <Card border="light" style={{width:"47rem", backgroundColor:"#DDF2F1", paddingTop:"1rem", paddingBottom:"1rem"}}>
       <div className="row justify-content-center align-items-center">
         
         {questionType === "객관식" ? (
