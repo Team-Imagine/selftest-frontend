@@ -47,7 +47,7 @@ a:focus {
   margin-left: -250px;
   transition: all 0.5s;
   position: sticky;
-  min-height: max-content;
+  min-height: 5000px;
   max-height: 20000px;
 }
 
@@ -55,7 +55,7 @@ a:focus {
   margin-left: 0;
   transition: 0.5s;
   max-height: max-content;
-  min-height: 1000px;
+  min-height: 5000px;
 }
 
 .sidebar-header h3 {
@@ -133,7 +133,7 @@ li a.dropdown-toggle::after {
 .content {
   padding: 20px;
   margin-left: 0;
-  min-height: "100px";
+  min-height: "1000px";
   max-height: "auto";
   
 }
@@ -155,7 +155,7 @@ li a.dropdown-toggle::after {
     min-width: 100%;
     max-width: 100%;
     margin-left: 0;
-    min-height: "100ox";
+    min-height: "auto";
     max-height: "auto";
     transition: all 0.5s, height 0s;
     height: 100vh !important;

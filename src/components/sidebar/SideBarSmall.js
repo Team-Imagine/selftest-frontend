@@ -50,8 +50,13 @@ const SideBarSmall = ({ toggle, isOpen }) => {
 
 	return (
 		<div>
+			 <div
+        className={classNames("smallsidebar", { "is-open": isOpen })}
+        style={{ height: "auto" }}
+      >
 			{isOpen && <div>
 				<Navbar
+				height="auto"
 					expand="lg"
 				>
 					<Navbar.Toggle aria-controls="responsive-navbar-nav" className="row" />
@@ -93,6 +98,7 @@ const SideBarSmall = ({ toggle, isOpen }) => {
 					
 				</Navbar>
 			</div>}
+			</div>
 			</div>
 	);
 };

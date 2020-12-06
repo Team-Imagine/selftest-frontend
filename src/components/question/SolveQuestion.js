@@ -894,14 +894,15 @@ const SolveQuestion = ({ subject, course, question_id, isOpen, toggle }) => {
             </div>
             <Button
               variant="info"
-              style={{ width: "2.4rem !important", height: "2rem" }}
+              style={{ height: "2rem" }}
               onClick={isBookmarked ? DeleteBookmarks : AddBookmarks}
             >
-              <FontAwesomeIcon
+              <div style={{paddingLeft:"0.1rem", width:"1rem"}}> <FontAwesomeIcon
                 icon={faThumbtack}
                 className="mr-2"
-                style={{ color: bookmarkedColor }}
-              />
+                style={{ color: bookmarkedColor}}
+              /></div>
+             
             </Button>
           </div>
         </Card.Header>

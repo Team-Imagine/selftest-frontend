@@ -50,7 +50,7 @@ const Rankcontent = ({ isOpen, toggle }) => {
   };
 
   return (
-    <Container
+    <Container style={{height:"100p"}}
       fluid
       id='jb-container'
     >
