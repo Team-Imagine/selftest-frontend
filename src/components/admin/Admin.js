@@ -13,11 +13,13 @@ import {
 import { Nav, Button } from "react-bootstrap";
 import classNames from "classnames";
 
-import AdminPage from "./AdminPage";
+import AdminBlocked from "./AdminBlocked";
 import AdminNavbar from "./AdminNavbar";
 import AdminSideBar from "./AdminSideBar";
 import AdminQuestion from "./AdminQuestion";
 import AdminOpened from "./AdminOpened";
+import AdminSubject from "./AdminSubject";
+import AdminCourse from "./AdminCourse";
 
 class Admin extends React.Component {
 
@@ -28,7 +30,7 @@ class Admin extends React.Component {
 		this.state = {
 			isOpen: false,
 			isMobile: true,
-			blocked: true,
+			type: 'blocked',
 		};
 
 		this.previousWidth = -1;
@@ -71,15 +73,9 @@ class Admin extends React.Component {
 	selectType = (type, e) => {
 		e.preventDefault();
 
-		if (type === 'blocked') {
-			this.setState({
-				blocked: true
-			})
-		} else {
-			this.setState({
-				blocked: false
-			})
-		}
+		this.setState({
+			type: type,
+		})
 	}
 
 	render() {
@@ -114,12 +110,28 @@ class Admin extends React.Component {
 								onClick={(e) => { this.selectType('opened', e) }}
 							>공개
 							</Button>
+							<br /><br/>
+							<Button
+								variant="secondary"
+								style={{width: '100%'}}
+								onClick={(e) => { this.selectType('subject', e) }}
+							>과목
+							</Button>
+							<br /><br/>
+							<Button
+								variant="secondary"
+								style={{width: '100%'}}
+								onClick={(e) => { this.selectType('course', e) }}
+							>강의
+							</Button>
 							</div>
 						</div>
 						<div style={{width: '90%'}}>
-						{this.state.blocked ?
-							<AdminPage toggle={this.toggle} isOpen={this.state.isOpen} />
-							: <AdminOpened toggle={this.toggle} isOpen={this.state.isOpen} />
+						{(this.state.type === 'blocked') ?
+							<AdminBlocked toggle={this.toggle} isOpen={this.state.isOpen} />
+							: (this.state.type === 'opened') ? <AdminOpened toggle={this.toggle} isOpen={this.state.isOpen} />
+							: (this.state.type === 'subject') ? <AdminSubject toggle={this.toggle} isOpen={this.state.isOpen} />
+							: <AdminCourse toggle={this.toggle} isOpen={this.state.isOpen} />
 						}
 						</div>
 					</div>

@@ -23,7 +23,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const AdminPage = ({ isOpen, blocked }) => {
+const AdminBlocked = ({ isOpen, blocked }) => {
   const [question, setQuestion] = useState({
     question: [],
     curPage: 1,
@@ -170,4 +170,4 @@ const AdminPage = ({ isOpen, blocked }) => {
 };
 
 
-export default AdminPage;
+export default AdminBlocked;
