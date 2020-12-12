@@ -1305,7 +1305,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen, toggle }) => {
           {showExplanation ? (
             <div style={{ width: "70%", left: '0', right: '0', marginLeft: 'auto', marginRight: 'auto', }}>
               <br />
-              정답)
+              {questionType !== 'essay' && <p>정답)</p>}
               {answerList.map((i, index) => (
                 <div key={index}>
                   <Card className="center">

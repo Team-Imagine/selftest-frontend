@@ -313,10 +313,10 @@ const TestMaking = ({ isOpen, toggle }) => {
                   style={{ width: "15rem" }}
                   onChange={testTitleChange}
                 />
-                <ButtonGroup style={{paddingLeft:"2rem"}}>
+                <ButtonGroup>
                   <Button
                     variant="light"
-                    style={{ width: "50%" }}
+                    style={{ width: "7.5rem" }}
                     onClick={(e) => makeTestHandler(true, e)}
                   >
                     선택 완료
@@ -324,7 +324,7 @@ const TestMaking = ({ isOpen, toggle }) => {
                   <Button
                     variant="light"
                     block
-                    style={{ width:"50%" }}
+                    style={{ width:"7.5rem" }}
                     onClick={(e) => makeTestHandler(false, e)}
                   >
                     생성 취소
