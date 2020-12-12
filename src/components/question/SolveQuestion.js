@@ -304,7 +304,10 @@ const SolveQuestion = ({ subject, course, question_id, isOpen, toggle }) => {
       axios.get(`/api/answer?question_id=${question_id}`).then((res) => {
         console.log(res.data);
 
-        htmlToEditor_answer = res.data.answers.rows[0].content;
+        if (res.data.answers.rows.length !== 0)
+          htmlToEditor_answer = res.data.answers.rows[0].content;
+        else
+          htmlToEditor_answer = '<p></p>';
 
         const blocksFromHtml = htmlToDraft(htmlToEditor_answer);
         if (blocksFromHtml) {
@@ -331,22 +334,13 @@ const SolveQuestion = ({ subject, course, question_id, isOpen, toggle }) => {
     var result;
     if (pointControl.points_to_solve) {
       result = window.confirm(
-        "풀이를 제출하시겠습니까? 포인트 " +
-        pointControl.points_to_solve +
-        "점이 차감됩니다."
+        "풀이를 제출하시겠습니까?"
       );
     } else {
       result = window.confirm("풀이를 제출하시겠습니까?");
     }
 
     if (result) {
-      if (pointControl.points_to_solve) {
-        let t_point = pointControl.points_to_solve;
-        setPointControl({
-          points_to_unlock: 0,
-          points_to_own: pointControl.points_to_own - t_point,
-        });
-      }
 
       axios
         .get(`/api/question/solve/${question_id}`)
@@ -461,12 +455,12 @@ const SolveQuestion = ({ subject, course, question_id, isOpen, toggle }) => {
         }
 
         console.log(res.data);
-        
+
         if (res.data.answers.rows.length !== 0)
           htmlToEditor_answer = res.data.answers.rows[0].content;
         else
           htmlToEditor_answer = '<p></p>';
-        
+
         const blocksFromHtml = htmlToDraft(htmlToEditor_answer);
         if (blocksFromHtml) {
           const { contentBlocks, entityMap } = blocksFromHtml;
@@ -853,7 +847,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen, toggle }) => {
   };
 
   return (
-    <Container style={{height:"2000px"}}
+    <Container style={{ height: "2000px" }}
       fluid
       id="jb-container"
     >
@@ -861,7 +855,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen, toggle }) => {
       <div className="d-flex bd-highlight mb-3">
         <div className="mr-auto p-2 bd-highlight">
           <div style={{ height: "2.5rem" }}>
-            <h3 style={{ fontWeight: "bolder", fontSize: '1.5rem'}}>
+            <h3 style={{ fontWeight: "bolder", fontSize: '1.5rem' }}>
               <Form.Label onClick={moveSubject}>과목</Form.Label> {">"} <Form.Label onClick={moveCourse}>{subject}</Form.Label> {">"} <Form.Label onClick={moveLecture}>{course}</Form.Label> {">"} 문제 풀이
             </h3>
           </div>
@@ -897,12 +891,12 @@ const SolveQuestion = ({ subject, course, question_id, isOpen, toggle }) => {
               style={{ height: "2rem" }}
               onClick={isBookmarked ? DeleteBookmarks : AddBookmarks}
             >
-              <div style={{paddingLeft:"0.1rem", width:"1rem"}}> <FontAwesomeIcon
+              <div style={{ paddingLeft: "0.1rem", width: "1rem" }}> <FontAwesomeIcon
                 icon={faThumbtack}
                 className="mr-2"
-                style={{ color: bookmarkedColor}}
+                style={{ color: bookmarkedColor }}
               /></div>
-             
+
             </Button>
           </div>
         </Card.Header>
@@ -1055,7 +1049,7 @@ const SolveQuestion = ({ subject, course, question_id, isOpen, toggle }) => {
                 >
                   <br />
                   <div>
-                    <div style={{fontSize: '1.1rem'}}>위 문제에 대한 알맞은 정답을 선택하세요.</div>
+                    <div style={{ fontSize: '1.1rem' }}>위 문제에 대한 알맞은 정답을 선택하세요.</div>
                   </div>
                   <br />
                   <div className="justify-content-center align-items-center">

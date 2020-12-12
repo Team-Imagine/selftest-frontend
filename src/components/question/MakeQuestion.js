@@ -434,7 +434,7 @@ const MakeQuestion = ({ subject, course, isOpen, toggle }) => {
       </div>
       <br />
       <div className="row justify-content-center align-items-center">
-        <Button className="btn-block" variant="info" onClick={submitHandler} style={{ width: '50%' }}>
+        <Button className="btn-block" variant="info" onClick={submitHandler} style={{ width: '47rem' }}>
           문제 등록
         </Button>
       </div>
